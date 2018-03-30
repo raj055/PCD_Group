@@ -26,7 +26,7 @@ import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
 public class UserDashbord extends AppCompatActivity {
 
-    Button LogOut, Client_Register, Client_Details, Image_upload;
+    Button LogOut, Client_Details, Image_upload;
     TextView EmailShow;
     String EmailHolder;
     private String mUsername;
@@ -38,7 +38,6 @@ public class UserDashbord extends AppCompatActivity {
 
         //Assign Id'S
         LogOut = (Button)findViewById(R.id.button);
-        Client_Register = (Button)findViewById(R.id.clientregister);
         Client_Details = (Button)findViewById(R.id.clientdetails);
         Image_upload = (Button)findViewById(R.id.imgupload);
 
@@ -72,17 +71,6 @@ public class UserDashbord extends AppCompatActivity {
             startActivity(loginIntent);
             return;
         }*/
-
-        // Click client register button
-        Client_Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(UserDashbord.this, ClientRegisterActivity.class);
-                startActivity(intent);
-
-            }
-        });
 
         // Click Client_details button
         Client_Details.setOnClickListener(new View.OnClickListener() {

@@ -161,9 +161,8 @@ public class Invoice extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.address), getResources().getString(R.string.action_address)));
-        menu.add(0, 2, 2, menuIconWithText(getResources().getDrawable(R.drawable.edit), getResources().getString(R.string.action_edit)));
-        menu.add(0, 3, 3, menuIconWithText(getResources().getDrawable(R.drawable.pdf), getResources().getString(R.string.action_pdf)));
+        menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.edit), getResources().getString(R.string.action_edit)));
+        menu.add(0, 2, 2, menuIconWithText(getResources().getDrawable(R.drawable.pdf), getResources().getString(R.string.action_pdf)));
         return true;
     }
 
@@ -173,9 +172,6 @@ public class Invoice extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case 1:
-                Toast.makeText(Invoice.this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
                 Intent intent = new Intent(Invoice.this, CreateQuotation.class);
 
                 startActivity(intent);
@@ -183,7 +179,7 @@ public class Invoice extends AppCompatActivity {
                 finish();
 
                 break;
-            case 3:
+            case 2:
                 fn_permission();
                 if (boolean_save) {
                     Intent intent1 = new Intent(getApplicationContext(), PDFViewActivity.class);
@@ -198,6 +194,7 @@ public class Invoice extends AppCompatActivity {
 
                     break;
                 }
+
                 break;
         }
         return super.onOptionsItemSelected(item);

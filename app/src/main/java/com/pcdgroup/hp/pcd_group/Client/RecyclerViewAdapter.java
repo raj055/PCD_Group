@@ -5,10 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.pcdgroup.hp.pcd_group.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,18 +21,23 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
+        implements Filterable {
 
-    Context context;
+    private Context context;
 
-    List<DataAdapter> dataAdapters;
+    private List<DataAdapter> dataAdapters;
 
-    public RecyclerViewAdapter(List<DataAdapter> getDataAdapter, Context context){
+    private List<DataAdapter> dataListFiltered;
 
-        super();
+    private DataAdapterListener listener;
 
-        this.dataAdapters = getDataAdapter;
-        this.context = context;
+    public RecyclerViewAdapter(ClientDetailsActivity clientDetailsActivity, List<DataAdapter> dataAdapters, ClientDetailsActivity listener) {
+
+        this.context = clientDetailsActivity;
+        this.listener = listener;
+        this.dataAdapters = dataAdapters;
+        this.dataListFiltered = dataAdapters;
     }
 
     @Override
@@ -57,12 +67,48 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.TextviewPin.setText(dataAdapter.getPin());
         viewHolder.TextViewEmailID.setText(dataAdapter.getEmailid());
         viewHolder.TextViewDesignation.setText(dataAdapter.getDesignation());
+
     }
 
     @Override
     public int getItemCount() {
 
         return dataAdapters.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    dataListFiltered = dataAdapters;
+                } else {
+                    List<DataAdapter> filteredList = new ArrayList<>();
+                    for (DataAdapter row : dataAdapters) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    dataListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = dataListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                dataListFiltered = (ArrayList<DataAdapter>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -97,6 +143,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             TextviewPin = (TextView) itemView.findViewById(R.id.tvpin) ;
             TextViewEmailID = (TextView) itemView.findViewById(R.id.tvemailid) ;
             TextViewDesignation = (TextView) itemView.findViewById(R.id.tvdesignation) ;
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // send selected contact in callback
+                    listener.onDataSelected(dataListFiltered.get(getAdapterPosition()));
+                }
+            });
         }
+    }
+
+    public interface DataAdapterListener {
+        void onDataSelected(DataAdapter dataAdapter);
     }
 }

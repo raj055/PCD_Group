@@ -21,6 +21,10 @@ public class DataAdapter {
     String emailid;
     String designation;
 
+    public DataAdapter(){
+
+    }
+
     public String getId() {
 
         return id;

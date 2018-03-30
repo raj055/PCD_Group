@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".Client.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/pcd_launcher"
         android:label="@string/app_name"
@@ -27,6 +28,7 @@
         <activity android:name=".Client.ClientRegisterActivity" android:label="PCD_Group" />
         <activity android:name=".AdminLogin.AdminLoginActivity" android:label="PCD_Group" />
         <activity android:name=".AdminLogin.AdminDashboard" android:label="PCD_Group" />
+        <activity android:name=".AdminLogin.AdminSetting" android:label="PCD_Group" />
         <activity android:name=".Client.SingleRecordShow" android:label="PCD_Group" />
         <activity android:name=".Client.ClientDetailsActivity" android:label="PCD_Group" />
         <activity android:name=".Product.ImageUpload" android:label="PCD_Group" />
