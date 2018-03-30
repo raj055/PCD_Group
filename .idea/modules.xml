@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PCD_Group.iml" filepath="$PROJECT_DIR$/PCD_Group.iml" />
+      <module fileurl="file://E:\projectappmaster\new\PCD_Group\PCD_Group.iml" filepath="E:\projectappmaster\new\PCD_Group\PCD_Group.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\projectappmaster\new\PCD_Group\app\app.iml" filepath="E:\projectappmaster\new\PCD_Group\app\app.iml" />
     </modules>
   </component>
 </project>
