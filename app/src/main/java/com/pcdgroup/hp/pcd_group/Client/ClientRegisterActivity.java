@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import java.util.HashMap;
 
@@ -172,7 +173,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent intent = new Intent(ClientRegisterActivity.this, MainActivity.class);
+                Intent intent = new Intent(ClientRegisterActivity.this, UserDashbord.class);
                 startActivity(intent);
 
                 finish();
