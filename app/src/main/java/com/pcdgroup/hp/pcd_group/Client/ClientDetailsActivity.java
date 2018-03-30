@@ -258,6 +258,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
                 mAdepter.getFilter().filter(query);
+
                 return false;
             }
         });

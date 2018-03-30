@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,14 +39,13 @@ import java.util.Map;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class UploadImageFragment extends Fragment {
+public class UploadImage extends AppCompatActivity {
 
     EditText name,price,quantity,hsncode,description,stock,reorderlevel;
     ImageView imageView;
     Spinner gst;
     Button pickImage, upload;
     Activity mActivity;
-    View rootView;
 
     private Bitmap bitmap;
     private String KEY_IMAGE = "image";
@@ -62,24 +62,23 @@ public class UploadImageFragment extends Fragment {
     private int PICK_IMAGE_REQUEST = 1;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setRetainInstance(true);
-        rootView = inflater.inflate(R.layout.upload_image_layout, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.upload_image_layout);
 
         //Assign Id'S
-        name= (EditText)rootView.findViewById(R.id.name);
-        price= (EditText)rootView.findViewById(R.id.price);
-        quantity= (EditText)rootView.findViewById(R.id.quantity);
-        hsncode= (EditText)rootView.findViewById(R.id.HSNCode);
-        gst= (Spinner) rootView.findViewById(R.id.spinner3);
-        description= (EditText)rootView.findViewById(R.id.Descriprion);
-        stock= (EditText)rootView.findViewById(R.id.Stock);
-        reorderlevel= (EditText)rootView.findViewById(R.id.Reorderlevel);
-        pickImage= (Button)rootView.findViewById(R.id.pickImgaeButton);
-        upload = (Button)rootView.findViewById(R.id.upload);
+        name= (EditText) findViewById(R.id.name);
+        price= (EditText) findViewById(R.id.price);
+        quantity= (EditText) findViewById(R.id.quantity);
+        hsncode= (EditText) findViewById(R.id.HSNCode);
+        gst= (Spinner) findViewById(R.id.spinner3);
+        description= (EditText) findViewById(R.id.Descriprion);
+        stock= (EditText) findViewById(R.id.Stock);
+        reorderlevel= (EditText) findViewById(R.id.Reorderlevel);
+        pickImage= (Button) findViewById(R.id.pickImgaeButton);
+        upload = (Button) findViewById(R.id.upload);
 
-        imageView = (ImageView)rootView.findViewById(R.id.previewImage);
+        imageView = (ImageView) findViewById(R.id.previewImage);
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +128,7 @@ public class UploadImageFragment extends Fragment {
                 showFileChooser();
             }
         });
-
-        return rootView;
+        
     }
 
     public String getStringImage(Bitmap bmp){
@@ -140,13 +138,7 @@ public class UploadImageFragment extends Fragment {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = activity;
-    }
-
+    
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

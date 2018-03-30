@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ViewImageFragment extends Fragment {
+public class ViewImage extends AppCompatActivity {
 
     View rootView;
     Activity mActivity;
@@ -45,15 +46,14 @@ public class ViewImageFragment extends Fragment {
     List<Entity> localEntity;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setRetainInstance(true);
-        rootView = inflater.inflate(R.layout.view_image_layout, container, false);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.view_image_layout);
 
         localEntity = new ArrayList<Entity>() ;
         recordName = new String("");
         picNames = new ArrayList<String>();
-        listView = (ListView) rootView.findViewById(R.id.lstv);
+        listView = (ListView) findViewById(R.id.lstv);
 
         adapter = new CustomListAdapter(mActivity, localEntity);
         listView.setAdapter(adapter);
@@ -68,13 +68,6 @@ public class ViewImageFragment extends Fragment {
         //Adepter
         adapter.notifyDataSetChanged();
 
-        return rootView;
-
-    }
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = activity;
     }
 
     private void getData(){

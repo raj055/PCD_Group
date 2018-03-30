@@ -15,7 +15,7 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.MainActivity;
-import com.pcdgroup.hp.pcd_group.Product.ImageUpload;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
@@ -26,7 +26,7 @@ import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
 public class UserDashbord extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Image_upload;
+    Button LogOut, Client_Details, Product;
     TextView EmailShow;
     String EmailHolder;
     private String mUsername;
@@ -39,7 +39,7 @@ public class UserDashbord extends AppCompatActivity {
         //Assign Id'S
         LogOut = (Button)findViewById(R.id.button);
         Client_Details = (Button)findViewById(R.id.clientdetails);
-        Image_upload = (Button)findViewById(R.id.imgupload);
+        Product = (Button)findViewById(R.id.imgupload);
 
         EmailShow = (TextView)findViewById(R.id.EmailShow);
         EmailShow.setText(mUsername);
@@ -84,11 +84,11 @@ public class UserDashbord extends AppCompatActivity {
         });
 
         // Click image upload button
-        Image_upload.setOnClickListener(new View.OnClickListener() {
+        Product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(UserDashbord.this, ImageUpload.class);
+                Intent intent = new Intent(UserDashbord.this, ViewImage.class);
 
                 startActivity(intent);
             }

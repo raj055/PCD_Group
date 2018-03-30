@@ -25,7 +25,6 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AdminLoginActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
-import com.pcdgroup.hp.pcd_group.Product.ImageUpload;
 import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;

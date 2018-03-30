@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.MainActivity;
-import com.pcdgroup.hp.pcd_group.Product.ImageUpload;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
 import com.pcdgroup.hp.pcd_group.Quotation.PDFViewActivity;
@@ -86,7 +86,7 @@ public class AdminDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AdminDashboard.this, ImageUpload.class);
+                Intent intent = new Intent(AdminDashboard.this, ViewImage.class);
 
                 startActivity(intent);
             }

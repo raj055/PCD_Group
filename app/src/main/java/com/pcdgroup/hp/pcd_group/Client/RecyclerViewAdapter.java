@@ -53,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        DataAdapter dataAdapter =  dataAdapters.get(position);
+        DataAdapter dataAdapter =  dataListFiltered.get(position);
 
         viewHolder.TextViewName.setText(dataAdapter.getName());
         viewHolder.TextViewType.setText(dataAdapter.getType());
@@ -73,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
 
-        return dataAdapters.size();
+        return dataListFiltered.size();
     }
 
     @Override
@@ -97,7 +97,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     dataListFiltered = filteredList;
                 }
-
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = dataListFiltered;
                 return filterResults;
