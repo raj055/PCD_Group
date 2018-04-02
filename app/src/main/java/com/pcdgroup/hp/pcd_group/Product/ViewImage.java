@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
-
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -117,13 +116,14 @@ public class ViewImage extends AppCompatActivity {
                 Integer price = jo.getInt("price");
                 Integer minimum = jo.getInt("minimum");
                 Integer hsncode=jo.getInt("hsncode");
+                Integer gst=jo.getInt("gst");
                 String brand=jo.getString("brand");
                 String description=jo.getString("description");
                 Integer stock=jo.getInt("stock");
                 Integer reorderlevel=jo.getInt("reorderlevel");
                 Integer id = jo.getInt("id");
                 picNames.add(picname);
-                Entity e = new Entity(picname,urlname,price,minimum,hsncode,brand,description,stock,reorderlevel,id);
+                Entity e = new Entity(picname,urlname,price,minimum,hsncode,gst,brand,description,stock,reorderlevel,id);
                 localEntity.add(e);
             }
 

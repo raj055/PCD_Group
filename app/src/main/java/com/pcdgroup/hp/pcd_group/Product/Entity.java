@@ -9,13 +9,14 @@ public class Entity {
 
   private String title,thumbnailUrl,description,brand;
   private int availableStock;
-  private Integer price,minimum,hsncode,stock,reorderlevel;
+  private Integer price,minimum,hsncode,gst,stock,reorderlevel;
 
-  public Entity(String name, String thumbnailUrl, Integer price, Integer minimum, Integer hsncode, String brand, String description, Integer stock, Integer reorderlevel, int availableStock) {
+  public Entity(String name, String thumbnailUrl, Integer price, Integer minimum, Integer hsncode,Integer gst, String brand, String description, Integer stock, Integer reorderlevel, int availableStock) {
     this.title = name;
     this.price = price;
     this.minimum = minimum;
     this.hsncode= hsncode;
+    this.gst=gst;
     this.brand= brand;
     this.stock=stock;
     this.description=description;
@@ -30,6 +31,7 @@ public class Entity {
   public Integer getPrice() {return price;}
   public Integer getMinimum() {return minimum;}
   public Integer getHsncode() {return hsncode;}
+  public  Integer getGst() {return  gst;}
   public String getBrand() {return brand;}
   public  String getDescription() {return description;}
   public Integer getstock() {return stock;}
@@ -41,6 +43,7 @@ public class Entity {
   public void setPrice(Integer price) {this.price = price;}
   public void setMinimum(Integer minimum) {this.minimum = minimum;}
   public void setHsncode(Integer hsncode) {this.hsncode = hsncode;}
+  public  void setGst(Integer gst){this.gst=gst;}
   public void setBrand(String brand) {this.brand = brand;}
   public  void setDescription (String description) { this.description= description ;}
   public void setStock(Integer stock) {this.stock = stock;}

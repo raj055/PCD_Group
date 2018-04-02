@@ -17,12 +17,12 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_alignLeft="@+id/GST"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/GST"
         android:textColor="@color/BlueViolet"
-        android:layout_marginLeft="40dp"
         android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <!-- Rating -->
     <TextView
@@ -49,15 +49,27 @@
         android:layout_toRightOf="@+id/thumbnail"
         />
 
+    <TextView
+        android:id="@+id/GST"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/minimumvalue"
+        android:layout_toEndOf="@+id/HSNCode"
+        android:layout_toRightOf="@+id/HSNCode"
+        android:textColor="@color/Black"
+        android:textSize="20dp" />
+
 
     <TextView
         android:id="@+id/HSNCode"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/thumbnail"
-        android:layout_marginTop="8dip"
+        android:layout_below="@+id/GST"
         android:gravity="left|center_vertical"
         android:textColor="@color/Black"
         android:textSize="20dp" />
@@ -66,8 +78,10 @@
         android:id="@+id/Brand"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
         android:layout_alignBaseline="@+id/HSNCode"
-        android:layout_alignBottom="@+id/HSNCode"
+        android:layout_alignBottom="@+id/GST"
+        android:layout_below="@id/GST"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:textColor="@color/Black"
@@ -90,6 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Stock"
         android:layout_alignBottom="@+id/Stock"
+        android:layout_marginTop="10dip"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:textColor="@color/Black"
@@ -105,6 +120,9 @@
         android:textSize="20dp"
         android:textColor="@color/Black"
         />
+
+
+
 
 
 </RelativeLayout>

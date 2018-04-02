@@ -65,6 +65,7 @@ public class CustomListAdapter extends BaseAdapter {
     TextView minimum = (TextView) convertView.findViewById(R.id.minimumvalue);
     TextView hsncode = (TextView) convertView.findViewById(R.id.HSNCode);
     TextView brand = (TextView) convertView.findViewById(R.id.Brand);
+    TextView gst=(TextView)convertView.findViewById(R.id.GST);
     TextView description = (TextView) convertView.findViewById(R.id.Descriprion);
     TextView stock = (TextView) convertView.findViewById(R.id.Stock);
     TextView reorderlevel = (TextView) convertView.findViewById(R.id.Reorderlevel);
@@ -82,6 +83,7 @@ public class CustomListAdapter extends BaseAdapter {
     minimum.setText("Minimum Value : " + String.valueOf(m.getMinimum()));
     hsncode.setText("Hsncode:" +String.valueOf(m.getHsncode()));
     brand.setText("Brand :" +String.valueOf(m.getBrand()));
+    gst.setText("GST :" + String.valueOf(m.getGst()));
     description.setText("Description:" +String.valueOf(m.getDescription()));
     stock.setText("Stock:" +String.valueOf(m.getStock()));
     reorderlevel.setText("Reorderlevel:" +String.valueOf(m.getReorderlevel()));

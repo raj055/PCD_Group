@@ -44,6 +44,7 @@ public class UploadImage extends AppCompatActivity {
     EditText name,price,minimum,hsncode,description,stock,reorderlevel;
     ImageView imageView;
     Spinner brand;
+    Spinner gst;
     Button pickImage, upload;
     Activity mActivity;
 
@@ -53,7 +54,8 @@ public class UploadImage extends AppCompatActivity {
     private String KEY_Price = "price";
     private String KEY_Minimum = "quantity";
     private String KEY_HSNCode = "HSNCode";
-    private String KEY_Brand = "GST";
+    private String KEY_Brand = "Brand";
+    private  String KEY_Gst= "gst";
     private String KEY_Description = "Description";
     private String KEY_Stock = "Stock";
     private String KEY_Reorderlevel = "Reorderlevel";
@@ -72,6 +74,7 @@ public class UploadImage extends AppCompatActivity {
         minimum= (EditText) findViewById(R.id.minimum);
         hsncode= (EditText) findViewById(R.id.HSNCode);
         brand= (Spinner) findViewById(R.id.spinner3);
+        gst= (Spinner)findViewById(R.id.spinner4);
         description= (EditText) findViewById(R.id.Descriprion);
         stock= (EditText) findViewById(R.id.Stock);
         reorderlevel= (EditText) findViewById(R.id.Reorderlevel);
@@ -201,6 +204,7 @@ public class UploadImage extends AppCompatActivity {
                 String name6= description.getText().toString().trim();
                 String name7= stock.getText().toString().trim();
                 String name8= reorderlevel.getText().toString().trim();
+                String name9=gst.getSelectedItem().toString().trim();
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
@@ -214,6 +218,7 @@ public class UploadImage extends AppCompatActivity {
                 params.put(KEY_Description,name6);
                 params.put(KEY_Stock,name7);
                 params.put(KEY_Reorderlevel,name8);
+                params.put(KEY_Gst,name9);
                 //returning parameters
                 return params;
             }
