@@ -150,7 +150,7 @@ public class SelectProduct  extends AppCompatActivity {
                 IdList.add(jo.getString("id").toString());
 
                 picNames.add(picname);
-                ProdactEntity e = new ProdactEntity(picname,urlname,price,quantity,hsncode,gst,description,stock,reorderlevel,id);
+                ProdactEntity e = new ProdactEntity(picname,urlname,price, quantity,hsncode,gst,description,stock,reorderlevel,id);
                 prodactEntities.add(e);
             }
 
