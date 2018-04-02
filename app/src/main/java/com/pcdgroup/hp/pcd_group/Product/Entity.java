@@ -11,7 +11,9 @@ public class Entity {
   private int availableStock;
   private Integer price,minimum,hsncode,gst,stock,reorderlevel;
 
-  public Entity(String name, String thumbnailUrl, Integer price, Integer minimum, Integer hsncode, String brand, String description, Integer stock, Integer reorderlevel, int availableStock) {
+  public Entity(String name, String thumbnailUrl, Integer price, Integer gst, Integer minimum, Integer hsncode,
+                String brand, String description, Integer stock, Integer reorderlevel,
+                int availableStock) {
     this.title = name;
     this.price = price;
     this.minimum = minimum;
