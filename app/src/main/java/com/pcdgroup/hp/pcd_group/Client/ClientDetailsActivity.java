@@ -83,7 +83,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             }
         });
 
-        // toolbar fancy stuff
+        // toolbar fancy stuff.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.toolbar_title);
 
