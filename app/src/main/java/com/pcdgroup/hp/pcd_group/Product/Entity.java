@@ -7,16 +7,16 @@ package com.pcdgroup.hp.pcd_group.Product;
 
 public class Entity {
 
-  private String title,thumbnailUrl,description;
+  private String title,thumbnailUrl,description,brand;
   private int availableStock;
-  private Integer price,quantity,hsncode,gst,stock,reorderlevel;
+  private Integer price,minimum,hsncode,stock,reorderlevel;
 
-  public Entity(String name, String thumbnailUrl, Integer price, Integer quantity, Integer hsncode, Integer gst, String description, Integer stock, Integer reorderlevel, int availableStock) {
+  public Entity(String name, String thumbnailUrl, Integer price, Integer minimum, Integer hsncode, String brand, String description, Integer stock, Integer reorderlevel, int availableStock) {
     this.title = name;
     this.price = price;
-    this.quantity = quantity;
+    this.minimum = minimum;
     this.hsncode= hsncode;
-    this.gst= gst;
+    this.brand= brand;
     this.stock=stock;
     this.description=description;
     this.reorderlevel=reorderlevel;
@@ -28,9 +28,9 @@ public class Entity {
     return title;
   }
   public Integer getPrice() {return price;}
-  public Integer getQuantity() {return quantity;}
+  public Integer getMinimum() {return minimum;}
   public Integer getHsncode() {return hsncode;}
-  public Integer getGst() {return gst;}
+  public String getBrand() {return brand;}
   public  String getDescription() {return description;}
   public Integer getstock() {return stock;}
   public Integer getReorderlevel() {return reorderlevel;}
@@ -39,9 +39,9 @@ public class Entity {
     this.title = name;
   }
   public void setPrice(Integer price) {this.price = price;}
-  public void setQuantity(Integer quantity) {this.quantity = quantity;}
+  public void setMinimum(Integer minimum) {this.minimum = minimum;}
   public void setHsncode(Integer hsncode) {this.hsncode = hsncode;}
-  public void setGst(Integer gst) {this.gst = gst;}
+  public void setBrand(String brand) {this.brand = brand;}
   public  void setDescription (String description) { this.description= description ;}
   public void setStock(Integer stock) {this.stock = stock;}
   public void setReorderlevel(Integer reorderlevel) {this.reorderlevel = reorderlevel;}

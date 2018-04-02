@@ -62,9 +62,9 @@ public class CustomListAdapter extends BaseAdapter {
     NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
     TextView title = (TextView) convertView.findViewById(R.id.title);
     TextView price = (TextView) convertView.findViewById(R.id.price);
-    TextView qunt = (TextView) convertView.findViewById(R.id.qunt);
+    TextView minimum = (TextView) convertView.findViewById(R.id.minimumvalue);
     TextView hsncode = (TextView) convertView.findViewById(R.id.HSNCode);
-    TextView gst = (TextView) convertView.findViewById(R.id.GST);
+    TextView brand = (TextView) convertView.findViewById(R.id.Brand);
     TextView description = (TextView) convertView.findViewById(R.id.Descriprion);
     TextView stock = (TextView) convertView.findViewById(R.id.Stock);
     TextView reorderlevel = (TextView) convertView.findViewById(R.id.Reorderlevel);
@@ -79,11 +79,11 @@ public class CustomListAdapter extends BaseAdapter {
 
     // price & Quantity
     price.setText("Price: \u20B9 " + String.valueOf(m.getPrice()));
-    qunt.setText("Quantity: " + String.valueOf(m.getQuantity()));
+    minimum.setText("Minimum Value : " + String.valueOf(m.getMinimum()));
     hsncode.setText("Hsncode:" +String.valueOf(m.getHsncode()));
-    gst.setText("GST:" +String.valueOf(m.getGst()));
-    description.setText("Description:" +String.valueOf(m.getGst()));
-    stock.setText("Stock:" +String.valueOf(m.getGst()));
+    brand.setText("Brand :" +String.valueOf(m.getBrand()));
+    description.setText("Description:" +String.valueOf(m.getDescription()));
+    stock.setText("Stock:" +String.valueOf(m.getStock()));
     reorderlevel.setText("Reorderlevel:" +String.valueOf(m.getReorderlevel()));
     return convertView;
   }

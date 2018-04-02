@@ -41,9 +41,9 @@ import java.util.Map;
 
 public class UploadImage extends AppCompatActivity {
 
-    EditText name,price,quantity,hsncode,description,stock,reorderlevel;
+    EditText name,price,minimum,hsncode,description,stock,reorderlevel;
     ImageView imageView;
-    Spinner gst;
+    Spinner brand;
     Button pickImage, upload;
     Activity mActivity;
 
@@ -51,9 +51,9 @@ public class UploadImage extends AppCompatActivity {
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
     private String KEY_Price = "price";
-    private String KEY_Quantity = "quantity";
+    private String KEY_Minimum = "quantity";
     private String KEY_HSNCode = "HSNCode";
-    private String KEY_GST = "GST";
+    private String KEY_Brand = "GST";
     private String KEY_Description = "Description";
     private String KEY_Stock = "Stock";
     private String KEY_Reorderlevel = "Reorderlevel";
@@ -69,9 +69,9 @@ public class UploadImage extends AppCompatActivity {
         //Assign Id'S
         name= (EditText) findViewById(R.id.name);
         price= (EditText) findViewById(R.id.price);
-        quantity= (EditText) findViewById(R.id.quantity);
+        minimum= (EditText) findViewById(R.id.minimum);
         hsncode= (EditText) findViewById(R.id.HSNCode);
-        gst= (Spinner) findViewById(R.id.spinner3);
+        brand= (Spinner) findViewById(R.id.spinner3);
         description= (EditText) findViewById(R.id.Descriprion);
         stock= (EditText) findViewById(R.id.Stock);
         reorderlevel= (EditText) findViewById(R.id.Reorderlevel);
@@ -92,9 +92,9 @@ public class UploadImage extends AppCompatActivity {
                 {
                     price.setError("Please Enter Price !");
                 }
-                else if (quantity.getText().toString().length() <= 0)
+                else if (minimum.getText().toString().length() <= 0)
                 {
-                    quantity.setError("Please Enter Quantity !");
+                    minimum.setError("Please Enter Minimum Value !");
                 }
                 else if (hsncode.getText().toString().length() <= 0)
                 {
@@ -195,9 +195,9 @@ public class UploadImage extends AppCompatActivity {
                 //Getting Image Name
                 String name1 = name.getText().toString().trim();
                 String name2 = price.getText().toString().trim();
-                String name3 = quantity.getText().toString().trim();
+                String name3 = minimum.getText().toString().trim();
                 String name4 = hsncode.getText().toString().trim();
-                String name5= gst.getSelectedItem().toString().trim();
+                String name5= brand.getSelectedItem().toString().trim();
                 String name6= description.getText().toString().trim();
                 String name7= stock.getText().toString().trim();
                 String name8= reorderlevel.getText().toString().trim();
@@ -208,9 +208,9 @@ public class UploadImage extends AppCompatActivity {
                 params.put(KEY_IMAGE, image);
                 params.put(KEY_NAME, name1);
                 params.put(KEY_Price, name2);
-                params.put(KEY_Quantity, name3);
+                params.put(KEY_Minimum, name3);
                 params.put(KEY_HSNCode,name4);
-                params.put(KEY_GST,name5);
+                params.put(KEY_Brand,name5);
                 params.put(KEY_Description,name6);
                 params.put(KEY_Stock,name7);
                 params.put(KEY_Reorderlevel,name8);

@@ -109,7 +109,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
         //RecyclerView Item click listener code starts from here.
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
-            GestureDetector gestureDetector = new GestureDetector(ClientDetailsActivity.this, new GestureDetector.SimpleOnGestureListener() {
+            GestureDetector gestureDetector = new GestureDetector(ClientDetailsActivity.this,
+                    new GestureDetector.SimpleOnGestureListener() {
 
                 @Override public boolean onSingleTapUp(MotionEvent motionEvent) {
 

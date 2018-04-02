@@ -38,7 +38,7 @@
         />
 
     <TextView
-        android:id="@+id/qunt"
+        android:id="@+id/minimumvalue"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
@@ -63,7 +63,7 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/GST"
+        android:id="@+id/Brand"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/HSNCode"
