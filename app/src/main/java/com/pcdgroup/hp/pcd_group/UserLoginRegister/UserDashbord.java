@@ -16,6 +16,7 @@ import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
+import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
@@ -26,7 +27,7 @@ import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
 public class UserDashbord extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Product;
+    Button LogOut, Client_Details, Product, Invoice;
     TextView EmailShow;
     String EmailHolder;
     private String mUsername;
@@ -40,6 +41,7 @@ public class UserDashbord extends AppCompatActivity {
         LogOut = (Button)findViewById(R.id.button);
         Client_Details = (Button)findViewById(R.id.clientdetails);
         Product = (Button)findViewById(R.id.imgupload);
+        Invoice = (Button)findViewById(R.id.btn_invoice);
 
         EmailShow = (TextView)findViewById(R.id.EmailShow);
         EmailShow.setText(mUsername);
@@ -89,6 +91,17 @@ public class UserDashbord extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(UserDashbord.this, ViewImage.class);
+
+                startActivity(intent);
+            }
+        });
+
+        // Click image invoice button
+        Invoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserDashbord.this, CreateQuotation.class);
 
                 startActivity(intent);
             }

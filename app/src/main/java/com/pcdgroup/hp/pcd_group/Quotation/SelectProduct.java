@@ -138,7 +138,7 @@ public class SelectProduct  extends AppCompatActivity {
                 String picname = jo.getString("name");
                 String urlname = jo.getString("photo");
                 Integer price = jo.getInt("price");
-                Integer quantity = jo.getInt("quantity");
+                Integer quantity = jo.getInt("minimum");
                 Integer hsncode=jo.getInt("hsncode");
                 Integer gst=jo.getInt("gst");
                 String description=jo.getString("description");

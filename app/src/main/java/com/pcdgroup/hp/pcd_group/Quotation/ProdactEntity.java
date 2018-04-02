@@ -9,12 +9,12 @@ public class ProdactEntity {
 
     private String title,thumbnailUrl,description;
     private int availableStock;
-    private Integer price,quantity,hsncode,gst,stock,reorderlevel;
+    private Integer price,minimum,hsncode,gst,stock,reorderlevel;
 
     public ProdactEntity(String name, String thumbnailUrl, Integer price, Integer quantity,Integer hsncode,Integer gst,String description,Integer stock,Integer reorderlevel, int availableStock) {
         this.title = name;
         this.price = price;
-        this.quantity = quantity;
+        this.minimum = quantity;
         this.hsncode= hsncode;
         this.gst= gst;
         this.stock=stock;
@@ -28,7 +28,7 @@ public class ProdactEntity {
         return title;
     }
     public Integer getPrice() {return price;}
-    public Integer getQuantity() {return quantity;}
+    public Integer getQuantity() {return minimum;}
     public Integer getHsncode() {return hsncode;}
     public Integer getGst() {return gst;}
     public  String getDescription() {return description;}
@@ -39,7 +39,7 @@ public class ProdactEntity {
         this.title = name;
     }
     public void setPrice(Integer price) {this.price = price;}
-    public void setQuantity(Integer quantity) {this.quantity = quantity;}
+    public void setQuantity(Integer minimum) {this.minimum = minimum;}
     public void setHsncode(Integer hsncode) {this.hsncode = hsncode;}
     public void setGst(Integer gst) {this.gst = gst;}
     public  void setDescription (String description) { this.description= description ;}

@@ -70,7 +70,7 @@ public class ProductCustomListAdapter extends BaseAdapter {
         title.setText(m.getTitle());
         // price & Quantity
         price.setText("Price: \u20B9" + String.valueOf(m.getPrice()));
-        qunt.setText("Quantity: " + String.valueOf(m.getQuantity()));
+        qunt.setText("minimum: " + String.valueOf(m.getQuantity()));
         hsncode.setText("Hsncode:" +String.valueOf(m.getHsncode()));
         gst.setText("GST:" +String.valueOf(m.getGst()));
         description.setText("Description:" +String.valueOf(m.getDescription()));

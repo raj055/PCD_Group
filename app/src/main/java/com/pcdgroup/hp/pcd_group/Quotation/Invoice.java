@@ -35,10 +35,14 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.R;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * @author Grasp
@@ -63,6 +67,10 @@ public class Invoice extends AppCompatActivity {
     boolean boolean_save;
     Bitmap bitmap;
     ProgressDialog progressDialog;
+
+    public static final String PDF_UPLOAD_HTTP_URL = "http://pcddata-001-site1.1tempurl.com/file_upload.php";
+    String PdfNameHolder, PdfPathHolder, PdfID;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -42,6 +42,7 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     }
     private void displayFromSdcard() {
         pdfFileName ="/sdcard/invoice.pdf";
+
         File file = new File(pdfFileName);
 
         Log.e("File path",file.getAbsolutePath());
