@@ -55,7 +55,7 @@ public class ViewImage extends AppCompatActivity {
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
 
-        adapter = new CustomListAdapter(mActivity, localEntity);
+        adapter = new CustomListAdapter(this, localEntity);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

@@ -22,6 +22,7 @@ import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
+import com.pcdgroup.hp.pcd_group.Quotation.List_Pdfs;
 import com.pcdgroup.hp.pcd_group.Quotation.PDFViewActivity;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
@@ -33,7 +34,7 @@ import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Image_upload, Quotation;
+    Button LogOut, Client_Details, Image_upload, Orders_pdf ,Quotation;
     TextView EmailShow;
     String EmailHolder;
 
@@ -46,6 +47,7 @@ public class AdminDashboard extends AppCompatActivity {
         LogOut = (Button) findViewById(R.id.button);
         Client_Details = (Button) findViewById(R.id.clientdetails);
         Image_upload = (Button) findViewById(R.id.imgupload);
+        Orders_pdf = (Button) findViewById(R.id.btn_orders);
         Quotation = (Button) findViewById(R.id.quotation);
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
@@ -87,6 +89,17 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(AdminDashboard.this, ViewImage.class);
+
+                startActivity(intent);
+            }
+        });
+
+        // Click Orders button
+        Orders_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(AdminDashboard.this, List_Pdfs.class);
 
                 startActivity(intent);
             }

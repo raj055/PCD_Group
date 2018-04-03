@@ -37,6 +37,7 @@
         <activity android:name=".Quotation.SelectClient" android:label="PCD_Group" />
         <activity android:name=".Quotation.SelectProduct" android:label="PCD_Group" />
         <activity android:name=".Quotation.PDFViewActivity" android:label="PCD_Group" />
+        <activity android:name=".Quotation.List_Pdfs" android:label="PCD_Group" />
         <activity android:name=".UserLoginRegister.UserDashbord" android:label="PCD_Group" />
         <activity android:name=".Product.UploadImage" android:label="PCD_Group" />
         <activity android:name=".Product.ViewImage" android:label="PCD_Group" />
