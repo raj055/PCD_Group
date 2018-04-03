@@ -69,7 +69,6 @@ public class AdminSetting extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void CheckAnyAddress() {
