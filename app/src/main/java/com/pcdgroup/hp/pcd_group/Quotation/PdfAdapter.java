@@ -50,7 +50,6 @@ public class PdfAdapter extends ArrayAdapter<Pdf> {
 
         pdf = data.get(position);
         holder.textViewName.setText(pdf.getName());
-        holder.textViewUrl.setText(pdf.getUrl());
         return row;
     }
 

@@ -1,5 +1,7 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
+import android.content.ActivityNotFoundException;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.support.annotation.StringDef;
@@ -43,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -74,13 +77,10 @@ public class List_Pdfs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listpdfs_activity);
 
-        //initializing ListView
+
         listView = (ListView) findViewById(R.id.listView);
 
-        //initializing buttonFetch
         buttonFetch = (Button) findViewById(R.id.buttonFetchPdf);
-
-        //initializing progressDialog
 
         progressDialog = new ProgressDialog(this);
 

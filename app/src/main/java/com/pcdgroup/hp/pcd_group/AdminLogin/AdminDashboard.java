@@ -34,7 +34,7 @@ import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Image_upload, Orders_pdf ,Quotation;
+    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation;
     TextView EmailShow;
     String EmailHolder;
 
@@ -47,7 +47,7 @@ public class AdminDashboard extends AppCompatActivity {
         LogOut = (Button) findViewById(R.id.button);
         Client_Details = (Button) findViewById(R.id.clientdetails);
         Image_upload = (Button) findViewById(R.id.imgupload);
-        Orders_pdf = (Button) findViewById(R.id.btn_orders);
+        Quotation_pdf = (Button) findViewById(R.id.btn_quotation);
         Quotation = (Button) findViewById(R.id.quotation);
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
@@ -95,7 +95,7 @@ public class AdminDashboard extends AppCompatActivity {
         });
 
         // Click Orders button
-        Orders_pdf.setOnClickListener(new View.OnClickListener() {
+        Quotation_pdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
