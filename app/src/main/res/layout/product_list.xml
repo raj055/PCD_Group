@@ -13,72 +13,72 @@
         >
 
         <TextView
-            android:layout_width="20dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
             android:text="1"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvproduct"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_weight="3"
             android:text="Computer"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvhsn"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
+            android:layout_weight="3"
             android:text="8457"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvquantity"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
+            android:layout_weight="3"
             android:text="1"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvprice"
-            android:layout_width="40dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
             android:text="1350"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvgst"
-            android:layout_width="35dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
             android:text="6.4"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/sgst"
-            android:layout_width="35dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
             android:text="12.5"
             android:textSize="12dp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/amount"
-            android:layout_width="55dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_weight="3"
             android:text="16530"
             android:textSize="12dp"
             android:textStyle="bold"/>

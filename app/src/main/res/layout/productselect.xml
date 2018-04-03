@@ -9,8 +9,9 @@
     <!-- Movie Title -->
     <TextView
         android:id="@+id/productname"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:layout_alignParentLeft="true"
         android:text="xyz"
         android:textColor="@color/BlueViolet"
@@ -20,14 +21,14 @@
     <!-- Rating -->
     <TextView
         android:id="@+id/amount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_toLeftOf="@+id/productname"
         android:text="123"
         android:textColor="@color/Black"
-
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/productname"
         tools:layout_editor_absoluteY="0dp"
