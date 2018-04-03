@@ -25,14 +25,25 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     PDFView pdfView;
     Integer pageNumber = 0;
     String pdfFileName;
-    String TAG="PDFViewActivity";
+    String TAG = "PDFViewActivity";
     int position=-1;
+
+    String saveName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
+
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras != null) {
+
+                saveName = extras.getString("FileName");
+            }
+        }
         init();
+
     }
 
     private void init(){
@@ -41,7 +52,8 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
         displayFromSdcard();
     }
     private void displayFromSdcard() {
-        pdfFileName ="/sdcard/invoice.pdf";
+
+        pdfFileName =  saveName ;
 
         File file = new File(pdfFileName);
 

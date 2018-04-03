@@ -1,8 +1,10 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,16 +20,19 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,7 +74,7 @@ public class Invoice extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     public static final String PDF_UPLOAD_HTTP_URL = "http://pcddata-001-site1.1tempurl.com/file_upload.php";
-    String PdfNameHolder, PdfPathHolder, PdfID;
+    String fileName, targetPdf;
 
 
     @Override
@@ -188,20 +193,46 @@ public class Invoice extends AppCompatActivity {
 
                 break;
             case 2:
-                fn_permission();
-                if (boolean_save) {
-                    Intent intent1 = new Intent(getApplicationContext(), PDFViewActivity.class);
-                    startActivity(intent1);
 
-                }
-                if (boolean_permission) {
-                    progressDialog = new ProgressDialog(Invoice.this);
-                    progressDialog.setMessage("Please wait");
-                    bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
-                    createPdf();
+                LayoutInflater layoutinflater = LayoutInflater.from(this);
+                View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
 
-                    break;
-                }
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+                alertDialogBuilder.setView(promptUserView);
+
+                final EditText userAnswer = (EditText) promptUserView.findViewById(R.id.username);
+
+                alertDialogBuilder.setTitle("What's your username?");
+
+                // prompt for username
+                alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        fileName =  userAnswer.getText().toString();
+                        targetPdf = "/sdcard/" + fileName + ".pdf";
+                        fn_permission();
+
+                        if (boolean_permission) {
+                            progressDialog = new ProgressDialog(Invoice.this);
+                            progressDialog.setMessage("Please wait");
+                            bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
+                            createPdf();
+                        }
+                        if (boolean_save) {
+                            Intent intent1 = new Intent(getApplicationContext(), PDFViewActivity.class);
+                            intent1.putExtra("FileName",targetPdf);
+                            startActivity(intent1);
+                        }
+
+
+
+                    }
+                });
+
+                // all set and time to build and show up!
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
 
                 break;
         }
@@ -211,7 +242,7 @@ public class Invoice extends AppCompatActivity {
     private CharSequence menuIconWithText(Drawable r, String title) {
 
         r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
-        SpannableString sb = new SpannableString("    " + title);
+        SpannableString sb = new SpannableString(" " + title);
         ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -244,11 +275,12 @@ public class Invoice extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0 , null);
         document.finishPage(page);
 
-        // write the document content
-        String targetPdf = "/sdcard/invoice.pdf";
+        targetPdf = "/sdcard/" + fileName + ".pdf";
+
         File filePath = new File(targetPdf);
         try {
             document.writeTo(new FileOutputStream(filePath));
+
             boolean_save=true;
         } catch (IOException e) {
             e.printStackTrace();
