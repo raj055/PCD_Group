@@ -1,8 +1,10 @@
 package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -11,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
 
+import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
+import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -32,8 +36,7 @@ import java.util.List;
 
 public class ViewImage extends AppCompatActivity {
 
-    View rootView;
-    Activity mActivity;
+
     ListView listView;
     CustomListAdapter adapter;
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/fimage.php";
@@ -50,12 +53,22 @@ public class ViewImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_image_layout);
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ViewImage.this,UploadImage.class);
+                startActivity(intent);
+            }
+        });
+
         localEntity = new ArrayList<Entity>() ;
         recordName = new String("");
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
 
-        adapter = new CustomListAdapter(mActivity, localEntity);
+        adapter = new CustomListAdapter(this, localEntity);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

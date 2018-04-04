@@ -64,6 +64,8 @@ public class Invoice extends AppCompatActivity {
 
     TextView date,validdate, finalPayable;
 
+    EditText userAnswer;
+
     float totalPrice, totalAmount;
     int totalquantity;
 
@@ -74,7 +76,7 @@ public class Invoice extends AppCompatActivity {
     Bitmap bitmap;
     ProgressDialog progressDialog;
 
-    public static final String PDF_UPLOAD_HTTP_URL = "http://pcddata-001-site1.1tempurl.com/file_upload.php";
+    public static final String UPLOAD_URL = "http://pcddata-001-site1.1tempurl.com/server_upload_pdf.php";
     String fileName, targetPdf;
 
     @Override
@@ -201,9 +203,9 @@ public class Invoice extends AppCompatActivity {
 
                 alertDialogBuilder.setView(promptUserView);
 
-                final EditText userAnswer = (EditText) promptUserView.findViewById(R.id.username);
+                userAnswer = (EditText) promptUserView.findViewById(R.id.username);
 
-                alertDialogBuilder.setTitle("What's your username?");
+                alertDialogBuilder.setTitle("Save File Name.");
 
                 // prompt for username
                 alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
@@ -224,8 +226,7 @@ public class Invoice extends AppCompatActivity {
                             startActivity(intent1);
                         }
 
-
-
+                        UploadPdf();
                     }
                 });
 
@@ -237,6 +238,33 @@ public class Invoice extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void UploadPdf() {
+
+        //getting name for the image
+        String name = userAnswer.getText().toString().trim();
+
+        if (targetPdf == null) {
+
+            Toast.makeText(this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
+        } else {
+            //Uploading code
+            try {
+                String uploadId = UUID.randomUUID().toString();
+
+                //Creating a multi part request
+                new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
+                        .addFileToUpload(targetPdf, "pdf") //Adding file
+                        .addParameter("name", name) //Adding text parameter to the request
+                        .setNotificationConfig(new UploadNotificationConfig())
+                        .setMaxRetries(2)
+                        .startUpload(); //Starting the upload
+
+            } catch (Exception exc) {
+                Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private CharSequence menuIconWithText(Drawable r, String title) {

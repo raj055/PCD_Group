@@ -53,7 +53,7 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     }
     private void displayFromSdcard() {
 
-        pdfFileName =  saveName ;
+        pdfFileName =  saveName;
 
         File file = new File(pdfFileName);
 
