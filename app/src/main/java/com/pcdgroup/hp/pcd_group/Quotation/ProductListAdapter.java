@@ -6,12 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.List;
-
+import com.pcdgroup.hp.pcd_group.R;
 /**
  * Created by HP on 21-03-2018.
  */
@@ -25,6 +26,7 @@ public class ProductListAdapter extends BaseAdapter {
   public ProductListAdapter(Activity activity, List<ProductInfoAdapter> entityItems) {
     this.activity = activity;
     this.entityItems = entityItems;
+
 
   }
 
@@ -43,11 +45,12 @@ public class ProductListAdapter extends BaseAdapter {
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-
+    ListView product = activity.findViewById(R.id.tv_product);
     if (inflater == null)
       inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    if (convertView == null)
+    if (convertView == null) {
       convertView = inflater.inflate(R.layout.productselect, null);
+    }
 
     //Assign Id'S
     TextView title = (TextView) convertView.findViewById(R.id.productname);

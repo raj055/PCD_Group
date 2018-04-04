@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.R;
 
+
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
@@ -75,7 +76,6 @@ public class Invoice extends AppCompatActivity {
 
     public static final String PDF_UPLOAD_HTTP_URL = "http://pcddata-001-site1.1tempurl.com/file_upload.php";
     String fileName, targetPdf;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

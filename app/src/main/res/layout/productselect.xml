@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <!-- Movie Title -->
     <TextView
         android:id="@+id/productname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_weight="2"
-        android:layout_alignParentLeft="true"
         android:text="xyz"
         android:textColor="@color/BlueViolet"
         android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"/>
 
     <!-- Rating -->
     <TextView
@@ -24,14 +28,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_toLeftOf="@+id/productname"
         android:text="123"
         android:textColor="@color/Black"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/productname"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
