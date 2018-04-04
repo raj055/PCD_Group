@@ -41,7 +41,6 @@ public class CreateQuotation extends AppCompatActivity {
     ProductListAdapter itemsAdapter;
     public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();
     public ArrayList<String[]> PrdList = new ArrayList<String[]>();
-//    ProductInfoAdapter tempAdapter;
 
     private int year;
     private int month;
