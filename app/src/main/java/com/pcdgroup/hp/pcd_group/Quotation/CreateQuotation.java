@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -33,11 +34,13 @@ public class CreateQuotation extends AppCompatActivity {
 
     private EditText quantity;
     private Button add_client,add_product,preview,date,validdate;
-    public TextView client,textdate,textvaliddate;
+    public TextView client, textdate, textvaliddate;
     public ListView product;
 
     GlobalVariable globalVariable;
     ProductListAdapter itemsAdapter;
+    public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();
+    public ArrayList<String[]> PrdList = new ArrayList<String[]>();
 //    ProductInfoAdapter tempAdapter;
 
     private int year;
@@ -52,7 +55,6 @@ public class CreateQuotation extends AppCompatActivity {
         setContentView(R.layout.activity_quotation);
 
         globalVariable = GlobalVariable.getInstance();
-
         quantity = (EditText) findViewById(R.id.quantity_et);
 
         client = (TextView) findViewById(R.id.tv_client);
@@ -76,7 +78,7 @@ public class CreateQuotation extends AppCompatActivity {
                 .append(month + 1).append("-")
                 .append(year).append(" "));
 
-        itemsAdapter = new ProductListAdapter(this,  globalVariable.items);
+        itemsAdapter = new ProductListAdapter(this,  items);
         product.setAdapter(itemsAdapter);
 
         // Client add in database
@@ -130,13 +132,13 @@ public class CreateQuotation extends AppCompatActivity {
 
                 //product
                 int itemsCount = 0;
-                for (ProductInfoAdapter pradap: globalVariable.items){
+                for (ProductInfoAdapter pradap: items){
 
-                    String[] glstr = globalVariable.PrdList.get(itemsCount++);
+                    String[] glstr = PrdList.get(itemsCount++);
                     if(glstr != null)
                         glstr[4] =  pradap.getAmount();
                 }
-                intent.putExtra("ProductInfo", globalVariable.PrdList);
+                intent.putExtra("ProductInfo", PrdList);
 //                intent.putExtra("proqunt", quantity.getText());
                 intent.putExtra("date", textdate.getText());
                 intent.putExtra("validdate", textvaliddate.getText());
@@ -159,10 +161,10 @@ public class CreateQuotation extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
 
                 String str = editable.toString();
-                int listSize = globalVariable.items.size() ;
+                int listSize = items.size() ;
                 if(listSize != 0) {
                     listSize -= 1;
-                    ProductInfoAdapter prinfo = globalVariable.items.get(listSize);
+                    ProductInfoAdapter prinfo = items.get(listSize);
                     prinfo.setAmount(str);
                     itemsAdapter.notifyDataSetChanged();
                 }
@@ -223,11 +225,11 @@ public class CreateQuotation extends AppCompatActivity {
 
                             ProductInfoAdapter tempAdapter = new ProductInfoAdapter();
                             tempAdapter.setName(globalVariable.globalProduct[0]);
-                            globalVariable.items.add(tempAdapter);
+                            items.add(tempAdapter);
                             itemsAdapter.notifyDataSetChanged();
 
                             String[] strpr = globalVariable.globalProduct.clone();
-                            globalVariable.PrdList.add(strpr);
+                            PrdList.add(strpr);
                         }
                     }
                 }

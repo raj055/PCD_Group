@@ -40,7 +40,6 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.R;
 
-
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
@@ -54,7 +53,6 @@ import java.util.UUID;
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
  */
-
 public class Invoice extends AppCompatActivity {
 
     TextView name,address,state,company,country,add1,add2,pin;
@@ -233,7 +231,6 @@ public class Invoice extends AppCompatActivity {
                 // all set and time to build and show up!
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-
 
                 break;
         }

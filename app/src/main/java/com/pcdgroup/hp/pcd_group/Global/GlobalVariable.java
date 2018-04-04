@@ -24,8 +24,8 @@ public class GlobalVariable {
 
     public  String[] globalProduct = new String[5];
 
-    public ArrayList<String[]> PrdList = new ArrayList<String[]>();
 
-    public ArrayList<ProductInfoAdapter> items = new ArrayList<ProductInfoAdapter>();
+
+//
 
 }
