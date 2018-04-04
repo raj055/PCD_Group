@@ -362,8 +362,8 @@ public class Invoice extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(Invoice.this, AdminDashboard.class);
-        startActivity(intent);
+//        Intent intent = new Intent(Invoice.this, AdminDashboard.class);
+//        startActivity(intent);
 
         finish();
 

@@ -65,7 +65,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     SearchView searchView;
 
-    int RecyclerViewClickedItemPOS ;
+    int RecyclerViewClickedItemPOS;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
