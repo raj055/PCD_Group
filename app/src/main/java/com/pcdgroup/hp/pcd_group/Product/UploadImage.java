@@ -151,7 +151,7 @@ public class UploadImage extends AppCompatActivity {
             try {
                 //Getting the Bitmap from Gallery
                 imageView.setVisibility(View.VISIBLE);
-                bitmap = MediaStore.Images.Media.getBitmap(mActivity.getContentResolver(), filePath);
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
                 //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
