@@ -220,7 +220,7 @@ public class CreateQuotation extends AppCompatActivity {
                             globalVariable.globalProduct[2] = temp.toString();
                             temp = extras.getInt("pprice");
                             globalVariable.globalProduct[3] = temp.toString();
-
+                            globalVariable.globalProduct[4] = "0";
 
                             ProductInfoAdapter tempAdapter = new ProductInfoAdapter();
                             tempAdapter.setName(globalVariable.globalProduct[0]);

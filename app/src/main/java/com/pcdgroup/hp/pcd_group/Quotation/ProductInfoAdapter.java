@@ -7,7 +7,7 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 public class ProductInfoAdapter {
 
   String name;
-  String amount;
+  String amount = "0";
 
   public String getName() {
 
