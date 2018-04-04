@@ -173,8 +173,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent intent = new Intent(ClientRegisterActivity.this, UserDashbord.class);
-                startActivity(intent);
+//                Intent intent = new Intent(ClientRegisterActivity.this, UserDashbord.class);
+//                startActivity(intent);
 
                 finish();
             }
