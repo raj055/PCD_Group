@@ -78,8 +78,6 @@ public class ClientRegisterActivity extends AppCompatActivity {
                     // If EditText is empty then this block will execute.
                     Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(ClientRegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
                 }
 
             }
