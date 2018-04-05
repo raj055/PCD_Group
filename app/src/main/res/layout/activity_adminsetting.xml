@@ -33,17 +33,19 @@
         android:background="#7B68EE"
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner5"
+        app:layout_constraintStart_toEndOf="@+id/spbrnad"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
         tools:ignore="RtlCompat" />
 
     <Spinner
-        android:id="@+id/spinner5"
-        android:layout_width="0dp"
+        android:id="@+id/spbrnad"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:entries="@array/dropdown_arrays"
+        android:layout_marginStart="8dp"
+        android:entries="@array/dropdown_brand"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_brand"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints,RtlCompat" />
 
     <TextView
         android:id="@+id/tv_address"
@@ -54,7 +56,24 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5" />
+        app:layout_constraintTop_toBottomOf="@+id/spbrnad" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="195dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Brand List"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/spbrnad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>

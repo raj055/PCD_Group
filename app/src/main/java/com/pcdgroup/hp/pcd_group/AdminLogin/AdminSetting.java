@@ -1,15 +1,20 @@
 package com.pcdgroup.hp.pcd_group.AdminLogin;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -22,7 +27,21 @@ import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.R;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Grasp
@@ -32,7 +51,7 @@ public class AdminSetting extends AppCompatActivity {
 
     Button Brand;
     EditText brandname, address, address1, address2,Pincode,mobile,email,website,pan,gst;
-    Spinner state;
+    Spinner state, SpinerBrand;
 
     Boolean CheckEditText;
     String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
@@ -46,6 +65,14 @@ public class AdminSetting extends AppCompatActivity {
     String HttpURL_get = "http://pcddata-001-site1.1tempurl.com/listbrands.php";
 
     View promptUserView;
+    ProgressDialog pDialog;
+
+    List<Category> categoriesList;
+    BrandAdepter adepter;
+    InputStream is = null;
+    String line = null;
+    String result = null;
+    String[] data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +92,26 @@ public class AdminSetting extends AppCompatActivity {
         website = (EditText) promptUserView.findViewById(R.id.editText7);
         pan = (EditText) promptUserView.findViewById(R.id.editText9);
         gst = (EditText) promptUserView.findViewById(R.id.editText8);
-
         state = (Spinner)  promptUserView.findViewById(R.id.spinner6);
 
         Brand = (Button) findViewById(R.id.btn_brand);
+
+        SpinerBrand = (Spinner) findViewById(R.id.spbrnad);
+
+        categoriesList = new ArrayList<Category>();
+
+        adepter = new BrandAdepter(this, categoriesList);
+        SpinerBrand.setAdapter(adepter);
+        adepter.notifyDataSetChanged();
+
+        //Allow network in main thread
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+
+        //Retrieve
+        getData();
+
+        //Adepter
+        adepter.notifyDataSetChanged();
 
         // Click Brand button
         Brand.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +121,22 @@ public class AdminSetting extends AppCompatActivity {
                 CheckAnyAddress();
 
                 CheckEditTextIsEmptyOrNot();
+            }
+        });
+
+        SpinerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Add new category"))
+                {
+                    // do your stuff
+                }
+            } // to close the onItemSelected
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
             }
         });
 
@@ -123,12 +182,19 @@ public class AdminSetting extends AppCompatActivity {
                 Website_Holde = website.getText().toString();
                 GST_Holder = gst.getText().toString();
 
-
-                    BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder,Addressline2_Holder,
-                            Mobileno_Holder,State_Holder,Pin_Holder,Emailid_Holder,Website_Holde,Pan_Holde,GST_Holder);
+//                if(CheckEditText) {
+                    BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder,
+                            Mobileno_Holder, State_Holder, Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
+//                }
+//                else {
+//
+//                    // If EditText is empty then this block will execute.
+//                    Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(AdminSetting.this, AdminSetting.class);
                     startActivity(intent);
+
+//                    }
 
             }
         });
@@ -198,5 +264,57 @@ public class AdminSetting extends AppCompatActivity {
 
         userRegisterFunctionClass.execute( name,  address, addressline1, addressline2,mobileno,
                 state,  pin, email_id, website, pan, gst);
+    }
+
+    private void getData(){
+
+        try {
+            URL url = new URL(HttpURL_get);
+            HttpURLConnection con= (HttpURLConnection) url.openConnection();
+
+            con.setRequestMethod("GET");
+
+            is = new BufferedInputStream(con.getInputStream());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //Read in content into String
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+
+            while ((line = br.readLine()) != null)
+            {
+                sb.append(line+"\n");
+            }
+
+            is.close();
+            result = sb.toString();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //Parse json data
+        try {
+
+            JSONArray ja = new JSONArray(result);
+            JSONObject jo = null;
+
+            data = new String[ja.length()];
+
+            for (int i=0; i<ja.length();i++){
+
+                jo=ja.getJSONObject(i);
+                String name = jo.getString("name");
+                Category e = new Category(name);
+                categoriesList.add(e);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

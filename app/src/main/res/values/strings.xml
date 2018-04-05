@@ -62,7 +62,6 @@
     <string-array name="dropdown_brand">
         <item>PCD</item>
         <item>D.E.R.T</item>
-
     </string-array>
 
     <string-array name="dropdown_gst">
