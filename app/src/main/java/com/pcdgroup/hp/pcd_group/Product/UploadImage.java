@@ -46,13 +46,13 @@ public class UploadImage extends AppCompatActivity {
     Spinner brand;
     Spinner gst;
     Button pickImage, upload;
-    Activity mActivity;
+
 
     private Bitmap bitmap;
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
     private String KEY_Price = "price";
-    private String KEY_Minimum = "quantity";
+    private String KEY_Minimum = "minimum";
     private String KEY_HSNCode = "HSNCode";
     private String KEY_Brand = "Brand";
     private  String KEY_Gst= "gst";
@@ -117,7 +117,7 @@ public class UploadImage extends AppCompatActivity {
                 }
                 else if (bitmap==null)
                 {
-                    Toast.makeText(mActivity,"Please Upload Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadImage.this,"Please Upload Image", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     uploadImage();
@@ -146,7 +146,7 @@ public class UploadImage extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == mActivity.RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == this.RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
                 //Getting the Bitmap from Gallery
@@ -169,7 +169,7 @@ public class UploadImage extends AppCompatActivity {
 
     private void uploadImage(){
         //Showing the progress dialog
-        final ProgressDialog loading = ProgressDialog.show(mActivity,"Uploading...","Please wait...",false,false);
+        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -177,7 +177,7 @@ public class UploadImage extends AppCompatActivity {
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(mActivity,s , Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadImage.this,s , Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -187,7 +187,7 @@ public class UploadImage extends AppCompatActivity {
                         loading.dismiss();
 
                         //Showing toast
-                        Toast.makeText(mActivity, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadImage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
@@ -225,7 +225,7 @@ public class UploadImage extends AppCompatActivity {
         };
 
         //Creating a Request Queue
-        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         //Adding request to the queue
         requestQueue.add(stringRequest);
