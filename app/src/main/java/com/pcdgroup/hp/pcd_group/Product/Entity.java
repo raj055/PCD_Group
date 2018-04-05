@@ -27,9 +27,7 @@ public class Entity {
     this.availableStock = availableStock;
   }
 
-  public String getTitle() {
-    return title;
-  }
+  public String getTitle() {return title;}
   public Integer getPrice() {return price;}
   public Integer getMinimum() {return minimum;}
   public Integer getHsncode() {return hsncode;}

@@ -32,11 +32,10 @@ import java.util.HashMap;
 public class AdminSetting extends AppCompatActivity {
 
     Button Brand;
-
-    EditText brandtv, address, address1, address2,Pincode,mobile,email,website,pan,gst;
-
+    EditText brandname, address, address1, address2,Pincode,mobile,email,website,pan,gst;
     Spinner state;
 
+    Boolean CheckEditText;
     String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
     String finalResult;
     ProgressDialog progressDialog;
@@ -45,54 +44,19 @@ public class AdminSetting extends AppCompatActivity {
 
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/brandadd.php";
 
+    String HttpURL_get = "http://pcddata-001-site1.1tempurl.com/listbrands.php";
+
+    View promptUserView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminsetting);
 
-        Brand = (Button) findViewById(R.id.btn_brand);
-
-        // Click Brand button
-        Brand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                CheckEditTextIsEmptyOrNot();
-
-                CheckAnyAddress();
-
-            }
-        });
-
-    }
-
-    public void CheckEditTextIsEmptyOrNot(){
-
-        //Checking all EditText Empty or Not.
-        Name_Holder = brandtv.getText().toString();
-        Address_Hoder = address.getText().toString();
-        Addressline1_Holder = address1.getText().toString();
-        Addressline2_Holder = address2.getText().toString();
-        Mobileno_Holder = mobile.getText().toString();
-        State_Holder=state.getSelectedItem().toString();
-        Pin_Holder=Pincode.getText().toString();
-        Pan_Holde = pan.getText().toString();
-        Emailid_Holder = email.getText().toString();
-        Website_Holde = website.getText().toString();
-        GST_Holder = gst.getText().toString();
-
-    }
-
-    private void CheckAnyAddress() {
-
         LayoutInflater layoutinflater = LayoutInflater.from(this);
-        View promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box, null);
+        promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box, null);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        alertDialogBuilder.setView(promptUserView);
-
-        brandtv = (EditText) promptUserView.findViewById(R.id.brnadname);
+        brandname = (EditText) promptUserView.findViewById(R.id.brnadname);
         address = (EditText) promptUserView.findViewById(R.id.editText);
         address1 = (EditText) promptUserView.findViewById(R.id.editText2);
         address2 = (EditText) promptUserView.findViewById(R.id.editText3);
@@ -105,13 +69,67 @@ public class AdminSetting extends AppCompatActivity {
 
         state = (Spinner)  promptUserView.findViewById(R.id.spinner6);
 
+        Brand = (Button) findViewById(R.id.btn_brand);
+
+        // Click Brand button
+        Brand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                CheckAnyAddress();
+
+                CheckEditTextIsEmptyOrNot();
+            }
+        });
+
+    }
+
+    public void CheckEditTextIsEmptyOrNot(){
+
+        if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(Addressline1_Holder) ||
+                TextUtils.isEmpty(Addressline2_Holder) || TextUtils.isEmpty(Emailid_Holder) ||
+                TextUtils.isEmpty(Mobileno_Holder) || TextUtils.isEmpty(Pin_Holder) ||
+                 TextUtils.isEmpty(Pan_Holde) || TextUtils.isEmpty(Website_Holde) || TextUtils.isEmpty(GST_Holder))
+        {
+            CheckEditText = false;
+        }
+        else {
+            CheckEditText = true ;
+        }
+
+    }
+
+    private void CheckAnyAddress() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setView(promptUserView);
+
         alertDialogBuilder.setTitle("Enter Brand Details.");
 
         // prompt for username
         alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Pin_Holder,Emailid_Holder,Website_Holde,Pan_Holde,GST_Holder);
+                //Checking all EditText Empty or Not.
+                Name_Holder = brandname.getText().toString();
+                Address_Hoder = address.getText().toString();
+                Addressline1_Holder = address1.getText().toString();
+                Addressline2_Holder = address2.getText().toString();
+                Mobileno_Holder = mobile.getText().toString();
+                State_Holder=state.getSelectedItem().toString();
+                Pin_Holder=Pincode.getText().toString();
+                Pan_Holde = pan.getText().toString();
+                Emailid_Holder = email.getText().toString();
+                Website_Holde = website.getText().toString();
+                GST_Holder = gst.getText().toString();
+
+
+                    BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder,Addressline2_Holder,
+                            Mobileno_Holder,State_Holder,Pin_Holder,Emailid_Holder,Website_Holde,Pan_Holde,GST_Holder);
+
+                    Intent intent = new Intent(AdminSetting.this, AdminSetting.class);
+                    startActivity(intent);
 
             }
         });
@@ -132,7 +150,7 @@ public class AdminSetting extends AppCompatActivity {
     //Register brand in database details.
     public void BrandRegisterFunction(final String name, final String address,final String addressline1,final String addressline2,final String mobileno, final String state, final  String pin,final String email_id, final String website, final String pan, final String gst){
 
-        class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
+        class BrandRegisterFunction extends AsyncTask<String,Void,String> {
 
             @Override
             protected void onPreExecute() {
@@ -177,7 +195,7 @@ public class AdminSetting extends AppCompatActivity {
             }
         }
 
-        UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
+        BrandRegisterFunction userRegisterFunctionClass = new BrandRegisterFunction();
 
         userRegisterFunctionClass.execute( name,  address, addressline1, addressline2,mobileno,
                 state,  pin, email_id, website, pan, gst);

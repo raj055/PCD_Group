@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Product.UploadImage;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.HashMap;
@@ -24,7 +26,8 @@ public class UpdateActivity extends AppCompatActivity {
 
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/updateclientdetails.php";
     ProgressDialog progressDialog;
-    String finalResult ;
+    String finalResult;
+    Boolean CheckEditText;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     EditText ClientName, ClientAddress,ClientAddressline1,ClientAddressline2,ClientMobileno,ClientState,
@@ -88,12 +91,19 @@ public class UpdateActivity extends AppCompatActivity {
                 // Getting data from EditText after button click.
                 GetDataFromEditText();
 
-                ClientRecordUpdate (ClientIdHolder,ClientNameHolder,ClientAddressHolder,ClientAddressline1Holder,
-                        ClientAddressline2Holder, ClientMobilenoHolder,ClientStateHolder, ClientCountryHolder,
-                        ClientEmailHolder,ClientPinoHolder, ClientComapnyHolder, ClientDesignationHolder);
+                if(CheckEditText){
+                    ClientRecordUpdate (ClientIdHolder,ClientNameHolder,ClientAddressHolder,ClientAddressline1Holder,
+                            ClientAddressline2Holder, ClientMobilenoHolder,ClientStateHolder, ClientCountryHolder,
+                            ClientEmailHolder,ClientPinoHolder, ClientComapnyHolder, ClientDesignationHolder);
+                }else {
 
-                Intent intent = new Intent(UpdateActivity.this,ClientDetailsActivity.class);
-                startActivity(intent);
+                    // If EditText is empty then this block will execute.
+                    Toast.makeText(UpdateActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(UpdateActivity.this,ClientDetailsActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -113,6 +123,18 @@ public class UpdateActivity extends AppCompatActivity {
         ClientPinoHolder = ClientPin.getText().toString();
         ClientComapnyHolder = ClientCompany.getText().toString();
         ClientDesignationHolder = ClientDesignation.getText().toString();
+
+        if(TextUtils.isEmpty(ClientNameHolder) || TextUtils.isEmpty(ClientAddressHolder) || TextUtils.isEmpty(ClientAddressline1Holder)
+                || TextUtils.isEmpty(ClientAddressline2Holder) || TextUtils.isEmpty(ClientMobilenoHolder)
+                || TextUtils.isEmpty(ClientStateHolder) || TextUtils.isEmpty(ClientCountryHolder)
+                || TextUtils.isEmpty(ClientEmailHolder)|| TextUtils.isEmpty(ClientPinoHolder)
+                || TextUtils.isEmpty(ClientComapnyHolder) || TextUtils.isEmpty(ClientDesignationHolder))
+        {
+            CheckEditText = false;
+        }
+        else {
+            CheckEditText = true ;
+        }
 
     }
 

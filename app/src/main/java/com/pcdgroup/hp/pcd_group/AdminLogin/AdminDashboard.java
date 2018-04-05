@@ -122,11 +122,9 @@ public class AdminDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(AdminDashboard.this, AdminSetting.class);
+                Intent intent = new Intent(AdminDashboard.this, AccessAdmin.class);
 
                 startActivity(intent);
-
-                finish();
 
             }
         });

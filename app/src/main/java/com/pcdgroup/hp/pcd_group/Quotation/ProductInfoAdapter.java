@@ -1,7 +1,8 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
 /**
- * Created by HP on 21-03-2018.
+ * @author Grasp
+ *  @version 1.0 on 28-03-2018.
  */
 
 public class ProductInfoAdapter {

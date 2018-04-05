@@ -42,7 +42,7 @@
         <activity android:name=".UserLoginRegister.UserDashbord" android:label="PCD_Group" />
         <activity android:name=".Product.UploadImage" android:label="PCD_Group" />
         <activity android:name=".Product.ViewImage" android:label="PCD_Group" />
-        <activity android:name=".Brand.BrandList" android:label="PCD_Group" />
+        <activity android:name=".AdminLogin.AccessAdmin" android:label="PCD_Group" />
 
 
     </application>

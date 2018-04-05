@@ -63,7 +63,7 @@ public class ViewImage extends AppCompatActivity {
             }
         });
 
-        localEntity = new ArrayList<Entity>() ;
+        localEntity = new ArrayList<Entity>();
         recordName = new String("");
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
@@ -144,6 +144,5 @@ public class ViewImage extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }

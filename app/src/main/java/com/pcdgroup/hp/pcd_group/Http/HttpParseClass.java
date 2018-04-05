@@ -23,6 +23,11 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+/**
+ * @author Grasp
+ *  @version 1.0 on 28-03-2018.
+ */
+
 public class HttpParseClass {
     private ArrayList<NameValuePair> params;
     private ArrayList<NameValuePair> headers;
