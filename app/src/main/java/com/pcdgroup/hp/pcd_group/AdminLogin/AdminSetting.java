@@ -52,6 +52,7 @@ public class AdminSetting extends AppCompatActivity {
     Button Brand;
     EditText brandname, address, address1, address2,Pincode,mobile,email,website,pan,gst;
     Spinner state, SpinerBrand;
+    TextView details;
 
     Boolean CheckEditText;
     String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
@@ -95,7 +96,7 @@ public class AdminSetting extends AppCompatActivity {
         state = (Spinner)  promptUserView.findViewById(R.id.spinner6);
 
         Brand = (Button) findViewById(R.id.btn_brand);
-
+        details = (TextView) findViewById(R.id.tv_details);
         SpinerBrand = (Spinner) findViewById(R.id.spbrnad);
 
         categoriesList = new ArrayList<Category>();
@@ -128,12 +129,9 @@ public class AdminSetting extends AppCompatActivity {
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                /*String selectedItem = parent.getItemAtPosition(position).toString();
-                if(selectedItem.equals("Add new category"))
-                {
-                    // do your stuff
-                }*/
+                String selectedItem = parent.getItemAtPosition(position).toString();
 
+                details.setText(selectedItem);
 
             } // to close the onItemSelected
             public void onNothingSelected(AdapterView<?> parent)
@@ -215,7 +213,7 @@ public class AdminSetting extends AppCompatActivity {
     }
 
     //Register brand in database details.
-    public void BrandRegisterFunction(final String name, final String address,final String addressline1,final String addressline2,final String mobileno, final String state, final  String pin,final String email_id, final String website, final String pan, final String gst){
+    public void BrandRegisterFunction(final String name, final String address,final String addressline1,final String addressline2,final  String pin, final String state, final String mobileno,final String email_id, final String website, final String pan, final String gst){
 
         class BrandRegisterFunction extends AsyncTask<String,Void,String> {
 
@@ -264,8 +262,8 @@ public class AdminSetting extends AppCompatActivity {
 
         BrandRegisterFunction userRegisterFunctionClass = new BrandRegisterFunction();
 
-        userRegisterFunctionClass.execute( name,  address, addressline1, addressline2,mobileno,
-                state,  pin, email_id, website, pan, gst);
+        userRegisterFunctionClass.execute( name,  address, addressline1, addressline2,pin,
+                state, mobileno, email_id, website, pan, gst);
     }
 
     private void getData(){

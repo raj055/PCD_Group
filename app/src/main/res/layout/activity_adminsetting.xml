@@ -48,7 +48,7 @@
         tools:ignore="MissingConstraints,RtlCompat" />
 
     <TextView
-        android:id="@+id/tv_address"
+        android:id="@+id/tv_details"
         android:layout_width="362dp"
         android:layout_height="138dp"
         android:layout_marginEnd="8dp"
