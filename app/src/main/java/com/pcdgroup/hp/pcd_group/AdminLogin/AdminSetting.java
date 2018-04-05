@@ -128,11 +128,13 @@ public class AdminSetting extends AppCompatActivity {
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String selectedItem = parent.getItemAtPosition(position).toString();
+                /*String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Add new category"))
                 {
                     // do your stuff
-                }
+                }*/
+
+
             } // to close the onItemSelected
             public void onNothingSelected(AdapterView<?> parent)
             {
