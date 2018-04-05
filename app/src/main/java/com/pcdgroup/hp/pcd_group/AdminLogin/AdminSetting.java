@@ -245,12 +245,12 @@ public class AdminSetting extends AppCompatActivity {
                 hashMap.put("address",params[1]);
                 hashMap.put("address1",params[2]);
                 hashMap.put("address2",params[3]);
-                hashMap.put("mobileno",params[4]);
+                hashMap.put("pincode",params[4]);
                 hashMap.put("state",params[5]);
-                hashMap.put("website",params[6]);
-                hashMap.put("pan",params[7]);
-                hashMap.put("pincode",params[8]);
-                hashMap.put("email",params[9]);
+                hashMap.put("mobileno",params[6]);
+                hashMap.put("email",params[7]);
+                hashMap.put("website",params[8]);
+                hashMap.put("pan",params[9]);
                 hashMap.put("gst",params[10]);
 
 
