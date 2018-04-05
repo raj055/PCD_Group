@@ -100,7 +100,7 @@ public class UpdateActivity extends AppCompatActivity {
                     // If EditText is empty then this block will execute.
                     Toast.makeText(UpdateActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(UpdateActivity.this,ClientDetailsActivity.class);
+                    Intent intent = new Intent(UpdateActivity.this,UpdateActivity.class);
                     startActivity(intent);
                 }
 
