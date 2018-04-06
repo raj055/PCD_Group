@@ -24,6 +24,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -48,6 +49,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import javax.xml.validation.Validator;
 
 /**
  * @author Grasp
@@ -208,6 +211,7 @@ public class Invoice extends AppCompatActivity {
                 // prompt for username
                 alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         fileName =  userAnswer.getText().toString();
                         targetPdf = "/sdcard/" + fileName + ".pdf";
                         fn_permission();

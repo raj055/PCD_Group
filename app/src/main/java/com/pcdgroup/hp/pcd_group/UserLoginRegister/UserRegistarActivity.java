@@ -26,6 +26,7 @@ public class UserRegistarActivity extends AppCompatActivity {
     Button register;
     EditText First_Name, Last_Name, Email, Password ;
     String F_Name_Holder, L_Name_Holder, EmailHolder, PasswordHolder;
+    String emailPattern;
     String finalResult ;
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/UserRegistration.php";
     Boolean CheckEditText ;
@@ -54,10 +55,9 @@ public class UserRegistarActivity extends AppCompatActivity {
                 // Checking whether EditText is Empty or Not
                 CheckEditTextIsEmptyOrNot();
 
-                if(CheckEditText){
+                if(EmailHolder.matches(emailPattern) && CheckEditText){
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-
                     UserRegisterFunction(F_Name_Holder,L_Name_Holder, EmailHolder, PasswordHolder);
 
                 }
@@ -65,6 +65,8 @@ public class UserRegistarActivity extends AppCompatActivity {
 
                     // If EditText is empty then this block will execute .
                     Toast.makeText(UserRegistarActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -77,9 +79,10 @@ public class UserRegistarActivity extends AppCompatActivity {
 
         F_Name_Holder = First_Name.getText().toString();
         L_Name_Holder = Last_Name.getText().toString();
-        EmailHolder = Email.getText().toString();
+        EmailHolder = Email.getText().toString().trim();
         PasswordHolder = Password.getText().toString();
 
+        emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if(TextUtils.isEmpty(F_Name_Holder) || TextUtils.isEmpty(L_Name_Holder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder))
         {

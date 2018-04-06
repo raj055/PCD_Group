@@ -186,19 +186,17 @@ public class AdminSetting extends AppCompatActivity {
                 Website_Holde = website.getText().toString();
                 GST_Holder = gst.getText().toString();
 
-//                if(CheckEditText) {
+                if(CheckEditText) {
+
                     BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder,
                             Mobileno_Holder, State_Holder, Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
-//                }
-//                else {
-//
-//                    // If EditText is empty then this block will execute.
-//                    Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                    Intent intent = new Intent(AdminSetting.this, AdminSetting.class);
-                    startActivity(intent);
+                    // If EditText is empty then this block will execute.
+                    Toast.makeText(AdminSetting.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
-//                    }
+                    }
 
             }
         });
@@ -341,9 +339,6 @@ public class AdminSetting extends AppCompatActivity {
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-//                Intent intent = new Intent(ClientRegisterActivity.this, UserDashbord.class);
-//                startActivity(intent);
 
                 finish();
             }
