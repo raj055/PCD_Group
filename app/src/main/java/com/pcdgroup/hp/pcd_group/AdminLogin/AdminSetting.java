@@ -208,7 +208,6 @@ public class AdminSetting extends AppCompatActivity {
                     }
                 });
 
-
         // all set and time to build and show up!
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
