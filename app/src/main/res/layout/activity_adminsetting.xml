@@ -49,11 +49,13 @@
 
     <TextView
         android:id="@+id/tv_details"
-        android:layout_width="362dp"
-        android:layout_height="138dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:textSize="16dp"
+        android:textColor="@color/Gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spbrnad" />

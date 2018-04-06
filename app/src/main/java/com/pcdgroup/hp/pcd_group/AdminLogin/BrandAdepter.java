@@ -58,13 +58,13 @@ public class BrandAdepter extends BaseAdapter {
 
 
         //Assign Id'S
-        TextView email = (TextView) convertView.findViewById(R.id.title);
+        TextView name = (TextView) convertView.findViewById(R.id.title);
 
         // getting movie data for the row
         Category m = categories.get(position);
 
         // title
-        email.setText(m.getName());
+        name.setText(m.getName());
 
         return convertView;
     }
