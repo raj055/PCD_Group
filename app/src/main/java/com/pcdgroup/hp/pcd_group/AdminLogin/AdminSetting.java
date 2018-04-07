@@ -178,9 +178,9 @@ public class AdminSetting extends AppCompatActivity {
                 Address_Hoder = address.getText().toString();
                 Addressline1_Holder = address1.getText().toString();
                 Addressline2_Holder = address2.getText().toString();
-                Mobileno_Holder = mobileno.getText().toString();
-                State_Holder=state.getSelectedItem().toString();
                 Pin_Holder=pincode.getText().toString();
+                State_Holder=state.getSelectedItem().toString();
+                Mobileno_Holder = mobileno.getText().toString();
                 Pan_Holde = pan.getText().toString();
                 Emailid_Holder = email.getText().toString();
                 Website_Holde = website.getText().toString();
@@ -189,7 +189,7 @@ public class AdminSetting extends AppCompatActivity {
                 if(CheckEditText) {
 
                     BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder,
-                            Mobileno_Holder, State_Holder, Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
+                            Pin_Holder, State_Holder, Mobileno_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
                 }
                 else {
 
@@ -256,8 +256,6 @@ public class AdminSetting extends AppCompatActivity {
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
                 return finalResult;
-            }
-            public void execute(String name, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation) {
             }
         }
 
