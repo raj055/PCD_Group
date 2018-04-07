@@ -257,7 +257,7 @@ public class SingleRecordShow extends AppCompatActivity {
                             jsonObject = jsonArray.getJSONObject(i);
 
                             // Storing Client Name, Phone Number, Class into Variables.
-                            IdHolder = jsonObject.getString("id").toString() ;
+                            IdHolder =  jsonObject.getString("id").toString() ;
                             NameHolder = jsonObject.getString("name").toString() ;
                             AddressHolder = jsonObject.getString("address").toString() ;
                             Address1Holder = jsonObject.getString("addressline1").toString() ;

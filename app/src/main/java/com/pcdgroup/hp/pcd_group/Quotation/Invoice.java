@@ -248,7 +248,7 @@ public class Invoice extends AppCompatActivity {
 
         if (targetPdf == null) {
 
-            Toast.makeText(this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please move your. pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
         } else {
             //Uploading code
             try {
