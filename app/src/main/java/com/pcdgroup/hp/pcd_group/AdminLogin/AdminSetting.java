@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,7 +51,7 @@ import java.util.List;
 public class AdminSetting extends AppCompatActivity {
 
     Button Brand;
-    EditText brandname, address, address1, address2,Pincode,mobile,email,website,pan,gst;
+    EditText brandname, address, address1, address2,pincode,mobileno,email,website,pan,gst;
     Spinner state, SpinerBrand;
     TextView details;
 
@@ -66,7 +67,6 @@ public class AdminSetting extends AppCompatActivity {
     String HttpURL_get = "http://pcddata-001-site1.1tempurl.com/listbrands.php";
 
     View promptUserView;
-    ProgressDialog pDialog;
 
     List<Category> categoriesList;
     BrandAdepter adepter;
@@ -81,14 +81,14 @@ public class AdminSetting extends AppCompatActivity {
         setContentView(R.layout.activity_adminsetting);
 
         LayoutInflater layoutinflater = LayoutInflater.from(this);
-        promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box, null);
+        promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box,null);
 
         brandname = (EditText) promptUserView.findViewById(R.id.brnadname);
         address = (EditText) promptUserView.findViewById(R.id.editText);
         address1 = (EditText) promptUserView.findViewById(R.id.editText2);
         address2 = (EditText) promptUserView.findViewById(R.id.editText3);
-        Pincode = (EditText) promptUserView.findViewById(R.id.editText4);
-        mobile = (EditText) promptUserView.findViewById(R.id.editText5);
+        pincode = (EditText) promptUserView.findViewById(R.id.editText4);
+        mobileno = (EditText) promptUserView.findViewById(R.id.editText5);
         email = (EditText) promptUserView.findViewById(R.id.editText6);
         website = (EditText) promptUserView.findViewById(R.id.editText7);
         pan = (EditText) promptUserView.findViewById(R.id.editText9);
@@ -119,9 +119,10 @@ public class AdminSetting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                CheckEditTextIsEmptyOrNot();
+
                 CheckAnyAddress();
 
-                CheckEditTextIsEmptyOrNot();
             }
         });
 
@@ -129,11 +130,16 @@ public class AdminSetting extends AppCompatActivity {
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String selectedItem = parent.getItemAtPosition(position).toString();
+//                String selectedItem = parent.getItemAtPosition(position).toString();
 
-                details.setText(selectedItem);
+                details.setText("Name : " + categoriesList.get(position).getName() + "\n" + "Address : " + categoriesList.get(position).getAddress()
+                        + "\n"  + "Address line_1 : " + categoriesList.get(position).getAddress1() + "\n" + "Address line 2 : " + categoriesList.get(position).getAddress2()
+                        + "\n" + "Pincode : " + categoriesList.get(position).getPincode() + "\n" + "State : " + categoriesList.get(position).getState()
+                        + "\n" + "Mobile No : " + categoriesList.get(position).getMobileno() + "\n" + "Email Id : " + categoriesList.get(position).getEmail()
+                        + "\n" + "WebSite : " + categoriesList.get(position).getWebsite() + "\n" + "PAN NO : " + categoriesList.get(position).getPan()
+                        + "\n" + "GST  No : " + categoriesList.get(position).getGst());
 
-            } // to close the onItemSelected
+                    } // to close the onItemSelected
             public void onNothingSelected(AdapterView<?> parent)
             {
 
@@ -159,7 +165,7 @@ public class AdminSetting extends AppCompatActivity {
 
     private void CheckAnyAddress() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         alertDialogBuilder.setView(promptUserView);
 
@@ -174,27 +180,27 @@ public class AdminSetting extends AppCompatActivity {
                 Address_Hoder = address.getText().toString();
                 Addressline1_Holder = address1.getText().toString();
                 Addressline2_Holder = address2.getText().toString();
-                Mobileno_Holder = mobile.getText().toString();
+                Pin_Holder=pincode.getText().toString();
                 State_Holder=state.getSelectedItem().toString();
-                Pin_Holder=Pincode.getText().toString();
+                Mobileno_Holder = mobileno.getText().toString();
                 Pan_Holde = pan.getText().toString();
                 Emailid_Holder = email.getText().toString();
                 Website_Holde = website.getText().toString();
                 GST_Holder = gst.getText().toString();
 
 //                if(CheckEditText) {
+
                     BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder,
-                            Mobileno_Holder, State_Holder, Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
+                            Pin_Holder, State_Holder, Mobileno_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
 //                }
 //                else {
 //
 //                    // If EditText is empty then this block will execute.
-//                    Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-
-                    Intent intent = new Intent(AdminSetting.this, AdminSetting.class);
-                    startActivity(intent);
+//                    Toast.makeText(AdminSetting.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
 //                    }
+
+                finish();
 
             }
         });
@@ -205,8 +211,6 @@ public class AdminSetting extends AppCompatActivity {
                         dialogBox.cancel();
                     }
                 });
-
-
         // all set and time to build and show up!
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -255,8 +259,6 @@ public class AdminSetting extends AppCompatActivity {
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
                 return finalResult;
-            }
-            public void execute(String name, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation) {
             }
         }
 
@@ -309,12 +311,45 @@ public class AdminSetting extends AppCompatActivity {
 
                 jo=ja.getJSONObject(i);
                 String name = jo.getString("name");
-                Category e = new Category(name);
+                String address = jo.getString("address");
+                String address1 = jo.getString("address1");
+                String address2 = jo.getString("address2");
+                String pincode = jo.getString("pincode");
+                String state = jo.getString("state");
+                String mobileno = jo.getString("mobileno");
+                String email = jo.getString("email");
+                String website = jo.getString("website");
+                String pan = jo.getString("pan");
+                String gst = jo.getString("gst");
+                Category e = new Category(name, address, address1, address2, pincode,
+                         state, mobileno, email, website, pan, gst);
                 categoriesList.add(e);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminSetting.this);
+        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finish();
+            }
+        });
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        android.app.AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

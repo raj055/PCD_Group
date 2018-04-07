@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.view.Menu;
@@ -18,9 +19,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +40,9 @@ public class CreateQuotation extends AppCompatActivity {
     public TextView client, textdate, textvaliddate;
     public ListView product;
 
+    String Client_Holder,TextValidDate_Holder,Product_Holder,Quantity_Holder;
+
+    Boolean CheckEditText;
     GlobalVariable globalVariable;
     ProductListAdapter itemsAdapter;
     public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();
@@ -125,24 +131,25 @@ public class CreateQuotation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(CreateQuotation.this, Invoice.class);
-                //customer
-                intent.putExtra("ClientInfo", globalVariable.globalClient);
 
-                //product
-                int itemsCount = 0;
-                for (ProductInfoAdapter pradap: items){
+                    Intent intent = new Intent(CreateQuotation.this, Invoice.class);
+                    //customer
+                    intent.putExtra("ClientInfo", globalVariable.globalClient);
 
-                    String[] glstr = PrdList.get(itemsCount++);
-                    if(glstr != null)
-                        glstr[4] =  pradap.getAmount();
-                }
-                intent.putExtra("ProductInfo", PrdList);
+                    //product
+                    int itemsCount = 0;
+                    for (ProductInfoAdapter pradap: items){
+
+                        String[] glstr = PrdList.get(itemsCount++);
+                        if(glstr != null)
+                            glstr[4] =  pradap.getAmount();
+                    }
+                    intent.putExtra("ProductInfo", PrdList);
 //                intent.putExtra("proqunt", quantity.getText());
-                intent.putExtra("date", textdate.getText());
-                intent.putExtra("validdate", textvaliddate.getText());
+                    intent.putExtra("date", textdate.getText());
+                    intent.putExtra("validdate", textvaliddate.getText());
 
-                startActivity(intent);
+                    startActivity(intent);
 
             }
         });
