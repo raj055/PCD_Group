@@ -8,6 +8,7 @@ package com.pcdgroup.hp.pcd_group.AdminLogin;
 public class UserDataGet {
 
     private String Email;
+    private String AccessType = "";
 
     public UserDataGet(String emial){
 
@@ -17,4 +18,8 @@ public class UserDataGet {
     public String getEmail(){return Email;}
 
     public void setEmail(String email){this.Email = email;}
+
+    public void setAccessType(String access){this.AccessType = access;}
+
+    public String getAccessType(){return AccessType;}
 }

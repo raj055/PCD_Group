@@ -1,8 +1,10 @@
 package com.pcdgroup.hp.pcd_group.AdminLogin;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
@@ -13,8 +15,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
@@ -30,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -46,8 +53,18 @@ public class AccessAdmin extends AppCompatActivity {
     ListView listView;
     Button done;
     UserAdminAdepter adepter;
+    HashMap<String,String> hashMap = new HashMap<>();
+    HttpParse httpParse = new HttpParse();
+    String currentAccValue;
     List<UserDataGet> userDataGets;
+    List<UserDataGet> tempStoreDataValues;
+    UserDataGet usrDGet;
+    ProgressDialog progressDialog;
+
+    String accessValue = "";
+    String finalResult;
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/accessuserdetails.php";
+    String HttpURL2 = "http://pcddata-001-site1.1tempurl.com/updateuserdetails.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +72,7 @@ public class AccessAdmin extends AppCompatActivity {
         setContentView(R.layout.activity_adminaccess);
 
         userDataGets = new ArrayList<UserDataGet>();
-
+        tempStoreDataValues = new ArrayList<UserDataGet>();
         listView = (ListView) findViewById(R.id.lstv);
         done = (Button) findViewById(R.id.btn_done);
 
@@ -80,19 +97,24 @@ public class AccessAdmin extends AppCompatActivity {
             }
         });
 
+
         //access listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            SelectionBox();
+                int clientListViewPos = parent.getPositionForView(view);
+
+                SelectionBox(position);
 
             }
         });
     }
 
-    private void SelectionBox() {
+    private void SelectionBox(int position) {
 
+         usrDGet = userDataGets.get(position);
+         currentAccValue = usrDGet.getAccessType();
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(AccessAdmin.this);
         builder.setTitle("Select Client");
@@ -103,6 +125,16 @@ public class AccessAdmin extends AppCompatActivity {
         builder.setSingleChoiceItems(Client, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case 0:
+                        accessValue = "default";
+                        break;
+                    case 1:
+                        accessValue = "Admin";
+                        break;
+                }
+
+                        usrDGet.setAccessType(accessValue);
 
             }
         });
@@ -111,7 +143,9 @@ public class AccessAdmin extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 // user clicked OK
+
             }
         });
         builder.setNegativeButton("Cancel", null);
@@ -123,6 +157,20 @@ public class AccessAdmin extends AppCompatActivity {
 
     private void SaveAccess() {
 
+        for(int index = 0 ; index < userDataGets.size(); index++){
+
+            UserDataGet tempStoredata = tempStoreDataValues.get(index);
+            UserDataGet tmpDataGet = userDataGets.get(index);
+            //Get the earlier and current stored strings.
+            String accessTypeE = tmpDataGet.getAccessType();
+            String accessTypeU = tempStoredata.getAccessType();
+
+            if ( accessTypeE != accessTypeU)
+            {
+                UserAccessUpdate(tmpDataGet.getEmail(), tmpDataGet.getAccessType());
+            }
+        }
+        finish();
     }
 
     private void getData(){
@@ -168,12 +216,58 @@ public class AccessAdmin extends AppCompatActivity {
 
                 jo=ja.getJSONObject(i);
                 String email = jo.getString("email");
+                String accessType = jo.getString("Access");
                 UserDataGet e = new UserDataGet(email);
+                UserDataGet tmp = new UserDataGet(email);
+                e.setAccessType(accessType);
+                tmp.setAccessType(accessType);
                 userDataGets.add(e);
+                //Store the set values
+
+                tempStoreDataValues.add(tmp);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void UserAccessUpdate( String ClientEmailHolder, String ClientAccessHolder){
+
+        class UserAccessUpdate extends AsyncTask<String,Void,String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressDialog = ProgressDialog.show(AccessAdmin.this,"Loading Data",null,true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String httpResponseMsg) {
+
+                super.onPostExecute(httpResponseMsg);
+
+                progressDialog.dismiss();
+
+                Toast.makeText(AccessAdmin.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                hashMap.put("email",params[0]);
+
+                hashMap.put("access",params[1]);
+
+                finalResult = httpParse.postRequest(hashMap, HttpURL2);
+
+                return finalResult;
+            }
+        }
+
+        UserAccessUpdate UpdateClass = new UserAccessUpdate();
+
+        UpdateClass.execute( ClientEmailHolder, ClientAccessHolder);
     }
 }

@@ -12,6 +12,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +22,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminLoginActivity;
+import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
@@ -29,6 +32,12 @@ import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 
 /**
@@ -91,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this,UserRegistarActivity.class);
                 startActivity(intent);
-
             }
         });
 /*
@@ -156,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(MainActivity.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(MainActivity.this,"Loading Data",
+                                                        null,true,true);
             }
 
             @Override
@@ -166,20 +175,63 @@ public class MainActivity extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                if(httpResponseMsg.equalsIgnoreCase("Data Matched")){
+//                String str = httpResponseMsg.toString();
 
 
-                    Intent intent = new Intent(MainActivity.this, UserDashbord.class);
 
-                    intent.putExtra(UserEmail, email);
-
-                    startActivity(intent);
-
-                    finish();
-                }
-                else{
+                if(httpResponseMsg.equalsIgnoreCase("Invalid Username or Password")){
 
                     Toast.makeText(MainActivity.this,httpResponseMsg,Toast.LENGTH_LONG).show();
+                }
+                else{
+                    try {
+
+                        JSONArray ja = new JSONArray(httpResponseMsg);
+                        JSONObject jo = null;
+                        String accessType = "";
+                        String data[] = new String[ja.length()];
+                        Log.v("length","" + ja.length());
+                        for (int i=0; i<ja.length();i++){
+
+                            jo=ja.getJSONObject(i);
+
+                            accessType = jo.getString("Access");
+                        }
+                        if(accessType != null)
+                        {
+                            Log.v("accesstype","" + accessType);
+                          if(accessType.contains("Admin") )  {
+                              Log.v("To be","in Adming mode" );
+                              Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
+
+                              intent.putExtra(UserEmail, email);
+
+                              startActivity(intent);
+
+                              finish();
+
+                          }
+                          else{
+
+                              Intent intent = new Intent(MainActivity.this, UserDashbord.class);
+
+                              intent.putExtra(UserEmail, email);
+
+                              startActivity(intent);
+
+                              finish();
+                          }
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+
+
+                    }
+
+
+
+
                 }
 
             }

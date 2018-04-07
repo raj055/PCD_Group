@@ -1,4 +1,7 @@
 package com.pcdgroup.hp.pcd_group.Http;
+import android.util.Log;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -20,6 +23,7 @@ public class HttpParse {
 
     String FinalHttpData = "";
     String Result ;
+    String line = null;
     BufferedWriter bufferedWriter ;
     OutputStream outputStream ;
     BufferedReader bufferedReader ;
@@ -57,18 +61,40 @@ public class HttpParse {
 
             outputStream.close();
 
-            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
+
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                BufferedInputStream is = new BufferedInputStream(httpURLConnection.getInputStream());
                 bufferedReader = new BufferedReader(
-                        new InputStreamReader(
-                                httpURLConnection.getInputStream()
-                        )
+                  new InputStreamReader(is)
                 );
-                FinalHttpData = bufferedReader.readLine();
+                StringBuilder sb = new StringBuilder();
+                boolean count = false;
+                while( (line = bufferedReader.readLine()) != null)
+                {
+                    //add the '/n' on every next line- not the first line.
+                    if (count) sb.append("/n");
+                    count = true;
+                    sb.append(line);
+
+                }
+                Log.v("d",FinalHttpData);
+                FinalHttpData = sb.toString();
+                Log.v("After",FinalHttpData);
+
+//                bufferedReader = new BufferedReader(
+//                  new InputStreamReader(
+//                    httpURLConnection.getInputStream()
+//                  )
+//                );
+//
+//                FinalHttpData = bufferedReader.readLine();
+//                Log.v("DataSent", FinalHttpData);
             }
             else {
                 FinalHttpData = "Something Went Wrong";
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

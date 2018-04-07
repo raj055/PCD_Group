@@ -146,7 +146,8 @@ public class SingleRecordShow extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog2 = ProgressDialog.show(SingleRecordShow.this, "Loading Data", null, true, true);
+                progressDialog2 = ProgressDialog.show(SingleRecordShow.this, "Loading Data",
+                  null, true, true);
             }
 
             @Override
