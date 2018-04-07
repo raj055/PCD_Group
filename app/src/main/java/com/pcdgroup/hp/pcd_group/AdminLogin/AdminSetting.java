@@ -118,9 +118,10 @@ public class AdminSetting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                CheckEditTextIsEmptyOrNot();
+
                 CheckAnyAddress();
 
-                CheckEditTextIsEmptyOrNot();
             }
         });
 
