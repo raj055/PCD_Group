@@ -61,8 +61,6 @@ public class HttpParse {
 
             outputStream.close();
 
-
-
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedInputStream is = new BufferedInputStream(httpURLConnection.getInputStream());
                 bufferedReader = new BufferedReader(

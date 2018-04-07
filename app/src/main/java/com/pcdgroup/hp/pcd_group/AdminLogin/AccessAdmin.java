@@ -122,6 +122,9 @@ public class AccessAdmin extends AppCompatActivity {
         // add a radio button list
         String[] Client = {"Default", "Full Access"};
         int checkedItem = 0; // cow
+        if(currentAccValue.contains("Admin")){
+            checkedItem = 1;
+        }
         builder.setSingleChoiceItems(Client, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
