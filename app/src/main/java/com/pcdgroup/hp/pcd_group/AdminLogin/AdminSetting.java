@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -80,7 +81,7 @@ public class AdminSetting extends AppCompatActivity {
         setContentView(R.layout.activity_adminsetting);
 
         LayoutInflater layoutinflater = LayoutInflater.from(this);
-        promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box, null);
+        promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box,null);
 
         brandname = (EditText) promptUserView.findViewById(R.id.brnadname);
         address = (EditText) promptUserView.findViewById(R.id.editText);
@@ -164,7 +165,7 @@ public class AdminSetting extends AppCompatActivity {
 
     private void CheckAnyAddress() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         alertDialogBuilder.setView(promptUserView);
 
@@ -193,11 +194,13 @@ public class AdminSetting extends AppCompatActivity {
                             Pin_Holder, State_Holder, Mobileno_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
 //                }
 //                else {
-
-                    // If EditText is empty then this block will execute.
-                    Toast.makeText(AdminSetting.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+//
+//                    // If EditText is empty then this block will execute.
+//                    Toast.makeText(AdminSetting.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
 //                    }
+
+                finish();
 
             }
         });
@@ -208,7 +211,6 @@ public class AdminSetting extends AppCompatActivity {
                         dialogBox.cancel();
                     }
                 });
-
         // all set and time to build and show up!
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
