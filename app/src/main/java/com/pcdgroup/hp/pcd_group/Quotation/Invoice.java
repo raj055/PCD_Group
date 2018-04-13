@@ -59,7 +59,7 @@ import javax.xml.validation.Validator;
  */
 public class Invoice extends AppCompatActivity {
 
-    TextView name,address,state,company,country,add1,add2,pin;
+    TextView name,address,state,company,country;
 
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
