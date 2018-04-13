@@ -81,6 +81,7 @@ public class Invoice extends AppCompatActivity {
     boolean boolean_save;
     Bitmap bitmap,bitmap1;
     ProgressDialog progressDialog;
+    float gstValue;
 
     public static final String UPLOAD_URL = "http://pcddata-001-site1.1tempurl.com/server_upload_pdf.php";
     String fileName, targetPdf;
@@ -94,11 +95,16 @@ public class Invoice extends AppCompatActivity {
         validdate = (TextView)findViewById(R.id.validdate_tv);
         quantity = (TextView)findViewById(R.id.tvquantity);
 
+        name = (TextView)findViewById(R.id.client_name);
         address = (TextView)findViewById(R.id.textView19);
         state = (TextView)findViewById(R.id.text_state);
         pin = (TextView)findViewById(R.id.text_pin);
         company = (TextView)findViewById(R.id.textView22);
         country = (TextView)findViewById(R.id.textView21);
+
+        state1 = (TextView)findViewById(R.id.text_state1);
+        sgst = (TextView)findViewById(R.id.sgst);
+        cgst1 = (TextView)findViewById(R.id.cgst);
 
         item = (TextView)findViewById(R.id.tvproduct);
         hsn = (TextView)findViewById(R.id.tvhsn);
@@ -114,13 +120,16 @@ public class Invoice extends AppCompatActivity {
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
         cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
 
+        state1.setText("maharashtra");
+
         String str;
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras != null) {
                 // Client
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
-//                name.setText(clientInfo[0]);
+
+                name.setText(clientInfo[7]);
                 str = clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2];
                 address.setText(str);
                 pin.setText(clientInfo[3]);
@@ -151,25 +160,25 @@ public class Invoice extends AppCompatActivity {
                     //product information
                     item.setText(stringList[0]);
                     hsn.setText(stringList[1]);
-                    float gstValue = Integer.valueOf(stringList[2]);
+                    gstValue = Integer.valueOf(stringList[2]);
                     float priceStr = Float.valueOf(stringList[3]);
                     Integer quantityStr = Integer.valueOf(stringList[4]);
 
-                    float amt = gstValue * priceStr/100 + priceStr;
-                    gstValue /= 2;
-                    gst.setText(String.valueOf(gstValue));
-                    cgst.setText(String.valueOf(gstValue));
-                    amt *= quantityStr;
-                    price.setText(stringList[3]);
-                    quantity.setText(stringList[4]);
-                    amount.setText(String.valueOf(amt));
+                        float amt = gstValue * priceStr/100 + priceStr;
+                        gstValue /= 2;
+                        gst.setText(String.valueOf(gstValue));
+                        cgst.setText(String.valueOf(gstValue));
+                        amt *= quantityStr;
+                        price.setText(stringList[3]);
+                        quantity.setText(stringList[4]);
+                        amount.setText(String.valueOf(amt));
 
+                        totalPrice +=  priceStr;
+                        totalAmount += amt;
+                        totalquantity += quantityStr;
 
-                    totalPrice +=  priceStr;
-                    totalAmount += amt;
-                    totalquantity += quantityStr;
                 }
-                finalprice.setText(String.valueOf(totalPrice)); ;
+                finalprice.setText(String.valueOf(totalPrice));
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
                 finalPayable.setText(String.valueOf(totalAmount));
@@ -178,6 +187,23 @@ public class Invoice extends AppCompatActivity {
                 date.setText(str);
                 str = extras.getString("validdate");
                 validdate.setText(str);
+            }
+
+            state_holder = state.getText().toString();
+            state1_holder = state1.getText().toString();
+
+            if (state1_holder.contains(state_holder)){
+
+                sgst.setText("SGST");
+                cgst1.setText("CGST");
+
+            }else
+            {
+                sgst.setVisibility(View.INVISIBLE);
+                cgst1.setText("IGST");
+
+                cgst.setVisibility(View.INVISIBLE);
+                gstValue /= 1;
             }
         }
     }

@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
 
@@ -65,10 +67,8 @@ public class ViewImage extends AppCompatActivity {
             }
         });
 
-
         Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");
-
 
         if (EmailHolders == user){
             fab.setVisibility(View.INVISIBLE);
@@ -91,6 +91,16 @@ public class ViewImage extends AppCompatActivity {
 
         //Adepter
         adapter.notifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(ViewImage.this,SingleRecordShow.class);
+
+                startActivity(intent);
+            }
+        });
 
     }
 
