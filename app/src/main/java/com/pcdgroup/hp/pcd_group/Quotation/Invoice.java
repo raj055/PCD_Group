@@ -59,7 +59,9 @@ import javax.xml.validation.Validator;
  */
 public class Invoice extends AppCompatActivity {
 
-    TextView name,address,state,company,country;
+    TextView name,address,state,company,country,pin;
+
+    TextView state1,sgst,cgst1;
 
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
@@ -68,14 +70,16 @@ public class Invoice extends AppCompatActivity {
 
     EditText userAnswer;
 
+    String state_holder,state1_holder,sgst_holder,cgst1_holder;
+
     float totalPrice, totalAmount;
     int totalquantity;
 
     public static int REQUEST_PERMISSIONS = 1;
-    ConstraintLayout cl_pdflayout;
+    ConstraintLayout cl_pdflayout,cl_pdflayout1;
     boolean boolean_permission;
     boolean boolean_save;
-    Bitmap bitmap;
+    Bitmap bitmap,bitmap1;
     ProgressDialog progressDialog;
 
     public static final String UPLOAD_URL = "http://pcddata-001-site1.1tempurl.com/server_upload_pdf.php";
@@ -90,8 +94,9 @@ public class Invoice extends AppCompatActivity {
         validdate = (TextView)findViewById(R.id.validdate_tv);
         quantity = (TextView)findViewById(R.id.tvquantity);
 
-        name = (TextView)findViewById(R.id.textView18);
         address = (TextView)findViewById(R.id.textView19);
+        state = (TextView)findViewById(R.id.text_state);
+        pin = (TextView)findViewById(R.id.text_pin);
         company = (TextView)findViewById(R.id.textView22);
         country = (TextView)findViewById(R.id.textView21);
 
@@ -105,8 +110,9 @@ public class Invoice extends AppCompatActivity {
         finalamount = (TextView) findViewById(R.id.finalAmount);
         finalPayable = (TextView) findViewById(R.id.textView25);
 
-        LinearLayout lyt = (LinearLayout)findViewById(R.id.tableRow2);
+        LinearLayout lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
+        cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
 
         String str;
         if(savedInstanceState == null){
@@ -114,11 +120,11 @@ public class Invoice extends AppCompatActivity {
             if(extras != null) {
                 // Client
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
-
-                name.setText(clientInfo[0]);
-                str =clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2] + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
-
+//                name.setText(clientInfo[0]);
+                str = clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2];
                 address.setText(str);
+                pin.setText(clientInfo[3]);
+                state.setText(clientInfo[4]);
                 company.setText(clientInfo[6]);
                 country.setText(clientInfo[5]);
 
@@ -221,6 +227,7 @@ public class Invoice extends AppCompatActivity {
                             progressDialog = new ProgressDialog(Invoice.this);
                             progressDialog.setMessage("Please wait");
                             bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
+                            bitmap1 = loadBitmapFromView(cl_pdflayout1, cl_pdflayout1.getWidth(), cl_pdflayout1.getHeight());
                             createPdf();
                         }
                         if (boolean_save) {
@@ -303,6 +310,19 @@ public class Invoice extends AppCompatActivity {
 
         paint.setColor(Color.BLUE);
         canvas.drawBitmap(bitmap, 0, 0 , null);
+        document.finishPage(page);
+
+        // Create Page 2
+        pageInfo = new PdfDocument.PageInfo.Builder(convertWidth,convertHighet, 2).create();
+        page = document.startPage(pageInfo);
+        canvas = page.getCanvas();
+        paint = new Paint();
+        canvas.drawPaint(paint);
+
+        bitmap1 = Bitmap.createScaledBitmap(bitmap1, convertWidth, convertHighet, true);
+
+        paint.setColor(Color.BLUE);
+        canvas.drawBitmap(bitmap1, 0, 0 , null);
         document.finishPage(page);
 
         targetPdf = "/sdcard/" + fileName + ".pdf";

@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -45,7 +47,7 @@ public class ViewImage extends AppCompatActivity {
     String result = null;
     String[] data;
     ArrayList<String> picNames;
-    String recordName;
+    String recordName,EmailHolders,user;
     List<Entity> localEntity;
 
     @Override
@@ -62,6 +64,15 @@ public class ViewImage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        Intent intent = getIntent();
+        EmailHolders = intent.getStringExtra("email");
+
+
+        if (EmailHolders == user){
+            fab.setVisibility(View.INVISIBLE);
+        }
 
         localEntity = new ArrayList<Entity>();
         recordName = new String("");

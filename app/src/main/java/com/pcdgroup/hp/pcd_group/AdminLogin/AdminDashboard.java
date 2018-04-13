@@ -91,6 +91,8 @@ public class AdminDashboard extends AppCompatActivity {
 
                 Intent intent = new Intent(AdminDashboard.this, ViewImage.class);
 
+                intent.putExtra("email",EmailHolder);
+
                 startActivity(intent);
             }
         });
