@@ -85,7 +85,7 @@ public class CustomListAdapter extends BaseAdapter {
     brand.setText("Brand :" +String.valueOf(m.getBrand()));
     gst.setText("GST :" + String.valueOf(m.getGst()));
     description.setText("Description:" +String.valueOf(m.getDescription()));
-    stock.setText("Stock:" +String.valueOf(m.getStock()));
+    stock.setText("Stock:" +String.valueOf(m.getstock()));
     reorderlevel.setText("Recorderlevel:" +String.valueOf(m.getReorderlevel()));
     return convertView;
   }

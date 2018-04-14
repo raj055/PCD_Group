@@ -1,13 +1,22 @@
 package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,6 +26,7 @@ import android.widget.ListView;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
@@ -40,7 +50,6 @@ import java.util.List;
 
 public class ViewImage extends AppCompatActivity {
 
-
     ListView listView;
     CustomListAdapter adapter;
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/fimage.php";
@@ -51,6 +60,7 @@ public class ViewImage extends AppCompatActivity {
     ArrayList<String> picNames;
     String recordName,EmailHolders,user;
     List<Entity> localEntity;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +79,6 @@ public class ViewImage extends AppCompatActivity {
 
         Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");
-
-        if (EmailHolders == user){
-            fab.setVisibility(View.INVISIBLE);
-        }
 
         localEntity = new ArrayList<Entity>();
         recordName = new String("");
@@ -96,11 +102,31 @@ public class ViewImage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(ViewImage.this,SingleRecordShow.class);
+                Intent intent = new Intent(ViewImage.this,ProductSingleRecord.class);
+
+
+                Entity productdata = localEntity.get(position);
+
+                intent.putExtra("id",productdata.getId());
+                intent.putExtra("name",productdata.getTitle());
+                intent.putExtra("price", productdata.getPrice());
+                intent.putExtra("minimum", productdata.getMinimum());
+                intent.putExtra("hsncode", productdata.getHsncode());
+                intent.putExtra("brand", productdata.getBrand());
+                intent.putExtra("description", productdata.getDescription());
+                intent.putExtra("stock", productdata.getstock());
+                intent.putExtra("reorderlevel", productdata.getReorderlevel());
+                intent.putExtra("gst", productdata.getGst());
+
+                intent.putExtra("email",EmailHolders);
 
                 startActivity(intent);
             }
         });
+
+        if (EmailHolders == user){
+            fab.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -148,15 +174,15 @@ public class ViewImage extends AppCompatActivity {
                 jo=ja.getJSONObject(i);
                 String picname = jo.getString("name");
                 String urlname = jo.getString("photo");
-                Integer price = jo.getInt("price");
-                Integer minimum = jo.getInt("minimum");
-                Integer hsncode=jo.getInt("hsncode");
-                Integer gst = jo.getInt("gst");
+                String price = jo.getString("price");
+                String minimum = jo.getString("minimum");
+                String hsncode=jo.getString("hsncode");
+                String gst = jo.getString("gst");
                 String brand=jo.getString("brand");
                 String description=jo.getString("description");
-                Integer stock=jo.getInt("stock");
-                Integer reorderlevel=jo.getInt("reorderlevel");
-                Integer id = jo.getInt("id");
+                String stock=jo.getString("stock");
+                String reorderlevel=jo.getString("reorderlevel");
+                String id = jo.getString("id");
                 picNames.add(picname);
                 Entity e = new Entity(picname,urlname,price,gst, minimum,hsncode,brand,description,stock,reorderlevel,id);
                 localEntity.add(e);
@@ -164,6 +190,72 @@ public class ViewImage extends AppCompatActivity {
 
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+//                mAdepter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+//                mAdepter.getFilter().filter(query);
+
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_search) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    private void whiteNotificationBar(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = view.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+            getWindow().setStatusBarColor(Color.WHITE);
         }
     }
 }

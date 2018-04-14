@@ -1,11 +1,14 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
+import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+
 /**
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
  */
 
 public class ClientDataAdapter {
+
     String name;
     String type;
     String address;
@@ -18,6 +21,10 @@ public class ClientDataAdapter {
     String pin;
     String emailid;
     String designation;
+
+    public ClientDataAdapter(){
+
+    }
 
 
     public String getName() {

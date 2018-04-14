@@ -1,22 +1,39 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRecyclerViewAdapter;
+import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
+import com.pcdgroup.hp.pcd_group.Client.MyDividerItemDecoration;
+import com.pcdgroup.hp.pcd_group.Client.RecyclerViewAdapter;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -31,7 +48,9 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class SelectClient extends AppCompatActivity {
+public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener {
+
+    private static final String TAG = SelectClient.class.getSimpleName();
 
     List<ClientDataAdapter> clientDataAdapters;
 
@@ -39,17 +58,17 @@ public class SelectClient extends AppCompatActivity {
 
     RecyclerView.LayoutManager recyclerViewlayoutManager;
 
-    RecyclerView.Adapter recyclerViewadapter;
+    ClientRecyclerViewAdapter mAdepter;
 
     JsonArrayRequest jsonArrayRequest ;
-
-    ArrayList<String> SubjectNames;
 
     RequestQueue requestQueue ;
 
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/ClientDataShow.php";
 
     View ChildView ;
+
+    SearchView searchView;
 
     int RecyclerViewClickedItemPOS ;
 
@@ -60,15 +79,22 @@ public class SelectClient extends AppCompatActivity {
 
         clientDataAdapters = new ArrayList<>();
 
-        SubjectNames = new ArrayList<>();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView1);
 
+        mAdepter = new ClientRecyclerViewAdapter(this, clientDataAdapters, this);
+
         recyclerView.setHasFixedSize(true);
 
-        recyclerViewlayoutManager = new LinearLayoutManager(this);
 
+        // white background notification bar
+        whiteNotificationBar(recyclerView);
+
+        recyclerViewlayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewlayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, DividerItemDecoration.VERTICAL, 36));
+        recyclerView.setAdapter(mAdepter);
 
         // JSON data web call function call from here.
         JSON_WEB_CALL();
@@ -139,12 +165,30 @@ public class SelectClient extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
 
+                        if (response == null) {
+                            Toast.makeText(getApplicationContext(), "Couldn't fetch the contacts! Pleas try again.", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        List<ClientDataAdapter> items = new Gson().fromJson(response.toString(), new TypeToken<List<ClientDataAdapter>>() {
+                        }.getType());
+
+                        // adding contacts to contacts list
+                        clientDataAdapters.clear();
+                        clientDataAdapters.addAll(items);
+
+                        // refreshing recycler view
+                        mAdepter.notifyDataSetChanged();
+
                         JSON_PARSE_DATA_AFTER_WEBCALL(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // error in getting json
+                        Log.e(TAG, "Error: " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -196,8 +240,79 @@ public class SelectClient extends AppCompatActivity {
         }
 
 
-        recyclerViewadapter = new ClientRecyclerViewAdapter(clientDataAdapters, this);
+        mAdepter = new ClientRecyclerViewAdapter(this,clientDataAdapters, this);
 
-        recyclerView.setAdapter(recyclerViewadapter);
+        recyclerView.setAdapter(mAdepter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                mAdepter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                mAdepter.getFilter().filter(query);
+
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_search) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    private void whiteNotificationBar(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = view.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+    }
+
+    @Override
+    public void onDataSelected(ClientDataAdapter dataAdapter) {
+
     }
 }

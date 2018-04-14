@@ -83,9 +83,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             }
         });
 
-        // toolbar fancy stuff.
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.toolbar_title);
 
         DataAdapters = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView1);

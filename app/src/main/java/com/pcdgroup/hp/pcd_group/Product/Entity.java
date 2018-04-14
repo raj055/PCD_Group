@@ -6,14 +6,13 @@ package com.pcdgroup.hp.pcd_group.Product;
  */
 
 public class Entity {
+  
+  String  id, title,thumbnailUrl,description,brand,price,minimum,hsncode,gst,stock,reorderlevel;
 
-  private String title,thumbnailUrl,description,brand;
-  private int availableStock;
-  private Integer price,minimum,hsncode,gst,stock,reorderlevel;
-
-  public Entity(String name, String thumbnailUrl, Integer price, Integer gst, Integer minimum, Integer hsncode,
-                String brand, String description, Integer stock, Integer reorderlevel,
-                int availableStock) {
+  public Entity(String name, String thumbnailUrl, String price, String gst, String minimum, String hsncode,
+                String brand, String description, String stock, String reorderlevel,
+                String id) {
+    this.id = id;
     this.title = name;
     this.price = price;
     this.minimum = minimum;
@@ -24,50 +23,118 @@ public class Entity {
     this.description=description;
     this.reorderlevel=reorderlevel;
     this.thumbnailUrl = thumbnailUrl;
-    this.availableStock = availableStock;
   }
 
-  public String getTitle() {return title;}
-  public Integer getPrice() {return price;}
-  public Integer getMinimum() {return minimum;}
-  public Integer getHsncode() {return hsncode;}
-  public  Integer getGst() {return  gst;}
-  public String getBrand() {return brand;}
-  public  String getDescription() {return description;}
-  public Integer getstock() {return stock;}
-  public Integer getReorderlevel() {return reorderlevel;}
+  public String getId() {
+
+    return id;
+  }
+
+  public void setId(String id) {
+
+    this.id = id;
+  }
+
+  public String getTitle() {
+
+    return title;
+  }
 
   public void setTitle(String name) {
+
     this.title = name;
   }
-  public void setPrice(Integer price) {this.price = price;}
-  public void setMinimum(Integer minimum) {this.minimum = minimum;}
-  public void setHsncode(Integer hsncode) {this.hsncode = hsncode;}
-  public  void setGst(Integer gst){this.gst=gst;}
-  public void setBrand(String brand) {this.brand = brand;}
-  public  void setDescription (String description) { this.description= description ;}
-  public void setStock(Integer stock) {this.stock = stock;}
-  public void setReorderlevel(Integer reorderlevel) {this.reorderlevel = reorderlevel;}
 
-  public String getThumbnailUrl() {
-    return thumbnailUrl;
-  }
-  public String gettitle() {return title;}
+  public String getPrice() {
 
-  public void setThumbnailUrl(String thumbnailUrl) {
-    this.thumbnailUrl = thumbnailUrl;
+    return price;
   }
-  public void settitle(String title) {
-    this.title = title;
-  }
-  public void setprice(Integer price) {
+
+  public void setPrice(String price) {
+
     this.price = price;
   }
 
-  public int getStock() {
-    return availableStock;
+  public String getMinimum() {
+
+    return minimum;
   }
-  public void setStock(int availableStock) {
-    this.availableStock = availableStock;
+
+  public void setMinimum(String minimum) {
+
+    this.minimum = minimum;
   }
+
+  public String getHsncode() {
+
+    return hsncode;
+  }
+
+  public void setHsncode(String hsncode) {
+
+    this.hsncode = hsncode;
+  }
+
+  public  String getGst() {
+
+    return  gst;
+  }
+
+  public  void setGst(String gst){
+
+    this.gst=gst;
+  }
+
+  public String getBrand() {
+
+    return brand;
+  }
+
+  public void setBrand(String brand) {
+
+    this.brand = brand;
+  }
+
+  public  String getDescription() {
+
+    return description;
+  }
+
+  public  void setDescription (String description) {
+
+    this.description= description ;
+  }
+
+  public String getstock() {
+
+    return stock;
+  }
+
+  public void setStock(String stock) {
+
+    this.stock = stock;
+  }
+
+  public String getReorderlevel() {
+
+    return reorderlevel;
+  }
+
+  public void setReorderlevel(String reorderlevel) {
+    this.reorderlevel = reorderlevel;
+  }
+
+
+
+  public String getThumbnailUrl() {
+
+    return thumbnailUrl;
+  }
+
+  public void setThumbnailUrl(String thumbnailUrl) {
+
+    this.thumbnailUrl = thumbnailUrl;
+  }
+
+
 }

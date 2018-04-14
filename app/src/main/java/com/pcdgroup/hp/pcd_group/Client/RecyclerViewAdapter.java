@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.pcdgroup.hp.pcd_group.Quotation.ClientDataAdapter;
+import com.pcdgroup.hp.pcd_group.Quotation.SelectClient;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.dataAdapters = dataAdapters;
         this.dataListFiltered = dataAdapters;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

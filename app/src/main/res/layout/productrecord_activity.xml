@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <TableLayout
+        android:id="@+id/table_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -17,7 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +36,8 @@
                 android:text="name of product" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,7 +54,8 @@
                 android:text="name of price" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +72,8 @@
                 android:text="minimum value" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,7 +90,8 @@
                 android:text="price of gst" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,7 +108,8 @@
                 android:text="name of hsncode" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,7 +126,8 @@
                 android:text="name of brand" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -136,7 +144,8 @@
                 android:text="name of stock" />
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -150,35 +159,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="name of recordlevel" />
+                android:text="recordlevel" />
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Product Description : "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/p_descrition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Descrition" />
         </TableRow>
 
     </TableLayout>
 
-        <Button
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:background="#7B68EE"
-            android:text="Edit Record"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="339dp" />
+    <Button
+        android:id="@+id/btn_edit_record"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/table_record"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="#7B68EE"
+        android:text="Edit Record"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/table_record"
+        tools:ignore="MissingConstraints" />
 
 
     <Button
+        android:id="@+id/btn_delete_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_below="@+id/btn_edit_record"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:background="#7B68EE"
         android:text="Delete Record"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_edit_record"
+        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

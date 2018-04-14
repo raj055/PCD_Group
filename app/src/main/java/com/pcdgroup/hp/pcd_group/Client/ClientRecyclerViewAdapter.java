@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.Quotation.ClientDataAdapter;
+import com.pcdgroup.hp.pcd_group.Quotation.SelectClient;
 import com.pcdgroup.hp.pcd_group.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,33 +21,39 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecyclerViewAdapter.ViewHolder> {
+public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecyclerViewAdapter.ViewHolder>
+        implements Filterable {
 
-    Context context;
-    List<ClientDataAdapter> clientDataAdapters;
+    private Context context;
 
-    public ClientRecyclerViewAdapter(List<ClientDataAdapter> getClientDataAdapter, Context context){
+    private List<ClientDataAdapter> clientDataAdapters;
 
-        super();
+    private List<ClientDataAdapter> dataListFiltered;
+
+    private DataAdapterListener listener;
+
+    public ClientRecyclerViewAdapter(SelectClient selectClient, List<ClientDataAdapter> getClientDataAdapter, SelectClient listener) {
 
         this.clientDataAdapters = getClientDataAdapter;
-        this.context = context;
+        this.listener = listener;
+        this.context = selectClient;
+        this.dataListFiltered = getClientDataAdapter;
     }
 
     @Override
-    public ClientRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.clientcardview, parent, false);
 
-        ClientRecyclerViewAdapter.ViewHolder viewHolder = new ClientRecyclerViewAdapter.ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ClientRecyclerViewAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        ClientDataAdapter clientDataAdapter =  clientDataAdapters.get(position);
+        ClientDataAdapter clientDataAdapter =  dataListFiltered.get(position);
 
         viewHolder.TextViewName.setText(clientDataAdapter.getName());
 
@@ -56,10 +66,44 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
     @Override
     public int getItemCount() {
 
-        return clientDataAdapters.size();
+        return dataListFiltered.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    dataListFiltered = clientDataAdapters;
+                } else {
+                    List<ClientDataAdapter> filteredList = new ArrayList<>();
+                    for (ClientDataAdapter row : clientDataAdapters) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    dataListFiltered = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = dataListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                dataListFiltered = (ArrayList<ClientDataAdapter>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+     class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView TextViewName;
         public TextView TextViewAddress;
@@ -73,6 +117,18 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
             TextViewAddress = (TextView) itemView.findViewById(R.id.tvaddress) ;
             TextViewCompanyName = (TextView) itemView.findViewById(R.id.tvcompanyname) ;
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // send selected contact in callback
+                    listener.onDataSelected(dataListFiltered.get(getAdapterPosition()));
+                }
+            });
+
         }
+    }
+
+    public interface DataAdapterListener {
+        void onDataSelected(ClientDataAdapter dataAdapter);
     }
 }
