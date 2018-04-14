@@ -104,7 +104,6 @@ public class ViewImage extends AppCompatActivity {
 
                 Intent intent = new Intent(ViewImage.this,ProductSingleRecord.class);
 
-
                 Entity productdata = localEntity.get(position);
 
                 intent.putExtra("id",productdata.getId());
