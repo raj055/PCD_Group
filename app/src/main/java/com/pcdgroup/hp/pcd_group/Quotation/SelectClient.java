@@ -50,8 +50,6 @@ import java.util.List;
 
 public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener {
 
-    private static final String TAG = SelectClient.class.getSimpleName();
-
     List<ClientDataAdapter> clientDataAdapters;
 
     RecyclerView recyclerView;
@@ -170,12 +168,8 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
                             return;
                         }
 
-                        List<ClientDataAdapter> items = new Gson().fromJson(response.toString(), new TypeToken<List<ClientDataAdapter>>() {
-                        }.getType());
-
                         // adding contacts to contacts list
                         clientDataAdapters.clear();
-                        clientDataAdapters.addAll(items);
 
                         // refreshing recycler view
                         mAdepter.notifyDataSetChanged();
@@ -187,7 +181,6 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error in getting json
-                        Log.e(TAG, "Error: " + error.getMessage());
                         Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }

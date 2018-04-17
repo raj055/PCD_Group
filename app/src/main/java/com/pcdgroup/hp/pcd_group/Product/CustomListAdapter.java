@@ -12,6 +12,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.pcdgroup.hp.pcd_group.R;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,11 +26,13 @@ public class CustomListAdapter extends BaseAdapter {
   private Activity activity;
   private LayoutInflater inflater;
   private List<Entity> entityItems;
+  private ArrayList<Entity> entityItemsfilter;
   private ImageLoader imageLoader;
 
   public CustomListAdapter(Activity activity, List<Entity> entityItems) {
     this.activity = activity;
     this.entityItems = entityItems;
+    this.entityItemsfilter = (ArrayList<Entity>) entityItems;
     imageLoader = CustomVolleyRequest.getInstance(activity.getApplicationContext())
             .getImageLoader();
   }
@@ -89,4 +93,5 @@ public class CustomListAdapter extends BaseAdapter {
     reorderlevel.setText("Recorderlevel:" +String.valueOf(m.getReorderlevel()));
     return convertView;
   }
+
 }

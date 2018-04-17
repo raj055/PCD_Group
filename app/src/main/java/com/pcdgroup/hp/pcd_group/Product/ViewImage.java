@@ -52,7 +52,7 @@ public class ViewImage extends AppCompatActivity {
 
     ListView listView;
     CustomListAdapter adapter;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/fimage.php";
+    String HttpURL1 = "http://pcddata-001-site1.1tempurl.com/fimage.php";
     InputStream is = null;
     String line = null;
     String result = null;
@@ -132,7 +132,7 @@ public class ViewImage extends AppCompatActivity {
     private void getData(){
 
         try {
-            URL url = new URL(HttpURL);
+            URL url = new URL(HttpURL1);
             HttpURLConnection con= (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("GET");
@@ -247,14 +247,5 @@ public class ViewImage extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
-    }
-
-    private void whiteNotificationBar(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = view.getSystemUiVisibility();
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
     }
 }

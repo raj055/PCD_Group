@@ -45,8 +45,6 @@ import java.util.List;
 
 public class ClientDetailsActivity extends AppCompatActivity implements RecyclerViewAdapter.DataAdapterListener {
 
-    private static final String TAG = ClientDetailsActivity.class.getSimpleName();
-
     List<DataAdapter> DataAdapters;
 
     RecyclerView recyclerView;
@@ -96,8 +94,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
         recyclerViewlayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewlayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, DividerItemDecoration.VERTICAL, 36));
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, DividerItemDecoration.VERTICAL, 36));
         recyclerView.setAdapter(mAdepter);
 
         // JSON data web call function call from here.
@@ -174,12 +172,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                             return;
                         }
 
-                        List<DataAdapter> items = new Gson().fromJson(response.toString(), new TypeToken<List<DataAdapter>>() {
-                        }.getType());
-
                         // adding contacts to contacts list
                         DataAdapters.clear();
-                        DataAdapters.addAll(items);
 
                         // refreshing recycler view
                         mAdepter.notifyDataSetChanged();
@@ -191,7 +185,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error in getting json
-                        Log.e(TAG, "Error: " + error.getMessage());
                         Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
@@ -205,6 +198,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
     }
 
     public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
+
+        Log.e("array", String.valueOf(array.length()));
 
         for(int i = 0; i<array.length(); i++) {
 
@@ -295,8 +290,10 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
         // close search view on back button pressed
         if (!searchView.isIconified()) {
             searchView.setIconified(true);
+
             return;
         }
+        finish();
         super.onBackPressed();
     }
 
