@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +49,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ViewImage extends AppCompatActivity {
+public class ViewImage extends AppCompatActivity implements CustomListAdapter.DataAdapterListener {
 
     ListView listView;
     CustomListAdapter adapter;
@@ -85,9 +86,11 @@ public class ViewImage extends AppCompatActivity {
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
 
-        adapter = new CustomListAdapter(this, localEntity);
+        // white background notification bar
+        whiteNotificationBar(listView);
+
+        adapter = new CustomListAdapter(this, localEntity,this);
         listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
@@ -209,18 +212,18 @@ public class ViewImage extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
-//                mAdepter.getFilter().filter(query);
+                adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
-//                mAdepter.getFilter().filter(query);
-
+                adapter.getFilter().filter(query);
                 return false;
             }
         });
+
         return true;
     }
 
@@ -247,5 +250,19 @@ public class ViewImage extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    private void whiteNotificationBar(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = view.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+    }
+
+    @Override
+    public void onDataSelected(Entity dataAdapter) {
+
     }
 }

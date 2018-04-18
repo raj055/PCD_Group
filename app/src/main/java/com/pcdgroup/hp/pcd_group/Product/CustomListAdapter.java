@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
+import com.pcdgroup.hp.pcd_group.Client.RecyclerViewAdapter;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.sql.Array;
@@ -21,24 +25,27 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class CustomListAdapter extends BaseAdapter {
+public class CustomListAdapter extends BaseAdapter implements Filterable {
 
   private Activity activity;
   private LayoutInflater inflater;
   private List<Entity> entityItems;
   private ArrayList<Entity> entityItemsfilter;
+  private DataAdapterListener listener;
+
   private ImageLoader imageLoader;
 
-  public CustomListAdapter(Activity activity, List<Entity> entityItems) {
+  public CustomListAdapter(Activity activity, List<Entity> entityItems, ViewImage listener) {
     this.activity = activity;
     this.entityItems = entityItems;
+    this.listener = listener;
     this.entityItemsfilter = (ArrayList<Entity>) entityItems;
     imageLoader = CustomVolleyRequest.getInstance(activity.getApplicationContext())
             .getImageLoader();
   }
 
   @Override
-  public int getCount() { return entityItems.size(); }
+  public int getCount() { return entityItemsfilter.size(); }
 
   @Override
   public Object getItem(int location) {
@@ -74,7 +81,7 @@ public class CustomListAdapter extends BaseAdapter {
     TextView stock = (TextView) convertView.findViewById(R.id.Stock);
     TextView reorderlevel = (TextView) convertView.findViewById(R.id.Reorderlevel);
     // getting movie data for the row
-    Entity m = entityItems.get(position);
+    Entity m = entityItemsfilter.get(position);
 
     // thumbnail image
     thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
@@ -94,4 +101,41 @@ public class CustomListAdapter extends BaseAdapter {
     return convertView;
   }
 
+  @Override
+  public Filter getFilter() {
+    return new Filter() {
+      @Override
+      protected FilterResults performFiltering(CharSequence charSequence) {
+        String charString = charSequence.toString();
+        if (charString.isEmpty()) {
+          entityItemsfilter = (ArrayList<Entity>) entityItems;
+        } else {
+          List<Entity> filteredList = new ArrayList<>();
+          for (Entity row : entityItems) {
+
+            // name match condition. this might differ depending on your requirement
+            // here we are looking for name or phone number match
+            if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
+              filteredList.add(row);
+            }
+          }
+
+          entityItemsfilter = (ArrayList<Entity>) filteredList;
+        }
+        FilterResults filterResults = new FilterResults();
+        filterResults.values = entityItemsfilter;
+        return filterResults;
+      }
+
+      @Override
+      protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+        entityItemsfilter = (ArrayList<Entity>) filterResults.values;
+        notifyDataSetChanged();
+      }
+    };
+  }
+
+  public interface DataAdapterListener {
+    void onDataSelected(Entity dataAdapter);
+  }
 }

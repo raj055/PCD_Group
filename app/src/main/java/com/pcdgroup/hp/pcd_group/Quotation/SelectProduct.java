@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
+import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -35,7 +37,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class SelectProduct  extends AppCompatActivity {
+public class SelectProduct  extends AppCompatActivity implements ProductCustomListAdapter.DataAdapterListener {
 
     ListView listView;
     ProductCustomListAdapter adapter;
@@ -48,19 +50,23 @@ public class SelectProduct  extends AppCompatActivity {
     String recordName;
     List<ProdactEntity> prodactEntities;
     List<String> IdList = new ArrayList<>();
-
     SearchView searchView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.product_view);
 
         prodactEntities = new ArrayList<ProdactEntity>();
         recordName = new String("");
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
+
+        // white background notification bar
+        whiteNotificationBar(listView);
+
+        adapter = new ProductCustomListAdapter(this, prodactEntities, this);
+        listView.setAdapter(adapter);
 
         //Adding ListView Item click Listener.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -87,9 +93,6 @@ public class SelectProduct  extends AppCompatActivity {
             }
         });
 
-        adapter = new ProductCustomListAdapter(this, prodactEntities);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
@@ -185,15 +188,14 @@ public class SelectProduct  extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // filter recycler view when query submitted
-//                mAdepter.getFilter().filter(query);
+                adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 // filter recycler view when text is changed
-//                mAdepter.getFilter().filter(query);
-
+                adapter.getFilter().filter(query);
                 return false;
             }
         });
@@ -223,5 +225,19 @@ public class SelectProduct  extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    private void whiteNotificationBar(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = view.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+    }
+
+    @Override
+    public void onDataSelected(Entity dataAdapter) {
+
     }
 }
