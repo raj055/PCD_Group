@@ -8,7 +8,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:id="@+id/listView"
+        android:id="@+id/orderList"
         android:layout_height="wrap_content">
     </ListView>
 

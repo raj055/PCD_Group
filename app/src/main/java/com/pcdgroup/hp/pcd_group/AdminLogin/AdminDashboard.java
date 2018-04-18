@@ -18,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.MainActivity;
+import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
@@ -34,7 +36,7 @@ import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation,Access;
+    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist;
     TextView EmailShow;
     String EmailHolder;
 
@@ -50,6 +52,7 @@ public class AdminDashboard extends AppCompatActivity {
         Quotation_pdf = (Button) findViewById(R.id.btn_quotation);
         Quotation = (Button) findViewById(R.id.quotation);
         Access = (Button) findViewById(R.id.btn_access);
+        Orderlist = (Button) findViewById(R.id.btn_orderlist);
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
 
@@ -57,6 +60,9 @@ public class AdminDashboard extends AppCompatActivity {
         Intent intent = getIntent();
         EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
         EmailShow.setText(EmailHolder);
+
+        GlobalVariable gblVar = GlobalVariable.getInstance();
+        gblVar.currentUserEmail = EmailHolder;
 
         // Click logout button
         LogOut.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +131,17 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(AdminDashboard.this, AccessAdmin.class);
+
+                startActivity(intent);
+
+            }
+        });
+        // Click Order button
+        Orderlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(AdminDashboard.this, Order_List.class);
 
                 startActivity(intent);
 

@@ -14,20 +14,23 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
+import com.pcdgroup.hp.pcd_group.Quotation.List_Pdfs;
+import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-03-2018.
  */
 
 public class UserDashbord extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Product, Invoice;
+    Button LogOut, Client_Details, Product, Invoice, Quotation;
     TextView EmailShow;
     String EmailHolder;
     private String mUsername;
@@ -42,9 +45,11 @@ public class UserDashbord extends AppCompatActivity {
         Client_Details = (Button)findViewById(R.id.clientdetails);
         Product = (Button)findViewById(R.id.imgupload);
         Invoice = (Button)findViewById(R.id.btn_invoice);
+        Quotation = (Button) findViewById(R.id.ul_quotation);
 
         EmailShow = (TextView)findViewById(R.id.EmailShow);
         EmailShow.setText(mUsername);
+
 
         // Click logout button
         LogOut.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +70,8 @@ public class UserDashbord extends AppCompatActivity {
         Intent intent = getIntent();
         EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
         EmailShow.setText(EmailHolder);
+        GlobalVariable gblVar = GlobalVariable.getInstance();
+        gblVar.currentUserEmail = EmailHolder;
 
         /*// check to see if the user is already logged in
         mUsername = MySharedPreferences.getUsername(this);
@@ -103,6 +110,16 @@ public class UserDashbord extends AppCompatActivity {
 
                 Intent intent = new Intent(UserDashbord.this, CreateQuotation.class);
 
+                startActivity(intent);
+            }
+        });
+        // Click image invoice button
+        Quotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserDashbord.this, ShowQuotationList.class);
+                intent.putExtra("emailid", EmailHolder);
                 startActivity(intent);
             }
         });

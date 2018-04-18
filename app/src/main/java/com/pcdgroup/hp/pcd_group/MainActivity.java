@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     EditText Email, Password;
     Button LogIn,Register ;
     String PasswordHolder, EmailHolder;
-    String finalResult ;
+    String finalResult;
     String HttpURL = "http://pcddata-001-site1.1tempurl.com/UserLogin.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
@@ -177,8 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
 //                String str = httpResponseMsg.toString();
 
-
-
                 if(httpResponseMsg.equalsIgnoreCase("Invalid Username or Password")){
 
                     Toast.makeText(MainActivity.this,httpResponseMsg,Toast.LENGTH_LONG).show();
@@ -225,8 +223,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     catch (Exception e){
                         e.printStackTrace();
-
-
                     }
 
                 }

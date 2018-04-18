@@ -20,6 +20,9 @@ public class GlobalVariable {
         return myObj;
     }
 
+    public String currentUserEmail;
+    public String currentUserStatus;
+
     public  String[] globalClient = new String[8];
 
     public  String[] globalProduct = new String[5];

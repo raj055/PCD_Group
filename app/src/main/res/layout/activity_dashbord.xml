@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/imgupload"
         android:layout_alignRight="@+id/imgupload"
-        android:layout_below="@+id/clientregister"
+        android:layout_below="@+id/EmailShow"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="70dp"
@@ -85,12 +85,25 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:background="#7B68EE"
         android:text="Invoice"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgupload" />
+        app:layout_constraintTop_toBottomOf="@+id/imgupload"/>
+
+    <Button
+        android:id="@+id/ul_quotation"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="#7B68EE"
+        android:text="MY QUOTATION"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_invoice"/>
 
 
 </android.support.constraint.ConstraintLayout>

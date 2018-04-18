@@ -9,6 +9,7 @@ public class Pdf {
 
     private String url;
     private String name;
+    private String billed;
 
     public String getUrl() {
         return url;
@@ -17,6 +18,14 @@ public class Pdf {
     public void setUrl(String url) {
         this.url = url;
     }
+    public String getBilled() {
+        return billed;
+    }
+
+    public void setBilled(String billed) {
+        this.billed = billed;
+    }
+
 
     public String getName() {
         return name;

@@ -116,44 +116,42 @@ public class List_Pdfs extends AppCompatActivity {
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, PDF_FETCH_URL,
 
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
 
+                    progressDialog.dismiss();
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        Toast.makeText(List_Pdfs.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            Toast.makeText(List_Pdfs.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        JSONArray jsonArray = obj.getJSONArray("pdfs");
 
-                            JSONArray jsonArray = obj.getJSONArray("pdfs");
+                        for(int i=0;i<jsonArray.length();i++){
 
-                            for(int i=0;i<jsonArray.length();i++){
+                            //Declaring a json object corresponding to every pdf object in our json Array
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            //Declaring a Pdf object to add it to the ArrayList  pdfList
+                            Pdf pdf  = new Pdf();
+                            String pdfName = jsonObject.getString("name");
+                            String pdfUrl = jsonObject.getString("url");
+                            pdf.setName(pdfName);
+                            pdf.setUrl(pdfUrl);
+                            pdfList.add(pdf);
 
-                                //Declaring a json object corresponding to every pdf object in our json Array
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                //Declaring a Pdf object to add it to the ArrayList  pdfList
-                                Pdf pdf  = new Pdf();
-                                String pdfName = jsonObject.getString("name");
-                                String pdfUrl = jsonObject.getString("url");
-                                pdf.setName(pdfName);
-                                pdf.setUrl(pdfUrl);
-                                pdfList.add(pdf);
-
-                            }
-
-                            pdfAdapter=new PdfAdapter(List_Pdfs.this,R.layout.list_layout, pdfList);
-
-                            listView.setAdapter(pdfAdapter);
-
-                            pdfAdapter.notifyDataSetChanged();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
 
+                        pdfAdapter=new PdfAdapter(List_Pdfs.this,R.layout.list_layout, pdfList);
+
+                        listView.setAdapter(pdfAdapter);
+
+                        pdfAdapter.notifyDataSetChanged();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                },
+                }
+            },
 
                 new Response.ErrorListener() {
                     @Override
@@ -204,5 +202,4 @@ public class List_Pdfs extends AppCompatActivity {
             }
         }
     }
-
 }

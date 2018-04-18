@@ -186,7 +186,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                     public void onErrorResponse(VolleyError error) {
                         // error in getting json
                         Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-
                     }
                 });
 

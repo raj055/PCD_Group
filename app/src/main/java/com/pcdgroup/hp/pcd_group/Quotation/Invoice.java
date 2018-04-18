@@ -1,6 +1,7 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,8 +40,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.itextpdf.text.PageSize;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -47,8 +49,13 @@ import net.gotev.uploadservice.UploadNotificationConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.xml.validation.Validator;
@@ -59,9 +66,7 @@ import javax.xml.validation.Validator;
  */
 public class Invoice extends AppCompatActivity {
 
-    TextView name,address,state,company,country,pin;
-
-    TextView state1,sgst,cgst1;
+    TextView name,address,state,company,country,add1,add2,pin;
 
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
@@ -70,57 +75,28 @@ public class Invoice extends AppCompatActivity {
 
     EditText userAnswer;
 
-    String state_holder,state1_holder,sgst_holder,cgst1_holder;
-
     float totalPrice, totalAmount;
     int totalquantity;
 
     public static int REQUEST_PERMISSIONS = 1;
-    ConstraintLayout cl_pdflayout,cl_pdflayout1;
+    ConstraintLayout cl_pdflayout;
     boolean boolean_permission;
     boolean boolean_save;
-    Bitmap bitmap,bitmap1;
+    Bitmap bitmap;
     ProgressDialog progressDialog;
-    float gstValue;
-
-    public static final String UPLOAD_URL = "http://pcddata-001-site1.1tempurl.com/server_upload_pdf.php";
+    HashMap<String, String> hsmap = new HashMap<String, String>();
+    public static final String UPLOAD_URL =
+                                    "http://pcddata-001-site1.1tempurl.com/uploadtxtfile.php";
     String fileName, targetPdf;
+    LinearLayout lyt;
+    String getAllProducts, getGst, getCgst, getPrice, getQuantity, getAmount, getHsn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice);
 
-        date = (TextView)findViewById(R.id.date_tv);
-        validdate = (TextView)findViewById(R.id.validdate_tv);
-        quantity = (TextView)findViewById(R.id.tvquantity);
-
-        name = (TextView)findViewById(R.id.client_name);
-        address = (TextView)findViewById(R.id.textView19);
-        state = (TextView)findViewById(R.id.text_state);
-        pin = (TextView)findViewById(R.id.text_pin);
-        company = (TextView)findViewById(R.id.textView22);
-        country = (TextView)findViewById(R.id.textView21);
-
-        state1 = (TextView)findViewById(R.id.text_state1);
-        sgst = (TextView)findViewById(R.id.sgst);
-        cgst1 = (TextView)findViewById(R.id.cgst);
-
-        item = (TextView)findViewById(R.id.tvproduct);
-        hsn = (TextView)findViewById(R.id.tvhsn);
-        gst = (TextView)findViewById(R.id.tvgst);
-        price = (TextView)findViewById(R.id.tvprice);
-
-        finalprice = (TextView) findViewById(R.id.itemsPrice);
-        finalquantity = (TextView) findViewById(R.id.finalQuantity);
-        finalamount = (TextView) findViewById(R.id.finalAmount);
-        finalPayable = (TextView) findViewById(R.id.textView25);
-
-        LinearLayout lyt = (LinearLayout) findViewById(R.id.tableRow2);
-        cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
-        cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
-
-        state1.setText("maharashtra");
+        initialiseLayouts();
 
         String str;
         if(savedInstanceState == null){
@@ -129,11 +105,10 @@ public class Invoice extends AppCompatActivity {
                 // Client
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
 
-                name.setText(clientInfo[7]);
-                str = clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2];
+                name.setText(clientInfo[0]);
+                str =clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2] + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
+
                 address.setText(str);
-                pin.setText(clientInfo[3]);
-                state.setText(clientInfo[4]);
                 company.setText(clientInfo[6]);
                 country.setText(clientInfo[5]);
 
@@ -142,6 +117,16 @@ public class Invoice extends AppCompatActivity {
                 String[]   productInfo =  extras.getStringArray("ProductInfo");
 
                 int size = PrdList.size();
+
+                getAllProducts = "";
+                Log.v("Products---------", getAllProducts);
+                getGst = new String();
+                getPrice = new String();
+                getCgst = new String();
+                getQuantity = new String();
+                getAmount = new String();
+                getHsn = new String();
+
                 for(int i = 0; i < size; i++){
 
                     String[] stringList = PrdList.get(i);
@@ -159,55 +144,108 @@ public class Invoice extends AppCompatActivity {
 
                     //product information
                     item.setText(stringList[0]);
+                    getAllProducts = getAllProducts.concat(stringList[0]);
+                    getAllProducts = getAllProducts.concat(",");
+
                     hsn.setText(stringList[1]);
-                    gstValue = Integer.valueOf(stringList[2]);
+                    getHsn = getHsn.concat(stringList[1]);
+                    getHsn = getHsn.concat(",");
+
+                    float gstValue = Integer.valueOf(stringList[2]);
+
                     float priceStr = Float.valueOf(stringList[3]);
+                    getPrice = getPrice.concat(stringList[3]);
+                    getPrice =getPrice.concat(",");
                     Integer quantityStr = Integer.valueOf(stringList[4]);
 
-                        float amt = gstValue * priceStr/100 + priceStr;
-                        gstValue /= 2;
-                        gst.setText(String.valueOf(gstValue));
-                        cgst.setText(String.valueOf(gstValue));
-                        amt *= quantityStr;
-                        price.setText(stringList[3]);
-                        quantity.setText(stringList[4]);
-                        amount.setText(String.valueOf(amt));
+                    float amt = gstValue * priceStr/100 + priceStr;
+                    gstValue /= 2;
+                    gst.setText(String.valueOf(gstValue));
+                    getGst = getGst.concat(String.valueOf(gstValue));
+                    getGst = getGst.concat(",");
+                    getCgst = getCgst.concat(String.valueOf(gstValue));
+                    getCgst = getCgst.concat(",");
 
-                        totalPrice +=  priceStr;
-                        totalAmount += amt;
-                        totalquantity += quantityStr;
+                    cgst.setText(String.valueOf(gstValue));
+                    amt *= quantityStr;
+                    price.setText(stringList[3]);
 
+                    quantity.setText(stringList[4]);
+                    getQuantity = getQuantity.concat(stringList[4]);
+                    getQuantity = getQuantity.concat(",");
+
+                    amount.setText(String.valueOf(amt));
+                    getAmount = getAmount.concat(String.valueOf(amt));
+                    getAmount =getAmount.concat(",");
+
+                    totalPrice +=  priceStr;
+                    totalAmount += amt;
+                    totalquantity += quantityStr;
                 }
-                finalprice.setText(String.valueOf(totalPrice));
+                finalprice.setText(String.valueOf(totalPrice)); ;
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
                 finalPayable.setText(String.valueOf(totalAmount));
 
                 str = extras.getString("date");
+                String str2 = getAllProducts;
+                Log.v("Products---------", str2);
+                Log.v("Products---------", getAllProducts);
+                Log.v("Date Put---------", str);
+
                 date.setText(str);
                 str = extras.getString("validdate");
                 validdate.setText(str);
-            }
 
-            state_holder = state.getText().toString();
-            state1_holder = state1.getText().toString();
-
-            if (state1_holder.contains(state_holder)){
-
-                sgst.setText("SGST");
-                cgst1.setText("CGST");
-
-            }else
-            {
-                sgst.setVisibility(View.INVISIBLE);
-                cgst1.setText("IGST");
-
-                cgst.setVisibility(View.INVISIBLE);
-                gstValue /= 1;
+                fillHashMap();
             }
         }
     }
 
+    void fillHashMap(){
+        hsmap.put("date", date.getText().toString());
+        hsmap.put("validdate", validdate.getText().toString());
+        hsmap.put("address", address.getText().toString());
+        hsmap.put("company", company.getText().toString());
+        hsmap.put("country", country.getText().toString());
+
+        hsmap.put("finalprice", finalprice.getText().toString());
+        hsmap.put("finalquantity", finalquantity.getText().toString());
+        hsmap.put("finalamount", finalamount.getText().toString());
+
+        Log.v("Products---------", getAllProducts);
+        hsmap.put("products", getAllProducts.toString());
+        hsmap.put("cgst", getCgst.toString());
+        hsmap.put("gst", getGst.toString());
+        hsmap.put("prices", getPrice.toString());
+        hsmap.put("quantities", getQuantity.toString());
+        hsmap.put("hsncode", getHsn.toString());
+        hsmap.put("amount", getAmount.toString());
+    }
+
+    void initialiseLayouts() {
+        date = (TextView) findViewById(R.id.date_tv);
+        validdate = (TextView) findViewById(R.id.validdate_tv);
+        quantity = (TextView) findViewById(R.id.tvquantity);
+
+        name = (TextView) findViewById(R.id.name);
+        address = (TextView) findViewById(R.id.textView19);
+        company = (TextView) findViewById(R.id.textView22);
+        country = (TextView) findViewById(R.id.textView21);
+
+        item = (TextView) findViewById(R.id.tvproduct);
+        hsn = (TextView) findViewById(R.id.tvhsn);
+        gst = (TextView) findViewById(R.id.tvgst);
+        price = (TextView) findViewById(R.id.tvprice);
+
+        finalprice = (TextView) findViewById(R.id.itemsPrice);
+        finalquantity = (TextView) findViewById(R.id.finalQuantity);
+        finalamount = (TextView) findViewById(R.id.finalAmount);
+        finalPayable = (TextView) findViewById(R.id.textView25);
+
+        lyt = (LinearLayout) findViewById(R.id.tableRow2);
+        cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.edit), getResources().getString(R.string.action_edit)));
@@ -253,7 +291,6 @@ public class Invoice extends AppCompatActivity {
                             progressDialog = new ProgressDialog(Invoice.this);
                             progressDialog.setMessage("Please wait");
                             bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
-                            bitmap1 = loadBitmapFromView(cl_pdflayout1, cl_pdflayout1.getWidth(), cl_pdflayout1.getHeight());
                             createPdf();
                         }
                         if (boolean_save) {
@@ -274,6 +311,63 @@ public class Invoice extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private Properties getHashMap(){
+//        HashMap<String, String> hsmap = new HashMap<String, String>();
+//        hsmap.put("date", date.getText().toString());
+//        hsmap.put("validdate", validdate.getText().toString());
+////        hsmap.put("quantity", quantity.getText().toString());
+//        hsmap.put("address", address.getText().toString());
+//        hsmap.put("company", company.getText().toString());
+//        hsmap.put("country", country.getText().toString());
+////        hsmap.put("item", item.getText().toString());
+////        hsmap.put("hsn", hsn.getText().toString());
+////        hsmap.put("gst", gst.getText().toString());
+////        hsmap.put("price", price.getText().toString());
+//        hsmap.put("finalprice", finalprice.getText().toString());
+//        hsmap.put("finalquantity", finalquantity.getText().toString());
+//        hsmap.put("finalamount", finalamount.getText().toString());
+//        hsmap.put("finalamount", finalamount.getText().toString());
+
+        Properties prHsmp = new Properties();
+
+        for(HashMap.Entry<String, String> ent: hsmap.entrySet()){
+            prHsmp.put(ent.getKey(), ent.getValue());
+        }
+        return prHsmp;
+    }
+    @SuppressLint("LongLogTag")
+    private void createTextFile(){
+
+        Properties currentFileInfo = getHashMap();
+        try
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd");
+            Date now = new Date();
+            String fName = formatter.format(now) ;
+
+            targetPdf = "/sdcard/" +  fileName + ".txt";;
+            File root = new File(getFilesDir() + "/", "Report");
+
+            if (!root.exists())
+            {
+                root.mkdirs();
+            }
+            fName = fileName + ".txt";
+            File gpxfile = new File(root, fName);
+            FileWriter writer = new FileWriter(gpxfile,true);
+            currentFileInfo.store(writer, null);
+            writer.flush();
+            writer.close();
+            String path = gpxfile.getAbsolutePath();
+            targetPdf = path;
+            Log.v("FileName::::::::::::::::::::::::::::::", path);
+            Toast.makeText(this, "Data has been written to Report File", Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     private void UploadPdf() {
 
@@ -282,16 +376,26 @@ public class Invoice extends AppCompatActivity {
 
         if (targetPdf == null) {
 
-            Toast.makeText(this, "Please move your. pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
         } else {
             //Uploading code
             try {
                 String uploadId = UUID.randomUUID().toString();
 
+                GlobalVariable gblVar = GlobalVariable.getInstance();
+
+                String emailId = "";
+                if(gblVar.currentUserEmail != null)
+                {
+                    emailId = gblVar.currentUserEmail;
+
+                }
+
                 //Creating a multi part request
                 new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
-                        .addFileToUpload(targetPdf, "pdf") //Adding file
+                        .addFileToUpload(targetPdf, "txt") //Adding file
                         .addParameter("name", name) //Adding text parameter to the request
+                        .addParameter("email", emailId)
                         .setNotificationConfig(new UploadNotificationConfig())
                         .setMaxRetries(2)
                         .startUpload(); //Starting the upload
@@ -318,8 +422,8 @@ public class Invoice extends AppCompatActivity {
         Display display = wm.getDefaultDisplay();
         DisplayMetrics displaymetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        float hight = PageSize.A4.getHeight() ;
-        float width = PageSize.A4.getWidth() ;
+        float hight = displaymetrics.heightPixels ;
+        float width = displaymetrics.widthPixels ;
 
         int convertHighet = (int) hight, convertWidth = (int) width;
 
@@ -338,19 +442,6 @@ public class Invoice extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0 , null);
         document.finishPage(page);
 
-        // Create Page 2
-        pageInfo = new PdfDocument.PageInfo.Builder(convertWidth,convertHighet, 2).create();
-        page = document.startPage(pageInfo);
-        canvas = page.getCanvas();
-        paint = new Paint();
-        canvas.drawPaint(paint);
-
-        bitmap1 = Bitmap.createScaledBitmap(bitmap1, convertWidth, convertHighet, true);
-
-        paint.setColor(Color.BLUE);
-        canvas.drawBitmap(bitmap1, 0, 0 , null);
-        document.finishPage(page);
-
         targetPdf = "/sdcard/" + fileName + ".pdf";
 
         File filePath = new File(targetPdf);
@@ -362,7 +453,6 @@ public class Invoice extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
         }
-
         // close the document
         document.close();
     }

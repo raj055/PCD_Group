@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PCD_Group</string>
+    <string name="app_name">PCDGroup</string>
 
     <string-array name="dropdown_arrays">
         <item>Company</item>
@@ -21,6 +21,7 @@
     <string name="action_brand">Address</string>
     <string name="action_edit">Edit</string>
     <string name="action_pdf">PDF</string>
+    <string name="bill_convert">BILL</string>
 
     <string name="toolbar_title">ClientList</string>
     <string name="action_search">Search</string>

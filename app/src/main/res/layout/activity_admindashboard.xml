@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/imgupload"
         android:layout_alignRight="@+id/imgupload"
-        android:layout_below="@+id/clientregister"
+        android:layout_below="@+id/EmailShow"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"

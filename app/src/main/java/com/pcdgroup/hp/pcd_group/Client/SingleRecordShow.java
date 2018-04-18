@@ -304,5 +304,4 @@ public class SingleRecordShow extends AppCompatActivity {
             TextViewDesignation.setText(DesignationHolder);
         }
     }
-
 }
