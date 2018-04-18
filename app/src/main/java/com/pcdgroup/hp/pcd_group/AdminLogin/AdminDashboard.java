@@ -26,6 +26,7 @@ import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Pdfs;
 import com.pcdgroup.hp.pcd_group.Quotation.PDFViewActivity;
+import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
@@ -108,8 +109,8 @@ public class AdminDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AdminDashboard.this, List_Pdfs.class);
-
+                Intent intent = new Intent(AdminDashboard.this, ShowQuotationList.class);
+                intent.putExtra("emailid", EmailHolder);
                 startActivity(intent);
             }
         });

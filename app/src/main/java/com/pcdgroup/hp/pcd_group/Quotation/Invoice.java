@@ -40,6 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.itextpdf.text.PageSize;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
@@ -67,22 +68,25 @@ import javax.xml.validation.Validator;
 public class Invoice extends AppCompatActivity {
 
     TextView name,address,state,company,country,add1,add2,pin;
-
+    TextView state1,sgst,cgst1;
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
 
     TextView date,validdate, finalPayable;
 
     EditText userAnswer;
+    float gstValue;
+
+    String state_holder,state1_holder;
 
     float totalPrice, totalAmount;
     int totalquantity;
 
     public static int REQUEST_PERMISSIONS = 1;
-    ConstraintLayout cl_pdflayout;
+    ConstraintLayout cl_pdflayout,cl_pdflayout1;
     boolean boolean_permission;
     boolean boolean_save;
-    Bitmap bitmap;
+    Bitmap bitmap,bitmap1;
     ProgressDialog progressDialog;
     HashMap<String, String> hsmap = new HashMap<String, String>();
     public static final String UPLOAD_URL =
@@ -199,6 +203,23 @@ public class Invoice extends AppCompatActivity {
 
                 fillHashMap();
             }
+
+            state_holder = state.getText().toString();
+            state1_holder = state1.getText().toString();
+
+            if (state1_holder.contains(state_holder)){
+
+                sgst.setText("SGST");
+                cgst1.setText("CGST");
+
+            }else
+            {
+                sgst.setVisibility(View.INVISIBLE);
+                cgst1.setText("IGST");
+
+                cgst.setVisibility(View.INVISIBLE);
+                gstValue /= 1;
+            }
         }
     }
 
@@ -230,6 +251,8 @@ public class Invoice extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.name);
         address = (TextView) findViewById(R.id.textView19);
+        state = (TextView)findViewById(R.id.text_state);
+        pin = (TextView)findViewById(R.id.text_pin);
         company = (TextView) findViewById(R.id.textView22);
         country = (TextView) findViewById(R.id.textView21);
 
@@ -245,6 +268,7 @@ public class Invoice extends AppCompatActivity {
 
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
+        cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -291,6 +315,7 @@ public class Invoice extends AppCompatActivity {
                             progressDialog = new ProgressDialog(Invoice.this);
                             progressDialog.setMessage("Please wait");
                             bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
+                            bitmap1 = loadBitmapFromView(cl_pdflayout1, cl_pdflayout1.getWidth(), cl_pdflayout1.getHeight());
                             createPdf();
                         }
                         if (boolean_save) {
@@ -345,7 +370,7 @@ public class Invoice extends AppCompatActivity {
             Date now = new Date();
             String fName = formatter.format(now) ;
 
-            targetPdf = "/sdcard/" +  fileName + ".txt";;
+            targetPdf = "/sdcard/" +  fileName + ".txt";
             File root = new File(getFilesDir() + "/", "Report");
 
             if (!root.exists())
@@ -422,8 +447,8 @@ public class Invoice extends AppCompatActivity {
         Display display = wm.getDefaultDisplay();
         DisplayMetrics displaymetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        float hight = displaymetrics.heightPixels ;
-        float width = displaymetrics.widthPixels ;
+        float hight = PageSize.A4.getHeight() ;
+        float width = PageSize.A4.getWidth() ;
 
         int convertHighet = (int) hight, convertWidth = (int) width;
 
@@ -440,6 +465,19 @@ public class Invoice extends AppCompatActivity {
 
         paint.setColor(Color.BLUE);
         canvas.drawBitmap(bitmap, 0, 0 , null);
+        document.finishPage(page);
+
+        // Create Page 2
+        pageInfo = new PdfDocument.PageInfo.Builder(convertWidth,convertHighet, 2).create();
+        page = document.startPage(pageInfo);
+        canvas = page.getCanvas();
+        paint = new Paint();
+        canvas.drawPaint(paint);
+
+        bitmap1 = Bitmap.createScaledBitmap(bitmap1, convertWidth, convertHighet, true);
+
+        paint.setColor(Color.BLUE);
+        canvas.drawBitmap(bitmap1, 0, 0 , null);
         document.finishPage(page);
 
         targetPdf = "/sdcard/" + fileName + ".pdf";
