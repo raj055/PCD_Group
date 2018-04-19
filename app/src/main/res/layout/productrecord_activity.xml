@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Name : "
                 android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
                 android:id="@+id/p_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="name of product" />
         </TableRow>
 
@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Price: : "
                 android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
                 android:id="@+id/p_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="name of price" />
         </TableRow>
 
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Minimum Value : "
                 android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
                 android:id="@+id/p_minimum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="minimum value" />
         </TableRow>
 
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product GST : "
                 android:textStyle="bold" />
 
@@ -86,7 +86,7 @@
                 android:id="@+id/p_gst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="price of gst" />
         </TableRow>
 
@@ -96,7 +96,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product HsnCode : "
                 android:textStyle="bold" />
 
@@ -104,7 +104,7 @@
                 android:id="@+id/p_hsn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="name of hsncode" />
         </TableRow>
 
@@ -114,7 +114,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Brand : "
                 android:textStyle="bold" />
 
@@ -122,7 +122,7 @@
                 android:id="@+id/p_brand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="name of brand" />
         </TableRow>
 
@@ -132,7 +132,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Stock : "
                 android:textStyle="bold" />
 
@@ -140,7 +140,7 @@
                 android:id="@+id/p_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="name of stock" />
         </TableRow>
 
@@ -150,7 +150,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Recorderlevel : "
                 android:textStyle="bold" />
 
@@ -158,7 +158,7 @@
                 android:id="@+id/p_recordlevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="recordlevel" />
         </TableRow>
 
@@ -168,16 +168,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Product Description : "
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/p_descrition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Descrition" />
+            <TextView />
+
+        </TableRow>
+        <TextView
+            android:id="@+id/p_descrition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Descrition" />
+        <TableRow>
+
         </TableRow>
 
     </TableLayout>

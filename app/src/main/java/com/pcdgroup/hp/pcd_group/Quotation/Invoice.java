@@ -102,6 +102,8 @@ public class Invoice extends AppCompatActivity {
 
         initialiseLayouts();
 
+        state1.setText("maharashtra");
+
         String str;
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -109,10 +111,11 @@ public class Invoice extends AppCompatActivity {
                 // Client
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
 
-                name.setText(clientInfo[0]);
-                str =clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2] + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
-
+                name.setText(clientInfo[7]);
+                str = clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2];
                 address.setText(str);
+                pin.setText(clientInfo[3]);
+                state.setText(clientInfo[4]);
                 company.setText(clientInfo[6]);
                 country.setText(clientInfo[5]);
 
@@ -186,7 +189,7 @@ public class Invoice extends AppCompatActivity {
                     totalAmount += amt;
                     totalquantity += quantityStr;
                 }
-                finalprice.setText(String.valueOf(totalPrice)); ;
+                finalprice.setText(String.valueOf(totalPrice));
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
                 finalPayable.setText(String.valueOf(totalAmount));
@@ -249,12 +252,16 @@ public class Invoice extends AppCompatActivity {
         validdate = (TextView) findViewById(R.id.validdate_tv);
         quantity = (TextView) findViewById(R.id.tvquantity);
 
-        name = (TextView) findViewById(R.id.name);
+        name = (TextView) findViewById(R.id.client_name);
         address = (TextView) findViewById(R.id.textView19);
         state = (TextView)findViewById(R.id.text_state);
         pin = (TextView)findViewById(R.id.text_pin);
         company = (TextView) findViewById(R.id.textView22);
         country = (TextView) findViewById(R.id.textView21);
+
+        state1 = (TextView)findViewById(R.id.text_state1);
+        sgst = (TextView)findViewById(R.id.sgst);
+        cgst1 = (TextView)findViewById(R.id.cgst);
 
         item = (TextView) findViewById(R.id.tvproduct);
         hsn = (TextView) findViewById(R.id.tvhsn);
@@ -269,6 +276,7 @@ public class Invoice extends AppCompatActivity {
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
         cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -399,6 +407,8 @@ public class Invoice extends AppCompatActivity {
         //getting name for the image
         String name = userAnswer.getText().toString().trim();
 
+        createTextFile();
+
         if (targetPdf == null) {
 
             Toast.makeText(this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
@@ -413,9 +423,7 @@ public class Invoice extends AppCompatActivity {
                 if(gblVar.currentUserEmail != null)
                 {
                     emailId = gblVar.currentUserEmail;
-
                 }
-
                 //Creating a multi part request
                 new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
                         .addFileToUpload(targetPdf, "txt") //Adding file
@@ -546,6 +554,5 @@ public class Invoice extends AppCompatActivity {
 //        startActivity(intent);
 
         finish();
-
     }
 }
