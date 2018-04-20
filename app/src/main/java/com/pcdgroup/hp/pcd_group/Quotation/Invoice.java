@@ -221,6 +221,7 @@ public class Invoice extends AppCompatActivity {
                 cgst1.setText("IGST");
 
                 cgst.setVisibility(View.INVISIBLE);
+                cgst.setText(null);
                 gstValue /= 1;
             }
         }
