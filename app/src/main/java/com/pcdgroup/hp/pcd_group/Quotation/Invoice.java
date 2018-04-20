@@ -221,7 +221,6 @@ public class Invoice extends AppCompatActivity {
                 cgst1.setText("IGST");
 
                 cgst.setVisibility(View.INVISIBLE);
-                cgst.setText(null);
                 gstValue /= 1;
             }
         }
@@ -346,21 +345,6 @@ public class Invoice extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private Properties getHashMap(){
-//        HashMap<String, String> hsmap = new HashMap<String, String>();
-//        hsmap.put("date", date.getText().toString());
-//        hsmap.put("validdate", validdate.getText().toString());
-////        hsmap.put("quantity", quantity.getText().toString());
-//        hsmap.put("address", address.getText().toString());
-//        hsmap.put("company", company.getText().toString());
-//        hsmap.put("country", country.getText().toString());
-////        hsmap.put("item", item.getText().toString());
-////        hsmap.put("hsn", hsn.getText().toString());
-////        hsmap.put("gst", gst.getText().toString());
-////        hsmap.put("price", price.getText().toString());
-//        hsmap.put("finalprice", finalprice.getText().toString());
-//        hsmap.put("finalquantity", finalquantity.getText().toString());
-//        hsmap.put("finalamount", finalamount.getText().toString());
-//        hsmap.put("finalamount", finalamount.getText().toString());
 
         Properties prHsmp = new Properties();
 
@@ -550,9 +534,6 @@ public class Invoice extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-//        Intent intent = new Intent(Invoice.this, AdminDashboard.class);
-//        startActivity(intent);
 
         finish();
     }

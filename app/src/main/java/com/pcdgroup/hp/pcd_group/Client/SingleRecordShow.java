@@ -178,7 +178,6 @@ public class SingleRecordShow extends AppCompatActivity {
         ClientDeleteClass.execute(ClientID);
     }
 
-
     //Method to show current record Current Selected Record
     public void HttpWebCall(final String PreviousListViewClickedItem){
 

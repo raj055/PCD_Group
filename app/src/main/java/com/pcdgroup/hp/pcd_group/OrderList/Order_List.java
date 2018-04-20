@@ -57,7 +57,6 @@ public class Order_List extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//        fn_permission();
             String fileUrl = pdfList.get(position).getUrl();
 
             Intent intent = new Intent(Order_List.this, ViewInvoice.class);
@@ -76,15 +75,12 @@ public class Order_List extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-//        progressDialog = ProgressDialog.show(ShowQuotationList.this, "Loading Data", null, true, true);
             }
 
             @Override
             protected void onPostExecute(String httpResponseMsg) {
 
                 super.onPostExecute(httpResponseMsg);
-
-//        progressDialog.dismiss();
 
                 try {
                     JSONObject obj = new JSONObject(httpResponseMsg);
@@ -100,10 +96,8 @@ public class Order_List extends AppCompatActivity {
                         Pdf pdf  = new Pdf();
                         String pdfName = jsonObject.getString("name");
                         String pdfUrl = jsonObject.getString("url");
-//                        String billing = jsonObject.getString("Billed");
                         pdf.setName(pdfName);
                         pdf.setUrl(pdfUrl);
-//                        if(billing.contains("true"))
                             pdfList.add(pdf);
                     }
 
@@ -115,9 +109,6 @@ public class Order_List extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-//        Toast.makeText(ShowQuotationList.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
 
             }
 
@@ -135,7 +126,5 @@ public class Order_List extends AppCompatActivity {
 
         GetPdfList.execute();
     }
-
-
 
 }

@@ -28,7 +28,6 @@ public class ProductListAdapter extends BaseAdapter {
     this.activity = activity;
     this.entityItems = entityItems;
 
-
   }
 
   @Override

@@ -88,14 +88,12 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
         recyclerView.setHasFixedSize(true);
 
-
         // white background notification bar
         whiteNotificationBar(recyclerView);
 
         recyclerViewlayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewlayoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, DividerItemDecoration.VERTICAL, 36));
+
         recyclerView.setAdapter(mAdepter);
 
         // JSON data web call function call from here.

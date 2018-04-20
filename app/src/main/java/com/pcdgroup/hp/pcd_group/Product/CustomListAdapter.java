@@ -2,9 +2,12 @@ package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -32,7 +35,6 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
   private List<Entity> entityItems;
   private ArrayList<Entity> entityItemsfilter;
   private DataAdapterListener listener;
-
   private ImageLoader imageLoader;
 
   public CustomListAdapter(Activity activity, List<Entity> entityItems, ViewImage listener) {

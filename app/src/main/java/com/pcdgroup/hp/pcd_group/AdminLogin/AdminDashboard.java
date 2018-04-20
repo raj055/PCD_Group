@@ -23,12 +23,8 @@ import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
-import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
-import com.pcdgroup.hp.pcd_group.Quotation.List_Pdfs;
-import com.pcdgroup.hp.pcd_group.Quotation.PDFViewActivity;
 import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
 /**
  * @author Grasp

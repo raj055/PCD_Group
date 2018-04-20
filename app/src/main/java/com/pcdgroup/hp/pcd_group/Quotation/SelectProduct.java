@@ -76,7 +76,6 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
 
                 // TODO Auto-generated method stub
 
-//                Intent intent = new Intent(SelectProduct.this,CreateQuotation.class);
                 Intent intent = new Intent();
 
                 // Sending ListView clicked value using intent.
@@ -86,7 +85,6 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
                 intent.putExtra("pgst", pcdata.getGst());
                 intent.putExtra("pprice", pcdata.getPrice());
                 setResult(RESULT_OK, intent);
-//                startActivity(intent);
 
                 finish();
 

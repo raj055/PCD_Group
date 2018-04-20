@@ -31,6 +31,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author Grasp
+ *  @version 1.0 on 28-03-2018.
+ */
+
 public class ShowQuotationList extends AppCompatActivity {
   public String PDF_FETCH_URL = "http://pcddata-001-site1.1tempurl.com/getpdfs.php";
   public String httpUrl = "http://pcddata-001-site1.1tempurl.com/getpdfs.php";
@@ -81,9 +86,7 @@ public class ShowQuotationList extends AppCompatActivity {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//        fn_permission();
-          String fileUrl = pdfList.get(position).getUrl();
-
+        String fileUrl = pdfList.get(position).getUrl();
 
         Intent intent = new Intent(ShowQuotationList.this, ViewInvoice.class);
         intent.putExtra("FileUrl", fileUrl);
@@ -101,15 +104,12 @@ public class ShowQuotationList extends AppCompatActivity {
       protected void onPreExecute() {
         super.onPreExecute();
 
-//        progressDialog = ProgressDialog.show(ShowQuotationList.this, "Loading Data", null, true, true);
       }
 
       @Override
       protected void onPostExecute(String httpResponseMsg) {
 
         super.onPostExecute(httpResponseMsg);
-
-//        progressDialog.dismiss();
 
         try {
           JSONObject obj = new JSONObject(httpResponseMsg);
@@ -140,9 +140,6 @@ public class ShowQuotationList extends AppCompatActivity {
           e.printStackTrace();
         }
 
-
-//        Toast.makeText(ShowQuotationList.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
       }
 
       @Override
@@ -160,82 +157,6 @@ public class ShowQuotationList extends AppCompatActivity {
     GetPdfList GetPdfList = new GetPdfList();
 
     GetPdfList.execute(ClientID);
-  }
-
-  private void getInvoice() {
-
-    progressDialog.setMessage("Fetching Invoices... Please Wait");
-    progressDialog.show();
-    StringRequest stringRequest = new StringRequest(Request.Method.POST, PDF_FETCH_URL,
-
-      new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-
-          progressDialog.dismiss();
-          try {
-            JSONObject obj = new JSONObject(response);
-            Toast.makeText(ShowQuotationList.this, obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-            JSONArray jsonArray = obj.getJSONArray("pdfs");
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-              //Declaring a json object corresponding to every pdf object in our json Array
-              JSONObject jsonObject = jsonArray.getJSONObject(i);
-              //Declaring a Pdf object to add it to the ArrayList  pdfList
-              Pdf pdf = new Pdf();
-              String pdfName = jsonObject.getString("name");
-              String pdfUrl = jsonObject.getString("url");
-              pdf.setName(pdfName);
-              pdf.setUrl(pdfUrl);
-              pdfList.add(pdf);
-
-            }
-
-            pdfAdapter = new PdfAdapter(ShowQuotationList.this, R.layout.list_layout, pdfList);
-
-            listView.setAdapter(pdfAdapter);
-
-            pdfAdapter.notifyDataSetChanged();
-
-          } catch (JSONException e) {
-            e.printStackTrace();
-          }
-        }
-      },
-
-      new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-        }
-      }
-    );
-
-    RequestQueue request = Volley.newRequestQueue(this);
-    request.add(stringRequest);
-
-  }
-
-  private void fn_permission() {
-//    if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)||
-//      (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-//
-//      if ((ActivityCompat.shouldShowRequestPermissionRationale(List_Pdfs.this, Manifest.permission.READ_EXTERNAL_STORAGE))) {
-//      } else {
-//        ActivityCompat.requestPermissions(List_Pdfs.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//          REQUEST_PERMISSIONS);
-//      }
-//
-//      if ((ActivityCompat.shouldShowRequestPermissionRationale(List_Pdfs.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
-//      } else {
-//        ActivityCompat.requestPermissions(List_Pdfs.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//          REQUEST_PERMISSIONS);
-//      }
-//    } else {
-//      boolean_permission = true;
-//
-//    }
   }
 
   @Override

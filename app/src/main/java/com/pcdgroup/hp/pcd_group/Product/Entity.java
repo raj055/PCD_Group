@@ -121,10 +121,9 @@ public class Entity {
   }
 
   public void setReorderlevel(String reorderlevel) {
+
     this.reorderlevel = reorderlevel;
   }
-
-
 
   public String getThumbnailUrl() {
 
@@ -135,6 +134,5 @@ public class Entity {
 
     this.thumbnailUrl = thumbnailUrl;
   }
-
 
 }
