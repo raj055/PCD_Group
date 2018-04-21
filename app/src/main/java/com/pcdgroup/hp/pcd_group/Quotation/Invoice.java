@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,8 @@ public class Invoice extends AppCompatActivity {
 
     TextView date,validdate, finalPayable;
 
+    boolean igst = false;
+
     EditText userAnswer;
     float gstValue;
 
@@ -83,10 +86,10 @@ public class Invoice extends AppCompatActivity {
     int totalquantity;
 
     public static int REQUEST_PERMISSIONS = 1;
-    ConstraintLayout cl_pdflayout,cl_pdflayout1;
+    ConstraintLayout cl_pdflayout;
     boolean boolean_permission;
     boolean boolean_save;
-    Bitmap bitmap,bitmap1;
+    Bitmap bitmap;
     ProgressDialog progressDialog;
     HashMap<String, String> hsmap = new HashMap<String, String>();
     public static final String UPLOAD_URL =
@@ -102,8 +105,6 @@ public class Invoice extends AppCompatActivity {
 
         initialiseLayouts();
 
-        state1.setText("maharashtra");
-
         String str;
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -112,17 +113,14 @@ public class Invoice extends AppCompatActivity {
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
 
                 name.setText(clientInfo[7]);
-                str = clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2];
+                str =clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2] + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
+
                 address.setText(str);
-                pin.setText(clientInfo[3]);
-                state.setText(clientInfo[4]);
                 company.setText(clientInfo[6]);
                 country.setText(clientInfo[5]);
 
                 //Product
                 ArrayList<String[]> PrdList = (ArrayList<String[]>) extras.getSerializable("ProductInfo");
-                String[]   productInfo =  extras.getStringArray("ProductInfo");
-
                 int size = PrdList.size();
 
                 getAllProducts = "";
@@ -133,6 +131,23 @@ public class Invoice extends AppCompatActivity {
                 getQuantity = new String();
                 getAmount = new String();
                 getHsn = new String();
+                state_holder = state.getText().toString();
+                state1_holder = state1.getText().toString();
+
+                if (state1_holder.contains(state_holder)){
+
+//                    sgst.setText("SGST");
+//                    cgst1.setText("CGST");
+
+                }else {
+                    TableRow tblr = (TableRow) findViewById(R.id.tableRow);
+                    tblr.removeView(sgst);
+//                    sgst.setVisibility(View.INVISIBLE);
+                    cgst1.setText("IGST");
+                    igst = true;
+                    //cgst.setVisibility(View.INVISIBLE);
+                    gstValue /= 1;
+                }
 
                 for(int i = 0; i < size; i++){
 
@@ -140,6 +155,7 @@ public class Invoice extends AppCompatActivity {
 
                     View child = (View) getLayoutInflater().inflate(R.layout.product_list, null);
                     lyt.addView(child);
+                    LinearLayout tblRw = (LinearLayout) child.findViewById(R.id.tableRow2);
 
                     item = (TextView)child.findViewById(R.id.tvproduct);
                     hsn = (TextView)child.findViewById(R.id.tvhsn);
@@ -166,14 +182,18 @@ public class Invoice extends AppCompatActivity {
                     Integer quantityStr = Integer.valueOf(stringList[4]);
 
                     float amt = gstValue * priceStr/100 + priceStr;
-                    gstValue /= 2;
+                    if(igst != true)gstValue /= 2;
                     gst.setText(String.valueOf(gstValue));
                     getGst = getGst.concat(String.valueOf(gstValue));
                     getGst = getGst.concat(",");
                     getCgst = getCgst.concat(String.valueOf(gstValue));
                     getCgst = getCgst.concat(",");
-
-                    cgst.setText(String.valueOf(gstValue));
+                    if(igst == true){
+                        tblRw.removeView(cgst);
+                    }
+                    else
+//                        gst.
+                            cgst.setText(String.valueOf(gstValue));
                     amt *= quantityStr;
                     price.setText(stringList[3]);
 
@@ -189,7 +209,7 @@ public class Invoice extends AppCompatActivity {
                     totalAmount += amt;
                     totalquantity += quantityStr;
                 }
-                finalprice.setText(String.valueOf(totalPrice));
+                finalprice.setText(String.valueOf(totalPrice)); ;
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
                 finalPayable.setText(String.valueOf(totalAmount));
@@ -207,22 +227,7 @@ public class Invoice extends AppCompatActivity {
                 fillHashMap();
             }
 
-            state_holder = state.getText().toString();
-            state1_holder = state1.getText().toString();
 
-            if (state1_holder.contains(state_holder)){
-
-                sgst.setText("SGST");
-                cgst1.setText("CGST");
-
-            }else
-            {
-                sgst.setVisibility(View.INVISIBLE);
-                cgst1.setText("IGST");
-
-                cgst.setVisibility(View.INVISIBLE);
-                gstValue /= 1;
-            }
         }
     }
 
@@ -232,6 +237,9 @@ public class Invoice extends AppCompatActivity {
         hsmap.put("address", address.getText().toString());
         hsmap.put("company", company.getText().toString());
         hsmap.put("country", country.getText().toString());
+        hsmap.put("pin", pin.getText().toString());
+        hsmap.put("state", state.getText().toString());
+        hsmap.put("state1", state1.getText().toString());
 
         hsmap.put("finalprice", finalprice.getText().toString());
         hsmap.put("finalquantity", finalquantity.getText().toString());
@@ -275,8 +283,7 @@ public class Invoice extends AppCompatActivity {
 
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
-        cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
-
+//        cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -323,7 +330,6 @@ public class Invoice extends AppCompatActivity {
                             progressDialog = new ProgressDialog(Invoice.this);
                             progressDialog.setMessage("Please wait");
                             bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
-                            bitmap1 = loadBitmapFromView(cl_pdflayout1, cl_pdflayout1.getWidth(), cl_pdflayout1.getHeight());
                             createPdf();
                         }
                         if (boolean_save) {
@@ -378,7 +384,7 @@ public class Invoice extends AppCompatActivity {
             Date now = new Date();
             String fName = formatter.format(now) ;
 
-            targetPdf = "/sdcard/" +  fileName + ".txt";
+            targetPdf = "/sdcard/" +  fileName + ".txt";;
             File root = new File(getFilesDir() + "/", "Report");
 
             if (!root.exists())
@@ -455,8 +461,8 @@ public class Invoice extends AppCompatActivity {
         Display display = wm.getDefaultDisplay();
         DisplayMetrics displaymetrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        float hight = PageSize.A4.getHeight() ;
-        float width = PageSize.A4.getWidth() ;
+        float hight = displaymetrics.heightPixels ;
+        float width = displaymetrics.widthPixels ;
 
         int convertHighet = (int) hight, convertWidth = (int) width;
 
@@ -473,19 +479,6 @@ public class Invoice extends AppCompatActivity {
 
         paint.setColor(Color.BLUE);
         canvas.drawBitmap(bitmap, 0, 0 , null);
-        document.finishPage(page);
-
-        // Create Page 2
-        pageInfo = new PdfDocument.PageInfo.Builder(convertWidth,convertHighet, 2).create();
-        page = document.startPage(pageInfo);
-        canvas = page.getCanvas();
-        paint = new Paint();
-        canvas.drawPaint(paint);
-
-        bitmap1 = Bitmap.createScaledBitmap(bitmap1, convertWidth, convertHighet, true);
-
-        paint.setColor(Color.BLUE);
-        canvas.drawBitmap(bitmap1, 0, 0 , null);
         document.finishPage(page);
 
         targetPdf = "/sdcard/" + fileName + ".pdf";

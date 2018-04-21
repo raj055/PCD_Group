@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,10 +64,10 @@ import java.util.UUID;
 
 public class ViewInvoice  extends AppCompatActivity {
 
-  TextView name,address,state,company,country,add1,add2,pin;
+  TextView name,address,state,company,country,add1,add2,pin,state1;
   HttpParse httpParse = new HttpParse();
 
-  TextView item,hsn,gst,cgst,price,quantity,amount;
+  TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1;
   TextView finalprice, finalquantity, finalamount;
 
   TextView date,validdate, finalPayable;
@@ -86,6 +87,9 @@ public class ViewInvoice  extends AppCompatActivity {
 
   ProgressDialog progressDialog2;
   String finalResult ;
+  boolean igst = false;
+
+  String state_holder,state1_holder;
 
   HashMap<String, String> map = new HashMap<String, String>();
 
@@ -106,11 +110,17 @@ public class ViewInvoice  extends AppCompatActivity {
     validdate = (TextView) findViewById(R.id.validdate_tv);
     quantity = (TextView) findViewById(R.id.tvquantity);
 
-    name = (TextView) findViewById(R.id.name);
+    name = (TextView) findViewById(R.id.client_name);
     address = (TextView) findViewById(R.id.textView19);
     company = (TextView) findViewById(R.id.textView22);
     country = (TextView) findViewById(R.id.textView21);
 
+    state = (TextView)findViewById(R.id.text_state);
+    pin = (TextView)findViewById(R.id.text_pin);
+    sgst = (TextView)findViewById(R.id.sgst);
+    cgst1 = (TextView)findViewById(R.id.cgst);
+
+    state1 = (TextView)findViewById(R.id.text_state1);
     item = (TextView) findViewById(R.id.tvproduct);
     hsn = (TextView) findViewById(R.id.tvhsn);
     gst = (TextView) findViewById(R.id.tvgst);
@@ -126,7 +136,6 @@ public class ViewInvoice  extends AppCompatActivity {
 
     //Allow network in main thread
     StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
 
     String str;
     if (savedInstanceState == null) {
@@ -149,19 +158,39 @@ public class ViewInvoice  extends AppCompatActivity {
           e.printStackTrace();
         }
 
-        name.setText(map.get("name"));
-        date.setText(map.get("date"));
-        validdate.setText(map.get("validdate"));
+        if(map.containsKey("name"))        name.setText(map.get("name"));
+        if(map.containsKey("date"))date.setText(map.get("date"));
+        if(map.containsKey("validdate"))validdate.setText(map.get("validdate"));
+        if(map.containsKey("pin"))pin.setText(map.get("pin"));
+        if(map.containsKey("state"))state.setText(map.get("state"));
+        if(map.containsKey("state1"))state1.setText(map.get("state1"));
 
-        address.setText(map.get("address"));
-        company.setText(map.get("company"));
-        country.setText(map.get("country"));
+        if(map.containsKey("address"))address.setText(map.get("address"));
+        if(map.containsKey("company"))company.setText(map.get("company"));
+        if(map.containsKey("country"))country.setText(map.get("country"));
 
-        finalprice.setText(map.get("finalprice"));
+        if(map.containsKey("finalprice"))finalprice.setText(map.get("finalprice"));
 
         finalquantity.setText(map.get("finalquantity"));
         finalamount.setText(map.get("finalamount"));
         finalPayable.setText(map.get("finalamount"));
+        state_holder = state.getText().toString();
+        state1_holder = state1.getText().toString();
+
+        if (state1_holder.contains(state_holder)){
+
+//                    sgst.setText("SGST");
+//                    cgst1.setText("CGST");
+
+        }else {
+          TableRow tblr = (TableRow) findViewById(R.id.tableRow);
+          tblr.removeView(sgst);
+//                    sgst.setVisibility(View.INVISIBLE);
+          cgst1.setText("IGST");
+          igst = true;
+          //cgst.setVisibility(View.INVISIBLE);
+//          gstValue /= 1;
+        }
 
         String temp;
         String[] productList = new String[0];
@@ -203,11 +232,18 @@ public class ViewInvoice  extends AppCompatActivity {
             quantity = (TextView) child.findViewById(R.id.tvquantity);
             cgst = (TextView) child.findViewById(R.id.sgst);
             amount = (TextView) child.findViewById(R.id.amount);
+            LinearLayout tblRw = (LinearLayout) child.findViewById(R.id.tableRow2);
 
+            if(igst == true){
+              tblRw.removeView(cgst);
+            }
+            else
+
+            cgst.setText(cgstList[i]);
             //product information
             item.setText(productList[i]);
             gst.setText(gstList[i]);
-            cgst.setText(cgstList[i]);
+
             price.setText(pricesList[i]);
             quantity.setText(quantityList[i]);
             amount.setText(amountList[i]);
