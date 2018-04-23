@@ -21,7 +21,6 @@ public class Category {
 	String pan;
 	String gst;
 
-	
 	public Category(String name , String address, String address1, String address2, String pincode,
 					String state, String mobileno, String email, String website, String pan, String gst){
 

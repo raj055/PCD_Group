@@ -47,7 +47,6 @@ public class UploadImage extends AppCompatActivity {
     Spinner gst;
     Button pickImage, upload;
 
-
     private Bitmap bitmap;
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";

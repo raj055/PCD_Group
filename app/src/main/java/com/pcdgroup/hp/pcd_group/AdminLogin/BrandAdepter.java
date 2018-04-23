@@ -56,7 +56,6 @@ public class BrandAdepter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_user, null);
 
-
         //Assign Id'S
         TextView name = (TextView) convertView.findViewById(R.id.title);
 

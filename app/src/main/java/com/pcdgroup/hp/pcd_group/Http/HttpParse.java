@@ -80,14 +80,6 @@ public class HttpParse {
                 FinalHttpData = sb.toString();
                 Log.v("After",FinalHttpData);
 
-//                bufferedReader = new BufferedReader(
-//                  new InputStreamReader(
-//                    httpURLConnection.getInputStream()
-//                  )
-//                );
-//
-//                FinalHttpData = bufferedReader.readLine();
-//                Log.v("DataSent", FinalHttpData);
             }
             else {
                 FinalHttpData = "Something Went Wrong";

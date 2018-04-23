@@ -40,8 +40,6 @@ public class CreateQuotation extends AppCompatActivity {
     public TextView client, textdate, textvaliddate;
     public ListView product;
 
-    String Client_Holder,TextValidDate_Holder,Product_Holder,Quantity_Holder;
-
     Boolean CheckEditText;
     GlobalVariable globalVariable;
     ProductListAdapter itemsAdapter;

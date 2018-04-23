@@ -42,7 +42,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.dataListFiltered = dataAdapters;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -127,7 +126,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView TextviewPin;
         public TextView TextViewEmailID;
         public TextView TextViewDesignation;
-
 
         public ViewHolder(View itemView) {
 

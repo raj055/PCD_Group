@@ -62,6 +62,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
+/**
+ * @author Grasp
+ *  @version 1.0 on 28-03-2018.
+ */
+
 public class ViewInvoice  extends AppCompatActivity {
 
   TextView name,address,state,company,country,add1,add2,pin,state1;

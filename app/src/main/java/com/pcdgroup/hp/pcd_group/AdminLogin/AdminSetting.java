@@ -188,17 +188,9 @@ public class AdminSetting extends AppCompatActivity {
                 Website_Holde = website.getText().toString();
                 GST_Holder = gst.getText().toString();
 
-//                if(CheckEditText) {
 
                     BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder,
                             Pin_Holder, State_Holder, Mobileno_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
-//                }
-//                else {
-//
-//                    // If EditText is empty then this block will execute.
-//                    Toast.makeText(AdminSetting.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-
-//                    }
 
                 finish();
 

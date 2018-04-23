@@ -101,7 +101,6 @@ public class UpdateActivity extends AppCompatActivity {
                     Toast.makeText(UpdateActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
                 }
-
             }
         });
 
