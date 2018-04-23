@@ -9,25 +9,21 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/White">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/White"
+        android:background="@color/White"
             android:id="@+id/cl_pdf">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/logo"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="8dp" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/dert"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"
+                />
 
         <TextView
             android:id="@+id/name"
@@ -97,12 +93,12 @@
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="33dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:srcCompat="@drawable/line" />
+            app:srcCompat="@drawable/line"/>
 
         <TableLayout
             android:id="@+id/tableLayout2"
@@ -257,7 +253,9 @@
 
             </TableRow>
 
-            <TableRow android:layout_height="60dp">
+            <TableRow
+                android:id="@+id/tblrw"
+                android:layout_height="60dp">
 
                 <TextView
                     android:id="@+id/textView16"
@@ -265,50 +263,39 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="VAT: NA \nGSTIN: 27ACWPP7502L1ZU \nService Tax No: NA \nPAN: ACWPP7502L"
-                    android:textSize="10dp"
                     android:textColor="@color/Black"
+                    android:textSize="10dp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="277dp" />
+                    tools:layout_editor_absoluteY="277dp"/>
 
                 <TextView
                     android:id="@+id/textView21"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:textColor="@color/Black"
                     android:text="Country"
+                    android:textColor="@color/Black"
                     android:textSize="10dp"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints,RtlCompat"
                     tools:layout_editor_absoluteX="266dp"
-                    tools:layout_editor_absoluteY="250dp" />
+                    tools:layout_editor_absoluteY="250dp"/>
 
             </TableRow>
 
         </TableLayout>
 
-        </android.support.constraint.ConstraintLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:background="@color/White"
-            android:id="@+id/cl_pdf1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/cl_pdf"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp">
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="33dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/line" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
+            app:srcCompat="@drawable/line"/>
 
             <TableRow
                 android:id="@+id/tableRow"
@@ -401,7 +388,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tableRow"
@@ -562,9 +549,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView24"
                 tools:ignore="MissingConstraints" />
-
-        </android.support.constraint.ConstraintLayout>
-
     </android.support.constraint.ConstraintLayout>
 
 
