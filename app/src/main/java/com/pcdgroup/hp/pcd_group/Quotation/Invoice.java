@@ -113,9 +113,12 @@ public class Invoice extends AppCompatActivity {
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
 
                 name.setText(clientInfo[7]);
-                str =clientInfo[0] + "\n" + clientInfo[1] + "\n"+ clientInfo[2] + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
+                str =clientInfo[0] + "," + "\n" + clientInfo[1] + "," + "\n"+ clientInfo[2];
+//                  + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
 
                 address.setText(str);
+                state.setText(clientInfo[4]);
+                pin.setText(clientInfo[3]);
                 company.setText(clientInfo[6]);
                 country.setText(clientInfo[5]);
 
@@ -233,6 +236,7 @@ public class Invoice extends AppCompatActivity {
 
     void fillHashMap(){
         hsmap.put("date", date.getText().toString());
+        hsmap.put("name", name.getText().toString());
         hsmap.put("validdate", validdate.getText().toString());
         hsmap.put("address", address.getText().toString());
         hsmap.put("company", company.getText().toString());
