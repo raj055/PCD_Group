@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     Button LogIn,Register ;
     String PasswordHolder, EmailHolder;
     String finalResult;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/UserLogin.php";
+    String HttpURL = "http://dert.co.in/gFiles/UserLogin.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();

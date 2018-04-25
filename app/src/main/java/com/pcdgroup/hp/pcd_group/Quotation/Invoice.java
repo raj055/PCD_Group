@@ -93,7 +93,7 @@ public class Invoice extends AppCompatActivity {
     ProgressDialog progressDialog;
     HashMap<String, String> hsmap = new HashMap<String, String>();
     public static final String UPLOAD_URL =
-                                    "http://pcddata-001-site1.1tempurl.com/uploadtxtfile.php";
+                                    "http://dert.co.in/gFiles/uploadtxtfile.php";
     String fileName, targetPdf;
     LinearLayout lyt;
     String getAllProducts, getGst, getCgst, getPrice, getQuantity, getAmount, getHsn;

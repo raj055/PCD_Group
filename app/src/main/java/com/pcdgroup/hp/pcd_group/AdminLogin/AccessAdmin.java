@@ -63,8 +63,8 @@ public class AccessAdmin extends AppCompatActivity {
 
     String accessValue = "";
     String finalResult;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/accessuserdetails.php";
-    String HttpURL2 = "http://pcddata-001-site1.1tempurl.com/updateuserdetails.php";
+    String HttpURL = "http://dert.co.in/gFiles/accessuserdetails.php";
+    String HttpURL2 = "http://dert.co.in/gFiles/updateuserdetails.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

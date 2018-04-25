@@ -56,7 +56,7 @@ public class ViewImage extends AppCompatActivity implements CustomListAdapter.Da
 
     ListView listView;
     CustomListAdapter adapter;
-    String HttpURL1 = "http://pcddata-001-site1.1tempurl.com/fimage.php";
+    String HttpURL1 = "http://dert.co.in/gFiles/fimage.php";
     InputStream is = null;
     String line = null;
     String result = null;

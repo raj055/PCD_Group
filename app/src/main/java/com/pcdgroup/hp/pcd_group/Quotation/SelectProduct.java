@@ -41,7 +41,7 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
 
     ListView listView;
     ProductCustomListAdapter adapter;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/fimage.php";
+    String HttpURL = "http://dert.co.in/gFiles/fimage.php";
     InputStream is = null;
     String line = null;
     String result = null;

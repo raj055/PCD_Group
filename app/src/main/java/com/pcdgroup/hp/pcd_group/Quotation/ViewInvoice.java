@@ -99,9 +99,9 @@ public class ViewInvoice  extends AppCompatActivity {
   HashMap<String, String> map = new HashMap<String, String>();
 
   // Http Url For adding the bills to the admin.
-  String HttpURL = "http://pcddata-001-site1.1tempurl.com/updatebill.php";
+  String HttpURL = "http://dert.co.in/gFiles/updatebill.php";
 
-  public static final String UPLOAD_URL = "http://pcddata-001-site1.1tempurl.com/server_upload_bills.php";
+  public static final String UPLOAD_URL = "http://dert.co.in/gFiles/server_upload_bills.php";
   String fileName, targetPdf;
   String fileUrl ;
 
@@ -163,7 +163,7 @@ public class ViewInvoice  extends AppCompatActivity {
           e.printStackTrace();
         }
 
-        if(map.containsKey("name"))        name.setText(map.get("name"));
+        if(map.containsKey("name"))name.setText(map.get("name"));
         if(map.containsKey("date"))date.setText(map.get("date"));
         if(map.containsKey("validdate"))validdate.setText(map.get("validdate"));
         if(map.containsKey("pin"))pin.setText(map.get("pin"));

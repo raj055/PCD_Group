@@ -28,7 +28,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     Button LogIn;
     String PasswordHolder, EmailHolder;
     String finalResult ;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/admin.php";
+    String HttpURL = "http://dert.co.in/gFiles/admin.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();

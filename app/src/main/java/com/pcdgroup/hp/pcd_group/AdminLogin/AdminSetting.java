@@ -62,9 +62,9 @@ public class AdminSetting extends AppCompatActivity {
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
 
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/brandadd.php";
+    String HttpURL = "http://dert.co.in/gFiles/brandadd.php";
 
-    String HttpURL_get = "http://pcddata-001-site1.1tempurl.com/listbrands.php";
+    String HttpURL_get = "http://dert.co.in/gFiles/listbrands.php";
 
     View promptUserView;
 

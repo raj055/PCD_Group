@@ -62,7 +62,7 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
 
     RequestQueue requestQueue ;
 
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/ClientDataShow.php";
+    String HttpURL = "http://dert.co.in/gFiles/ClientDataShow.php";
 
     View ChildView ;
 

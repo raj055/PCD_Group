@@ -31,10 +31,10 @@ public class ProductSingleRecord extends AppCompatActivity {
     ProgressDialog pDialog;
 
     // Http Url For Filter product Data from Id Sent from previous activity.
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/filterproductdata.php";
+    String HttpURL = "http://dert.co.in/gFiles/filterproductdata.php";
 
     // Http URL for delete Already Open product Record.
-    String HttpUrlDeleteRecord = "http://pcddata-001-site1.1tempurl.com/deleteproduct.php";
+    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteproduct.php";
 
     String finalResult ;
     HashMap<String,String> hashMap = new HashMap<>();

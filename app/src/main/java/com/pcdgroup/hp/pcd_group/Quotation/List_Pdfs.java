@@ -59,7 +59,7 @@ import java.util.UUID;
 
 public class List_Pdfs extends AppCompatActivity {
 
-    public static final String PDF_FETCH_URL = "http://pcddata-001-site1.1tempurl.com/getPdfs.php";
+    public static final String PDF_FETCH_URL = "http://dert.co.in/gFiles/getPdfs.php";
 
     ListView listView;
     Button buttonFetch;

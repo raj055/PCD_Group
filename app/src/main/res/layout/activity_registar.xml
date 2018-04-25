@@ -21,18 +21,18 @@
         android:textColor="#D2691E"/>
 
     <EditText
+        android:id="@+id/editTextF_Name"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#D8BFD8"
-        android:inputType="textPersonName"
-        android:ems="10"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/editTextF_Name"
-        android:hint="Enter Your First Name"
+        android:background="#D8BFD8"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:ems="10"
         android:gravity="center"
-        />
+        android:hint="Enter Your First Name"
+        android:inputType="textPersonName" />
 
     <EditText
         android:layout_width="fill_parent"

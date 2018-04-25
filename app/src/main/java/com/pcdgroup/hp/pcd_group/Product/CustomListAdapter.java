@@ -92,14 +92,14 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
     title.setText(m.getTitle());
 
     // price & Quantity
-    price.setText("Price: \u20B9 " + String.valueOf(m.getPrice()));
+    price.setText("Price : \u20B9" + String.valueOf(m.getPrice()));
     minimum.setText("Minimum Value : " + String.valueOf(m.getMinimum()));
-    hsncode.setText("Hsncode:" +String.valueOf(m.getHsncode()));
-    brand.setText("Brand :" +String.valueOf(m.getBrand()));
-    gst.setText("GST :" + String.valueOf(m.getGst()));
-    description.setText("Description:" +String.valueOf(m.getDescription()));
-    stock.setText("Stock:" +String.valueOf(m.getstock()));
-    reorderlevel.setText("Recorderlevel:" +String.valueOf(m.getReorderlevel()));
+    hsncode.setText("Hsncode :" +String.valueOf(m.getHsncode()));
+    brand.setText("Brand : " +String.valueOf(m.getBrand()));
+    gst.setText("GST : " + String.valueOf(m.getGst()));
+    description.setText("Description : " +String.valueOf(m.getDescription()));
+    stock.setText("Stock : " +String.valueOf(m.getstock()));
+    reorderlevel.setText("Recorderlevel : " +String.valueOf(m.getReorderlevel()));
     return convertView;
   }
 

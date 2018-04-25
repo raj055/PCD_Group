@@ -58,7 +58,7 @@ public class UploadImage extends AppCompatActivity {
     private String KEY_Description = "Description";
     private String KEY_Stock = "Stock";
     private String KEY_Reorderlevel = "Reorderlevel";
-    private String UPLOAD_URL ="http://pcddata-001-site1.1tempurl.com/upload.php";
+    private String UPLOAD_URL ="http://dert.co.in/gFiles/upload.php";
 
     private int PICK_IMAGE_REQUEST = 1;
 

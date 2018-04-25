@@ -31,10 +31,10 @@ public class SingleRecordShow extends AppCompatActivity {
     ProgressDialog pDialog;
 
     // Http Url For Filter Client Data from Id Sent from previous activity.
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/filterclientdata.php";
+    String HttpURL = "http://dert.co.in/gFiles/filterclientdata.php";
 
     // Http URL for delete Already Open Client Record.
-    String HttpUrlDeleteRecord = "http://pcddata-001-site1.1tempurl.com/DeleteClient.php";
+    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/DeleteClient.php";
 
     String finalResult ;
     HashMap<String,String> hashMap = new HashMap<>();

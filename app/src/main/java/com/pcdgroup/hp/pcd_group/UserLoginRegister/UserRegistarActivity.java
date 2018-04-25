@@ -28,7 +28,7 @@ public class UserRegistarActivity extends AppCompatActivity {
     String F_Name_Holder, L_Name_Holder, EmailHolder, PasswordHolder;
     String emailPattern;
     String finalResult ;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/UserRegistration.php";
+    String HttpURL = "http://dert.co.in/gFiles/UserRegistration.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();

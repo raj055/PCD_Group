@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class ProductUpdate extends AppCompatActivity {
 
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/updateproductdetails.php";
+    String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;

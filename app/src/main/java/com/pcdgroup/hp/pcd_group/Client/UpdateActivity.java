@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/updateclientdetails.php";
+    String HttpURL = "http://dert.co.in/gFiles/updateclientdetails.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;

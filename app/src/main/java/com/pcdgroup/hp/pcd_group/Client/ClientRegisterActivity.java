@@ -34,7 +34,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
     Button submit;
     String Name_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder;
     String finalResult;
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/ClientDetails.php";
+    String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();

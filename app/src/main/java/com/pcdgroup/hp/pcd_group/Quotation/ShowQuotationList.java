@@ -37,8 +37,8 @@ import java.util.HashMap;
  */
 
 public class ShowQuotationList extends AppCompatActivity {
-  public String PDF_FETCH_URL = "http://pcddata-001-site1.1tempurl.com/getpdfs.php";
-  public String httpUrl = "http://pcddata-001-site1.1tempurl.com/getpdfs.php";
+  public String PDF_FETCH_URL = "http://dert.co.in/gFiles/getpdfs.php";
+  public String httpUrl = "http://dert.co.in/gFiles/getpdfs.php";
   ListView listView;
   Button buttonFetch;
   ProgressDialog progressDialog;
