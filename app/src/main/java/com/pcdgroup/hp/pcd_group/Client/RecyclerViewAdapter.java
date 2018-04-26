@@ -1,15 +1,23 @@
 package com.pcdgroup.hp.pcd_group.Client;
 
 import android.content.Context;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.SparseBooleanArray;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.pcdgroup.hp.pcd_group.Quotation.ClientDataAdapter;
 import com.pcdgroup.hp.pcd_group.Quotation.SelectClient;
@@ -34,12 +42,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private DataAdapterListener listener;
 
+    private SparseBooleanArray selectedItems;
+
+    // array used to perform multiple animation at once
+    private SparseBooleanArray animationItemsIndex;
+    private boolean reverseAllAnimations = false;
+
+    // index is used to animate only the selected row
+    // dirty fix, find a better solution
+    private static int currentSelectedIndex = -1;
+
     public RecyclerViewAdapter(ClientDetailsActivity clientDetailsActivity, List<DataAdapter> dataAdapters, ClientDetailsActivity listener) {
 
         this.context = clientDetailsActivity;
         this.listener = listener;
         this.dataAdapters = dataAdapters;
         this.dataListFiltered = dataAdapters;
+
+        selectedItems = new SparseBooleanArray();
+        animationItemsIndex = new SparseBooleanArray();
     }
 
     @Override
@@ -70,6 +91,56 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.TextViewEmailID.setText(dataAdapter.getEmailid());
         viewHolder.TextViewDesignation.setText(dataAdapter.getDesignation());
 
+        // change the row state to activated
+        viewHolder.itemView.setActivated(selectedItems.get(position, false));
+
+        // handle icon animation
+        applyIconAnimation(viewHolder, position);
+
+        // apply click events
+        applyClickEvents(viewHolder, position);
+    }
+
+    private void applyClickEvents(ViewHolder holder, final int position) {
+        holder.iconContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onIconClicked(position);
+            }
+        });
+    }
+
+    private void applyIconAnimation(ViewHolder holder, int position) {
+        if (selectedItems.get(position, false)) {
+            holder.iconFront.setVisibility(View.GONE);
+            resetIconYAxis(holder.iconBack);
+            holder.iconBack.setVisibility(View.VISIBLE);
+            holder.iconBack.setAlpha(1);
+            if (currentSelectedIndex == position) {
+                FlipAnimator.flipView(context, holder.iconBack, holder.iconFront, true);
+                resetCurrentIndex();
+            }
+        } else {
+            holder.iconBack.setVisibility(View.GONE);
+            resetIconYAxis(holder.iconFront);
+            holder.iconFront.setVisibility(View.VISIBLE);
+            holder.iconFront.setAlpha(1);
+            if ((reverseAllAnimations && animationItemsIndex.get(position, false)) || currentSelectedIndex == position) {
+                FlipAnimator.flipView(context, holder.iconBack, holder.iconFront, false);
+                resetCurrentIndex();
+            }
+        }
+    }
+
+    private void resetIconYAxis(View view) {
+        if (view.getRotationY() != 0) {
+            view.setRotationY(0);
+        }
+    }
+
+    public void resetAnimationIndex() {
+        reverseAllAnimations = false;
+        animationItemsIndex.clear();
     }
 
     @Override
@@ -77,6 +148,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         return dataListFiltered.size();
     }
+
+    public void toggleSelection(int pos) {
+        currentSelectedIndex = pos;
+        if (selectedItems.get(pos, false)) {
+            selectedItems.delete(pos);
+            animationItemsIndex.delete(pos);
+        } else {
+            selectedItems.put(pos, true);
+            animationItemsIndex.put(pos, true);
+        }
+        notifyItemChanged(pos);
+    }
+
+    public void clearSelections() {
+        reverseAllAnimations = true;
+        selectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public int getSelectedItemCount() {
+        return selectedItems.size();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items =
+                new ArrayList<>(selectedItems.size());
+        for (int i = 0; i < selectedItems.size(); i++) {
+            items.add(selectedItems.keyAt(i));
+        }
+        return items;
+    }
+
+    public void removeData(int position) {
+        dataAdapters.remove(position);
+        resetCurrentIndex();
+    }
+
+    private void resetCurrentIndex() {
+        currentSelectedIndex = -1;
+    }
+
 
     @Override
     public Filter getFilter() {
@@ -112,7 +224,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         };
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
 
         public TextView TextViewName;
         public TextView TextViewType;
@@ -126,6 +238,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView TextviewPin;
         public TextView TextViewEmailID;
         public TextView TextViewDesignation;
+        public RelativeLayout iconContainer, iconBack, iconFront;
 
         public ViewHolder(View itemView) {
 
@@ -144,17 +257,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             TextViewEmailID = (TextView) itemView.findViewById(R.id.tvemailid) ;
             TextViewDesignation = (TextView) itemView.findViewById(R.id.tvdesignation) ;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // send selected contact in callback
-                    listener.onDataSelected(dataListFiltered.get(getAdapterPosition()));
-                }
-            });
+            iconBack = (RelativeLayout) itemView.findViewById(R.id.icon_back);
+            iconFront = (RelativeLayout) itemView.findViewById(R.id.icon_front);
+            iconContainer = (RelativeLayout) itemView.findViewById(R.id.icon_container);
+
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            listener.onRowLongClicked(getAdapterPosition());
+            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            return true;
         }
     }
 
     public interface DataAdapterListener {
         void onDataSelected(DataAdapter dataAdapter);
+
+        void onIconClicked(int position);
+
+        void onRowLongClicked(int adapterPosition);
+
+        void onIconImportantClicked(int position);
+
+        void onMessageRowClicked(int position);
     }
 }

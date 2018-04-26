@@ -3,16 +3,30 @@ package com.pcdgroup.hp.pcd_group.Product;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
+import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,10 +72,15 @@ public class ProductSingleRecord extends AppCompatActivity {
 
     String EmailHolders,user;
 
+    Intent intent;
+    GlobalVariable gblVar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.productrecord_activity);
+
+        gblVar = GlobalVariable.getInstance();
 
         Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");
@@ -300,5 +319,44 @@ public class ProductSingleRecord extends AppCompatActivity {
             TextViewRecordlevel.setText(RecordlevelHolder);
             TextviewGst.setText(GstHolder);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.home) {
+            if (gblVar.admin.contains("Admin")) {
+
+                intent = new Intent(this, AdminDashboard.class);
+
+            }else {
+
+                intent = new Intent(this, UserDashbord.class);
+            }
+
+            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private CharSequence menuIconWithText(Drawable r, String title) {
+
+        r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
+        SpannableString sb = new SpannableString(" " + title);
+        ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
+        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return sb;
     }
 }

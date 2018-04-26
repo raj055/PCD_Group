@@ -1,6 +1,7 @@
 package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
@@ -26,12 +28,14 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
+import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
 
@@ -45,6 +49,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -53,6 +58,20 @@ import java.util.List;
  */
 
 public class ViewImage extends AppCompatActivity implements CustomListAdapter.DataAdapterListener {
+
+    HttpParse httpParse = new HttpParse();
+    String finalResult ;
+    HashMap<String,String> hashMap = new HashMap<>();
+    String IdHolder;
+
+    // Http URL for delete Already Open Client Record.
+    String HttpUrlDeleteRecord = "http://pcddata-001-site1.1tempurl.com/DeleteClient.php";
+
+    ProgressDialog progressDialog2;
+    RecyclerView recyclerView;
+
+//    private ActionModeCallback actionModeCallback;
+    private android.support.v7.view.ActionMode actionMode;
 
     ListView listView;
     CustomListAdapter adapter;
@@ -92,7 +111,9 @@ public class ViewImage extends AppCompatActivity implements CustomListAdapter.Da
         // white background notification bar
         whiteNotificationBar(listView);
 
-        adapter = new CustomListAdapter(this, localEntity,this);
+//        actionModeCallback = new ActionModeCallback();
+
+        adapter = new CustomListAdapter(this,this, localEntity,this);
         listView.setAdapter(adapter);
 
         //Allow network in main thread
@@ -265,7 +286,159 @@ public class ViewImage extends AppCompatActivity implements CustomListAdapter.Da
     }
 
     @Override
+    public void onDataSelected(DataAdapter dataAdapter) {
+
+    }
+
+    @Override
     public void onDataSelected(Entity dataAdapter) {
 
+    }
+
+
+    @Override
+    public void onIconClicked(int position) {
+        /*if (actionMode == null) {
+            actionMode = startSupportActionMode(actionModeCallback);
+        }
+
+        toggleSelection(position);*/
+    }
+
+    @Override
+    public void onRowLongClicked(int position) {
+        // long press is performed, enable action mode
+//        enableActionMode(position);
+    }
+
+    private void enableActionMode(int position) {
+        /*if (actionMode == null) {
+            actionMode = startSupportActionMode(actionModeCallback);
+        }
+        toggleSelection(position);*/
+    }
+
+    private void toggleSelection(int position) {
+       /* adapter.toggleSelection(position);
+        int count = adapter.getSelectedItemCount();
+
+        if (count == 0) {
+            actionMode.finish();
+        } else {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }*/
+    }
+
+    @Override
+    public void onIconImportantClicked(int position) {
+       /* // Star icon is clicked,
+        // mark the message as important
+        Entity message = localEntity.get(position);
+        localEntity.set(position, message);
+        adapter.notifyDataSetChanged();*/
+    }
+
+    @Override
+    public void onMessageRowClicked(int position) {
+       /* // verify whether action mode is enabled or not
+        // if enabled, change the row state to activated
+        if (adapter.getSelectedItemCount() > 0) {
+            enableActionMode(position);
+        } else {
+            // read the message which removes bold from the row
+            Entity message = localEntity.get(position);
+            localEntity.set(position, message);
+            adapter.notifyDataSetChanged();
+        }*/
+    }
+
+   /* private class ActionModeCallback implements android.support.v7.view.ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.menu_contextual_mode, menu);
+
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_delete:
+                    // delete all the selected messages
+                    deleteMessages();
+                    mode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+            adapter.clearSelections();
+            actionMode = null;
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.resetAnimationIndex();
+                    // mAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }*/
+
+    // deleting the messages from recycler view
+    private void deleteMessages() {
+        adapter.resetAnimationIndex();
+        List<Integer> selectedItemPositions =
+                adapter.getSelectedItems();
+        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+            adapter.removeData(selectedItemPositions.get(i));
+        }
+        adapter.notifyDataSetChanged();
+
+        /*class ClientDeleteClass extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                progressDialog2 = ProgressDialog.show(ClientDetailsActivity.this, "Loading Data",
+                        null, true, true);
+            }
+
+            @Override
+            protected void onPostExecute(String httpResponseMsg) {
+
+                super.onPostExecute(httpResponseMsg);
+
+                progressDialog2.dismiss();
+
+                Toast.makeText(ClientDetailsActivity.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                // Sending Client id.
+                hashMap.put("id",IdHolder);
+
+                finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
+
+                return finalResult;
+            }
+        }
+
+        ClientDeleteClass ClientDeleteClass = new ClientDeleteClass();
+
+        ClientDeleteClass.execute(ClientID);*/
     }
 }

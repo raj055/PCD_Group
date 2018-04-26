@@ -1,15 +1,23 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.shockwave.pdfium.PdfDocument;
 
 import java.io.File;
@@ -29,11 +37,15 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     int position=-1;
 
     String saveName;
+    Intent intent;
+    GlobalVariable gblVar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
+
+        gblVar = GlobalVariable.getInstance();
 
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -92,4 +104,34 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.home) {
+            if (gblVar.admin.contains("Admin")) {
+
+                intent = new Intent(this, AdminDashboard.class);
+
+            }else {
+
+                intent = new Intent(this, UserDashbord.class);
+            }
+
+            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

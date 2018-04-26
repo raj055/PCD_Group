@@ -48,7 +48,6 @@
         <activity android:name=".Product.ProductUpdate" android:label="PCD_Group" />
         <activity android:name=".AdminLogin.AccessAdmin" android:label="PCD_Group" />
 
-
     </application>
 
 </manifest>

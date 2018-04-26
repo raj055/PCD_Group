@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,10 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -343,5 +347,26 @@ public class AdminSetting extends AppCompatActivity {
         });
         android.app.AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.home) {
+            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AdminSetting.this, AdminDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,17 +5,22 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.Quotation.PdfAdapter;
 import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.Quotation.ViewInvoice;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,4 +132,24 @@ public class Order_List extends AppCompatActivity {
         GetPdfList.execute();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.home) {
+            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Order_List.this, AdminDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

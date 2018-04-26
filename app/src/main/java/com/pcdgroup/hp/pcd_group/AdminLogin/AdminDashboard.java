@@ -2,10 +2,12 @@ package com.pcdgroup.hp.pcd_group.AdminLogin;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -35,7 +37,7 @@ public class AdminDashboard extends AppCompatActivity {
 
     Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist;
     TextView EmailShow;
-    String EmailHolder;
+    public static String EmailHolder = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(AdminDashboard.this, ClientDetailsActivity.class);
-
+                intent.putExtra("emailid", EmailHolder);
                 startActivity(intent);
             }
         });
