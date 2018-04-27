@@ -57,7 +57,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     RequestQueue requestQueue ;
 
-    String HttpURL = "http://pcddata-001-site1.1tempurl.com/ClientDataShow.php";
+    String HttpURL = "http://dert.co.in/gFiles/ClientDataShow.php";
 
     View ChildView ;
 
