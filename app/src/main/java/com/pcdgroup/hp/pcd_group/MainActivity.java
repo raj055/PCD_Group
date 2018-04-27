@@ -27,6 +27,7 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AdminLoginActivity;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
+    GlobalVariable gblVar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         Password = (EditText)findViewById(R.id.password);
         LogIn = (Button)findViewById(R.id.Login);
         Register = (Button)findViewById(R.id.register);
+
+        gblVar = GlobalVariable.getInstance();
 
         LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,11 +206,12 @@ public class MainActivity extends AppCompatActivity {
                               Log.v("To be","in Adming mode" );
                               Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
 
-                              intent.putExtra(UserEmail, email);
-
+                              intent.putExtra(UserEmail , email);
+                              gblVar.admin = accessType.toString();
                               startActivity(intent);
 
                               finish();
+
 
                           }
                           else{
@@ -237,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
                 hashMap.put("password",params[1]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
+
+                gblVar.admin = Email.getText().toString();
 
                 return finalResult;
             }

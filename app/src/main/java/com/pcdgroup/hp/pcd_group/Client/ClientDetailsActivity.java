@@ -57,7 +57,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     RequestQueue requestQueue ;
 
-    String HttpURL = "http://dert.co.in/gFiles/ClientDataShow.php";
+    String HttpURL = "http://pcddata-001-site1.1tempurl.com/ClientDataShow.php";
 
     View ChildView ;
 
@@ -304,6 +304,26 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     @Override
     public void onDataSelected(DataAdapter dataAdapter) {
+
+    }
+
+    @Override
+    public void onIconClicked(int position) {
+
+    }
+
+    @Override
+    public void onRowLongClicked(int adapterPosition) {
+
+    }
+
+    @Override
+    public void onIconImportantClicked(int position) {
+
+    }
+
+    @Override
+    public void onMessageRowClicked(int position) {
 
     }
 }

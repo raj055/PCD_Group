@@ -10,6 +10,8 @@ import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -272,5 +275,26 @@ public class AccessAdmin extends AppCompatActivity {
         UserAccessUpdate UpdateClass = new UserAccessUpdate();
 
         UpdateClass.execute( ClientEmailHolder, ClientAccessHolder);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.home) {
+            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AccessAdmin.this, AdminDashboard.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

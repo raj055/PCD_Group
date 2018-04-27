@@ -13,9 +13,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_admin">Admin</string>
-    <string name="delete">Delete</string>
-
     <string name="action_settings">Settings</string>
     <string name="action_address">Address</string>
     <string name="action_access">Address</string>
@@ -23,6 +20,10 @@
     <string name="action_edit">Edit</string>
     <string name="action_pdf">PDF</string>
     <string name="bill_convert">BILL</string>
+
+    <string name="action_admin">Admin</string>
+
+    <string name="action_home">Home</string>
 
     <string name="toolbar_title">ClientList</string>
     <string name="action_search">Search</string>
@@ -73,6 +74,12 @@
         <item>18%</item>
         <item>28%</item>
     </string-array>
+
+
+    <!--  Action Mode Menu Items -->
+    <string name="delete">Delete</string>
+    <string name="copy">Copy</string>
+    <string name="forward">Forward</string>
 
 
 </resources>

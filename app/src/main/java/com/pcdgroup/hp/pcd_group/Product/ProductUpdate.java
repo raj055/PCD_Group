@@ -1,17 +1,24 @@
 package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import java.util.HashMap;
 
@@ -34,11 +41,15 @@ public class ProductUpdate extends AppCompatActivity {
     String productIdHolder,productNameHolder,productPriceHolder,productMinimumHolder,productHsncodeHolder,
             productBeandHolder,productDescriptionHolder,productStockHolder, productRecordlevelHolder,
             productGstHolder;
+    Intent intent;
+    GlobalVariable gblVar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_product);
+
+        gblVar = GlobalVariable.getInstance();
 
         productName = (EditText)findViewById(R.id.editText_name);
         productPrice = (EditText)findViewById(R.id.editText_price);
@@ -186,6 +197,35 @@ public class ProductUpdate extends AppCompatActivity {
                 productHsncodeHolder, productBeandHolder,
                 productDescriptionHolder, productStockHolder, productRecordlevelHolder,
                 productGstHolder);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id==R.id.home) {
+            if (gblVar.admin.contains("Admin")) {
+
+                intent = new Intent(this, AdminDashboard.class);
+
+            }else {
+
+                intent = new Intent(this, UserDashbord.class);
+            }
+
+            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -3,16 +3,28 @@ package com.pcdgroup.hp.pcd_group.Client;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.MainActivity;
+import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +58,9 @@ public class SingleRecordShow extends AppCompatActivity {
     Button UpdateButton, DeleteButton;
     ProgressDialog progressDialog2;
 
+    Intent intent;
+    GlobalVariable gblVar;
+
     public TextView TextViewName;
     public TextView TextViewAddress;
     public TextView TextviewAddressline1;
@@ -62,6 +77,8 @@ public class SingleRecordShow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_record);
+
+        gblVar = GlobalVariable.getInstance();
 
         TextViewName = (TextView) findViewById(R.id.tvname) ;
         TextViewAddress = (TextView) findViewById(R.id.tvaddress) ;
@@ -303,4 +320,36 @@ public class SingleRecordShow extends AppCompatActivity {
             TextViewDesignation.setText(DesignationHolder);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+            if(id==R.id.home) {
+
+                if (gblVar.admin.contains("Admin")) {
+
+                    intent = new Intent(this, AdminDashboard.class);
+
+                }else {
+
+                    intent = new Intent(this, UserDashbord.class);
+                }
+
+                Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

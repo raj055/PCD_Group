@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
@@ -41,13 +42,13 @@ public class UserDashbord extends AppCompatActivity {
         setContentView(R.layout.activity_dashbord);
 
         //Assign Id'S
-        LogOut = (Button)findViewById(R.id.button);
-        Client_Details = (Button)findViewById(R.id.clientdetails);
-        Product = (Button)findViewById(R.id.imgupload);
-        Invoice = (Button)findViewById(R.id.btn_invoice);
+        LogOut = (Button) findViewById(R.id.button);
+        Client_Details = (Button) findViewById(R.id.clientdetails);
+        Product = (Button) findViewById(R.id.imgupload);
+        Invoice = (Button) findViewById(R.id.btn_invoice);
         Quotation = (Button) findViewById(R.id.ul_quotation);
 
-        EmailShow = (TextView)findViewById(R.id.EmailShow);
+        EmailShow = (TextView) findViewById(R.id.EmailShow);
         EmailShow.setText(mUsername);
 
 
