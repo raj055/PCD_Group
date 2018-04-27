@@ -81,7 +81,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             }
         });
 
-
         DataAdapters = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView1);
         mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
