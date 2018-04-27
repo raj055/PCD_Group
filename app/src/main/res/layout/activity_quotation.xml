@@ -12,19 +12,45 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Address : "
+            android:textColor="@color/Black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/spinner5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:entries="@array/dropdown_brand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/address"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:focusedByDefault="true"
             android:text="Client"
             android:textSize="25dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address"
             tools:ignore="MissingConstraints" />
 
         <TextView

@@ -76,7 +76,7 @@ public class AccessAdmin extends AppCompatActivity {
 
         userDataGets = new ArrayList<UserDataGet>();
         tempStoreDataValues = new ArrayList<UserDataGet>();
-        listView = (ListView) findViewById(R.id.lstv);
+        listView = (ListView) findViewById(R.id.lstv1);
         done = (Button) findViewById(R.id.btn_done);
 
         adepter = new UserAdminAdepter(this, userDataGets);

@@ -224,7 +224,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         };
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
 
         public TextView TextViewName;
         public TextView TextViewType;

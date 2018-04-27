@@ -28,7 +28,5 @@ public class GlobalVariable {
     public  String[] globalProduct = new String[5];
 
     public String admin;
-    public String User;
-
 
 }
