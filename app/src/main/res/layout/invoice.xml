@@ -359,7 +359,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:textColor="@color/Black"
-                    android:text=""
+                    android:text="SGST"
                     android:textSize="8dp"
                     android:textStyle="bold" />
 
@@ -369,7 +369,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:textColor="@color/Black"
-                    android:text=""
+                    android:text="CGST"
                     android:textSize="8dp"
                     android:textStyle="bold" />
 

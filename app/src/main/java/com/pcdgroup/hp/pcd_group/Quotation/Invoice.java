@@ -68,11 +68,11 @@ import javax.xml.validation.Validator;
  */
 public class Invoice extends AppCompatActivity {
 
-    TextView name,address,state,company,country,add1,add2,pin;
+    TextView name,address,state,company,country,pin;
     TextView state1,sgst,cgst1;
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
-    TextView b_name,b_address,b_address1,b_address2,b_pin,b_state,b_mobile,b_email,b_website,b_pan,b_gst;
+    TextView b_name,b_address,b_pin,b_state,b_mobile,b_pan;
 
     TextView date,validdate, finalPayable;
 
@@ -311,15 +311,10 @@ public class Invoice extends AppCompatActivity {
 
         b_name = (TextView) findViewById(R.id.textView13);
         b_address = (TextView) findViewById(R.id.textView14);
-        b_address1 = (TextView) findViewById(R.id.textView14);
-        b_address2 = (TextView) findViewById(R.id.textView14);
         b_pin = (TextView) findViewById(R.id.pin_cuntry);
-        b_state = (TextView) findViewById(R.id.pin_cuntry);
+        b_state = (TextView) findViewById(R.id.text_state1);
         b_mobile = (TextView) findViewById(R.id.textView15);
-        b_email = (TextView) findViewById(R.id.textView15);
-        b_website = (TextView) findViewById(R.id.textView15);
         b_pan = (TextView) findViewById(R.id.textView16);
-        b_gst = (TextView) findViewById(R.id.textView16);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
