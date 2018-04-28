@@ -72,6 +72,7 @@ public class Invoice extends AppCompatActivity {
     TextView state1,sgst,cgst1;
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
+    TextView b_name,b_address,b_address1,b_address2,b_pin,b_state,b_mobile,b_email,b_website,b_pan,b_gst;
 
     TextView date,validdate, finalPayable;
 
@@ -109,6 +110,23 @@ public class Invoice extends AppCompatActivity {
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras != null) {
+
+                //Brand
+                String[] brandAddress = extras.getStringArray("SelectedBrand");
+                b_name.setText(brandAddress[0]);
+                str = brandAddress[1] + "," + "\n" + brandAddress[2] + "," + "\n" + brandAddress[3];
+                b_address.setText(str);
+
+                b_state.setText(brandAddress[5]);
+
+                b_pin.setText(brandAddress[4]);
+
+                str = brandAddress[6] + "," + "\n" + brandAddress[7] + "," + "\n" + brandAddress[8];
+                b_mobile.setText(str);
+
+                str = brandAddress[9] + "," + "\n" + brandAddress[10];
+                b_pan.setText(str);
+
                 // Client
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
 
@@ -212,7 +230,7 @@ public class Invoice extends AppCompatActivity {
                     totalAmount += amt;
                     totalquantity += quantityStr;
                 }
-                finalprice.setText(String.valueOf(totalPrice)); ;
+                finalprice.setText(String.valueOf(totalPrice));
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
                 finalPayable.setText(String.valueOf(totalAmount));
@@ -257,6 +275,8 @@ public class Invoice extends AppCompatActivity {
         hsmap.put("quantities", getQuantity.toString());
         hsmap.put("hsncode", getHsn.toString());
         hsmap.put("amount", getAmount.toString());
+
+        hsmap.put("name", b_name.getText().toString());
     }
 
     void initialiseLayouts() {
@@ -288,6 +308,18 @@ public class Invoice extends AppCompatActivity {
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
 //        cl_pdflayout1 = (ConstraintLayout) findViewById(R.id.cl_pdf1);
+
+        b_name = (TextView) findViewById(R.id.textView13);
+        b_address = (TextView) findViewById(R.id.textView14);
+        b_address1 = (TextView) findViewById(R.id.textView14);
+        b_address2 = (TextView) findViewById(R.id.textView14);
+        b_pin = (TextView) findViewById(R.id.pin_cuntry);
+        b_state = (TextView) findViewById(R.id.pin_cuntry);
+        b_mobile = (TextView) findViewById(R.id.textView15);
+        b_email = (TextView) findViewById(R.id.textView15);
+        b_website = (TextView) findViewById(R.id.textView15);
+        b_pan = (TextView) findViewById(R.id.textView16);
+        b_gst = (TextView) findViewById(R.id.textView16);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

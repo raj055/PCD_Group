@@ -13,26 +13,18 @@
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="155dp"
+            android:layout_height="33dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:text="Address : "
             android:textColor="@color/Black"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/spinner5"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/spinner5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:entries="@array/dropdown_brand"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/address"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toEndOf="@+id/btn_address"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -42,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:focusedByDefault="true"
             android:text="Client"
             android:textSize="25dp"
@@ -226,6 +218,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_product"
             tools:ignore="RtlCompat" />
+
+        <Button
+            android:id="@+id/btn_address"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Add Address"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="#7B68EE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="8dp" />
 
 
     </android.support.constraint.ConstraintLayout>

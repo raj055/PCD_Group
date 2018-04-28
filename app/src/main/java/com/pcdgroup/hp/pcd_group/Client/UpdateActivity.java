@@ -195,11 +195,11 @@ public class UpdateActivity extends AppCompatActivity {
 
                 hashMap.put("country",params[7]);
 
-                hashMap.put("company",params[8]);
+                hashMap.put("email_id",params[8]);
 
                 hashMap.put("pin",params[9]);
 
-                hashMap.put("email_id",params[10]);
+                hashMap.put("company",params[10]);
 
                 hashMap.put("designation",params[11]);
 

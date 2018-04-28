@@ -57,7 +57,7 @@ import java.util.List;
 public class CreateQuotation extends AppCompatActivity {
 
     private EditText quantity;
-    private Button add_client,add_product,preview,date,validdate;
+    private Button add_client,add_product,preview,date,validdate,addAddress;
     public TextView client, textdate, textvaliddate, textaddres;
     public ListView product;
 
@@ -77,8 +77,6 @@ public class CreateQuotation extends AppCompatActivity {
     String[] data;
 
     Intent intent;
-
-    Spinner SpinerAddress;
 
     private int year;
     private int month;
@@ -101,55 +99,18 @@ public class CreateQuotation extends AppCompatActivity {
         textvaliddate = (TextView) findViewById(R.id.tv_uptodate);
         textaddres = (TextView) findViewById(R.id.address);
 
+
         add_client = (Button) findViewById(R.id.btn_client);
         add_product = (Button) findViewById(R.id.btn_product);
         preview = (Button) findViewById(R.id.btn_preview);
         date = (Button) findViewById(R.id.btn_date);
         validdate = (Button) findViewById(R.id.btn_validupto);
-        SpinerAddress = (Spinner) findViewById(R.id.spinner5);
+        addAddress = (Button) findViewById(R.id.btn_address);
 
         categoriesList = new ArrayList<Category>();
         adepter = new BrandAdepter(this, categoriesList);
-        SpinerAddress.setAdapter(adepter);
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
-
-        SpinerAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent();
-
-                // Sending ListView clicked value using intent.
-                Category pcdata = categoriesList.get((int) id);
-                intent.putExtra("name", pcdata.getName());
-                intent.putExtra("address", pcdata.getAddress());
-                intent.putExtra("address1", pcdata.getAddress1());
-                intent.putExtra("address2", pcdata.getAddress2());
-                intent.putExtra("pincode", pcdata.getPincode());
-                intent.putExtra("state", pcdata.getState());
-                intent.putExtra("mobileno", pcdata.getMobileno());
-                intent.putExtra("email", pcdata.getEmail());
-                intent.putExtra("website", pcdata.getWebsite());
-                intent.putExtra("pan", pcdata.getPan());
-                intent.putExtra("gst", pcdata.getGst());
-
-                setResult(RESULT_OK, intent);
-
-                finish();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //Retrieve
         getData();
-        adepter.notifyDataSetChanged();
 
         final Calendar c = Calendar.getInstance();
         year  = c.get(Calendar.YEAR);
@@ -181,6 +142,17 @@ public class CreateQuotation extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(CreateQuotation.this, SelectProduct.class);
+
+                startActivityForResult(intent, 3);
+
+            }
+        });
+
+        addAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(CreateQuotation.this, BrandList.class);
 
                 startActivityForResult(intent, 2);
 
@@ -227,8 +199,9 @@ public class CreateQuotation extends AppCompatActivity {
                     intent.putExtra("date", textdate.getText());
                     intent.putExtra("validdate", textvaliddate.getText());
 
-                    startActivity(intent);
+                    intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
 
+                    startActivity(intent);
             }
         });
 
@@ -289,8 +262,32 @@ public class CreateQuotation extends AppCompatActivity {
                     client.setText(globalVariable.globalClient[7]);
                 }
             }
-        } else {
-            if (requestCode == 2) {
+        }
+        if (requestCode == 2) {
+                if(resultCode == RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+
+                        //Product Details
+                        if (extras.containsKey("name")) {
+                            globalVariable.globalBarnd[0] = extras.getString("name");
+                            globalVariable.globalBarnd[1] = extras.getString("address");
+                            globalVariable.globalBarnd[2] = extras.getString("address1");
+                            globalVariable.globalBarnd[3] = extras.getString("address2");
+                            globalVariable.globalBarnd[4] = extras.getString("pincode");
+                            globalVariable.globalBarnd[5] = extras.getString("state");
+                            globalVariable.globalBarnd[6] = extras.getString("mobileno");
+                            globalVariable.globalBarnd[7] = extras.getString("email");
+                            globalVariable.globalBarnd[8] = extras.getString("website");
+                            globalVariable.globalBarnd[9] = extras.getString("pan");
+                            globalVariable.globalBarnd[10] = extras.getString("gst");
+                        }
+                        textaddres.setText(globalVariable.globalBarnd[0]);
+                    }
+                }
+        }
+        else {
+            if (requestCode == 3) {
                 if(resultCode == RESULT_OK) {
                     Bundle extras = data.getExtras();
                     if (extras != null) {
@@ -317,6 +314,7 @@ public class CreateQuotation extends AppCompatActivity {
                     }
                 }
             }
+
         }
     }
     private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {

@@ -47,6 +47,7 @@
         <activity android:name=".Product.ProductSingleRecord" android:label="PCD_Group" />
         <activity android:name=".Product.ProductUpdate" android:label="PCD_Group" />
         <activity android:name=".AdminLogin.AccessAdmin" android:label="PCD_Group" />
+        <activity android:name=".Quotation.BrandList" android:label="PCD_Group" />
 
     </application>
 

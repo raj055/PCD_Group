@@ -27,6 +27,8 @@ public class GlobalVariable {
 
     public  String[] globalProduct = new String[5];
 
+    public  String[] globalBarnd = new String[11];
+
     public String admin;
 
 }
