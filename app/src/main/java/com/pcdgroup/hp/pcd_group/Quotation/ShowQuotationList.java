@@ -71,7 +71,7 @@ public class ShowQuotationList extends AppCompatActivity {
     Intent intent = getIntent();
     emailId = intent.getStringExtra("emailid");
 
-    Log.v("CurrentEmail:::", emailId);
+//    Log.v("CurrentEmail:::", emailId);
 
     //Setting clicklistener
     buttonFetch.setOnClickListener(new View.OnClickListener() {

@@ -76,7 +76,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     String HttpURL = "http://dert.co.in/gFiles/ClientDataShow.php";
 
-    View ChildView ;
+    View ChildView;
 
     SearchView searchView;
 

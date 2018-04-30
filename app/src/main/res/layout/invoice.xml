@@ -31,12 +31,12 @@
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:text="Quatation"
-            android:textSize="20dp"
+            android:text="Quotation"
             android:textColor="@color/Black"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"/>
 
         <TextView
             android:id="@+id/textView11"

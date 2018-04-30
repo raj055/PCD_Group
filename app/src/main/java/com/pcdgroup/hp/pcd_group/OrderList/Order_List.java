@@ -66,6 +66,7 @@ public class Order_List extends AppCompatActivity {
 
             Intent intent = new Intent(Order_List.this, ViewInvoice.class);
             intent.putExtra("FileUrl", fileUrl);
+            intent.putExtra("Activity", "OrderList");
             startActivity(intent);
             }
         });

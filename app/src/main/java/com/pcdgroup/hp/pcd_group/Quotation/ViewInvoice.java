@@ -73,7 +73,7 @@ public class ViewInvoice  extends AppCompatActivity {
   HttpParse httpParse = new HttpParse();
 
   TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1;
-  TextView finalprice, finalquantity, finalamount;
+  TextView finalprice, finalquantity, finalamount, nameBill;
 
   TextView date,validdate, finalPayable;
   HashMap<String,String> hashMap = new HashMap<>();
@@ -135,6 +135,7 @@ public class ViewInvoice  extends AppCompatActivity {
     finalquantity = (TextView) findViewById(R.id.finalQuantity);
     finalamount = (TextView) findViewById(R.id.finalAmount);
     finalPayable = (TextView) findViewById(R.id.textView25);
+    nameBill = (TextView) findViewById(R.id.name);
 
     LinearLayout lyt = (LinearLayout) findViewById(R.id.tableRow2);
     cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
@@ -148,6 +149,7 @@ public class ViewInvoice  extends AppCompatActivity {
       if (extras != null) {
         // Client
         fileUrl = extras.getString("FileUrl");
+        String activity = extras.getString("Activity");
         URL url;
         Properties prFile = new Properties();
         try {
@@ -181,20 +183,18 @@ public class ViewInvoice  extends AppCompatActivity {
         finalPayable.setText(map.get("finalamount"));
         state_holder = state.getText().toString();
         state1_holder = state1.getText().toString();
+        if(activity!= null){
+          if(activity.contains("OrderList"))
+          nameBill.setText("BILL");
+        }
 
         if (state1_holder.contains(state_holder)){
-
-//                    sgst.setText("SGST");
-//                    cgst1.setText("CGST");
 
         }else {
           TableRow tblr = (TableRow) findViewById(R.id.tableRow);
           tblr.removeView(sgst);
-//                    sgst.setVisibility(View.INVISIBLE);
           cgst1.setText("IGST");
           igst = true;
-          //cgst.setVisibility(View.INVISIBLE);
-//          gstValue /= 1;
         }
 
         String temp;
@@ -272,7 +272,7 @@ public class ViewInvoice  extends AppCompatActivity {
     switch (id) {
 
       case 1:
-
+        nameBill.setText("BILL");
         LayoutInflater layoutinflater = LayoutInflater.from(this);
         View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
 
