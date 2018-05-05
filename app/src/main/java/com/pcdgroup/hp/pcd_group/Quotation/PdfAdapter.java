@@ -40,7 +40,7 @@ public class PdfAdapter extends ArrayAdapter<Pdf> {
             row=inflater.inflate(layoutResourceId,parent,false);
             holder=new PdfHolder();
             holder.textViewName= (TextView) row.findViewById(R.id.textViewName);
-            holder.textViewUrl= (TextView) row.findViewById(R.id.textViewUrl);
+            holder.textViewEmail= (TextView) row.findViewById(R.id.textViewEmail);
             row.setTag(holder);
         }
         else
@@ -50,12 +50,13 @@ public class PdfAdapter extends ArrayAdapter<Pdf> {
 
         pdf = data.get(position);
         holder.textViewName.setText(pdf.getName());
+        holder.textViewEmail.setText(pdf.getEmail());
         return row;
     }
 
     class PdfHolder
     {
-        TextView textViewName,textViewUrl;
+        TextView textViewName,textViewEmail;
     }
 
 }

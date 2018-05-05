@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RelativeLayout;
@@ -52,7 +53,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // dirty fix, find a better solution
     private static int currentSelectedIndex = -1;
 
-    public RecyclerViewAdapter(ClientDetailsActivity clientDetailsActivity, List<DataAdapter> dataAdapters, ClientDetailsActivity listener) {
+    public RecyclerViewAdapter(ClientDetailsActivity clientDetailsActivity,
+                               List<DataAdapter> dataAdapters,
+                               ClientDetailsActivity listener) {
 
         this.context = clientDetailsActivity;
         this.listener = listener;

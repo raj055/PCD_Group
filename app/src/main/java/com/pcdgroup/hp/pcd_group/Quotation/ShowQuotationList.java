@@ -37,7 +37,7 @@ import java.util.HashMap;
  */
 
 public class ShowQuotationList extends AppCompatActivity {
-  public String PDF_FETCH_URL = "http://dert.co.in/gFiles/getpdfs.php";
+
   public String httpUrl = "http://dert.co.in/gFiles/getpdfs.php";
   ListView listView;
   Button buttonFetch;
@@ -51,7 +51,6 @@ public class ShowQuotationList extends AppCompatActivity {
 
   public static int REQUEST_PERMISSIONS = 1;
   boolean boolean_permission;
-  ProgressDialog progressDialog2;
   HttpParse httpParse;
 
   HashMap<String, String> hashMap = new HashMap<>();
@@ -124,9 +123,7 @@ public class ShowQuotationList extends AppCompatActivity {
             //Declaring a Pdf object to add it to the ArrayList  pdfList
             Pdf pdf  = new Pdf();
             String pdfName = jsonObject.getString("name");
-            String pdfUrl = jsonObject.getString("url");
             pdf.setName(pdfName);
-            pdf.setUrl(pdfUrl);
             pdfList.add(pdf);
           }
 

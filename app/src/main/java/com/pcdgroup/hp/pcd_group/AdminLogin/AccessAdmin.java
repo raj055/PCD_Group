@@ -120,23 +120,33 @@ public class AccessAdmin extends AppCompatActivity {
          currentAccValue = usrDGet.getAccessType();
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(AccessAdmin.this);
-        builder.setTitle("Select Client");
+        builder.setTitle("Select Access Level");
 
         // add a radio button list
-        String[] Client = {"Default", "Full Access"};
+        String[] Client = {" User", "Admin", "Manager", "Client"};
         int checkedItem = 0; // cow
         if(currentAccValue.contains("Admin")){
             checkedItem = 1;
+        }else if (currentAccValue.contains("Manager")){
+            checkedItem = 2;
+        }else if (currentAccValue.contains("Client")){
+            checkedItem = 3;
         }
         builder.setSingleChoiceItems(Client, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
-                        accessValue = "default";
+                        accessValue = "User";
                         break;
                     case 1:
                         accessValue = "Admin";
+                        break;
+                    case 2:
+                        accessValue = "Manager";
+                        break;
+                    case 3:
+                        accessValue = "Client";
                         break;
                 }
 

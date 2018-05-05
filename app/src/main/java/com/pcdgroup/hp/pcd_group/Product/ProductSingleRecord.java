@@ -337,12 +337,22 @@ public class ProductSingleRecord extends AppCompatActivity {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }else {
+            }
+            /*if (gblVar.manager.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
+
+            }
+            if (gblVar.client.contains("Client")) {
+
+                intent = new Intent(this, AdminDashboard.class);
+
+            }*/
+           else {
+
+                intent = new Intent(this, ViewImage.class);
             }
 
-            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -350,13 +360,4 @@ public class ProductSingleRecord extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private CharSequence menuIconWithText(Drawable r, String title) {
-
-        r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
-        SpannableString sb = new SpannableString(" " + title);
-        ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
-        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return sb;
-    }
 }
