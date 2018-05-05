@@ -39,9 +39,6 @@ public class Order_List extends AppCompatActivity {
     ArrayList<Pdf> pdfList = new ArrayList<Pdf>();
     PdfAdapter pdfAdapter;
     public String httpUrl = "http://dert.co.in/gFiles/orderlist.php";
-    public static int REQUEST_PERMISSIONS = 1;
-    boolean boolean_permission;
-    ProgressDialog progressDialog2;
     HttpParse httpParse;
     String finalResult;
     ListView lstVeiw;

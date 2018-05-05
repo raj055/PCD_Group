@@ -3,7 +3,6 @@ package com.pcdgroup.hp.pcd_group.UserLoginRegister;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,18 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
-import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
-import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
+import com.pcdgroup.hp.pcd_group.Client.ClientOfClientList;
+import com.pcdgroup.hp.pcd_group.Discount.Client_Discount;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.MainActivity;
+import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
-import com.pcdgroup.hp.pcd_group.Quotation.List_Pdfs;
+import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
 import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
 /**
  * @author Grasp
@@ -31,10 +29,12 @@ import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 
 public class UserDashbord extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Product, Invoice, Quotation;
+    Button LogOut, Client_Details, Product, Invoice, MyQuotation,QuotationList,OrderList,Discount;
     TextView EmailShow;
     String EmailHolder;
     private String mUsername;
+
+    GlobalVariable gblv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,26 @@ public class UserDashbord extends AppCompatActivity {
         Client_Details = (Button) findViewById(R.id.clientdetails);
         Product = (Button) findViewById(R.id.imgupload);
         Invoice = (Button) findViewById(R.id.btn_invoice);
-        Quotation = (Button) findViewById(R.id.ul_quotation);
+        MyQuotation = (Button) findViewById(R.id.ul_quotation);
+        QuotationList = (Button) findViewById(R.id.btn_quotationlist);
+        OrderList = (Button) findViewById(R.id.btn_orderlist);
+        Discount = (Button) findViewById(R.id.btn_discount);
+
+        gblv = GlobalVariable.getInstance();
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
         EmailShow.setText(mUsername);
+
+
+
+         if (gblv.AccessType.contains("Manager")) {
+             MyQuotation.setVisibility(View.INVISIBLE);
+         }
+         else if (gblv.AccessType.contains("Client")){
+             QuotationList.setVisibility(View.INVISIBLE);
+             OrderList.setVisibility(View.INVISIBLE);
+             Discount.setVisibility(View.INVISIBLE);
+         }
 
 
         // Click logout button
@@ -71,8 +87,7 @@ public class UserDashbord extends AppCompatActivity {
         Intent intent = getIntent();
         EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
         EmailShow.setText(EmailHolder);
-        GlobalVariable gblVar = GlobalVariable.getInstance();
-        gblVar.currentUserEmail = EmailHolder;
+        gblv.currentUserEmail = EmailHolder;
 
         /*// check to see if the user is already logged in
         mUsername = MySharedPreferences.getUsername(this);
@@ -87,9 +102,13 @@ public class UserDashbord extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(UserDashbord.this, ClientDetailsActivity.class);
-
-                startActivity(intent);
+                if (gblv.AccessType.contains("Manager")) {
+                    Intent intent = new Intent(UserDashbord.this, ClientDetailsActivity.class);
+                    startActivity(intent);
+                } else if (gblv.AccessType.contains("Client")){
+                    Intent intent = new Intent(UserDashbord.this, ClientOfClientList.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -115,7 +134,7 @@ public class UserDashbord extends AppCompatActivity {
             }
         });
         // Click image invoice button
-        Quotation.setOnClickListener(new View.OnClickListener() {
+        MyQuotation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -124,6 +143,40 @@ public class UserDashbord extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // Click QuotationList button
+        QuotationList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserDashbord.this, List_Quotation_Pdfs.class);
+
+                startActivity(intent);
+            }
+        });
+
+        // Click OrderList button
+        OrderList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserDashbord.this, Order_List.class);
+
+                startActivity(intent);
+            }
+        });
+
+        // Click Discount button
+        Discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserDashbord.this, Client_Discount.class);
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

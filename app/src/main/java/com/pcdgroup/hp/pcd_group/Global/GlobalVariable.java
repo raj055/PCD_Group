@@ -21,7 +21,6 @@ public class GlobalVariable {
     }
 
     public String currentUserEmail;
-    public String currentUserStatus;
 
     public  String[] globalClient = new String[8];
 
@@ -30,5 +29,8 @@ public class GlobalVariable {
     public  String[] globalBarnd = new String[11];
 
     public String admin;
+
+
+    public String AccessType;
 
 }

@@ -2,13 +2,10 @@ package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -16,15 +13,11 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
 import com.pcdgroup.hp.pcd_group.Client.RecyclerViewAdapter;
 import com.pcdgroup.hp.pcd_group.R;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.pcdgroup.hp.pcd_group.Client.RecyclerViewAdapter.*;
 
 /**
  * @author Grasp
@@ -37,30 +30,17 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
   private LayoutInflater inflater;
   private List<Entity> entityItems;
   private ArrayList<Entity> entityItemsfilter;
-  private DataAdapterListener listener;
   private ImageLoader imageLoader;
 
   private SparseBooleanArray selectedItems;
 
-  // array used to perform multiple animation at once
-  private SparseBooleanArray animationItemsIndex;
-  private boolean reverseAllAnimations = false;
-
-  // index is used to animate only the selected row
-  // dirty fix, find a better solution
-  private static int currentSelectedIndex = -1;
-
   public CustomListAdapter(Activity activity, List<Entity> entityItems, ViewImage listener) {
     this.activity = activity;
     this.entityItems = entityItems;
-    this.listener = listener;
     this.entityItemsfilter = (ArrayList<Entity>) entityItems;
     imageLoader = CustomVolleyRequest.getInstance(activity.getApplicationContext())
             .getImageLoader();
 
-
-    selectedItems = new SparseBooleanArray();
-    animationItemsIndex = new SparseBooleanArray();
   }
 
   @Override
@@ -118,15 +98,6 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
     stock.setText("Stock:" +String.valueOf(m.getstock()));
     reorderlevel.setText("Recorderlevel:" +String.valueOf(m.getReorderlevel()));
 
-   /* // change the row state to activated
-    convertView.itemView.setActivated(selectedItems.get(position, false));
-
-    // handle icon animation
-    applyIconAnimation(convertView, position);
-
-    // apply click events
-    applyClickEvents(convertView, position);*/
-
     return convertView;
   }
 
@@ -164,39 +135,4 @@ public class CustomListAdapter extends BaseAdapter implements Filterable {
     };
   }
 
-  public void toggleSelection(int position) {
-
-  }
-
-  public int getSelectedItemCount() {
-      return 0;
-  }
-
-  public void clearSelections() {
-
-  }
-
-  public void resetAnimationIndex() {
-
-  }
-
-  public List<Integer> getSelectedItems() {
-    return null;
-  }
-
-  public void removeData(Integer integer) {
-
-  }
-
-  public interface DataAdapterListener {
-    void onDataSelected(Entity dataAdapter);
-
-    void onIconClicked(int position);
-
-    void onRowLongClicked(int position);
-
-    void onIconImportantClicked(int position);
-
-    void onMessageRowClicked(int position);
-  }
 }

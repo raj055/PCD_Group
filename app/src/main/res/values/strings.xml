@@ -27,6 +27,7 @@
 
     <string name="toolbar_title">ClientList</string>
     <string name="action_search">Search</string>
+    <string name="action_login">Login</string>
     <string name="search_hint">Type name…</string>
 
     <string name="username">Save pdf name</string>

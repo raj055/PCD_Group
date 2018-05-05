@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Quotation.List_Pdfs">
+    tools:context=".Quotation.List_Quotation_Pdfs">
 
     <Button
         android:layout_width="match_parent"

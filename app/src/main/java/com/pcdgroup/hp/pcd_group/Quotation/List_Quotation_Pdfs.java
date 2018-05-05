@@ -1,32 +1,19 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
-import android.content.ActivityNotFoundException;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.app.ProgressDialog;
-import android.support.annotation.StringDef;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,32 +24,23 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pcdgroup.hp.pcd_group.R;
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
  */
 
-public class List_Pdfs extends AppCompatActivity {
+public class List_Quotation_Pdfs extends AppCompatActivity {
 
-    public static final String PDF_FETCH_URL = "http://dert.co.in/gFiles/getPdfs.php";
+    public static final String PDF_FETCH_URL = "http://dert.co.in/gFiles/QuotationList.php";
 
     ListView listView;
-    Button buttonFetch;
     ProgressDialog progressDialog;
 
     ArrayList<Pdf> pdfList= new ArrayList<Pdf>();
@@ -80,17 +58,10 @@ public class List_Pdfs extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
 
-        buttonFetch = (Button) findViewById(R.id.buttonFetchPdf);
 
         progressDialog = new ProgressDialog(this);
 
-        //Setting clicklistener
-        buttonFetch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPdfs();
-            }
-        });
+        getPdfs();
 
         //setting listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -123,7 +94,7 @@ public class List_Pdfs extends AppCompatActivity {
                     progressDialog.dismiss();
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Toast.makeText(List_Pdfs.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(List_Quotation_Pdfs.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
 
                         JSONArray jsonArray = obj.getJSONArray("pdfs");
 
@@ -141,7 +112,7 @@ public class List_Pdfs extends AppCompatActivity {
 
                         }
 
-                        pdfAdapter=new PdfAdapter(List_Pdfs.this,R.layout.list_layout, pdfList);
+                        pdfAdapter=new PdfAdapter(List_Quotation_Pdfs.this,R.layout.list_layout, pdfList);
 
                         listView.setAdapter(pdfAdapter);
 
@@ -171,15 +142,15 @@ public class List_Pdfs extends AppCompatActivity {
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)||
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
 
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(List_Pdfs.this, Manifest.permission.READ_EXTERNAL_STORAGE))) {
+            if ((ActivityCompat.shouldShowRequestPermissionRationale(List_Quotation_Pdfs.this, Manifest.permission.READ_EXTERNAL_STORAGE))) {
             } else {
-                ActivityCompat.requestPermissions(List_Pdfs.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                ActivityCompat.requestPermissions(List_Quotation_Pdfs.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_PERMISSIONS);
             }
 
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(List_Pdfs.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+            if ((ActivityCompat.shouldShowRequestPermissionRationale(List_Quotation_Pdfs.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
             } else {
-                ActivityCompat.requestPermissions(List_Pdfs.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                ActivityCompat.requestPermissions(List_Quotation_Pdfs.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         REQUEST_PERMISSIONS);
             }
         } else {
