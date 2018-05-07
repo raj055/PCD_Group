@@ -122,17 +122,29 @@ public class ClientOfClientList extends AppCompatActivity {
                     JSONObject obj = new JSONObject(httpResponseMsg);
                     Toast.makeText(ClientOfClientList.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                    JSONArray jsonArray = obj.getJSONArray("pdfs");
+                    JSONArray jsonArray = obj.getJSONArray("g_client_details");
 
                     for(int i=0;i<jsonArray.length();i++){
 
                         //Declaring a json object corresponding to every pdf object in our json Array
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        //Declaring a Pdf object to add it to the ArrayList  pdfList
-                        Pdf pdf  = new Pdf();
-                        String pdfName = jsonObject.getString("name");
-                        pdf.setName(pdfName);
-                        ClientList.add(pdf);
+
+                        DataAdapter GetData = new DataAdapter();
+                        GetData.setId(jsonObject.getString("id"));
+                        GetData.setName(jsonObject.getString("name"));
+                        GetData.setType(jsonObject.getString("type"));
+                        GetData.setAddress(jsonObject.getString("address"));
+                        GetData.setaddresline1(jsonObject.getString("addressline1"));
+                        GetData.setAddressline2(jsonObject.getString("addressline2"));
+                        GetData.setMobileno(jsonObject.getString("mobileno"));
+                        GetData.setState(jsonObject.getString("state"));
+                        GetData.setCountry(jsonObject.getString("country"));
+                        GetData.setCompanyname(jsonObject.getString("company"));
+                        GetData.setPin(jsonObject.getString( "pin"));
+                        GetData.setEmailid(jsonObject.getString("email_id"));
+                        GetData.setDesignation(jsonObject.getString("designation"));
+
+
                     }
 
                     pdfAdapter=new PdfAdapter(ClientOfClientList.this,R.layout.list_layout, ClientList);
@@ -149,9 +161,9 @@ public class ClientOfClientList extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... params) {
-
-                // Sending Client id.
-                hashMap.put("emailId", emailId);
+//
+//                // Sending Client id.
+//                hashMap.put("emailId", emailId);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 

@@ -240,7 +240,7 @@ public class Invoice extends AppCompatActivity {
                     totalAmount += amt;
                     totalquantity += quantityStr;
 
-                    
+
 
                 }
                 finalprice.setText(String.valueOf(totalPrice));

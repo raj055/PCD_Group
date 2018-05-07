@@ -56,7 +56,7 @@ import java.util.List;
 
 public class CreateQuotation extends AppCompatActivity {
 
-    private EditText quantity;
+    private EditText quantity,transportationcost,discountperce;
     private Button add_client,add_product,preview,date,validdate,addAddress;
     public TextView client, textdate, textvaliddate, textaddres;
     public ListView product;
@@ -75,7 +75,7 @@ public class CreateQuotation extends AppCompatActivity {
     String line = null;
     String result = null;
     String[] data;
-
+    String Tpcost,discount;
     Intent intent;
 
     private int year;
@@ -92,6 +92,8 @@ public class CreateQuotation extends AppCompatActivity {
         globalVariable = GlobalVariable.getInstance();
 
         quantity = (EditText) findViewById(R.id.quantity_et);
+        transportationcost = (EditText) findViewById(R.id.editText10);
+        discountperce = (EditText) findViewById(R.id.editText11);
 
         client = (TextView) findViewById(R.id.tv_client);
         product = (ListView) findViewById(R.id.tv_product);
@@ -198,6 +200,13 @@ public class CreateQuotation extends AppCompatActivity {
 //                intent.putExtra("proqunt", quantity.getText());
                     intent.putExtra("date", textdate.getText());
                     intent.putExtra("validdate", textvaliddate.getText());
+
+                    Tpcost=transportationcost.getText().toString();
+
+                   discount=discountperce.getText().toString();
+
+                    intent.putExtra("transportioncost",Tpcost );
+                    intent.putExtra("discountperce", discount);
 
                     intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
 
