@@ -74,7 +74,7 @@ public class Invoice extends AppCompatActivity {
     TextView finalprice, finalquantity, finalamount;
     TextView b_name,b_address,b_pin,b_state,b_mobile,b_pan;
 
-    TextView date,validdate, finalPayable;
+    TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountPerce;
 
     boolean igst = false;
 
@@ -83,8 +83,10 @@ public class Invoice extends AppCompatActivity {
 
     String state_holder,state1_holder;
 
+    String transport,discount;
+
     float totalPrice, totalAmount;
-    int totalquantity;
+    int totalquantity,totalCost,discountValue;
 
     public static int REQUEST_PERMISSIONS = 1;
     ConstraintLayout cl_pdflayout;
@@ -106,6 +108,13 @@ public class Invoice extends AppCompatActivity {
 
         initialiseLayouts();
 
+        transport=getIntent().getExtras().getString("transportioncost");
+        TransportationCost.setText(transport);
+
+        discount=getIntent().getExtras().getString("discountperce");
+        DiscountPerce.setText(discount);
+
+
         String str;
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -114,31 +123,31 @@ public class Invoice extends AppCompatActivity {
                 //Brand
                 String[] brandAddress = extras.getStringArray("SelectedBrand");
                 b_name.setText(brandAddress[0]);
-                str = brandAddress[1] + "," + "\n" + brandAddress[2] + "," + "\n" + brandAddress[3];
+                str = "Address : " + brandAddress[1] + "," + "\n" + "Address1 : " +  brandAddress[2] + "," + "\n" + "Address2 : " + brandAddress[3];
                 b_address.setText(str);
 
-                b_state.setText(brandAddress[5]);
+                b_state.setText("State : " + brandAddress[5]);
 
-                b_pin.setText(brandAddress[4]);
+                b_pin.setText("Pin_no : " + brandAddress[4]);
 
-                str = brandAddress[6] + "," + "\n" + brandAddress[7] + "," + "\n" + brandAddress[8];
+                str = "Mobile_no : " + brandAddress[6] + "," + "\n" +  "Email_id : " + brandAddress[7] + "," + "\n" + "Website : " + brandAddress[8];
                 b_mobile.setText(str);
 
-                str = brandAddress[9] + "," + "\n" + brandAddress[10];
+                str = "Pan_no : " + brandAddress[9] +  "\n" +  "GST : " + brandAddress[10];
                 b_pan.setText(str);
 
                 // Client
                 String[]   clientInfo =  extras.getStringArray("ClientInfo");
 
-                name.setText(clientInfo[7]);
-                str =clientInfo[0] + "," + "\n" + clientInfo[1] + "," + "\n"+ clientInfo[2];
+                name.setText("Name : "+ clientInfo[7]);
+                str ="Address : " + clientInfo[0] + "," + "\n" +  "Address1 : " + clientInfo[1] +  "\n"+  "Address2 : " + clientInfo[2];
 //                  + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
 
                 address.setText(str);
-                state.setText(clientInfo[4]);
-                pin.setText(clientInfo[3]);
-                company.setText(clientInfo[6]);
-                country.setText(clientInfo[5]);
+                state.setText("State : "+ clientInfo[4]);
+                pin.setText("Pin_no : " + clientInfo[3]);
+                company.setText("Company : "+ clientInfo[6]);
+                country.setText("Country : "+clientInfo[5]);
 
                 //Product
                 ArrayList<String[]> PrdList = (ArrayList<String[]>) extras.getSerializable("ProductInfo");
@@ -154,6 +163,7 @@ public class Invoice extends AppCompatActivity {
                 getHsn = new String();
                 state_holder = state.getText().toString();
                 state1_holder = state1.getText().toString();
+
 
                 if (state1_holder.contains(state_holder)){
 
@@ -229,6 +239,9 @@ public class Invoice extends AppCompatActivity {
                     totalPrice +=  priceStr;
                     totalAmount += amt;
                     totalquantity += quantityStr;
+
+                    
+
                 }
                 finalprice.setText(String.valueOf(totalPrice));
                 finalquantity.setText(String.valueOf(totalquantity));
@@ -267,6 +280,7 @@ public class Invoice extends AppCompatActivity {
         hsmap.put("finalquantity", finalquantity.getText().toString());
         hsmap.put("finalamount", finalamount.getText().toString());
 
+
         Log.v("Products---------", getAllProducts);
         hsmap.put("products", getAllProducts.toString());
         hsmap.put("cgst", getCgst.toString());
@@ -304,6 +318,9 @@ public class Invoice extends AppCompatActivity {
         finalquantity = (TextView) findViewById(R.id.finalQuantity);
         finalamount = (TextView) findViewById(R.id.finalAmount);
         finalPayable = (TextView) findViewById(R.id.textView25);
+        TransportationCost=(TextView) findViewById(R.id.textView18);
+        DiscountValue=(TextView ) findViewById(R.id.textView27);
+        DiscountPerce=(TextView) findViewById(R.id.textView26);
 
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
