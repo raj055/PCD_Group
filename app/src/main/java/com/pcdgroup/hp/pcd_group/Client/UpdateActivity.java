@@ -1,7 +1,9 @@
 package com.pcdgroup.hp.pcd_group.Client;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -23,6 +25,7 @@ import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
 import com.pcdgroup.hp.pcd_group.Product.UploadImage;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
@@ -244,6 +247,30 @@ public class UpdateActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
+        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(UpdateActivity.this, ClientDetailsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

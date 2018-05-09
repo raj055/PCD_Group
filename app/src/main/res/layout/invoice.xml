@@ -502,18 +502,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/tableRow3"
                 app:srcCompat="@drawable/line" />
 
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="112dp"
-                android:layout_marginStart="112dp"
-                android:textColor="@color/Black"
-                android:text="Total: ₹ "
-                android:textSize="10dp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
-                app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="112dp"
+            android:text="Total: ₹ "
+            android:textColor="@color/Black"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="498dp" />
 
             <TextView
                 android:id="@+id/textView25"

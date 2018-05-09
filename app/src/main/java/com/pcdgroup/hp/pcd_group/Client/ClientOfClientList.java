@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.http.GET;
+
 /**
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
@@ -55,16 +57,16 @@ import java.util.List;
 public class ClientOfClientList extends AppCompatActivity {
 
 
-    String HttpURL = "http://dert.co.in/gFiles/DataClient.php";
+    public String httpUrl = "http://dert.co.in/gFiles/DataClient.php";
 
     ListView listView;
     ProgressDialog progressDialog;
     String emailId;
     String finalResult;
 
-    ArrayList<Pdf> ClientList = new ArrayList<Pdf>();
+    ArrayList<DataAdapter> ClientList = new ArrayList<DataAdapter>();
 
-    PdfAdapter pdfAdapter;
+    ClientAdepter clientAdepter;
 
     public static int REQUEST_PERMISSIONS = 1;
     boolean boolean_permission;
@@ -93,19 +95,20 @@ public class ClientOfClientList extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
 
+        finalResult = new String();
         progressDialog = new ProgressDialog(this);
 
         // intent
         Intent intent = getIntent();
         emailId = intent.getStringExtra("emailid");
 
-        GetPdfList(emailId);
+        GetClientList(emailId);
     }
 
     // Method to Get the Invoice List
-    public void GetPdfList(final String ClientID) {
+    public void GetClientList(final String ClientID) {
 
-        class GetPdfList extends AsyncTask<String, Void, String> {
+        class GetClientList extends AsyncTask<String, Void, String> {
 
             @Override
             protected void onPreExecute() {
@@ -122,24 +125,37 @@ public class ClientOfClientList extends AppCompatActivity {
                     JSONObject obj = new JSONObject(httpResponseMsg);
                     Toast.makeText(ClientOfClientList.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                    JSONArray jsonArray = obj.getJSONArray("pdfs");
+                    JSONArray jsonArray = obj.getJSONArray("client");
 
                     for(int i=0;i<jsonArray.length();i++){
 
-                        //Declaring a json object corresponding to every pdf object in our json Array
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        //Declaring a Pdf object to add it to the ArrayList  pdfList
-                        Pdf pdf  = new Pdf();
-                        String pdfName = jsonObject.getString("name");
-                        pdf.setName(pdfName);
-                        ClientList.add(pdf);
+
+                        DataAdapter GetData = new DataAdapter();
+
+                        GetData.setId(jsonObject.getString("id"));
+                        GetData.setName(jsonObject.getString("name"));
+                        GetData.setType(jsonObject.getString("type"));
+                        GetData.setAddress(jsonObject.getString("address"));
+                        GetData.setaddresline1(jsonObject.getString("addressline1"));
+                        GetData.setAddressline2(jsonObject.getString("addressline2"));
+                        GetData.setMobileno(jsonObject.getString("mobileno"));
+                        GetData.setState(jsonObject.getString("state"));
+                        GetData.setCountry(jsonObject.getString("country"));
+                        GetData.setCompanyname(jsonObject.getString("company"));
+                        GetData.setPin(jsonObject.getString("pin"));
+                        GetData.setEmailid(jsonObject.getString("email_id"));
+                        GetData.setDesignation(jsonObject.getString("designation"));
+
+                        ClientList.add(GetData);
+
                     }
 
-                    pdfAdapter=new PdfAdapter(ClientOfClientList.this,R.layout.list_layout, ClientList);
+                    clientAdepter=new ClientAdepter(ClientOfClientList.this,R.layout.cardview1, ClientList);
 
-                    listView.setAdapter(pdfAdapter);
+                    listView.setAdapter(clientAdepter);
 
-                    pdfAdapter.notifyDataSetChanged();
+                    clientAdepter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -153,30 +169,14 @@ public class ClientOfClientList extends AppCompatActivity {
                 // Sending Client id.
                 hashMap.put("emailId", emailId);
 
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
+                finalResult = httpParse.postRequest(hashMap, httpUrl);
 
                 return finalResult;
             }
         }
 
-        GetPdfList GetPdfList = new GetPdfList();
+        GetClientList getClientList = new GetClientList();
 
-        GetPdfList.execute(ClientID);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSIONS) {
-
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                boolean_permission = true;
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Please allow the permission", Toast.LENGTH_LONG).show();
-
-            }
-        }
+        getClientList.execute(ClientID);
     }
 }

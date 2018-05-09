@@ -135,11 +135,34 @@
             app:layout_constraintTop_toBottomOf="@+id/editText_record" />
 
         <Button
+            android:id="@+id/btn_imgupload"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="146dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="88dp"
+            android:text="Image Upload"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_deskription"
+            android:layout_marginLeft="8dp" />
+
+        <ImageView
+            android:id="@+id/upload_imageview"
+            android:layout_width="250dp"
+            android:layout_height="180dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_imgupload"
+            app:layout_constraintTop_toBottomOf="@+id/editText_deskription" />
+
+        <Button
             android:id="@+id/btn_submit"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
@@ -147,8 +170,9 @@
             android:text="Submit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_deskription" />
+            app:layout_constraintTop_toBottomOf="@+id/upload_imageview" />
 
     </android.support.constraint.ConstraintLayout>
 

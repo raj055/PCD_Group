@@ -14,8 +14,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
@@ -85,6 +88,8 @@ public class Invoice extends AppCompatActivity {
 
     float totalPrice, totalAmount;
     int totalquantity;
+
+    private int PICK_IMAGE_REQUEST = 1;
 
     public static int REQUEST_PERMISSIONS = 1;
     ConstraintLayout cl_pdflayout;
@@ -338,6 +343,8 @@ public class Invoice extends AppCompatActivity {
                 break;
             case 2:
 
+//                showFileChooser();
+
                 LayoutInflater layoutinflater = LayoutInflater.from(this);
                 View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
 
@@ -381,6 +388,40 @@ public class Invoice extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+       /* if (requestCode == PICK_IMAGE_REQUEST) {
+            if (resultCode == DirectoryChooserActivity.RESULT_CODE_DIR_SELECTED) {
+                handleDirectoryChoice(data
+                        .getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
+            } else {
+                // Nothing selected
+            }
+        }
+    }
+
+    private void handleDirectoryChoice(String stringExtra) {
+
+    }
+
+    private void showFileChooser() {
+        final Intent chooserIntent = new Intent(this, DirectoryChooserActivity.class);
+
+        final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
+                .newDirectoryName("DirChooserSample")
+                .allowReadOnlyDirectory(true)
+                .allowNewDirectoryNameModification(true)
+                .build();
+
+        chooserIntent.putExtra(DirectoryChooserActivity.EXTRA_CONFIG, config);
+
+// REQUEST_DIRECTORY is a constant integer to identify the request, e.g. 0
+        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);*/
+    }
+
     private Properties getHashMap(){
 
         Properties prHsmp = new Properties();
@@ -500,6 +541,7 @@ public class Invoice extends AppCompatActivity {
         targetPdf = "/sdcard/" + fileName + ".pdf";
 
         File filePath = new File(targetPdf);
+
         try {
             document.writeTo(new FileOutputStream(filePath));
 

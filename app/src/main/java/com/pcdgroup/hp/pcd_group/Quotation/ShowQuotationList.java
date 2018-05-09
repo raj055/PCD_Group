@@ -40,7 +40,6 @@ public class ShowQuotationList extends AppCompatActivity {
 
   public String httpUrl = "http://dert.co.in/gFiles/getpdfs.php";
   ListView listView;
-  Button buttonFetch;
   ProgressDialog progressDialog;
   String emailId;
   String finalResult;
@@ -62,7 +61,6 @@ public class ShowQuotationList extends AppCompatActivity {
     httpParse = new HttpParse();
 
     listView = (ListView) findViewById(R.id.listView);
-    buttonFetch = (Button) findViewById(R.id.buttonFetchPdf);
 
     progressDialog = new ProgressDialog(this);
 
@@ -70,15 +68,7 @@ public class ShowQuotationList extends AppCompatActivity {
     Intent intent = getIntent();
     emailId = intent.getStringExtra("emailid");
 
-//    Log.v("CurrentEmail:::", emailId);
-
-    //Setting clicklistener
-    buttonFetch.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        GetPdfList(emailId);
-      }
-    });
+    GetPdfList(emailId);
 
     //setting listView on item click listener
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -96,12 +96,7 @@ public class Order_List extends AppCompatActivity {
                         //Declaring a json object corresponding to every pdf object in our json Array
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //Declaring a Pdf object to add it to the ArrayList  pdfList
-                        Pdf pdf  = new Pdf();
-                        String pdfName = jsonObject.getString("name");
-                        String pdfUrl = jsonObject.getString("url");
-                        pdf.setName(pdfName);
-                        pdf.setUrl(pdfUrl);
-                            pdfList.add(pdf);
+
                     }
 
                     pdfAdapter=new PdfAdapter(Order_List.this,R.layout.list_layout, pdfList);

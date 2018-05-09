@@ -1,26 +1,45 @@
 package com.pcdgroup.hp.pcd_group.Product;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * @author Grasp
@@ -30,19 +49,28 @@ import java.util.HashMap;
 public class ProductUpdate extends AppCompatActivity {
 
     String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
+    String HttpURLImage = "http://dert.co.in/gFiles/updateproductimage.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
+    ImageView imageView_Upload;
     EditText productName, productPrice,productMinimum,productHsncode,productBrand,productDescription,
             productStock, productRecordlevel, productgst;
-    Button UpdateProduct;
+    Button UpdateProduct,Image_Upload;
     String productIdHolder,productNameHolder,productPriceHolder,productMinimumHolder,productHsncodeHolder,
             productBeandHolder,productDescriptionHolder,productStockHolder, productRecordlevelHolder,
             productGstHolder;
     Intent intent;
     GlobalVariable gblVar;
+
+    private Bitmap bitmap;
+
+    private String KEY_IMAGE = "image";
+    private String KEY_NAME = "name";
+
+    private int PICK_IMAGE_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +78,8 @@ public class ProductUpdate extends AppCompatActivity {
         setContentView(R.layout.update_product);
 
         gblVar = GlobalVariable.getInstance();
+
+        imageView_Upload = (ImageView) findViewById(R.id.upload_imageview);
 
         productName = (EditText)findViewById(R.id.editText_name);
         productPrice = (EditText)findViewById(R.id.editText_price);
@@ -61,6 +91,7 @@ public class ProductUpdate extends AppCompatActivity {
         productRecordlevel = (EditText)findViewById(R.id.editText_record);
         productgst= (EditText)findViewById(R.id.editText_gst);
 
+        Image_Upload = (Button)findViewById(R.id.btn_imgupload);
         UpdateProduct = (Button)findViewById(R.id.btn_submit);
 
         // Receive product ID, Name , Address , Email, etc.. Send by previous ShowSingleRecordActivity.
@@ -102,12 +133,101 @@ public class ProductUpdate extends AppCompatActivity {
 
                     // If EditText is empty then this block will execute.
                     Toast.makeText(ProductUpdate.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-
                 }
 
+                uploadImage();
             }
         });
 
+        Image_Upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+            }
+        });
+    }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == this.RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                //Getting the Bitmap from Gallery
+                imageView_Upload.setVisibility(View.VISIBLE);
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
+                //Setting the Bitmap to ImageView
+                imageView_Upload.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage(){
+        //Showing the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpURLImage,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Toast.makeText(ProductUpdate.this,s , Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+
+                        //Showing toast
+                        Toast.makeText(ProductUpdate.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Converting Bitmap to String
+                String image = getStringImage(bitmap);
+
+                //Getting Image Name
+                String name1 = productName.getText().toString().trim();
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put(KEY_IMAGE, image);
+                params.put(KEY_NAME, name1);
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     // Method to get existing data from EditText.
@@ -228,4 +348,27 @@ public class ProductUpdate extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(ProductUpdate.this);
+        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ProductUpdate.this, ViewImage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }

@@ -170,7 +170,6 @@ public class ClientRegisterActivity extends AppCompatActivity {
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 finish();
             }
         });

@@ -56,7 +56,7 @@ import java.util.List;
 
 public class CreateQuotation extends AppCompatActivity {
 
-    private EditText quantity;
+    private EditText quantity,transpotation;
     private Button add_client,add_product,preview,date,validdate,addAddress;
     public TextView client, textdate, textvaliddate, textaddres;
     public ListView product;

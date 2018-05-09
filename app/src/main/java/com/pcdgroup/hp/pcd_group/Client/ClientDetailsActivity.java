@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -50,12 +52,16 @@ import java.util.List;
 public class ClientDetailsActivity extends AppCompatActivity implements RecyclerViewAdapter.DataAdapterListener {
 
     HttpParse httpParse = new HttpParse();
-    String finalResult ;
     HashMap<String,String> hashMap = new HashMap<>();
+    HashMap<String,String> ResultHash = new HashMap<>();
     String IdHolder;
+    ProgressDialog pDialog;
+    String FinalJSonObject ;
+    String ParseResult ;
+    String finalResult ;
 
     // Http URL for delete Already Open Client Record.
-    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/DeleteClient.php";
+    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteclient.php";
 
     ProgressDialog progressDialog2;
 
@@ -401,9 +407,20 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             switch (item.getItemId()) {
                 case R.id.action_delete:
                     // delete all the selected messages
-                    deleteMessages();
+
+                    mAdepter.resetAnimationIndex();
+                    List<Integer> selectedItemPositions =
+                            mAdepter.getSelectedItems();
+                    for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+                       DataAdapter currRecord = DataAdapters.get(selectedItemPositions.get(i));
+                        deleteMessages(currRecord.getId());
+                        mAdepter.removeData(selectedItemPositions.get(i));
+                    }
+                    mAdepter.notifyDataSetChanged();
+
                     mode.finish();
                     return true;
+
 
                 default:
                     return false;
@@ -425,16 +442,9 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
     }
 
     // deleting the messages from recycler view
-    private void deleteMessages() {
-        mAdepter.resetAnimationIndex();
-        List<Integer> selectedItemPositions =
-                mAdepter.getSelectedItems();
-        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-            mAdepter.removeData(selectedItemPositions.get(i));
-        }
-        mAdepter.notifyDataSetChanged();
+    private void deleteMessages(final String ClientID) {
 
-        /*class ClientDeleteClass extends AsyncTask<String, Void, String> {
+        class ClientDeleteClass extends AsyncTask<String, Void, String> {
 
             @Override
             protected void onPreExecute() {
@@ -459,8 +469,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             protected String doInBackground(String... params) {
 
                 // Sending Client id.
-                hashMap.put("id",IdHolder);
-
+                hashMap.put("id",ClientID);
+                Log.v("id ====== ", ClientID);
                 finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
 
                 return finalResult;
@@ -469,7 +479,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
         ClientDeleteClass ClientDeleteClass = new ClientDeleteClass();
 
-        ClientDeleteClass.execute(ClientID);*/
+        ClientDeleteClass.execute(ClientID);
     }
-
 }

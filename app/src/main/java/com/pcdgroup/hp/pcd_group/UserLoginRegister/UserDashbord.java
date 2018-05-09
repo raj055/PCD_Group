@@ -59,12 +59,12 @@ public class UserDashbord extends AppCompatActivity {
 
 
          if (gblv.AccessType.contains("Manager")) {
-             MyQuotation.setVisibility(View.INVISIBLE);
+             MyQuotation.setVisibility(View.GONE);
          }
          else if (gblv.AccessType.contains("Client")){
-             QuotationList.setVisibility(View.INVISIBLE);
-             OrderList.setVisibility(View.INVISIBLE);
-             Discount.setVisibility(View.INVISIBLE);
+             QuotationList.setVisibility(View.GONE);
+             OrderList.setVisibility(View.GONE);
+             Discount.setVisibility(View.GONE);
          }
 
 
@@ -107,6 +107,7 @@ public class UserDashbord extends AppCompatActivity {
                     startActivity(intent);
                 } else if (gblv.AccessType.contains("Client")){
                     Intent intent = new Intent(UserDashbord.this, ClientOfClientList.class);
+                    intent.putExtra("emailid", EmailHolder);
                     startActivity(intent);
                 }
             }

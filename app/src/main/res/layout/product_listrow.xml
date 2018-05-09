@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/thumbnail"
+        android:layout_below="@+id/qunt"
         android:layout_marginTop="8dip"
         android:gravity="left|center_vertical"
         android:textColor="@color/Black"

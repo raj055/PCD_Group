@@ -132,6 +132,8 @@ public class ProductSingleRecord extends AppCompatActivity {
                 intent.putExtra("reorderlevel", RecordlevelHolder);
                 intent.putExtra("gst", GstHolder);
 
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(intent);
 
                 // Finishing current activity after opening next activity.

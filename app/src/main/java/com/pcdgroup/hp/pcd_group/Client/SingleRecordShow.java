@@ -46,7 +46,7 @@ public class SingleRecordShow extends AppCompatActivity {
     String HttpURL = "http://dert.co.in/gFiles/filterclientdata.php";
 
     // Http URL for delete Already Open Client Record.
-    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/DeleteClient.php";
+    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteclient.php";
 
     String finalResult ;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -133,6 +133,8 @@ public class SingleRecordShow extends AppCompatActivity {
                 intent.putExtra("email_id", EmailHolder);
                 intent.putExtra("designation", DesignationHolder);
 
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(intent);
 
                 // Finishing current activity after opening next activity.
@@ -183,6 +185,7 @@ public class SingleRecordShow extends AppCompatActivity {
 
                 // Sending Client id.
                 hashMap.put("id",IdHolder);
+                Log.v("id ====== ", IdHolder);
 
                 finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
 
