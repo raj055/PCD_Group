@@ -161,9 +161,9 @@ public class ClientOfClientList extends AppCompatActivity {
 
             @Override
             protected String doInBackground(String... params) {
-//
-//                // Sending Client id.
-//                hashMap.put("emailId", emailId);
+
+                // Sending Client id.
+                hashMap.put("emailId", emailId);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
