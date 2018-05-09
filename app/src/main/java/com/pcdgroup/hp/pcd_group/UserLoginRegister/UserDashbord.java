@@ -177,7 +177,6 @@ public class UserDashbord extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override

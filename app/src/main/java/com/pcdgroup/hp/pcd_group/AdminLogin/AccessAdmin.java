@@ -123,7 +123,7 @@ public class AccessAdmin extends AppCompatActivity {
         builder.setTitle("Select Access Level");
 
         // add a radio button list
-        String[] Client = {" User", "Admin", "Manager", "Client"};
+        String[] Client = {"User", "Admin", "Manager", "Client"};
         int checkedItem = 0; // cow
         if(currentAccValue.contains("Admin")){
             checkedItem = 1;

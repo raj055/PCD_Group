@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -334,22 +335,23 @@ public class ProductSingleRecord extends AppCompatActivity {
 
         int id = item.getItemId();
 
+        Log.v("Access type ========",gblVar.AccessType);
         if(id==R.id.home) {
-            if (gblVar.admin.contains("Admin")) {
+            if (gblVar.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
             }
-            /*if (gblVar.manager.contains("Manager")) {
+            else if (gblVar.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, AdminDashboard.class);
+                intent = new Intent(this, UserDashbord.class);
 
             }
-            if (gblVar.client.contains("Client")) {
+            else if (gblVar.AccessType.contains("Client")) {
 
-                intent = new Intent(this, AdminDashboard.class);
+                intent = new Intent(this, UserDashbord.class);
 
-            }*/
+            }
            else {
 
                 intent = new Intent(this, ViewImage.class);

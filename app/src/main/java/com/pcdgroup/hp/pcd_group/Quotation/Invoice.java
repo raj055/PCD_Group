@@ -76,21 +76,16 @@ public class Invoice extends AppCompatActivity {
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
     TextView b_name,b_address,b_pin,b_state,b_mobile,b_pan;
+    TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountPerce;
 
-    TextView date,validdate, finalPayable;
-
+    String transport,discount;
     boolean igst = false;
-
     EditText userAnswer;
     float gstValue;
-
     String state_holder,state1_holder;
-
     float totalPrice, totalAmount;
     int totalquantity;
-
-    private int PICK_IMAGE_REQUEST = 1;
-
+    private int REQUEST_DIRECTORY = 1;
     public static int REQUEST_PERMISSIONS = 1;
     ConstraintLayout cl_pdflayout;
     boolean boolean_permission;
@@ -110,6 +105,13 @@ public class Invoice extends AppCompatActivity {
         setContentView(R.layout.invoice);
 
         initialiseLayouts();
+
+        transport=getIntent().getExtras().getString("transportioncost");
+        TransportationCost.setText(transport);
+
+        discount=getIntent().getExtras().getString("discountperce");
+        DiscountPerce.setText(discount);
+
 
         String str;
         if(savedInstanceState == null){
@@ -309,6 +311,9 @@ public class Invoice extends AppCompatActivity {
         finalquantity = (TextView) findViewById(R.id.finalQuantity);
         finalamount = (TextView) findViewById(R.id.finalAmount);
         finalPayable = (TextView) findViewById(R.id.textView25);
+        TransportationCost=(TextView) findViewById(R.id.textView18);
+        DiscountValue=(TextView ) findViewById(R.id.textView27);
+        DiscountPerce=(TextView) findViewById(R.id.textView26);
 
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
@@ -343,7 +348,7 @@ public class Invoice extends AppCompatActivity {
                 break;
             case 2:
 
-//                showFileChooser();
+                showFileChooser();
 
                 LayoutInflater layoutinflater = LayoutInflater.from(this);
                 View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
@@ -393,14 +398,14 @@ public class Invoice extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       /* if (requestCode == PICK_IMAGE_REQUEST) {
+       /* if (requestCode == REQUEST_DIRECTORY) {
             if (resultCode == DirectoryChooserActivity.RESULT_CODE_DIR_SELECTED) {
                 handleDirectoryChoice(data
                         .getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
             } else {
                 // Nothing selected
             }
-        }
+        }*/
     }
 
     private void handleDirectoryChoice(String stringExtra) {
@@ -408,7 +413,7 @@ public class Invoice extends AppCompatActivity {
     }
 
     private void showFileChooser() {
-        final Intent chooserIntent = new Intent(this, DirectoryChooserActivity.class);
+       /* final Intent chooserIntent = new Intent(this, DirectoryChooserActivity.class);
 
         final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
                 .newDirectoryName("DirChooserSample")
@@ -419,7 +424,7 @@ public class Invoice extends AppCompatActivity {
         chooserIntent.putExtra(DirectoryChooserActivity.EXTRA_CONFIG, config);
 
 // REQUEST_DIRECTORY is a constant integer to identify the request, e.g. 0
-        startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);*/
+        startActivityForResult(chooserIntent, REQUEST_DIRECTORY);*/
     }
 
     private Properties getHashMap(){

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
+import com.pcdgroup.hp.pcd_group.Discount.Client_Discount;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
@@ -36,7 +37,7 @@ import com.pcdgroup.hp.pcd_group.R;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist;
+    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist, Discount;
     TextView EmailShow;
     public static String EmailHolder = " ";
 
@@ -53,6 +54,7 @@ public class AdminDashboard extends AppCompatActivity {
         Quotation = (Button) findViewById(R.id.quotation);
         Access = (Button) findViewById(R.id.btn_access);
         Orderlist = (Button) findViewById(R.id.btn_orderlist);
+        Discount = (Button) findViewById(R.id.btn_discount);
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
 
@@ -142,6 +144,17 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(AdminDashboard.this, Order_List.class);
+
+                startActivity(intent);
+
+            }
+        });
+        // Click Discount button
+        Discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(AdminDashboard.this, Client_Discount.class);
 
                 startActivity(intent);
 
