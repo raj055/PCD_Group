@@ -98,7 +98,7 @@ public class Client_Discount extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SaveAccess();
+//                SaveAccess();
             }
         });
 
