@@ -32,8 +32,8 @@ public class UserDashbord extends AppCompatActivity {
     Button LogOut, Client_Details, Product, Invoice, MyQuotation,QuotationList,OrderList,Discount;
     TextView EmailShow;
     String EmailHolder;
-    private String mUsername;
-
+    String mUsername;
+    String AccessDashbord;
     GlobalVariable gblv;
 
     @Override

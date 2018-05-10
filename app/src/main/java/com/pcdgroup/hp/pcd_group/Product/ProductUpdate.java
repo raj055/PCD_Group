@@ -48,8 +48,8 @@ import java.util.Map;
 
 public class ProductUpdate extends AppCompatActivity {
 
-    String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
-    String HttpURLImage = "http://dert.co.in/gFiles/updateproductimage.php";
+    String HttpURL = "http://dert.co.in/gFiles/updateproductdetails12.php";
+//    String HttpURLImage = "http://dert.co.in/gFiles/updateproductimage.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;
@@ -59,7 +59,7 @@ public class ProductUpdate extends AppCompatActivity {
     EditText productName, productPrice,productMinimum,productHsncode,productBrand,productDescription,
             productStock, productRecordlevel, productgst;
     Button UpdateProduct,Image_Upload;
-    String productIdHolder,productNameHolder,productPriceHolder,productMinimumHolder,productHsncodeHolder,
+    String productIdHolder,productImageHolder,productNameHolder,productPriceHolder,productMinimumHolder,productHsncodeHolder,
             productBeandHolder,productDescriptionHolder,productStockHolder, productRecordlevelHolder,
             productGstHolder;
     Intent intent;
@@ -67,8 +67,6 @@ public class ProductUpdate extends AppCompatActivity {
 
     private Bitmap bitmap;
 
-    private String KEY_IMAGE = "image";
-    private String KEY_NAME = "name";
 
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -96,6 +94,7 @@ public class ProductUpdate extends AppCompatActivity {
 
         // Receive product ID, Name , Address , Email, etc.. Send by previous ShowSingleRecordActivity.
         productIdHolder = getIntent().getStringExtra("id");
+        productImageHolder = getIntent().getStringExtra("image");
         productNameHolder = getIntent().getStringExtra("name");
         productPriceHolder = getIntent().getStringExtra("price");
         productMinimumHolder = getIntent().getStringExtra("minimum");
@@ -107,6 +106,7 @@ public class ProductUpdate extends AppCompatActivity {
         productGstHolder = getIntent().getStringExtra("gst");
 
         // Setting Received Student Name, Phone Number, Class into EditText.
+//        imageView_Upload.setImageBitmap();
         productName.setText(productNameHolder);
         productPrice.setText(productPriceHolder);
         productMinimum.setText(productMinimumHolder);
@@ -126,7 +126,7 @@ public class ProductUpdate extends AppCompatActivity {
                 GetDataFromEditText();
 
                 if(CheckEditText){
-                    productRecordUpdate (productIdHolder,productNameHolder,productPriceHolder,productMinimumHolder,
+                    productRecordUpdate (productIdHolder,productImageHolder,productNameHolder,productPriceHolder,productMinimumHolder,
                             productHsncodeHolder, productBeandHolder,productDescriptionHolder, productStockHolder,
                             productRecordlevelHolder,productGstHolder);
                 }else {
@@ -135,7 +135,6 @@ public class ProductUpdate extends AppCompatActivity {
                     Toast.makeText(ProductUpdate.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
                 }
 
-                uploadImage();
             }
         });
 
@@ -173,56 +172,6 @@ public class ProductUpdate extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(){
-        //Showing the progress dialog
-        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpURLImage,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        //Disimissing the progress dialog
-                        loading.dismiss();
-                        //Showing toast message of the response
-                        Toast.makeText(ProductUpdate.this,s , Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        //Dismissing the progress dialog
-                        loading.dismiss();
-
-                        //Showing toast
-                        Toast.makeText(ProductUpdate.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                //Converting Bitmap to String
-                String image = getStringImage(bitmap);
-
-                //Getting Image Name
-                String name1 = productName.getText().toString().trim();
-
-                //Creating parameters
-                Map<String,String> params = new Hashtable<String, String>();
-
-                //Adding parameters
-                params.put(KEY_IMAGE, image);
-                params.put(KEY_NAME, name1);
-
-                //returning parameters
-                return params;
-            }
-        };
-
-        //Creating a Request Queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        //Adding request to the queue
-        requestQueue.add(stringRequest);
-    }
-
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -232,6 +181,8 @@ public class ProductUpdate extends AppCompatActivity {
 
     // Method to get existing data from EditText.
     public void GetDataFromEditText(){
+
+        productImageHolder = getStringImage(bitmap);
 
         productNameHolder = productName.getText().toString();
         productPriceHolder = productPrice.getText().toString();
@@ -257,7 +208,7 @@ public class ProductUpdate extends AppCompatActivity {
     }
 
     // Method to Update Student Record.
-    public void productRecordUpdate( String productIdHolder, String productNameHolder, String productPriceHolder, String productMinimumHolder,
+    public void productRecordUpdate( String productIdHolder,String ClientImageHolder, String productNameHolder, String productPriceHolder, String productMinimumHolder,
                                     String productHsncodeHolder, String productBeandHolder,
                                     String productDescriptionHolder, String productStockHolder,
                                     String productRecordlevelHolder, String productGstHolder){
@@ -287,25 +238,28 @@ public class ProductUpdate extends AppCompatActivity {
 
                 hashMap.put("id",params[0]);
 
-                hashMap.put("name",params[1]);
+                hashMap.put("image",params[1]);
 
-                hashMap.put("price",params[2]);
+                hashMap.put("name",params[2]);
 
-                hashMap.put("minimum",params[3]);
+                hashMap.put("price",params[3]);
 
-                hashMap.put("hsncode",params[4]);
+                hashMap.put("minimum",params[4]);
 
-                hashMap.put("brand",params[5]);
+                hashMap.put("hsncode",params[5]);
 
-                hashMap.put("description",params[6]);
+                hashMap.put("brand",params[6]);
 
-                hashMap.put("stock",params[7]);
+                hashMap.put("description",params[7]);
 
-                hashMap.put("reorderlevel",params[8]);
+                hashMap.put("stock",params[8]);
 
-                hashMap.put("gst",params[9]);
+                hashMap.put("reorderlevel",params[9]);
+
+                hashMap.put("gst",params[10]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
+
 
                 return finalResult;
             }
@@ -313,7 +267,7 @@ public class ProductUpdate extends AppCompatActivity {
 
         productRecordUpdateClass productRecordUpdateClass = new productRecordUpdateClass();
 
-        productRecordUpdateClass.execute(productIdHolder,productNameHolder, productPriceHolder, productMinimumHolder,
+        productRecordUpdateClass.execute(productIdHolder,ClientImageHolder,productNameHolder, productPriceHolder, productMinimumHolder,
                 productHsncodeHolder, productBeandHolder,
                 productDescriptionHolder, productStockHolder, productRecordlevelHolder,
                 productGstHolder);
