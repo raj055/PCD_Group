@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.AdminLogin.BrandAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.Category;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;
@@ -417,18 +419,29 @@ public class CreateQuotation extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if(id==R.id.home) {
+        Log.v("Access type ========",globalVariable.AccessType);
 
-            if (globalVariable.admin.contains("Admin")) {
+        if(id==R.id.home) {
+            if (globalVariable.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }else {
+            }
+            else if (globalVariable.AccessType.contains("Manager")) {
 
                 intent = new Intent(this, UserDashbord.class);
+
+            }
+            else if (globalVariable.AccessType.contains("Client")) {
+
+                intent = new Intent(this, UserDashbord.class);
+
+            }
+            else {
+
+                intent = new Intent(this, ViewImage.class);
             }
 
-            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

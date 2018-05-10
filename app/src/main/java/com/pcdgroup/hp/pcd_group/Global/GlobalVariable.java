@@ -28,9 +28,6 @@ public class GlobalVariable {
 
     public  String[] globalBarnd = new String[11];
 
-    public String admin;
-
-
     public String AccessType;
 
 }

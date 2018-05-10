@@ -13,6 +13,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -231,21 +232,34 @@ public class UpdateActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
+        Log.v("Access type ========",gblVar.AccessType);
+
         if(id==R.id.home) {
-            if (gblVar.admin.contains("Admin")) {
+            if (gblVar.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }else {
+            }
+            else if (gblVar.AccessType.contains("Manager")) {
 
                 intent = new Intent(this, UserDashbord.class);
+
+            }
+            else if (gblVar.AccessType.contains("Client")) {
+
+                intent = new Intent(this, UserDashbord.class);
+
+            }
+            else {
+
+                intent = new Intent(this, ViewImage.class);
             }
 
-            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 

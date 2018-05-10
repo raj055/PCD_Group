@@ -16,6 +16,7 @@ import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.shockwave.pdfium.PdfDocument;
@@ -116,17 +117,29 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
 
         int id = item.getItemId();
 
+        Log.v("Access type ========",gblVar.AccessType);
+
         if(id==R.id.home) {
-            if (gblVar.admin.contains("Admin")) {
+            if (gblVar.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }else {
+            }
+            else if (gblVar.AccessType.contains("Manager")) {
 
                 intent = new Intent(this, UserDashbord.class);
+
+            }
+            else if (gblVar.AccessType.contains("Client")) {
+
+                intent = new Intent(this, UserDashbord.class);
+
+            }
+            else {
+
+                intent = new Intent(this, ViewImage.class);
             }
 
-            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

@@ -23,6 +23,7 @@ import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
@@ -335,22 +336,33 @@ public class SingleRecordShow extends AppCompatActivity {
 
         int id = item.getItemId();
 
-            if(id==R.id.home) {
+        Log.v("Access type ========",gblVar.AccessType);
 
-                if (gblVar.admin.contains("Admin")) {
+        if(id==R.id.home) {
+            if (gblVar.AccessType.contains("Admin")) {
 
-                    intent = new Intent(this, AdminDashboard.class);
+                intent = new Intent(this, AdminDashboard.class);
 
-                }else {
-
-                    intent = new Intent(this, UserDashbord.class);
-                }
-
-                Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
             }
+            else if (gblVar.AccessType.contains("Manager")) {
+
+                intent = new Intent(this, UserDashbord.class);
+
+            }
+            else if (gblVar.AccessType.contains("Client")) {
+
+                intent = new Intent(this, UserDashbord.class);
+
+            }
+            else {
+
+                intent = new Intent(this, ViewImage.class);
+            }
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

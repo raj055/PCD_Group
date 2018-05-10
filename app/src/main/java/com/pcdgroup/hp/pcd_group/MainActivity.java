@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
 
                                 intent.putExtra(UserEmail , email);
-                                gblVar.admin = accessType.toString();
+                                gblVar.AccessType = "Admin";
                                 startActivity(intent);
 
                                 finish();
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, UserDashbord.class);
 
                                 intent.putExtra(UserEmail , email);
-                                gblVar.AccessType = accessType.toString();
+                                gblVar.AccessType = "Manager";
                                 startActivity(intent);
 
                                 finish();
@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, UserDashbord.class);
 
                                 intent.putExtra(UserEmail , email);
-                                gblVar.AccessType = accessType.toString();
+                                gblVar.AccessType = "Client";
                                 startActivity(intent);
 
                                 finish();
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this, ViewImage.class);
 
                                 intent.putExtra(UserEmail, email);
-                                gblVar.AccessType = accessType.toString();
+                                gblVar.AccessType = "User";
                                 startActivity(intent);
 
                                 finish();
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
-                gblVar.admin = Email.getText().toString();
+                gblVar.AccessType = Email.getText().toString();
 
                 return finalResult;
             }

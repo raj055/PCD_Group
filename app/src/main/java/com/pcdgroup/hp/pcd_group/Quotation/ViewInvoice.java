@@ -39,10 +39,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
@@ -105,11 +108,15 @@ public class ViewInvoice  extends AppCompatActivity {
   String fileName, targetPdf;
   String fileUrl ;
 
+  Intent intent;
+  GlobalVariable gblVar;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.invoice);
+
+    gblVar = GlobalVariable.getInstance();
 
     date = (TextView) findViewById(R.id.date_tv);
     validdate = (TextView) findViewById(R.id.validdate_tv);
@@ -359,47 +366,6 @@ public class ViewInvoice  extends AppCompatActivity {
 
     AddToOrderList.execute(textFile);
     }
-
-
-
-
-
-    //getting name for the image
-//    String name = userAnswer.getText().toString().trim();
-
-//    Log.v("FileName::::::::::::", targetPdf);
-//    if (targetPdf == null) {
-//
-//      Toast.makeText(this, "Please move your .pdf file to internal storage and retry", Toast.LENGTH_LONG).show();
-//    } else {
-//      //Uploading code
-//      try {
-//        String uploadId = UUID.randomUUID().toString();
-//
-//        GlobalVariable gblVar = GlobalVariable.getInstance();
-//
-//        String emailId = "";
-//        if(gblVar.currentUserEmail != null)
-//        {
-//          emailId = gblVar.currentUserEmail;
-//
-//        }
-
-        //Creating a multi part request
-//        new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
-//          .addFileToUpload(targetPdf, "txt") //Adding file
-//          .addParameter("name", name) //Adding text parameter to the request
-//          .addParameter("email", emailId)
-//          .setNotificationConfig(new UploadNotificationConfig())
-//          .setMaxRetries(2)
-//          .startUpload(); //Starting the upload
-
-//      } catch (Exception exc) {
-//        Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-//      }
-//    }
-//  }
-
 
   public static Bitmap loadBitmapFromView(View v, int width, int height) {
     Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);

@@ -81,7 +81,14 @@ public class ViewImage extends AppCompatActivity {
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
 
-        if (EmailHolders == user){
+        if (gblVar.AccessType.contains("Manager")){
+            fab.setVisibility(View.INVISIBLE);
+            listView.setClickable(false);
+        }
+        else if (gblVar.AccessType.contains("Client")){
+            fab.setVisibility(View.INVISIBLE);
+            listView.setClickable(false);
+        } else if (gblVar.AccessType.contains("User")){
             fab.setVisibility(View.INVISIBLE);
             listView.setClickable(false);
         }

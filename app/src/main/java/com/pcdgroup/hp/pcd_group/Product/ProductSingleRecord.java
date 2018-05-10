@@ -154,7 +154,14 @@ public class ProductSingleRecord extends AppCompatActivity {
             }
         });
 
-        if (EmailHolders == user){
+        if (gblVar.AccessType.contains("Manager")){
+            UpdateButton.setVisibility(View.INVISIBLE);
+            DeleteButton.setVisibility(View.INVISIBLE);
+        }
+        else if (gblVar.AccessType.contains("Client")){
+            UpdateButton.setVisibility(View.INVISIBLE);
+            DeleteButton.setVisibility(View.INVISIBLE);
+        } else if (gblVar.AccessType.contains("User")){
             UpdateButton.setVisibility(View.INVISIBLE);
             DeleteButton.setVisibility(View.INVISIBLE);
         }

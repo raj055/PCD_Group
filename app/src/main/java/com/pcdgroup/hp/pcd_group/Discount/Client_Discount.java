@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.UserAdminAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
@@ -313,22 +315,23 @@ public class Client_Discount extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if(id==R.id.home) {
+        Log.v("Access type ========",gblv.AccessType);
 
-            if (gblv.admin.contains("Admin")) {
+        if(id==R.id.home) {
+            if (gblv.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }else {
+            } else if (gblv.AccessType.contains("Manager")) {
 
                 intent = new Intent(this, UserDashbord.class);
+
             }
 
-            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
+
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
-
         }
         return super.onOptionsItemSelected(item);
     }
