@@ -1,7 +1,9 @@
 package com.pcdgroup.hp.pcd_group.Client;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -336,8 +338,6 @@ public class SingleRecordShow extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Log.v("Access type ========",gblVar.AccessType);
-
         if(id==R.id.home) {
             if (gblVar.AccessType.contains("Admin")) {
 
@@ -367,4 +367,27 @@ public class SingleRecordShow extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(SingleRecordShow.this);
+        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(SingleRecordShow.this, ClientDetailsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }

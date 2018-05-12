@@ -285,8 +285,6 @@ public class ProductUpdate extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Log.v("Access type ========",gblVar.AccessType);
-
         if(id==R.id.home) {
             if (gblVar.AccessType.contains("Admin")) {
 
