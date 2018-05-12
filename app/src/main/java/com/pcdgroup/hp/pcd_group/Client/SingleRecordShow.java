@@ -199,6 +199,9 @@ public class SingleRecordShow extends AppCompatActivity {
         ClientDeleteClass ClientDeleteClass = new ClientDeleteClass();
 
         ClientDeleteClass.execute(ClientID);
+
+        intent = new Intent(this,ClientDetailsActivity.class);
+        startActivity(intent);
     }
 
     //Method to show current record Current Selected Record
@@ -367,27 +370,4 @@ public class SingleRecordShow extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(SingleRecordShow.this);
-        builder.setMessage("Are You Sure Want To Exit Register ?");
-        builder.setCancelable(true);
-        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(SingleRecordShow.this, ClientDetailsActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
-        });
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }
