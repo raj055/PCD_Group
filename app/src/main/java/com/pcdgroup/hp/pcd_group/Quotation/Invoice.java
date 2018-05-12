@@ -2,12 +2,15 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,6 +21,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -56,20 +60,26 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
 import javax.xml.validation.Validator;
+
+import static android.app.PendingIntent.getActivity;
 
 /**
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
  */
 public class Invoice extends AppCompatActivity {
+
+    private static final String TAG = Invoice.class.getSimpleName();
 
     TextView name,address,state,company,country,pin;
     TextView state1,sgst,cgst1;
@@ -85,8 +95,6 @@ public class Invoice extends AppCompatActivity {
     String state_holder,state1_holder;
     float totalPrice, totalAmount;
     int totalquantity;
-    private int REQUEST_DIRECTORY = 1;
-    public static int REQUEST_PERMISSIONS = 1;
     ConstraintLayout cl_pdflayout;
     boolean boolean_permission;
     boolean boolean_save;
@@ -98,6 +106,10 @@ public class Invoice extends AppCompatActivity {
     String fileName, targetPdf;
     LinearLayout lyt;
     String getAllProducts, getGst, getCgst, getPrice, getQuantity, getAmount, getHsn;
+
+    private int REQUEST_CODE_OPEN_DIRECTORY = 0;
+    public static int REQUEST_PERMISSIONS = 1;
+    String mCurrentDirectoryUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -254,8 +266,6 @@ public class Invoice extends AppCompatActivity {
 
                 fillHashMap();
             }
-
-
         }
     }
 
@@ -308,7 +318,7 @@ public class Invoice extends AppCompatActivity {
         price = (TextView) findViewById(R.id.tvprice);
 
         finalprice = (TextView) findViewById(R.id.itemsPrice);
-        finalquantity = (TextView) findViewById(R.id.finalQuantity);
+        finalquantity = ( TextView) findViewById(R.id.finalQuantity);
         finalamount = (TextView) findViewById(R.id.finalAmount);
         finalPayable = (TextView) findViewById(R.id.textView25);
         TransportationCost=(TextView) findViewById(R.id.textView18);
@@ -366,7 +376,8 @@ public class Invoice extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         fileName =  userAnswer.getText().toString();
-                        targetPdf = "/sdcard/" + fileName + ".pdf";
+                        targetPdf = getFilesDir() + fileName + ".pdf";
+
                         fn_permission();
 
                         if (boolean_permission) {
@@ -383,6 +394,7 @@ public class Invoice extends AppCompatActivity {
 
                         UploadPdf();
                     }
+
                 });
 
                 // all set and time to build and show up!
@@ -396,35 +408,16 @@ public class Invoice extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        /*if (requestCode == REQUEST_DIRECTORY) {
-            if (resultCode == DirectoryChooserActivity.RESULT_CODE_DIR_SELECTED) {
-                handleDirectoryChoice(data
-                        .getStringExtra(DirectoryChooserActivity.RESULT_SELECTED_DIR));
-            } else {
-                // Nothing selected
-            }
-        }*/
-    }
-
-    private void handleDirectoryChoice(String stringExtra) {
-
+        if (requestCode == REQUEST_CODE_OPEN_DIRECTORY && resultCode == Activity.RESULT_OK) {
+            Log.d(TAG, String.format("Open Directory result Uri : %s", data.getData()));
+            mCurrentDirectoryUri = new String();
+            mCurrentDirectoryUri.concat(data.getData().toString());
+        }
     }
 
     private void showFileChooser() {
-       /* final Intent chooserIntent = new Intent(this, DirectoryChooserActivity.class);
-
-        final DirectoryChooserConfig config = DirectoryChooserConfig.builder()
-                .newDirectoryName("DirChooserSample")
-                .allowReadOnlyDirectory(true)
-                .allowNewDirectoryNameModification(true)
-                .build();
-
-        chooserIntent.putExtra(DirectoryChooserActivity.EXTRA_CONFIG, config);
-
-// REQUEST_DIRECTORY is a constant integer to identify the request, e.g. 0
-        startActivityForResult(chooserIntent, REQUEST_DIRECTORY);*/
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
     }
 
     private Properties getHashMap(){
@@ -446,9 +439,9 @@ public class Invoice extends AppCompatActivity {
             Date now = new Date();
             String fName = formatter.format(now) ;
 
-            targetPdf = "/sdcard/" +  fileName + ".txt";;
-            File root = new File(getFilesDir() + "/", "Report");
+            targetPdf = getApplicationContext().getFilesDir().getAbsolutePath() +  fileName + ".txt";
 
+            File root = new File(getFilesDir() + "/", "Report");
             if (!root.exists())
             {
                 root.mkdirs();
@@ -543,7 +536,9 @@ public class Invoice extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0 , null);
         document.finishPage(page);
 
-        targetPdf = "/sdcard/" + fileName + ".pdf";
+        targetPdf = getFilesDir() + fileName + ".pdf";
+
+        Log.v("Targetpdf==========",targetPdf);
 
         File filePath = new File(targetPdf);
 
@@ -553,7 +548,7 @@ public class Invoice extends AppCompatActivity {
             boolean_save=true;
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Something wrong: " + filePath+ e.toString(), Toast.LENGTH_LONG).show();
         }
         // close the document
         document.close();

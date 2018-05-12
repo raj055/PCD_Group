@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
@@ -32,7 +33,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
     EditText name,address,addressline1,addressline2,mobileno,country,company_name,pin,email_id,designation;
     Spinner type,state;
     Button submit;
-    String Name_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder;
+    String Name_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder, UserClient_Holder;
     String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
     Boolean CheckEditText ;
@@ -40,10 +41,14 @@ public class ClientRegisterActivity extends AppCompatActivity {
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
 
+    GlobalVariable globalVariable;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientregister);
+
+        globalVariable = GlobalVariable.getInstance();
 
         //Assign Id'S
         name = (EditText) findViewById(R.id.et_name);
@@ -71,7 +76,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
                 if(CheckEditText){
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(Name_Holder, type_Holder, Address_Hoder, Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder,CompanyName_Holder,Pin_Holder, Emailid_Holder,Designation_Holder);
+                    UserRegisterFunction(Name_Holder, type_Holder, Address_Hoder, Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder,CompanyName_Holder,Pin_Holder, Emailid_Holder,Designation_Holder,UserClient_Holder);
                 }
                 else {
 
@@ -100,6 +105,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
         Pin_Holder = pin.getText().toString();
         Designation_Holder = designation.getText().toString();
 
+        UserClient_Holder = globalVariable.currentUserEmail;
+
         if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder))
         {
             CheckEditText = false;
@@ -110,7 +117,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
     }
 
     //Register user in database details.
-    public void UserRegisterFunction(final String name, final String type, final String address,final String addressline1,final String addressline2,final String mobileno,final String state,final String counntry, final String company_name, final  String pin,final String email_id, final String designation){
+    public void UserRegisterFunction(final String name, final String type, final String address,final String addressline1,final String addressline2,final String mobileno,final String state,final String counntry, final String company_name, final  String pin,final String email_id, final String designation, final String userclient){
 
         class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
 
@@ -148,18 +155,19 @@ public class ClientRegisterActivity extends AppCompatActivity {
                 hashMap.put("pin",params[9]);
                 hashMap.put("email_id",params[10]);
                 hashMap.put("designation",params[11]);
+                hashMap.put("UserClient",params[12]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
                 return finalResult;
             }
-            public void execute(String name, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation) {
+            public void execute(String name, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation, String userclient) {
             }
         }
 
         UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
 
-        userRegisterFunctionClass.execute(name,type,address,addressline1,addressline2,mobileno,state,counntry,company_name,pin,email_id,designation);
+        userRegisterFunctionClass.execute(name,type,address,addressline1,addressline2,mobileno,state,counntry,company_name,pin,email_id,designation,userclient);
     }
 
     @Override

@@ -113,7 +113,9 @@ public class ShowQuotationList extends AppCompatActivity {
             //Declaring a Pdf object to add it to the ArrayList  pdfList
             Pdf pdf  = new Pdf();
             String pdfName = jsonObject.getString("name");
+            String pdfEmail = jsonObject.getString("email");
             pdf.setName(pdfName);
+            pdf.setEmail(pdfEmail);
             pdfList.add(pdf);
           }
 

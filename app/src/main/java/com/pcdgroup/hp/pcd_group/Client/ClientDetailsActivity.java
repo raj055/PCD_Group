@@ -470,7 +470,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
                 // Sending Client id.
                 hashMap.put("id",ClientID);
-                Log.v("id ====== ", ClientID);
                 finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
 
                 return finalResult;
