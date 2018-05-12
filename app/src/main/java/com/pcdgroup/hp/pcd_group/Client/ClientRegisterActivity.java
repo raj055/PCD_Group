@@ -105,6 +105,14 @@ public class ClientRegisterActivity extends AppCompatActivity {
         Pin_Holder = pin.getText().toString();
         Designation_Holder = designation.getText().toString();
 
+        Name_Holder = Name_Holder.replace("'","''");
+        Address_Hoder = Address_Hoder.replace("'","''");
+        Addressline1_Holder = Addressline1_Holder.replace("'","''");
+        Addressline2_Holder = Addressline2_Holder.replace("'","''");
+        CompanyName_Holder = CompanyName_Holder.replace("'","''");
+        Designation_Holder = Designation_Holder.replace("'","''");
+
+        
         UserClient_Holder = globalVariable.currentUserEmail;
 
         if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder))
