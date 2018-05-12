@@ -204,6 +204,10 @@ public class UploadImage extends AppCompatActivity {
                 String name7= stock.getText().toString().trim();
                 String name8= reorderlevel.getText().toString().trim();
                 String name9=gst.getSelectedItem().toString().trim();
+                
+                name1 = name1.replace("'","''");
+                name6 = name6.replace("'","''");
+                
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
