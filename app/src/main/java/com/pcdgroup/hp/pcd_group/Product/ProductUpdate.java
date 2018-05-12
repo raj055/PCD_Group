@@ -105,7 +105,7 @@ public class ProductUpdate extends AppCompatActivity {
         productStockHolder = getIntent().getStringExtra("stock");
         productRecordlevelHolder = getIntent().getStringExtra("reorderlevel");
         productGstHolder = getIntent().getStringExtra("gst");
-
+        
         // Setting Received Student Name, Phone Number, Class into EditText.
 //        imageView_Upload.setImageBitmap();
         productName.setText(productNameHolder);
@@ -118,6 +118,9 @@ public class ProductUpdate extends AppCompatActivity {
         productRecordlevel.setText(productRecordlevelHolder);
         productgst.setText(productGstHolder);
 
+        productNameHolder = productNameHolder.replace("'","''");
+        productDescriptionHolder = productDescriptionHolder.replace("'","''");
+        
         // Adding click listener to update button .
         UpdateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
