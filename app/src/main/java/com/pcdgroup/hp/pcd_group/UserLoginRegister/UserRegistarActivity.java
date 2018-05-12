@@ -81,6 +81,9 @@ public class UserRegistarActivity extends AppCompatActivity {
         L_Name_Holder = Last_Name.getText().toString();
         EmailHolder = Email.getText().toString().trim();
         PasswordHolder = Password.getText().toString();
+        
+           F_Name_Holder = F_Name_Holder.replace("'","''");
+        L_Name_Holder = L_Name_Holder.replace("'","''");
 
         emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
