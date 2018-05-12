@@ -139,6 +139,13 @@ public class UpdateActivity extends AppCompatActivity {
         ClientPinoHolder = ClientPin.getText().toString();
         ClientComapnyHolder = ClientCompany.getText().toString();
         ClientDesignationHolder = ClientDesignation.getText().toString();
+        
+        ClientNameHolder = ClientNameHolder.replace("'","''");
+        ClientAddressHolder = ClientNameHolder.replace("'","''");
+        ClientAddressline1Holder = ClientAddressline1Holder.replace("'","''");
+        ClientAddressline2Holder = ClientAddressline2Holder.replace("'","''");
+        ClientComapnyHolder = ClientComapnyHolder.replace("'","''");
+        ClientDesignationHolder = ClientDesignationHolder.replace("'","''");
 
         if(TextUtils.isEmpty(ClientNameHolder) || TextUtils.isEmpty(ClientAddressHolder) || TextUtils.isEmpty(ClientAddressline1Holder)
                 || TextUtils.isEmpty(ClientAddressline2Holder) || TextUtils.isEmpty(ClientMobilenoHolder)
