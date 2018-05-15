@@ -104,7 +104,6 @@ public class CreateQuotation extends AppCompatActivity {
         textvaliddate = (TextView) findViewById(R.id.tv_uptodate);
         textaddres = (TextView) findViewById(R.id.address);
 
-
         add_client = (Button) findViewById(R.id.btn_client);
         add_product = (Button) findViewById(R.id.btn_product);
         preview = (Button) findViewById(R.id.btn_preview);
@@ -446,7 +445,6 @@ public class CreateQuotation extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

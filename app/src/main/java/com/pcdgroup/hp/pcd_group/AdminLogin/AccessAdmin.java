@@ -149,9 +149,7 @@ public class AccessAdmin extends AppCompatActivity {
                         accessValue = "Client";
                         break;
                 }
-
                         usrDGet.setAccessType(accessValue);
-
             }
         });
 

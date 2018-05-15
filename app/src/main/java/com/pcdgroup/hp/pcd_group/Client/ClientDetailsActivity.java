@@ -61,7 +61,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
     String finalResult ;
 
     // Http URL for delete Already Open Client Record.
-    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteclient.php";
+    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deletemultiple.php";
 
     ProgressDialog progressDialog2;
 
@@ -243,14 +243,11 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                 GetData.setPin(json.getString( "pin"));
                 GetData.setEmailid(json.getString("email_id"));
                 GetData.setDesignation(json.getString("designation"));
-
             }
             catch (JSONException e)
             {
-
                 e.printStackTrace();
             }
-
             DataAdapters.add(GetData);
         }
 
@@ -413,9 +410,12 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                             mAdepter.getSelectedItems();
                     for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
                        DataAdapter currRecord = DataAdapters.get(selectedItemPositions.get(i));
-                        deleteMessages(currRecord.getId());
+                       String str = currRecord.getId();
+                       String key = "id[" + i + "]";
+                        hashMap.put(key, str);
                         mAdepter.removeData(selectedItemPositions.get(i));
                     }
+                    deleteMessages("");
                     mAdepter.notifyDataSetChanged();
 
                     mode.finish();
@@ -469,7 +469,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             protected String doInBackground(String... params) {
 
                 // Sending Client id.
-                hashMap.put("id",ClientID);
+//                hashMap.put("id",ClientID);
                 finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
 
                 return finalResult;
