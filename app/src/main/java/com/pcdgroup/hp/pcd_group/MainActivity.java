@@ -266,7 +266,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     catch (Exception e){
+                        Toast.makeText(getApplicationContext(),"The Username or password you entered is incorrect.", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
+
                     }
 
                 }
@@ -292,32 +294,4 @@ public class MainActivity extends AppCompatActivity {
 
         userLoginClass.execute(email,password);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.administrator), getResources().getString(R.string.action_admin)));
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
-
-        startActivity(intent);
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private CharSequence menuIconWithText(Drawable r, String title) {
-
-        r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
-        SpannableString sb = new SpannableString("    " + title);
-        ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
-        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return sb;
-    }
-
 }

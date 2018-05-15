@@ -376,7 +376,7 @@ public class Invoice extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         fileName =  userAnswer.getText().toString();
-                        targetPdf = getFilesDir() + fileName + ".pdf";
+                        targetPdf = "/sdcard/" + fileName + ".pdf";
 
                         fn_permission();
 
@@ -439,7 +439,7 @@ public class Invoice extends AppCompatActivity {
             Date now = new Date();
             String fName = formatter.format(now) ;
 
-            targetPdf = getApplicationContext().getFilesDir().getAbsolutePath() +  fileName + ".txt";
+            targetPdf = "/sdcard/" +  fileName + ".txt";
 
             File root = new File(getFilesDir() + "/", "Report");
             if (!root.exists())
@@ -536,7 +536,7 @@ public class Invoice extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0 , null);
         document.finishPage(page);
 
-        targetPdf = getFilesDir() + fileName + ".pdf";
+        targetPdf = "/sdcard/" + fileName + ".pdf";
 
         Log.v("Targetpdf==========",targetPdf);
 
