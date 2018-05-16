@@ -95,8 +95,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
         Name_Holder = name.getText().toString();
         type_Holder = type.getSelectedItem().toString();
         Address_Hoder = address.getText().toString();
-        Addressline1_Holder = addressline2.getText().toString();
-        Addressline2_Holder = addressline1.getText().toString();
+        Addressline1_Holder = addressline1.getText().toString();
+        Addressline2_Holder = addressline2.getText().toString();
         Mobileno_Holder = mobileno.getText().toString();
         State_Holder=state.getSelectedItem().toString();
         Country_Holder=country.getText().toString();
@@ -186,6 +186,9 @@ public class ClientRegisterActivity extends AppCompatActivity {
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ClientRegisterActivity.this, ClientDetailsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
             }
         });

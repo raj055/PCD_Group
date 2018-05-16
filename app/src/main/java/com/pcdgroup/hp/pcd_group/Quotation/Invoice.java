@@ -541,14 +541,16 @@ public class Invoice extends AppCompatActivity {
         Log.v("Targetpdf==========",targetPdf);
 
         File filePath = new File(targetPdf);
+        File fileWithinMyDir = new File(filePath, "PCD_Group");
+        File fileInvoice = new File(fileWithinMyDir, "Quotation");
 
         try {
-            document.writeTo(new FileOutputStream(filePath));
+            document.writeTo(new FileOutputStream(fileInvoice));
 
             boolean_save=true;
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Something wrong: " + filePath+ e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Something wrong: " + fileInvoice+ e.toString(), Toast.LENGTH_LONG).show();
         }
         // close the document
         document.close();

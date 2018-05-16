@@ -1,7 +1,9 @@
 package com.pcdgroup.hp.pcd_group.Product;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -232,6 +234,30 @@ public class UploadImage extends AppCompatActivity {
 
         //Adding request to the queue
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(UploadImage.this);
+        builder.setMessage("Are You Sure Want To Exit ?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(UploadImage.this, ViewImage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

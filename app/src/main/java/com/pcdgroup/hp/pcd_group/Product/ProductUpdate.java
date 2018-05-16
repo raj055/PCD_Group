@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -26,6 +27,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
@@ -40,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,8 +53,8 @@ import java.util.Map;
 
 public class ProductUpdate extends AppCompatActivity {
 
-    String HttpURL = "http://dert.co.in/gFiles/updateproductdetails12.php";
-//    String HttpURLImage = "http://dert.co.in/gFiles/updateproductimage.php";
+    String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
+    String HttpURLImage = "http://dert.co.in/gFiles/updateproductdetails12.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;
@@ -66,8 +70,7 @@ public class ProductUpdate extends AppCompatActivity {
     Intent intent;
     GlobalVariable gblVar;
 
-    private Bitmap bitmap;
-
+    private Bitmap bitmap = null;
 
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -77,8 +80,6 @@ public class ProductUpdate extends AppCompatActivity {
         setContentView(R.layout.update_product);
 
         gblVar = GlobalVariable.getInstance();
-
-        imageView_Upload = (ImageView) findViewById(R.id.upload_imageview);
 
         productName = (EditText)findViewById(R.id.editText_name);
         productPrice = (EditText)findViewById(R.id.editText_price);
@@ -92,6 +93,10 @@ public class ProductUpdate extends AppCompatActivity {
 
         Image_Upload = (Button)findViewById(R.id.btn_imgupload);
         UpdateProduct = (Button)findViewById(R.id.btn_submit);
+        imageView_Upload = (ImageView)findViewById(R.id.upload_imageview);
+
+        //Allow network in main thread
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
         // Receive product ID, Name , Address , Email, etc.. Send by previous ShowSingleRecordActivity.
         productIdHolder = getIntent().getStringExtra("id");
@@ -107,7 +112,7 @@ public class ProductUpdate extends AppCompatActivity {
         productGstHolder = getIntent().getStringExtra("gst");
         
         // Setting Received Student Name, Phone Number, Class into EditText.
-//        imageView_Upload.setImageBitmap();
+//        imageView_Upload.setImageBitmap(bitmap);
         productName.setText(productNameHolder);
         productPrice.setText(productPriceHolder);
         productMinimum.setText(productMinimumHolder);
@@ -186,7 +191,11 @@ public class ProductUpdate extends AppCompatActivity {
     // Method to get existing data from EditText.
     public void GetDataFromEditText(){
 
-        productImageHolder = getStringImage(bitmap);
+        if(bitmap != null) {
+            productImageHolder = getStringImage(bitmap);
+            HttpURL = "http://dert.co.in/gFiles/updateproductdetails12.php";
+            hashMap.put("image",productImageHolder);
+        }
 
         productNameHolder = productName.getText().toString();
         productPriceHolder = productPrice.getText().toString();
@@ -197,6 +206,29 @@ public class ProductUpdate extends AppCompatActivity {
         productStockHolder = productStock.getText().toString();
         productRecordlevelHolder = productRecordlevel.getText().toString();
         productGstHolder = productgst.getText().toString();
+
+        productNameHolder = productNameHolder.replace("'","''");
+        productDescriptionHolder = productDescriptionHolder.replace("'","''");
+
+        hashMap.put("id", productIdHolder);
+
+        hashMap.put("name",productNameHolder);
+
+        hashMap.put("price",productPriceHolder);
+
+        hashMap.put("minimum",productMinimumHolder);
+
+        hashMap.put("hsncode",productHsncodeHolder);
+
+        hashMap.put("brand",productBeandHolder);
+
+        hashMap.put("description",productDescriptionHolder);
+
+        hashMap.put("stock",productStockHolder);
+
+        hashMap.put("reorderlevel",productRecordlevelHolder);
+
+        hashMap.put("gst",productGstHolder);
 
         if(TextUtils.isEmpty(productNameHolder) || TextUtils.isEmpty(productPriceHolder) || TextUtils.isEmpty(productMinimumHolder)
                 || TextUtils.isEmpty(productHsncodeHolder) || TextUtils.isEmpty(productBeandHolder)
@@ -240,27 +272,7 @@ public class ProductUpdate extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                hashMap.put("id",params[0]);
 
-                hashMap.put("image",params[1]);
-
-                hashMap.put("name",params[2]);
-
-                hashMap.put("price",params[3]);
-
-                hashMap.put("minimum",params[4]);
-
-                hashMap.put("hsncode",params[5]);
-
-                hashMap.put("brand",params[6]);
-
-                hashMap.put("description",params[7]);
-
-                hashMap.put("stock",params[8]);
-
-                hashMap.put("reorderlevel",params[9]);
-
-                hashMap.put("gst",params[10]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
@@ -320,7 +332,7 @@ public class ProductUpdate extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(ProductUpdate.this);
-        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setMessage("Are You Sure Want To Exit?");
         builder.setCancelable(true);
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override

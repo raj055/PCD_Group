@@ -271,7 +271,7 @@ public class UpdateActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
-        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setMessage("Are You Sure Want To Exit ?");
         builder.setCancelable(true);
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
@@ -291,5 +291,4 @@ public class UpdateActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
 }

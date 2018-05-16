@@ -120,31 +120,29 @@ public class Client_Discount extends AppCompatActivity {
 
         usrDGet = userDataGets.get(position);
         currentAccValue = usrDGet.getAccessType();
+
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(Client_Discount.this);
-        builder.setTitle("Select Discount Percentage");
+        builder.setTitle("Select Discount Level");
 
         // add a radio button list
-        final String[] Percentage = {"5%","10%", "20%", "30%", "40%","50%"};
-        boolean[] checkedItems = {false, false, false, false, false, false};
-
-       /* int checkedItem = 0; // cow
+        String[] Client = {"5%","10%", "20%", "30%", "40%","50%"};
+        int checkedItem = 0; // cow
         if(currentAccValue.contains("10%")){
             checkedItem = 1;
         }else if (currentAccValue.contains("20%")){
             checkedItem = 2;
         }else if (currentAccValue.contains("30%")){
             checkedItem = 3;
-        }else if (currentAccValue.contains("40%")) {
+        }else if (currentAccValue.contains("40%")){
             checkedItem = 4;
-        }else if (currentAccValue.contains("50%")) {
+        }else if (currentAccValue.contains("50%")){
             checkedItem = 5;
-        }*/
+        }
 
-        builder.setMultiChoiceItems(Percentage, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setSingleChoiceItems(Client, checkedItem, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-
+            public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
                         accessValue = "5%";
@@ -168,6 +166,7 @@ public class Client_Discount extends AppCompatActivity {
                 }
 
                 usrDGet.setAccessType(accessValue);
+
             }
         });
 
