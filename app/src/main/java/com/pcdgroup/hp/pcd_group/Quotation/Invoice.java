@@ -358,8 +358,6 @@ public class Invoice extends AppCompatActivity {
                 break;
             case 2:
 
-                showFileChooser();
-
                 LayoutInflater layoutinflater = LayoutInflater.from(this);
                 View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
 
@@ -413,11 +411,6 @@ public class Invoice extends AppCompatActivity {
             mCurrentDirectoryUri = new String();
             mCurrentDirectoryUri.concat(data.getData().toString());
         }
-    }
-
-    private void showFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
     }
 
     private Properties getHashMap(){

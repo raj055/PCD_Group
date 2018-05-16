@@ -30,4 +30,6 @@ public class GlobalVariable {
 
     public String AccessType;
 
+    public String DiscountType;
+
 }

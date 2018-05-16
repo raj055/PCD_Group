@@ -68,6 +68,7 @@ public class ShowQuotationList extends AppCompatActivity {
     Intent intent = getIntent();
     emailId = intent.getStringExtra("emailid");
 
+    Log.v("Email Id", emailId);
     GetPdfList(emailId);
 
     //setting listView on item click listener
@@ -113,9 +114,9 @@ public class ShowQuotationList extends AppCompatActivity {
             //Declaring a Pdf object to add it to the ArrayList  pdfList
             Pdf pdf  = new Pdf();
             String pdfName = jsonObject.getString("name");
-            String pdfEmail = jsonObject.getString("email");
+            //String pdfEmail = jsonObject.getString("email");
             pdf.setName(pdfName);
-            pdf.setEmail(pdfEmail);
+            pdf.setEmail(emailId);
             pdfList.add(pdf);
           }
 

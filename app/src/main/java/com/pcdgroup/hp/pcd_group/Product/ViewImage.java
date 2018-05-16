@@ -67,7 +67,7 @@ public class ViewImage extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(ViewImage.this,UploadImage.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 

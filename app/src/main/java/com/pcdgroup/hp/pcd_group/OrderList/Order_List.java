@@ -144,8 +144,6 @@ public class Order_List extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Log.v("Access type ========",globalVariable.AccessType);
-
         if(id==R.id.home) {
             if (globalVariable.AccessType.contains("Admin")) {
 

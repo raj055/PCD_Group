@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,14 +34,16 @@ public class ClientRegisterActivity extends AppCompatActivity {
     EditText name,address,addressline1,addressline2,mobileno,country,company_name,pin,email_id,designation;
     Spinner type,state;
     Button submit;
-    String Name_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder, UserClient_Holder;
+    String Name_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
+            State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder,
+            UserClient_Holder;
     String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
-
+    Intent intent;
     GlobalVariable globalVariable;
 
     @Override
@@ -76,7 +79,9 @@ public class ClientRegisterActivity extends AppCompatActivity {
                 if(CheckEditText){
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(Name_Holder, type_Holder, Address_Hoder, Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder,CompanyName_Holder,Pin_Holder, Emailid_Holder,Designation_Holder,UserClient_Holder);
+                    UserRegisterFunction(Name_Holder, type_Holder, Address_Hoder, Addressline1_Holder,
+                            Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder,
+                            CompanyName_Holder,Pin_Holder, Emailid_Holder,Designation_Holder,UserClient_Holder);
                 }
                 else {
 
@@ -112,7 +117,6 @@ public class ClientRegisterActivity extends AppCompatActivity {
         CompanyName_Holder = CompanyName_Holder.replace("'","''");
         Designation_Holder = Designation_Holder.replace("'","''");
 
-        
         UserClient_Holder = globalVariable.currentUserEmail;
 
         if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder))
@@ -125,7 +129,12 @@ public class ClientRegisterActivity extends AppCompatActivity {
     }
 
     //Register user in database details.
-    public void UserRegisterFunction(final String name, final String type, final String address,final String addressline1,final String addressline2,final String mobileno,final String state,final String counntry, final String company_name, final  String pin,final String email_id, final String designation, final String userclient){
+    public void UserRegisterFunction(final String name, final String type, final String address,
+                                     final String addressline1,final String addressline2,
+                                     final String mobileno,final String state,
+                                     final String counntry, final String company_name,
+                                     final  String pin,final String email_id, final String designation,
+                                     final String userclient){
 
         class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
 
@@ -186,7 +195,19 @@ public class ClientRegisterActivity extends AppCompatActivity {
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(ClientRegisterActivity.this, ClientDetailsActivity.class);
+
+                if (globalVariable.AccessType.contains("Admin")){
+                    intent = new Intent(ClientRegisterActivity.this, ClientDetailsActivity.class);
+
+                } else if (globalVariable.AccessType.contains("Manager")){
+                    intent = new Intent(ClientRegisterActivity.this, ClientDetailsActivity.class);
+
+                } else if (globalVariable.AccessType.contains("Client")){
+                    intent = new Intent(ClientRegisterActivity.this, ClientOfClientList.class);
+                    intent.putExtra("emailid", globalVariable.currentUserEmail);
+
+                }
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
