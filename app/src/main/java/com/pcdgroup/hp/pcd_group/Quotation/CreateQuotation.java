@@ -58,11 +58,11 @@ import java.util.List;
 
 public class CreateQuotation extends AppCompatActivity {
 
-    private EditText quantity,transportationcost,discountperce;
+    private EditText quantity,transportationcost,discountprice;
     private Button add_client,add_product,preview,date,validdate,addAddress;
     public TextView client, textdate, textvaliddate, textaddres;
     public ListView product;
-
+    public TextView tvDiscount;
     Boolean CheckEditText;
     GlobalVariable globalVariable;
     ProductListAdapter itemsAdapter;
@@ -79,7 +79,7 @@ public class CreateQuotation extends AppCompatActivity {
     String[] data;
 
     Intent intent;
-    String Tpcost,discount;
+    String Tpcost,discount,DiscountVallue;
 
     private int year;
     private int month;
@@ -94,9 +94,11 @@ public class CreateQuotation extends AppCompatActivity {
 
         globalVariable = GlobalVariable.getInstance();
 
+        tvDiscount = (TextView) findViewById(R.id.textView12);
+
         quantity = (EditText) findViewById(R.id.quantity_et);
         transportationcost = (EditText) findViewById(R.id.editText10);
-        discountperce = (EditText) findViewById(R.id.editText11);
+        discountprice = (EditText) findViewById(R.id.editText11);
 
         client = (TextView) findViewById(R.id.tv_client);
         product = (ListView) findViewById(R.id.tv_product);
@@ -113,6 +115,10 @@ public class CreateQuotation extends AppCompatActivity {
 
         categoriesList = new ArrayList<Category>();
         adepter = new BrandAdepter(this, categoriesList);
+
+        DiscountVallue = globalVariable.DiscountType;
+
+        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue);
 
         getData();
 
@@ -185,31 +191,30 @@ public class CreateQuotation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(CreateQuotation.this, Invoice.class);
+                //customer
+                intent.putExtra("ClientInfo", globalVariable.globalClient);
 
-                    Intent intent = new Intent(CreateQuotation.this, Invoice.class);
-                    //customer
-                    intent.putExtra("ClientInfo", globalVariable.globalClient);
+                //product
+                int itemsCount = 0;
+                for (ProductInfoAdapter pradap: items){
 
-                    //product
-                    int itemsCount = 0;
-                    for (ProductInfoAdapter pradap: items){
+                    String[] glstr = PrdList.get(itemsCount++);
+                    if(glstr != null)
+                        glstr[4] =  pradap.getAmount();
+                }
+                intent.putExtra("ProductInfo", PrdList);
+    //                intent.putExtra("proqunt", quantity.getText());
+                intent.putExtra("date", textdate.getText());
+                intent.putExtra("validdate", textvaliddate.getText());
 
-                        String[] glstr = PrdList.get(itemsCount++);
-                        if(glstr != null)
-                            glstr[4] =  pradap.getAmount();
-                    }
-                    intent.putExtra("ProductInfo", PrdList);
-//                intent.putExtra("proqunt", quantity.getText());
-                    intent.putExtra("date", textdate.getText());
-                    intent.putExtra("validdate", textvaliddate.getText());
+                Tpcost = transportationcost.getText().toString();
 
-                    Tpcost=transportationcost.getText().toString();
+                discount = discountprice.getText().toString();
 
-                    discount=discountperce.getText().toString();
+                intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
 
-                    intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
-
-                    startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -417,8 +422,6 @@ public class CreateQuotation extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-
-        Log.v("Access type ========",globalVariable.AccessType);
 
         if(id==R.id.home) {
             if (globalVariable.AccessType.contains("Admin")) {

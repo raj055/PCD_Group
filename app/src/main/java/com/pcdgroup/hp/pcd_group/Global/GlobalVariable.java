@@ -30,4 +30,9 @@ public class GlobalVariable {
 
     public String AccessType;
 
+    public String DiscountType;
+
+    public String[] GlobalImageUpload = new String[10];
+
+    public String[] GlobalImageSingleRecord = new String[10];
 }

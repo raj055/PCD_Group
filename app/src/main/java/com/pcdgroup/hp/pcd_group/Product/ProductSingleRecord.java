@@ -350,7 +350,6 @@ public class ProductSingleRecord extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Log.v("Access type ========",gblVar.AccessType);
         if(id==R.id.home) {
             if (gblVar.AccessType.contains("Admin")) {
 
@@ -372,7 +371,6 @@ public class ProductSingleRecord extends AppCompatActivity {
                 intent = new Intent(this, ViewImage.class);
             }
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

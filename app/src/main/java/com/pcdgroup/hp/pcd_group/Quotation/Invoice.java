@@ -86,7 +86,7 @@ public class Invoice extends AppCompatActivity {
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
     TextView b_name,b_address,b_pin,b_state,b_mobile,b_pan;
-    TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountPerce;
+    TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountTextview;
 
     String transport,discount;
     boolean igst = false;
@@ -110,6 +110,8 @@ public class Invoice extends AppCompatActivity {
     private int REQUEST_CODE_OPEN_DIRECTORY = 0;
     public static int REQUEST_PERMISSIONS = 1;
     String mCurrentDirectoryUri;
+    String DiscountTVvalue;
+    GlobalVariable globalVariable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,8 +124,10 @@ public class Invoice extends AppCompatActivity {
         TransportationCost.setText(transport);
 
         discount=getIntent().getExtras().getString("discountperce");
-        DiscountPerce.setText(discount);
 
+        DiscountTVvalue = globalVariable.DiscountType;
+
+        DiscountTextview.setText("Discount:" + "\t\t" + DiscountTVvalue);
 
         String str;
         if(savedInstanceState == null){
@@ -176,16 +180,13 @@ public class Invoice extends AppCompatActivity {
 
                 if (state1_holder.contains(state_holder)){
 
-//                    sgst.setText("SGST");
-//                    cgst1.setText("CGST");
-
                 }else {
                     TableRow tblr = (TableRow) findViewById(R.id.tableRow);
                     tblr.removeView(sgst);
-//                    sgst.setVisibility(View.INVISIBLE);
+
                     cgst1.setText("IGST");
                     igst = true;
-                    //cgst.setVisibility(View.INVISIBLE);
+
                     gstValue /= 1;
                 }
 
@@ -321,9 +322,9 @@ public class Invoice extends AppCompatActivity {
         finalquantity = ( TextView) findViewById(R.id.finalQuantity);
         finalamount = (TextView) findViewById(R.id.finalAmount);
         finalPayable = (TextView) findViewById(R.id.textView25);
-        TransportationCost=(TextView) findViewById(R.id.textView18);
-        DiscountValue=(TextView ) findViewById(R.id.textView27);
-        DiscountPerce=(TextView) findViewById(R.id.textView26);
+        TransportationCost =(TextView) findViewById(R.id.textView18);
+        DiscountValue =(TextView ) findViewById(R.id.textView27);
+        DiscountTextview =(TextView ) findViewById(R.id.textView20);
 
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
@@ -335,6 +336,8 @@ public class Invoice extends AppCompatActivity {
         b_state = (TextView) findViewById(R.id.text_state1);
         b_mobile = (TextView) findViewById(R.id.textView15);
         b_pan = (TextView) findViewById(R.id.textView16);
+
+        globalVariable = GlobalVariable.getInstance();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -358,8 +361,6 @@ public class Invoice extends AppCompatActivity {
                 break;
             case 2:
 
-                showFileChooser();
-
                 LayoutInflater layoutinflater = LayoutInflater.from(this);
                 View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
 
@@ -376,7 +377,7 @@ public class Invoice extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         fileName =  userAnswer.getText().toString();
-                        targetPdf = getFilesDir() + fileName + ".pdf";
+                        targetPdf = "/sdcard/" + fileName + ".pdf";
 
                         fn_permission();
 
@@ -406,20 +407,6 @@ public class Invoice extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_OPEN_DIRECTORY && resultCode == Activity.RESULT_OK) {
-            Log.d(TAG, String.format("Open Directory result Uri : %s", data.getData()));
-            mCurrentDirectoryUri = new String();
-            mCurrentDirectoryUri.concat(data.getData().toString());
-        }
-    }
-
-    private void showFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY);
-    }
-
     private Properties getHashMap(){
 
         Properties prHsmp = new Properties();
@@ -439,15 +426,17 @@ public class Invoice extends AppCompatActivity {
             Date now = new Date();
             String fName = formatter.format(now) ;
 
-            targetPdf = getApplicationContext().getFilesDir().getAbsolutePath() +  fileName + ".txt";
+            targetPdf = "/sdcard/" +  fileName + ".txt";
 
             File root = new File(getFilesDir() + "/", "Report");
-            if (!root.exists())
+            File fileWithinMyDir = new File(root, "PCD_Group");
+            File fileInvoice = new File(fileWithinMyDir, "Quotation");
+            if (!fileInvoice.exists())
             {
-                root.mkdirs();
+                fileInvoice.mkdirs();
             }
             fName = fileName + ".txt";
-            File gpxfile = new File(root, fName);
+            File gpxfile = new File(fileInvoice, fName);
             FileWriter writer = new FileWriter(gpxfile,true);
             currentFileInfo.store(writer, null);
             writer.flush();
@@ -536,19 +525,21 @@ public class Invoice extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0 , null);
         document.finishPage(page);
 
-        targetPdf = getFilesDir() + fileName + ".pdf";
+        targetPdf = "/sdcard/" + fileName + ".pdf";
 
         Log.v("Targetpdf==========",targetPdf);
 
         File filePath = new File(targetPdf);
+        File fileWithinMyDir = new File(filePath, "PCD_Group");
+        File fileInvoice = new File(fileWithinMyDir, "Quotation");
 
         try {
-            document.writeTo(new FileOutputStream(filePath));
+            document.writeTo(new FileOutputStream(fileInvoice));
 
             boolean_save=true;
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Something wrong: " + filePath+ e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Something wrong: " + fileInvoice+ e.toString(), Toast.LENGTH_LONG).show();
         }
         // close the document
         document.close();

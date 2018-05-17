@@ -185,9 +185,9 @@ public class ViewInvoice  extends AppCompatActivity {
 
         if(map.containsKey("finalprice"))finalprice.setText(map.get("finalprice"));
 
-        finalquantity.setText(map.get("finalquantity"));
-        finalamount.setText(map.get("finalamount"));
-        finalPayable.setText(map.get("finalamount"));
+        if(map.containsKey("finalquantity"))finalquantity.setText(map.get("finalquantity"));
+        if(map.containsKey("finalamount"))finalamount.setText(map.get("finalamount"));
+        if(map.containsKey("finalamount"))finalPayable.setText(map.get("finalamount"));
         state_holder = state.getText().toString();
         state1_holder = state1.getText().toString();
         if(activity!= null){

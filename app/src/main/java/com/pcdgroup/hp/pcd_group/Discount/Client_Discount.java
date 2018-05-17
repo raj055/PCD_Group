@@ -56,7 +56,7 @@ public class Client_Discount extends AppCompatActivity {
     UserAdminAdepter adepter;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
-    String currentAccValue;
+    String currentDicountValue;
     List<UserDataGet> userDataGets;
     List<UserDataGet> tempStoreDataValues;
     UserDataGet usrDGet;
@@ -64,10 +64,10 @@ public class Client_Discount extends AppCompatActivity {
     Intent intent;
     GlobalVariable gblv;
 
-    String accessValue = "";
+    String discountValue = "";
     String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/accessuserdetails.php";
-    String HttpURL2 = "http://dert.co.in/gFiles/updateuserdetails.php";
+    String HttpURL2 = "http://dert.co.in/gFiles/DiscountDetails.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class Client_Discount extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SaveAccess();
+                SaveDiscount();
             }
         });
 
@@ -119,55 +119,54 @@ public class Client_Discount extends AppCompatActivity {
     private void SelectionBox(int position) {
 
         usrDGet = userDataGets.get(position);
-        currentAccValue = usrDGet.getAccessType();
+        currentDicountValue = usrDGet.getAccessType();
+
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(Client_Discount.this);
-        builder.setTitle("Select Discount Percentage");
+        builder.setTitle("Select Discount Level");
 
         // add a radio button list
-        final String[] Percentage = {"5%","10%", "20%", "30%", "40%","50%"};
-        boolean[] checkedItems = {false, false, false, false, false, false};
-
-       /* int checkedItem = 0; // cow
-        if(currentAccValue.contains("10%")){
+        String[] Client = {"5%","10%", "20%", "30%", "40%","50%"};
+        int checkedItem = 0; // cow
+        if(currentDicountValue.contains("10%")){
             checkedItem = 1;
-        }else if (currentAccValue.contains("20%")){
+        }else if (currentDicountValue.contains("20%")){
             checkedItem = 2;
-        }else if (currentAccValue.contains("30%")){
+        }else if (currentDicountValue.contains("30%")){
             checkedItem = 3;
-        }else if (currentAccValue.contains("40%")) {
+        }else if (currentDicountValue.contains("40%")){
             checkedItem = 4;
-        }else if (currentAccValue.contains("50%")) {
+        }else if (currentDicountValue.contains("50%")){
             checkedItem = 5;
-        }*/
+        }
 
-        builder.setMultiChoiceItems(Percentage, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setSingleChoiceItems(Client, checkedItem, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-
+            public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
-                        accessValue = "5%";
+                        discountValue = "5%";
                         break;
                     case 1:
-                        accessValue = "10%";
+                        discountValue = "10%";
                         break;
                     case 2:
-                        accessValue = "20%";
+                        discountValue = "20%";
                         break;
                     case 3:
-                        accessValue = "30%";
+                        discountValue = "30%";
                         break;
                     case 4:
-                        accessValue = "40%";
+                        discountValue = "40%";
                         break;
                     case 5:
-                        accessValue = "50%";
+                        discountValue = "50%";
                         break;
 
                 }
 
-                usrDGet.setAccessType(accessValue);
+                usrDGet.setAccessType(discountValue);
+
             }
         });
 
@@ -187,7 +186,7 @@ public class Client_Discount extends AppCompatActivity {
         dialog.show();
     }
 
-    private void SaveAccess() {
+    private void SaveDiscount() {
 
         for(int index = 0 ; index < userDataGets.size(); index++){
 
@@ -248,7 +247,7 @@ public class Client_Discount extends AppCompatActivity {
 
                 jo=ja.getJSONObject(i);
                 String email = jo.getString("email");
-                String accessType = jo.getString("Access");
+                String accessType = jo.getString("Discount");
                 UserDataGet e = new UserDataGet(email);
                 UserDataGet tmp = new UserDataGet(email);
                 e.setAccessType(accessType);
@@ -291,7 +290,7 @@ public class Client_Discount extends AppCompatActivity {
 
                 hashMap.put("email",params[0]);
 
-                hashMap.put("access",params[1]);
+                hashMap.put("discount",params[1]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL2);
 
@@ -315,8 +314,6 @@ public class Client_Discount extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Log.v("Access type ========",gblv.AccessType);
-
         if(id==R.id.home) {
             if (gblv.AccessType.contains("Admin")) {
 
@@ -327,7 +324,6 @@ public class Client_Discount extends AppCompatActivity {
                 intent = new Intent(this, UserDashbord.class);
 
             }
-
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

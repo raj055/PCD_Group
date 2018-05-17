@@ -76,6 +76,20 @@ public class List_Quotation_Pdfs extends AppCompatActivity {
         getPdfs();
 
         adapter.notifyDataSetChanged();
+
+        //setting listView on item click listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String fileUrl = localPdf.get(position).getUrl();
+
+                Intent intent = new Intent(List_Quotation_Pdfs.this, ViewInvoice.class);
+                intent.putExtra("FileUrl", fileUrl);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void getPdfs() {

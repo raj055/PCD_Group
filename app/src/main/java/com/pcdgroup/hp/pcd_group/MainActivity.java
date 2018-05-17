@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText Email, Password;
     Button LogIn,Register ;
-    String PasswordHolder, EmailHolder;
+    String PasswordHolder, EmailHolder, DiscountHolder;
     String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/UserLogin.php";
     Boolean CheckEditText ;
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
+    public static final String ClientDiscount = "";
     GlobalVariable gblVar;
 
     @Override
@@ -213,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray ja = new JSONArray(httpResponseMsg);
                         JSONObject jo = null;
                         String accessType = "";
+                        String discountType = "";
                         String data[] = new String[ja.length()];
                         Log.v("length","" + ja.length());
                         for (int i=0; i<ja.length();i++){
@@ -220,8 +222,9 @@ public class MainActivity extends AppCompatActivity {
                             jo=ja.getJSONObject(i);
 
                             accessType = jo.getString("Access");
+                            discountType = jo.getString("Discount");
                         }
-                        if(accessType != null)
+                        if(accessType != null && discountType != null)
                         {
                             Log.v("accesstype","" + accessType);
                             if(accessType.contains("Admin")) {
@@ -230,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 intent.putExtra(UserEmail , email);
                                 gblVar.AccessType = "Admin";
+                                gblVar.DiscountType = "100%";
                                 startActivity(intent);
 
                                 finish();
@@ -240,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 intent.putExtra(UserEmail , email);
                                 gblVar.AccessType = "Manager";
+                                gblVar.DiscountType = "100%";
                                 startActivity(intent);
 
                                 finish();
@@ -250,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 intent.putExtra(UserEmail , email);
                                 gblVar.AccessType = "Client";
+                                gblVar.DiscountType = discountType;
                                 startActivity(intent);
 
                                 finish();
@@ -266,7 +272,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     catch (Exception e){
+                        Toast.makeText(getApplicationContext(),"The Username or password you entered is incorrect.", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
+
                     }
 
                 }
@@ -292,32 +300,4 @@ public class MainActivity extends AppCompatActivity {
 
         userLoginClass.execute(email,password);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.administrator), getResources().getString(R.string.action_admin)));
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Intent intent = new Intent(getApplicationContext(), AdminLoginActivity.class);
-
-        startActivity(intent);
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private CharSequence menuIconWithText(Drawable r, String title) {
-
-        r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
-        SpannableString sb = new SpannableString("    " + title);
-        ImageSpan imageSpan = new ImageSpan(r, ImageSpan.ALIGN_BOTTOM);
-        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return sb;
-    }
-
 }
