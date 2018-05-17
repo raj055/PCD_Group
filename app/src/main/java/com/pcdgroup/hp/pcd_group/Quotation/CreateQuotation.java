@@ -185,6 +185,35 @@ public class CreateQuotation extends AppCompatActivity {
             }
         });
 
+        discountprice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+//                String str = editable.toString();
+               String str = new String(editable.toString());
+
+                Log.v("String Value", str);
+                if((str != null) && (str != "")) {
+                    int discount=Integer.parseInt(str);
+                    DiscountVallue.replace("%", "");
+                    int currDiscountVal=Integer.parseInt("40");
+                    Log.v("%", DiscountVallue);
+                    if (discount > currDiscountVal) {
+
+                        Toast.makeText(getApplicationContext(), "Discount Value wrong.", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }
+        });
 
         // Preview add in database
         preview.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +239,7 @@ public class CreateQuotation extends AppCompatActivity {
 
                 Tpcost = transportationcost.getText().toString();
 
-                discount = discountprice.getText().toString();
+                intent.putExtra("transportioncost",Tpcost);
 
                 intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
 

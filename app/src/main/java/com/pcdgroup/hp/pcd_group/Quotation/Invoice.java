@@ -79,8 +79,6 @@ import static android.app.PendingIntent.getActivity;
  */
 public class Invoice extends AppCompatActivity {
 
-    private static final String TAG = Invoice.class.getSimpleName();
-
     TextView name,address,state,company,country,pin;
     TextView state1,sgst,cgst1;
     TextView item,hsn,gst,cgst,price,quantity,amount;
@@ -120,10 +118,10 @@ public class Invoice extends AppCompatActivity {
 
         initialiseLayouts();
 
-        transport=getIntent().getExtras().getString("transportioncost");
+        transport = getIntent().getExtras().getString("transportioncost");
         TransportationCost.setText(transport);
 
-        discount=getIntent().getExtras().getString("discountperce");
+        discount = getIntent().getExtras().getString("discountperce");
 
         DiscountTVvalue = globalVariable.DiscountType;
 
@@ -333,7 +331,7 @@ public class Invoice extends AppCompatActivity {
         b_name = (TextView) findViewById(R.id.textView13);
         b_address = (TextView) findViewById(R.id.textView14);
         b_pin = (TextView) findViewById(R.id.pin_cuntry);
-        b_state = (TextView) findViewById(R.id.text_state1);
+        b_state = (TextView) findViewById(R.id.text_state);
         b_mobile = (TextView) findViewById(R.id.textView15);
         b_pan = (TextView) findViewById(R.id.textView16);
 
@@ -359,6 +357,7 @@ public class Invoice extends AppCompatActivity {
                 finish();
 
                 break;
+
             case 2:
 
                 LayoutInflater layoutinflater = LayoutInflater.from(this);
@@ -431,10 +430,12 @@ public class Invoice extends AppCompatActivity {
             File root = new File(getFilesDir() + "/", "Report");
             File fileWithinMyDir = new File(root, "PCD_Group");
             File fileInvoice = new File(fileWithinMyDir, "Quotation");
+
             if (!fileInvoice.exists())
             {
                 fileInvoice.mkdirs();
             }
+
             fName = fileName + ".txt";
             File gpxfile = new File(fileInvoice, fName);
             FileWriter writer = new FileWriter(gpxfile,true);
@@ -443,7 +444,6 @@ public class Invoice extends AppCompatActivity {
             writer.close();
             String path = gpxfile.getAbsolutePath();
             targetPdf = path;
-            Log.v("FileName::::::::::::::::::::::::::::::", path);
             Toast.makeText(this, "Data has been written to Report File", Toast.LENGTH_SHORT).show();
         }
         catch(IOException e)
@@ -526,8 +526,6 @@ public class Invoice extends AppCompatActivity {
         document.finishPage(page);
 
         targetPdf = "/sdcard/" + fileName + ".pdf";
-
-        Log.v("Targetpdf==========",targetPdf);
 
         File filePath = new File(targetPdf);
         File fileWithinMyDir = new File(filePath, "PCD_Group");
