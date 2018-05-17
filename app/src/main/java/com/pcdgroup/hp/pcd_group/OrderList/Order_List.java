@@ -18,6 +18,7 @@ import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
+import com.pcdgroup.hp.pcd_group.Quotation.BillAdepter;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.Quotation.PdfAdapter;
 import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
@@ -40,12 +41,13 @@ import java.util.HashMap;
 public class Order_List extends AppCompatActivity {
 
     ArrayList<Pdf> pdfList = new ArrayList<Pdf>();
-    PdfAdapter pdfAdapter;
+    BillAdepter billAdepter;
     public String httpUrl = "http://dert.co.in/gFiles/orderlist.php";
     HttpParse httpParse;
     String finalResult;
     ListView lstVeiw;
     Intent intent;
+    String emailId;
 
     HashMap<String, String> hashMap = new HashMap<>();
 
@@ -60,8 +62,11 @@ public class Order_List extends AppCompatActivity {
 
         globalVariable = GlobalVariable.getInstance();
 
+        Intent intent = getIntent();
+        emailId = intent.getStringExtra("emailid");
+
         lstVeiw = (ListView) findViewById(R.id.orderList);
-        GetPdfList();
+        GetPdfList(emailId);
 
         lstVeiw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,7 +83,7 @@ public class Order_List extends AppCompatActivity {
     }
 
     // Method to Get the Invoice List
-    public void GetPdfList() {
+    public void GetPdfList(final String ClientID) {
 
         class GetPdfList extends AsyncTask<String, Void, String> {
 
@@ -104,13 +109,18 @@ public class Order_List extends AppCompatActivity {
                         //Declaring a json object corresponding to every pdf object in our json Array
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //Declaring a Pdf object to add it to the ArrayList  pdfList
-
+                        Pdf pdf  = new Pdf();
+                        String pdfBill = jsonObject.getString("Billing");
+                        //String pdfEmail = jsonObject.getString("email");
+                        pdf.setBilled(pdfBill);
+                        pdf.setEmail(emailId);
+                        pdfList.add(pdf);
                     }
 
-                    pdfAdapter=new PdfAdapter(Order_List.this,R.layout.list_layout, pdfList);
-                    lstVeiw.setAdapter(pdfAdapter);
+                    billAdepter=new BillAdepter(Order_List.this,R.layout.list_layout, pdfList);
+                    lstVeiw.setAdapter(billAdepter);
 
-                    pdfAdapter.notifyDataSetChanged();
+                    billAdepter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -130,7 +140,7 @@ public class Order_List extends AppCompatActivity {
 
         GetPdfList GetPdfList = new GetPdfList();
 
-        GetPdfList.execute();
+        GetPdfList.execute(ClientID);
     }
 
     @Override
