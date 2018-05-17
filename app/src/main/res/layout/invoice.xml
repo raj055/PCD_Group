@@ -504,139 +504,125 @@
             app:layout_constraintTop_toBottomOf="@+id/tableRow3"
             app:srcCompat="@drawable/line" />
 
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
-            android:text="Total: ₹ "
-            android:textColor="@color/Black"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="112dp" />
-
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/tableLayout5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/Black"
-            android:text=""
-            android:textSize="10dp"
-            android:textStyle="bold"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.964"
-            app:layout_constraintStart_toEndOf="@+id/textView24"
-            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: ₹ "
+                    android:textColor="@color/Black"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="170dp"
+                    tools:layout_editor_absoluteX="112dp"
+                    tools:layout_editor_absoluteY="496dp" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="totalvallue"
+                    android:textColor="@color/Black"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="25dp"
+                    tools:layout_editor_absoluteX="322dp"
+                    tools:layout_editor_absoluteY="496dp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="05dp">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Discount:"
+                    android:textColor="@color/Black"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="170dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="125dp"
+                    tools:layout_editor_absoluteY="544dp" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/Black"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="25dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="371dp"
+                    tools:layout_editor_absoluteY="550dp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="05dp">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transportation Cost:"
+                    android:textColor="@color/Black"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="170dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="125dp"
+                    tools:layout_editor_absoluteY="517dp" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="230"
+                    android:textColor="@color/Black"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="25dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="352dp"
+                    tools:layout_editor_absoluteY="524dp" />
+            </TableRow>
+
+        </TableLayout>
 
         <TextView
             android:id="@+id/textView23"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="NOTE\nBAnk Info: \nAC.Name: D-ERT,AC No:209005000002932 \nBank: Citizencredit Co-operativ Bank LTD. Bandra West Branch: Sunbeam chs, \nNEFT/RTGS: CCBL0209005 \n\nTransport extra at actual cost."
+            android:layout_marginTop="16dp"
+            android:text="NOTE\nBAnk Info: \nAC.Name: D-ERT,AC No:209005000002932 \nBank: Citizencredit Co-operativ Bank LTD. Bandra West Branch: Sunbeam chs, \nNEFT/RTGS: CCBL0209005 \n\nTransport extra at actual cost. \n"
             android:textColor="@color/Black"
             android:textSize="10dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.222"
+            app:layout_constraintHorizontal_bias="0.214"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="8dp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="112dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="8dp"
-            android:text="Transportation Cost:"
-            android:textColor="@color/Black"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView20"
-            app:layout_constraintEnd_toStartOf="@+id/textView18"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            tools:ignore="MissingConstraints"
-            android:layout_marginRight="112dp"
-            android:layout_marginLeft="110dp" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text="230"
-            android:textStyle="bold"
-            android:textColor="@color/Black"
-            app:layout_constraintBottom_toTopOf="@+id/textView27"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView25"
-            tools:ignore="MissingConstraints"
-            android:layout_marginRight="8dp" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
-            android:text="Discount:"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/Black"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="112dp" />
-
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:text="10%"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/Black"
-            app:layout_constraintBottom_toTopOf="@+id/textView23"
-            app:layout_constraintEnd_toStartOf="@+id/textView27"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout5"
             tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text="0"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/Black"
-            app:layout_constraintBottom_toTopOf="@+id/textView23"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
-            tools:ignore="MissingConstraints"
-            android:layout_marginRight="16dp" />
-
 
     </android.support.constraint.ConstraintLayout>
 

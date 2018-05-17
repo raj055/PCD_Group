@@ -129,7 +129,7 @@ public class ViewImage extends AppCompatActivity {
 
                 intent.putExtra("email",EmailHolders);
 
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -191,11 +191,60 @@ public class ViewImage extends AppCompatActivity {
                 picNames.add(picname);
                 Entity e = new Entity(picname,urlname,price,gst, minimum,hsncode,brand,description,stock,reorderlevel,id);
                 localEntity.add(e);
+                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    // Client Details
+                    if (extras.containsKey("name")) {
+                        gblVar.GlobalImageUpload[0] = extras.getString("name");
+                        gblVar.GlobalImageUpload[1] = extras.getString("photo");
+                        gblVar.GlobalImageUpload[2] = extras.getString("price");
+                        gblVar.GlobalImageUpload[3] = extras.getString("minimum");
+                        gblVar.GlobalImageUpload[4] = extras.getString("hsncode");
+                        gblVar.GlobalImageUpload[5] = extras.getString("brand");
+                        gblVar.GlobalImageUpload[6] = extras.getString("description");
+                        gblVar.GlobalImageUpload[7] = extras.getString("stock");
+                        gblVar.GlobalImageUpload[8] = extras.getString("reorderlevel");
+                        gblVar.GlobalImageUpload[9] = extras.getString("gst");
+                    }
+                }
+            }
+        }
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    // Client Details
+                    if (extras.containsKey("nameRecord")) {
+                        gblVar.GlobalImageSingleRecord[0] = extras.getString("nameRecord");
+                        gblVar.GlobalImageSingleRecord[1] = extras.getString("price");
+                        gblVar.GlobalImageSingleRecord[2] = extras.getString("minimum");
+                        gblVar.GlobalImageSingleRecord[3] = extras.getString("hsncode");
+                        gblVar.GlobalImageSingleRecord[4] = extras.getString("brand");
+                        gblVar.GlobalImageSingleRecord[5] = extras.getString("description");
+                        gblVar.GlobalImageSingleRecord[6] = extras.getString("stock");
+                        gblVar.GlobalImageSingleRecord[7] = extras.getString("reorderlevel");
+                        gblVar.GlobalImageSingleRecord[8] = extras.getString("gst");
+                    }
+                }
+            }
+        }
+
     }
 
     @Override
