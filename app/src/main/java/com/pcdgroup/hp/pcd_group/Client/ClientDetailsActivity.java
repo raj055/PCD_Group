@@ -56,9 +56,9 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
     HashMap<String,String> ResultHash = new HashMap<>();
     String IdHolder;
     ProgressDialog pDialog;
-    String FinalJSonObject ;
-    String ParseResult ;
-    String finalResult ;
+    String FinalJSonObject;
+    String ParseResult;
+    String finalResult;
 
     // Http URL for delete Already Open Client Record.
     String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deletemultiple.php";
@@ -418,11 +418,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                     }
                     deleteMessages("");
                     mAdepter.notifyDataSetChanged();
-
                     mode.finish();
                     return true;
-
-
                 default:
                     return false;
             }
@@ -470,7 +467,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             protected String doInBackground(String... params) {
 
                 // Sending Client id.
-//                hashMap.put("id",ClientID);
                 finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
 
                 return finalResult;

@@ -121,7 +121,7 @@ public class CreateQuotation extends AppCompatActivity {
 
         DiscountVallue = globalVariable.DiscountType;
 
-        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue + "%");
+        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue);
 
         getData();
 
@@ -203,13 +203,13 @@ public class CreateQuotation extends AppCompatActivity {
 //                String str = editable.toString();
                final String str = new String(editable.toString());
 
+                Log.v("String Value", str);
+
                 if((str != null) && (str != "") && (str.matches("^[0-9]+$"))) {
                     int discount=Integer.parseInt(str);
                     int currDiscountVal=Integer.parseInt(DiscountVallue);
                     if (discount > currDiscountVal) {
-
                         Toast.makeText(getApplicationContext(), "Discount Value wrong.", Toast.LENGTH_SHORT).show();
-
                         AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             builder = new AlertDialog.Builder(CreateQuotation.this, android.R.style.Theme_Material_Dialog_Alert);
@@ -477,30 +477,21 @@ public class CreateQuotation extends AppCompatActivity {
 
         if(id==R.id.home) {
             if (globalVariable.AccessType.contains("Admin")) {
-
                 intent = new Intent(this, AdminDashboard.class);
-
             }
             else if (globalVariable.AccessType.contains("Manager")) {
-
                 intent = new Intent(this, UserDashbord.class);
-
             }
             else if (globalVariable.AccessType.contains("Client")) {
-
                 intent = new Intent(this, UserDashbord.class);
-
             }
             else {
-
                 intent = new Intent(this, ViewImage.class);
             }
-
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

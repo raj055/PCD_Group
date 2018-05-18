@@ -94,7 +94,8 @@ public class Order_List extends AppCompatActivity {
 
                 try {
                     JSONObject obj = new JSONObject(httpResponseMsg);
-                    Toast.makeText(Order_List.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Order_List.this,obj.getString("message"),
+                      Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = obj.getJSONArray("pdfs");
 
@@ -133,7 +134,6 @@ public class Order_List extends AppCompatActivity {
         }
 
         GetPdfList GetPdfList = new GetPdfList();
-
         GetPdfList.execute(ClientID);
     }
 
