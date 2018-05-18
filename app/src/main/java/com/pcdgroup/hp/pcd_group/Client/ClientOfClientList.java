@@ -88,6 +88,7 @@ public class ClientOfClientList extends AppCompatActivity {
                 Intent intent = new Intent(ClientOfClientList.this, ClientRegisterActivity.class);
 
                 startActivity(intent);
+                finish();
             }
         });
 
