@@ -86,6 +86,7 @@ public class Invoice extends AppCompatActivity {
     TextView b_name,b_address,b_pin,b_state,b_mobile,b_pan;
     TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountTextview;
 
+    float amt;
     String transport,discount;
     boolean igst = false;
     EditText userAnswer;
@@ -122,7 +123,6 @@ public class Invoice extends AppCompatActivity {
         TransportationCost.setText(transport);
 
         discount = getIntent().getExtras().getString("discountperce");
-
         DiscountTVvalue = globalVariable.DiscountType;
 
         DiscountTextview.setText("Discount:" + "\t\t" + DiscountTVvalue + "%");
@@ -220,7 +220,9 @@ public class Invoice extends AppCompatActivity {
                     getPrice =getPrice.concat(",");
                     Integer quantityStr = Integer.valueOf(stringList[4]);
 
-                    float amt = gstValue * priceStr/100 + priceStr;
+
+
+                    amt = gstValue * priceStr/100 + priceStr;
                     if(igst != true)gstValue /= 2;
                     gst.setText(String.valueOf(gstValue));
                     getGst = getGst.concat(String.valueOf(gstValue));
@@ -251,6 +253,16 @@ public class Invoice extends AppCompatActivity {
                 finalprice.setText(String.valueOf(totalPrice));
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
+
+                float totalDiscount = Float.valueOf(discount);
+                float tDiscount = totalDiscount * amt /100;
+                DiscountValue.setText(String.valueOf(tDiscount));
+
+                float totalTransport = Float.valueOf(transport);
+                totalAmount += totalTransport;
+
+                totalAmount -= tDiscount;
+
                 finalPayable.setText(String.valueOf(totalAmount));
 
                 str = extras.getString("date");
