@@ -201,7 +201,7 @@ public class CreateQuotation extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
 
 //                String str = editable.toString();
-               String str = new String(editable.toString());
+               final String str = new String(editable.toString());
 
                 if((str != null) && (str != "") && (str.matches("^[0-9]+$"))) {
                     int discount=Integer.parseInt(str);
@@ -220,6 +220,11 @@ public class CreateQuotation extends AppCompatActivity {
                                 .setMessage("Please Enter Perfect Value Of Discount.")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
+
+                                        String str = discountprice.getText().toString();
+                                        str = str.substring ( 0, str.length() - 1 );
+                                        discountprice.setText(str);
+
                                         dialog.cancel();
                                     }
                                 })
@@ -253,8 +258,10 @@ public class CreateQuotation extends AppCompatActivity {
                 intent.putExtra("validdate", textvaliddate.getText());
 
                 Tpcost = transportationcost.getText().toString();
-
                 intent.putExtra("transportioncost",Tpcost);
+
+                discount = discountprice.getText().toString();
+                intent.putExtra("discountperce",discount);
 
                 intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
 
