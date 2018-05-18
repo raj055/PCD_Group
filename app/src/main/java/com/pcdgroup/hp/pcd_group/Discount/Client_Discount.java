@@ -126,17 +126,17 @@ public class Client_Discount extends AppCompatActivity {
         builder.setTitle("Select Discount Level");
 
         // add a radio button list
-        String[] Client = {"5%","10%", "20%", "30%", "40%","50%"};
+        String[] Client = {"5","10", "20", "30", "40","50"};
         int checkedItem = 0; // cow
-        if(currentDicountValue.contains("10%")){
+        if(currentDicountValue.contains("10")){
             checkedItem = 1;
-        }else if (currentDicountValue.contains("20%")){
+        }else if (currentDicountValue.contains("20")){
             checkedItem = 2;
-        }else if (currentDicountValue.contains("30%")){
+        }else if (currentDicountValue.contains("30")){
             checkedItem = 3;
-        }else if (currentDicountValue.contains("40%")){
+        }else if (currentDicountValue.contains("40")){
             checkedItem = 4;
-        }else if (currentDicountValue.contains("50%")){
+        }else if (currentDicountValue.contains("50")){
             checkedItem = 5;
         }
 
@@ -145,24 +145,23 @@ public class Client_Discount extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
-                        discountValue = "5%";
+                        discountValue = "5";
                         break;
                     case 1:
-                        discountValue = "10%";
+                        discountValue = "10";
                         break;
                     case 2:
-                        discountValue = "20%";
+                        discountValue = "20";
                         break;
                     case 3:
-                        discountValue = "30%";
+                        discountValue = "30";
                         break;
                     case 4:
-                        discountValue = "40%";
+                        discountValue = "40";
                         break;
                     case 5:
-                        discountValue = "50%";
+                        discountValue = "50";
                         break;
-
                 }
 
                 usrDGet.setAccessType(discountValue);

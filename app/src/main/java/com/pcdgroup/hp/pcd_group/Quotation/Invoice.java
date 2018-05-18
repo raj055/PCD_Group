@@ -125,7 +125,7 @@ public class Invoice extends AppCompatActivity {
 
         DiscountTVvalue = globalVariable.DiscountType;
 
-        DiscountTextview.setText("Discount:" + "\t\t" + DiscountTVvalue);
+        DiscountTextview.setText("Discount:" + "\t\t" + DiscountTVvalue + "%");
 
         String str;
         if(savedInstanceState == null){

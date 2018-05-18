@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 intent.putExtra(UserEmail , email);
                                 gblVar.AccessType = "Admin";
-                                gblVar.DiscountType = "100%";
+                                gblVar.DiscountType = "100";
                                 startActivity(intent);
 
                                 finish();
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 intent.putExtra(UserEmail , email);
                                 gblVar.AccessType = "Manager";
-                                gblVar.DiscountType = "100%";
+                                gblVar.DiscountType = "100";
                                 startActivity(intent);
 
                                 finish();

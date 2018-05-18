@@ -2,9 +2,11 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +18,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -118,7 +121,7 @@ public class CreateQuotation extends AppCompatActivity {
 
         DiscountVallue = globalVariable.DiscountType;
 
-        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue);
+        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue + "%");
 
         getData();
 
@@ -200,16 +203,28 @@ public class CreateQuotation extends AppCompatActivity {
 //                String str = editable.toString();
                String str = new String(editable.toString());
 
-                Log.v("String Value", str);
-                if((str != null) && (str != "")) {
+                if((str != null) && (str != "") && (str.matches("^[0-9]+$"))) {
                     int discount=Integer.parseInt(str);
-                    DiscountVallue.replace("%", "");
-                    int currDiscountVal=Integer.parseInt("40");
-                    Log.v("%", DiscountVallue);
+                    int currDiscountVal=Integer.parseInt(DiscountVallue);
                     if (discount > currDiscountVal) {
 
                         Toast.makeText(getApplicationContext(), "Discount Value wrong.", Toast.LENGTH_SHORT).show();
 
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(CreateQuotation.this, android.R.style.Theme_Material_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(CreateQuotation.this);
+                        }
+                        builder.setTitle("Wrong Discount Value")
+                                .setMessage("Please Enter Perfect Value Of Discount.")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                 }
             }

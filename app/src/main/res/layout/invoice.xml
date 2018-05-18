@@ -518,7 +518,6 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView8">
 
             <TableRow>
-
                 <TextView
                     android:id="@+id/textView20"
                     android:layout_width="wrap_content"
@@ -527,7 +526,7 @@
                     android:textColor="@color/Black"
                     android:textSize="10dp"
                     android:textStyle="bold"
-                    android:layout_marginStart="170dp"
+                    android:layout_marginStart="200dp"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteX="125dp"
                     tools:layout_editor_absoluteY="544dp" />
@@ -540,7 +539,7 @@
                     android:textColor="@color/Black"
                     android:textSize="10dp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="50dp"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteX="371dp"
                     tools:layout_editor_absoluteY="550dp" />
@@ -557,7 +556,7 @@
                     android:textColor="@color/Black"
                     android:textSize="10dp"
                     android:textStyle="bold"
-                    android:layout_marginStart="170dp"
+                    android:layout_marginStart="200dp"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteX="125dp"
                     tools:layout_editor_absoluteY="517dp" />
@@ -569,7 +568,7 @@
                     android:text="0"
                     android:textColor="@color/Black"
                     android:textStyle="bold"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="50dp"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteX="352dp"
                     tools:layout_editor_absoluteY="524dp" />
@@ -585,7 +584,7 @@
                     android:textColor="@color/Black"
                     android:textSize="10dp"
                     android:textStyle="bold"
-                    android:layout_marginStart="170dp"
+                    android:layout_marginStart="200dp"
                     tools:layout_editor_absoluteX="112dp"
                     tools:layout_editor_absoluteY="496dp" />
 
@@ -597,7 +596,7 @@
                     android:textColor="@color/Black"
                     android:textSize="10dp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="50dp"
                     tools:layout_editor_absoluteX="322dp"
                     tools:layout_editor_absoluteY="496dp" />
 

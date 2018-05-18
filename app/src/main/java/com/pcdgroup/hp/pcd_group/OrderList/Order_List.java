@@ -1,11 +1,9 @@
 package com.pcdgroup.hp.pcd_group.OrderList;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,14 +12,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
-import com.pcdgroup.hp.pcd_group.Product.ViewImage;
-import com.pcdgroup.hp.pcd_group.Quotation.BillAdepter;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.Quotation.PdfAdapter;
-import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.Quotation.ViewInvoice;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
@@ -41,7 +35,7 @@ import java.util.HashMap;
 public class Order_List extends AppCompatActivity {
 
     ArrayList<Pdf> pdfList = new ArrayList<Pdf>();
-    BillAdepter billAdepter;
+    PdfAdapter billAdepter;
     public String httpUrl = "http://dert.co.in/gFiles/orderlist.php";
     HttpParse httpParse;
     String finalResult;
@@ -110,14 +104,14 @@ public class Order_List extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         //Declaring a Pdf object to add it to the ArrayList  pdfList
                         Pdf pdf  = new Pdf();
-                        String pdfBill = jsonObject.getString("Billing");
-                        //String pdfEmail = jsonObject.getString("email");
-                        pdf.setBilled(pdfBill);
+                        String pdfBill = jsonObject.getString("name");
+//                        String pdfEmail = jsonObject.getString("email");
+                        pdf.setName(pdfBill);
                         pdf.setEmail(emailId);
                         pdfList.add(pdf);
                     }
 
-                    billAdepter=new BillAdepter(Order_List.this,R.layout.list_layout, pdfList);
+                    billAdepter = new PdfAdapter(Order_List.this,R.layout.list_layout, pdfList);
                     lstVeiw.setAdapter(billAdepter);
 
                     billAdepter.notifyDataSetChanged();
