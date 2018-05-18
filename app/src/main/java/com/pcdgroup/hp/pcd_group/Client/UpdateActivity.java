@@ -260,7 +260,6 @@ public class UpdateActivity extends AppCompatActivity {
                 intent = new Intent(this, ViewImage.class);
             }
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

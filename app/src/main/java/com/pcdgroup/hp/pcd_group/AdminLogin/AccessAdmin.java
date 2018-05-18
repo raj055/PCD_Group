@@ -299,7 +299,6 @@ public class AccessAdmin extends AppCompatActivity {
         if(id==R.id.home) {
             Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AccessAdmin.this, AdminDashboard.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

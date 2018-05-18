@@ -601,7 +601,6 @@ public class Invoice extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         finish();
     }
 }

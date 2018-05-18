@@ -160,7 +160,6 @@ public class Order_List extends AppCompatActivity {
 
             }
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

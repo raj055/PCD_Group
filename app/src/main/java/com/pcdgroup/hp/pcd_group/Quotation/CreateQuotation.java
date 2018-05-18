@@ -266,6 +266,7 @@ public class CreateQuotation extends AppCompatActivity {
                 intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
 
                 startActivity(intent);
+                finish();
             }
         });
 

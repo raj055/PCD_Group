@@ -202,6 +202,7 @@ public class SingleRecordShow extends AppCompatActivity {
 
         intent = new Intent(this,ClientDetailsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     //Method to show current record Current Selected Record
@@ -362,7 +363,6 @@ public class SingleRecordShow extends AppCompatActivity {
                 intent = new Intent(this, ViewImage.class);
             }
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

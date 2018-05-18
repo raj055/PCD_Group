@@ -99,8 +99,8 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             public void onClick(View v) {
 
                 Intent intent = new Intent(ClientDetailsActivity.this,ClientRegisterActivity.class);
-
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -163,6 +163,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                     intent.putExtra("designation", cldata.getDesignation());
 
                     startActivity(intent);
+                    finish();
 
                 }
 

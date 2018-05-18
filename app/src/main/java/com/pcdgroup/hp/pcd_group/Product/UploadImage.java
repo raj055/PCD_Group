@@ -178,7 +178,7 @@ public class UploadImage extends AppCompatActivity {
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(UploadImage.this,s , Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadImage.this,s , Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -188,7 +188,7 @@ public class UploadImage extends AppCompatActivity {
                         loading.dismiss();
 
                         //Showing toast
-                        Toast.makeText(UploadImage.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(UploadImage.this, volleyError.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override

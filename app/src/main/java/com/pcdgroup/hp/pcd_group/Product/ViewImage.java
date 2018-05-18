@@ -68,6 +68,7 @@ public class ViewImage extends AppCompatActivity {
 
                 Intent intent = new Intent(ViewImage.this,UploadImage.class);
                 startActivityForResult(intent, 1);
+                finish();
             }
         });
 
@@ -130,6 +131,7 @@ public class ViewImage extends AppCompatActivity {
                 intent.putExtra("email",EmailHolders);
 
                 startActivityForResult(intent, 2);
+                finish();
             }
         });
 
@@ -188,10 +190,10 @@ public class ViewImage extends AppCompatActivity {
                 String stock=jo.getString("stock");
                 String reorderlevel=jo.getString("reorderlevel");
                 String id = jo.getString("id");
+                adapter.notifyDataSetChanged();
                 picNames.add(picname);
                 Entity e = new Entity(picname,urlname,price,gst, minimum,hsncode,brand,description,stock,reorderlevel,id);
                 localEntity.add(e);
-                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){
