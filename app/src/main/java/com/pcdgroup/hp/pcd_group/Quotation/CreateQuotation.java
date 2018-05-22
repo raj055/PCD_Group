@@ -121,7 +121,7 @@ public class CreateQuotation extends AppCompatActivity {
 
         DiscountVallue = globalVariable.DiscountType;
 
-        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue + "%");
+        tvDiscount.setText("Discount" + "\t" + DiscountVallue + "%");
 
         getData();
 
@@ -239,7 +239,6 @@ public class CreateQuotation extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(CreateQuotation.this, Invoice.class);
                 //customer
                 intent.putExtra("ClientInfo", globalVariable.globalClient);
@@ -258,9 +257,9 @@ public class CreateQuotation extends AppCompatActivity {
                 intent.putExtra("validdate", textvaliddate.getText());
 
                 Tpcost = transportationcost.getText().toString();
-                intent.putExtra("transportioncost",Tpcost);
-
                 discount = discountprice.getText().toString();
+
+                intent.putExtra("transportioncost",Tpcost);
                 intent.putExtra("discountperce",discount);
 
                 intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);

@@ -11,9 +11,11 @@
     <application
         android:name=".Client.MyApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/pcd_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/pcd_launcher"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" android:label="PCD_Group">
@@ -50,6 +52,7 @@
         <activity android:name=".Quotation.BrandList" android:label="PCD_Group" />
         <activity android:name=".Discount.Client_Discount" android:label="PCD_Group" />
         <activity android:name=".Client.ClientOfClientList" android:label="PCD_Group" />
+        <activity android:name=".Vendor.Add_Vendor" android:label="PCD_Group" />
 
     </application>
 

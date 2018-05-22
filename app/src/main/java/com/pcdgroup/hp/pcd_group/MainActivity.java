@@ -43,6 +43,7 @@ import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
 import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
+import com.pcdgroup.hp.pcd_group.Product.ProductUpdate;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
@@ -106,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 //                saveUsername();
+
+                Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
+                startActivity(intent);
 
                 CheckEditTextIsEmptyOrNot();
 

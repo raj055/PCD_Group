@@ -3,15 +3,18 @@ package com.pcdgroup.hp.pcd_group.Product;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ import com.android.volley.toolbox.Volley;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
@@ -132,7 +137,7 @@ public class UploadImage extends AppCompatActivity {
                 showFileChooser();
             }
         });
-        
+
     }
 
     public String getStringImage(Bitmap bmp){
@@ -142,7 +147,7 @@ public class UploadImage extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -153,6 +158,8 @@ public class UploadImage extends AppCompatActivity {
                 //Getting the Bitmap from Gallery
                 imageView.setVisibility(View.VISIBLE);
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
@@ -169,26 +176,39 @@ public class UploadImage extends AppCompatActivity {
     }
 
     private void uploadImage(){
+
+//        resizeAndCompressImageBeforeSend();
+
         //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
+                        if(loading != null) {
+                            if (loading.isShowing()) {
+                                loading.dismiss();
+                            }
+                        }
+
                         //Disimissing the progress dialog
-                        loading.dismiss();
+//                        loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(UploadImage.this,s , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UploadImage.this,s , Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         //Dismissing the progress dialog
-                        loading.dismiss();
+                        if(loading != null) {
+                            if (loading.isShowing()) {
+                                loading.dismiss();
+                            }
+                        }
 
                         //Showing toast
-                        Toast.makeText(UploadImage.this, volleyError.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UploadImage.this, volleyError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
@@ -206,10 +226,6 @@ public class UploadImage extends AppCompatActivity {
                 String name7= stock.getText().toString().trim();
                 String name8= reorderlevel.getText().toString().trim();
                 String name9=gst.getSelectedItem().toString().trim();
-                
-                name1 = name1.replace("'","''");
-                name6 = name6.replace("'","''");
-                
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
@@ -236,27 +252,71 @@ public class UploadImage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    @Override
-    public void onBackPressed() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(UploadImage.this);
-        builder.setMessage("Are You Sure Want To Exit ?");
-        builder.setCancelable(true);
-        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(UploadImage.this, ViewImage.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+    public static String resizeAndCompressImageBeforeSend(Context context, String filePath, String fileName){
+        final int MAX_IMAGE_SIZE = 700 * 1024; // max final file size in kilobytes
+
+        // First decode with inJustDecodeBounds=true to check dimensions of image
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath,options);
+
+        // Calculate inSampleSize(First we are going to resize the image to 800x800 image, in order to not have a big but very low quality image.
+        //resizing the image will already reduce the file size, but after resizing we will check the file size and start to compress image
+        options.inSampleSize = calculateInSampleSize(options, 800, 800);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        options.inPreferredConfig= Bitmap.Config.ARGB_8888;
+
+        Bitmap bmpPic = BitmapFactory.decodeFile(filePath,options);
+
+
+        int compressQuality = 100; // quality decreasing by 5 every loop.
+        int streamLength;
+        do{
+            ByteArrayOutputStream bmpStream = new ByteArrayOutputStream();
+            Log.d("compressBitmap", "Quality: " + compressQuality);
+            bmpPic.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream);
+            byte[] bmpPicByteArray = bmpStream.toByteArray();
+            streamLength = bmpPicByteArray.length;
+            compressQuality -= 5;
+            Log.d("compressBitmap", "Size: " + streamLength/1024+" kb");
+        }while (streamLength >= MAX_IMAGE_SIZE);
+
+        try {
+            //save the resized and compressed file to disk cache
+            Log.d("compressBitmap","cacheDir: "+context.getCacheDir());
+            FileOutputStream bmpFile = new FileOutputStream(context.getCacheDir()+fileName);
+            bmpPic.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpFile);
+            bmpFile.flush();
+            bmpFile.close();
+        } catch (Exception e) {
+            Log.e("compressBitmap", "Error on saving file");
+        }
+        //return the path of resized and compressed file
+        return  context.getCacheDir()+fileName;
     }
 
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        String debugTag = "MemoryInformation";
+        // Image nin islenmeden onceki genislik ve yuksekligi
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        Log.d(debugTag,"image height: "+height+ "---image width: "+ width);
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        Log.d(debugTag,"inSampleSize: "+inSampleSize);
+        return inSampleSize;
+    }
 }

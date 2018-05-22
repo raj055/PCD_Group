@@ -125,7 +125,7 @@ public class Invoice extends AppCompatActivity {
         discount = getIntent().getExtras().getString("discountperce");
         DiscountTVvalue = globalVariable.DiscountType;
 
-        DiscountTextview.setText("Discount:" + "\t\t" + DiscountTVvalue + "%");
+        DiscountTextview.setText("Discount:" + "\t" + DiscountTVvalue + "%");
 
         String str;
         if(savedInstanceState == null){
@@ -388,7 +388,7 @@ public class Invoice extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
 
                         fileName =  userAnswer.getText().toString();
-                        targetPdf = "/sdcard/" + fileName + ".pdf";
+                        targetPdf =  fileName + ".pdf";
 
                         fn_permission();
 
@@ -437,26 +437,24 @@ public class Invoice extends AppCompatActivity {
             Date now = new Date();
             String fName = formatter.format(now) ;
 
-            targetPdf = "/sdcard/" +  fileName + ".txt";
+            targetPdf = fileName + ".txt";
 
             File root = new File(getFilesDir() + "/", "Report");
-            File fileWithinMyDir = new File(root, "PCD_Group");
-            File fileInvoice = new File(fileWithinMyDir, "Quotation");
 
-            if (!fileInvoice.exists())
+            if (!root.exists())
             {
-                fileInvoice.mkdirs();
+                root.mkdirs();
             }
 
             fName = fileName + ".txt";
-            File gpxfile = new File(fileInvoice, fName);
+            File gpxfile = new File(root, fName);
             FileWriter writer = new FileWriter(gpxfile,true);
             currentFileInfo.store(writer, null);
             writer.flush();
             writer.close();
             String path = gpxfile.getAbsolutePath();
             targetPdf = path;
-            Toast.makeText(this, "Data has been written to Report File", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Data has been written to Report File", Toast.LENGTH_SHORT).show();
         }
         catch(IOException e)
         {
@@ -537,19 +535,33 @@ public class Invoice extends AppCompatActivity {
         canvas.drawBitmap(bitmap, 0, 0 , null);
         document.finishPage(page);
 
-        targetPdf = "/sdcard/" + fileName + ".pdf";
+        targetPdf = fileName + ".pdf";
 
-        File filePath = new File(targetPdf);
-        File fileWithinMyDir = new File(filePath, "PCD_Group");
-        File fileInvoice = new File(fileWithinMyDir, "Quotation");
+        File root = new File(Environment.getExternalStorageDirectory(), "PCDGroup");
+        File PcdQuotation = new File(root,"Quotation");
+
+        if(!PcdQuotation.exists())
+        {
+            PcdQuotation.mkdirs();
+            Toast.makeText(Invoice.this, "Make directory", Toast.LENGTH_LONG).show();
+        }
+
+        File gpxfile = new File(PcdQuotation, targetPdf);
 
         try {
-            document.writeTo(new FileOutputStream(fileInvoice));
 
+            document.writeTo(new FileOutputStream(gpxfile));
+
+            FileWriter writer = new FileWriter(gpxfile,true);
+            writer.flush();
+            writer.close();
+            String path = gpxfile.getAbsolutePath();
+            targetPdf = path;
             boolean_save=true;
+
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Something wrong: " + fileInvoice+ e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Something wrong: " + PcdQuotation + e.toString(), Toast.LENGTH_LONG).show();
         }
         // close the document
         document.close();

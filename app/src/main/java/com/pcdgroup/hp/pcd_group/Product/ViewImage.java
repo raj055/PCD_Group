@@ -51,7 +51,7 @@ public class ViewImage extends AppCompatActivity {
     String result = null;
     String[] data;
     ArrayList<String> picNames;
-    String recordName,EmailHolders,user;
+    String recordName,EmailHolders;
     List<Entity> localEntity;
     SearchView searchView;
     GlobalVariable gblVar;
@@ -68,7 +68,7 @@ public class ViewImage extends AppCompatActivity {
 
                 Intent intent = new Intent(ViewImage.this,UploadImage.class);
                 startActivityForResult(intent, 1);
-                finish();
+
             }
         });
 
@@ -131,7 +131,7 @@ public class ViewImage extends AppCompatActivity {
                 intent.putExtra("email",EmailHolders);
 
                 startActivityForResult(intent, 2);
-                finish();
+
             }
         });
 

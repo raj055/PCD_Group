@@ -29,6 +29,7 @@ import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
 import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.Vendor.Add_Vendor;
 
 /**
  * @author Grasp
@@ -37,7 +38,8 @@ import com.pcdgroup.hp.pcd_group.R;
 
 public class AdminDashboard extends AppCompatActivity {
 
-    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist, Discount;
+    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist,
+            Discount, Vendor;
     TextView EmailShow;
     public static String EmailHolder = " ";
 
@@ -55,6 +57,7 @@ public class AdminDashboard extends AppCompatActivity {
         Access = (Button) findViewById(R.id.btn_access);
         Orderlist = (Button) findViewById(R.id.btn_orderlist);
         Discount = (Button) findViewById(R.id.btn_discount);
+        Vendor = (Button) findViewById(R.id.btn_vender);
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
 
@@ -155,6 +158,17 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(AdminDashboard.this, Client_Discount.class);
+
+                startActivity(intent);
+
+            }
+        });
+        // Click Vender button
+        Vendor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(AdminDashboard.this, Add_Vendor.class);
 
                 startActivity(intent);
 
