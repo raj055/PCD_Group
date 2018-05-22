@@ -214,7 +214,6 @@ public class Invoice extends AppCompatActivity {
                     getHsn = getHsn.concat(",");
 
                     float gstValue = Integer.valueOf(stringList[2]);
-
                     float priceStr = Float.valueOf(stringList[3]);
                     getPrice = getPrice.concat(stringList[3]);
                     getPrice =getPrice.concat(",");
@@ -293,7 +292,11 @@ public class Invoice extends AppCompatActivity {
 
         hsmap.put("finalprice", finalprice.getText().toString());
         hsmap.put("finalquantity", finalquantity.getText().toString());
-        hsmap.put("finalamount", finalamount.getText().toString());
+        hsmap.put("transportfee", TransportationCost.getText().toString());
+        hsmap.put("discountValue", DiscountValue.getText().toString());
+        hsmap.put("discountText", DiscountTextview.getText().toString());
+        hsmap.put("finalpayable", finalPayable.getText().toString());
+
 
         Log.v("Products---------", getAllProducts);
         hsmap.put("products", getAllProducts.toString());
@@ -304,7 +307,7 @@ public class Invoice extends AppCompatActivity {
         hsmap.put("hsncode", getHsn.toString());
         hsmap.put("amount", getAmount.toString());
 
-        hsmap.put("name", b_name.getText().toString());
+        hsmap.put("bname", b_name.getText().toString());
     }
 
     void initialiseLayouts() {

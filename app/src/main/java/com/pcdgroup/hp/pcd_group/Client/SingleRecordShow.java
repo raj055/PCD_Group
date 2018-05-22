@@ -142,7 +142,6 @@ public class SingleRecordShow extends AppCompatActivity {
 
                 // Finishing current activity after opening next activity.
                 finish();
-
             }
         });
 
@@ -187,7 +186,8 @@ public class SingleRecordShow extends AppCompatActivity {
             protected String doInBackground(String... params) {
 
                 // Sending Client id.
-                hashMap.put("id",IdHolder);
+                hashMap.put("id",ClientID);
+
                 Log.v("id ====== ", IdHolder);
 
                 finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);

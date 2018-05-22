@@ -1,6 +1,7 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -75,8 +76,9 @@ public class ViewInvoice  extends AppCompatActivity {
   TextView name,address,state,company,country,add1,add2,pin,state1;
   HttpParse httpParse = new HttpParse();
 
-  TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1;
-  TextView finalprice, finalquantity, finalamount, nameBill;
+  TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1,
+                    TransportationCost,DiscountValue,DiscountTextview;
+  TextView finalprice, finalquantity, finalamount, nameBill, brandname;
 
   TextView date,validdate, finalPayable;
   HashMap<String,String> hashMap = new HashMap<>();
@@ -123,9 +125,14 @@ public class ViewInvoice  extends AppCompatActivity {
     quantity = (TextView) findViewById(R.id.tvquantity);
 
     name = (TextView) findViewById(R.id.client_name);
+    brandname = (TextView) findViewById(R.id.textView13);
     address = (TextView) findViewById(R.id.textView19);
     company = (TextView) findViewById(R.id.textView22);
     country = (TextView) findViewById(R.id.textView21);
+    TransportationCost =(TextView) findViewById(R.id.textView18);
+    DiscountValue =(TextView ) findViewById(R.id.textView27);
+    DiscountTextview =(TextView ) findViewById(R.id.textView20);
+
 
     state = (TextView)findViewById(R.id.text_state);
     pin = (TextView)findViewById(R.id.text_pin);
@@ -172,7 +179,7 @@ public class ViewInvoice  extends AppCompatActivity {
           e.printStackTrace();
         }
 
-        if(map.containsKey("name"))name.setText(map.get("name"));
+        if(map.containsKey("bname"))brandname.setText(map.get("bname"));
         if(map.containsKey("date"))date.setText(map.get("date"));
         if(map.containsKey("validdate"))validdate.setText(map.get("validdate"));
         if(map.containsKey("pin"))pin.setText(map.get("pin"));
@@ -187,7 +194,12 @@ public class ViewInvoice  extends AppCompatActivity {
 
         if(map.containsKey("finalquantity"))finalquantity.setText(map.get("finalquantity"));
         if(map.containsKey("finalamount"))finalamount.setText(map.get("finalamount"));
-        if(map.containsKey("finalamount"))finalPayable.setText(map.get("finalamount"));
+        if(map.containsKey("finalpayable"))finalPayable.setText(map.get("finalpayable"));
+        if(map.containsKey("name"))name.setText(map.get("name"));
+        if(map.containsKey("transportfee"))TransportationCost.setText(map.get("transportfee"));
+        if(map.containsKey("discountValue"))DiscountValue.setText(map.get("discountValue"));
+        if(map.containsKey("discountText"))DiscountTextview.setText(map.get("discountText"));
+
         state_holder = state.getText().toString();
         state1_holder = state1.getText().toString();
         if(activity!= null){

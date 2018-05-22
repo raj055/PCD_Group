@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +68,7 @@ public class Order_List extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             String fileUrl = pdfList.get(position).getUrl();
+            Log.v("File Url",fileUrl);
 
             Intent intent = new Intent(Order_List.this, ViewInvoice.class);
             intent.putExtra("FileUrl", fileUrl);
@@ -94,7 +96,8 @@ public class Order_List extends AppCompatActivity {
 
                 try {
                     JSONObject obj = new JSONObject(httpResponseMsg);
-                    Toast.makeText(Order_List.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Order_List.this,obj.getString("message"),
+                      Toast.LENGTH_SHORT).show();
 
                     JSONArray jsonArray = obj.getJSONArray("pdfs");
 
@@ -105,9 +108,11 @@ public class Order_List extends AppCompatActivity {
                         //Declaring a Pdf object to add it to the ArrayList  pdfList
                         Pdf pdf  = new Pdf();
                         String pdfBill = jsonObject.getString("name");
+                        String url = jsonObject.getString("url");
 //                        String pdfEmail = jsonObject.getString("email");
                         pdf.setName(pdfBill);
                         pdf.setEmail(emailId);
+                        pdf.setUrl(url);
                         pdfList.add(pdf);
                     }
 
@@ -133,7 +138,6 @@ public class Order_List extends AppCompatActivity {
         }
 
         GetPdfList GetPdfList = new GetPdfList();
-
         GetPdfList.execute(ClientID);
     }
 

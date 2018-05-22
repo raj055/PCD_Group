@@ -60,7 +60,8 @@ public class AdminSetting extends AppCompatActivity {
     TextView details;
 
     Boolean CheckEditText;
-    String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
+    String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
+      State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
     String finalResult;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();

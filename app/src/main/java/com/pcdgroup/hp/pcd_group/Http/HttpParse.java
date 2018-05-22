@@ -43,6 +43,7 @@ public class HttpParse {
 
             httpURLConnection.setRequestMethod("POST");
 
+
             httpURLConnection.setDoInput(true);
 
             httpURLConnection.setDoOutput(true);
@@ -62,6 +63,7 @@ public class HttpParse {
             outputStream.close();
 
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
                 BufferedInputStream is = new BufferedInputStream(httpURLConnection.getInputStream());
                 bufferedReader = new BufferedReader(
                   new InputStreamReader(is)
@@ -106,6 +108,8 @@ public class HttpParse {
         }
 
         Result = stringBuilder.toString();
+
+        Log.v ("Rslt-------", Result);
 
         return Result ;
     }
