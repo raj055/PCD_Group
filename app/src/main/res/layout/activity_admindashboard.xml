@@ -182,7 +182,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:background="#7B68EE"
-            android:text="Add Vender"
+            android:text="Vender Dealer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

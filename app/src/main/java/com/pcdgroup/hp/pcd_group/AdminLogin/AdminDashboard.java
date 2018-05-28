@@ -1,13 +1,10 @@
 package com.pcdgroup.hp.pcd_group.AdminLogin;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -27,9 +24,8 @@ import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
-import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.Vendor.Add_Vendor;
+import com.pcdgroup.hp.pcd_group.VendorDealer.Vendor_Dealer;
 
 /**
  * @author Grasp
@@ -168,7 +164,7 @@ public class AdminDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(AdminDashboard.this, Add_Vendor.class);
+                Intent intent = new Intent(AdminDashboard.this, Vendor_Dealer.class);
 
                 startActivity(intent);
 
