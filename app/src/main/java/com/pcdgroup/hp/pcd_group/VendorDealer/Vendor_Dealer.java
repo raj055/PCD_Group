@@ -182,14 +182,11 @@ public class Vendor_Dealer extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 if (globalVariable.AccessType.contains("Admin")){
-                    intent = new Intent(Vendor_Dealer.this, AdminDashboard.class);
+                    intent = new Intent(Vendor_Dealer.this, List_VendorDealer.class);
 
                 } else if (globalVariable.AccessType.contains("Manager")){
-                    intent = new Intent(Vendor_Dealer.this, UserDashbord.class);
+                    intent = new Intent(Vendor_Dealer.this, List_VendorDealer.class);
 
-                } else if (globalVariable.AccessType.contains("Client")){
-                    intent = new Intent(Vendor_Dealer.this, UserDashbord.class);
-                    intent.putExtra("emailid", globalVariable.currentUserEmail);
                 }
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

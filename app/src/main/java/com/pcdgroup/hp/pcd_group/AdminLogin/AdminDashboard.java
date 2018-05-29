@@ -25,6 +25,7 @@ import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.VendorDealer.List_VendorDealer;
 import com.pcdgroup.hp.pcd_group.VendorDealer.Vendor_Dealer;
 
 /**
@@ -164,7 +165,7 @@ public class AdminDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(AdminDashboard.this, Vendor_Dealer.class);
+                Intent intent = new Intent(AdminDashboard.this, List_VendorDealer.class);
 
                 startActivity(intent);
 

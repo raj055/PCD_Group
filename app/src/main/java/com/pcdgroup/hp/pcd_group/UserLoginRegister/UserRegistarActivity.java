@@ -24,8 +24,8 @@ import java.util.HashMap;
 public class UserRegistarActivity extends AppCompatActivity {
 
     Button register;
-    EditText First_Name, Last_Name, Email, Password ;
-    String F_Name_Holder, L_Name_Holder, EmailHolder, PasswordHolder;
+    EditText First_Name, Last_Name,MobileNo, Email, Password ;
+    String F_Name_Holder, L_Name_Holder, MobileNo_Holder, EmailHolder, PasswordHolder;
     String emailPattern;
     String finalResult ;
     String HttpURL = "http://dert.co.in/gFiles/UserRegistration.php";
@@ -42,6 +42,7 @@ public class UserRegistarActivity extends AppCompatActivity {
         //Assign Id'S
         First_Name = (EditText)findViewById(R.id.editTextF_Name);
         Last_Name = (EditText)findViewById(R.id.editTextL_Name);
+        MobileNo = (EditText)findViewById(R.id.editTextL_mobile);
         Email = (EditText)findViewById(R.id.editTextEmail);
         Password = (EditText)findViewById(R.id.editTextPassword);
 
@@ -58,7 +59,7 @@ public class UserRegistarActivity extends AppCompatActivity {
                 if(EmailHolder.matches(emailPattern) && CheckEditText){
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(F_Name_Holder,L_Name_Holder, EmailHolder, PasswordHolder);
+                    UserRegisterFunction(F_Name_Holder,L_Name_Holder,MobileNo_Holder, EmailHolder, PasswordHolder);
 
                 }
                 else {
@@ -69,7 +70,6 @@ public class UserRegistarActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
 
@@ -79,15 +79,16 @@ public class UserRegistarActivity extends AppCompatActivity {
 
         F_Name_Holder = First_Name.getText().toString();
         L_Name_Holder = Last_Name.getText().toString();
+        MobileNo_Holder = MobileNo.getText().toString();
         EmailHolder = Email.getText().toString().trim();
         PasswordHolder = Password.getText().toString();
         
-           F_Name_Holder = F_Name_Holder.replace("'","''");
+        F_Name_Holder = F_Name_Holder.replace("'","''");
         L_Name_Holder = L_Name_Holder.replace("'","''");
 
         emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if(TextUtils.isEmpty(F_Name_Holder) || TextUtils.isEmpty(L_Name_Holder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder))
+        if(TextUtils.isEmpty(F_Name_Holder) || TextUtils.isEmpty(L_Name_Holder) || TextUtils.isEmpty(MobileNo_Holder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder))
         {
 
             CheckEditText = false;
@@ -100,7 +101,7 @@ public class UserRegistarActivity extends AppCompatActivity {
 
     }
 
-    public void UserRegisterFunction(final String F_Name, final String L_Name, final String email, final String password){
+    public void UserRegisterFunction(final String F_Name, final String L_Name,final String mobile, final String email, final String password){
 
         class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
 
@@ -129,9 +130,11 @@ public class UserRegistarActivity extends AppCompatActivity {
 
                 hashMap.put("L_name",params[1]);
 
-                hashMap.put("email",params[2]);
+                hashMap.put("mobile_num",params[2]);
 
-                hashMap.put("password",params[3]);
+                hashMap.put("email",params[3]);
+
+                hashMap.put("password",params[4]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
@@ -141,6 +144,6 @@ public class UserRegistarActivity extends AppCompatActivity {
 
         UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
 
-        userRegisterFunctionClass.execute(F_Name,L_Name,email,password);
+        userRegisterFunctionClass.execute(F_Name,L_Name,mobile,email,password);
     }
 }

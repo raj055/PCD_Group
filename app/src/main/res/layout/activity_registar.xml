@@ -51,9 +51,22 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:background="#D8BFD8"
-        android:inputType="textEmailAddress"
+        android:inputType="textPersonName"
         android:ems="10"
         android:layout_below="@+id/editTextL_Name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/editTextL_mobile"
+        android:hint="Enter Your mobile No"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#D8BFD8"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_below="@+id/editTextL_mobile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:id="@+id/editTextEmail"
