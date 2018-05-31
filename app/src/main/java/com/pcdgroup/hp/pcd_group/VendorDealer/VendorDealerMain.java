@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.pcdgroup.hp.pcd_group.R;
 
-public class List_VendorDealer extends AppCompatActivity{
+public class VendorDealerMain extends AppCompatActivity{
 
     private SectionsPageAdapter mSectionsPageAdapter;
 

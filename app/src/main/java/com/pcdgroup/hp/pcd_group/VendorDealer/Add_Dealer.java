@@ -15,11 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Product.ViewImage;
+import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
+import com.pcdgroup.hp.pcd_group.Quotation.PDFViewActivity;
 import com.pcdgroup.hp.pcd_group.R;
+import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import java.util.HashMap;
 
@@ -35,8 +40,10 @@ public class Add_Dealer extends Fragment {
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
-    Intent intent;
     GlobalVariable globalVariable;
+    EditText VerifayCode;
+    TextView RegenrateCode;
+    Button Verify;
 
     @Nullable
     @Override
@@ -70,10 +77,8 @@ public class Add_Dealer extends Fragment {
 
                 if(CheckEditText){
 
-                    // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
-                            Email_Holder, Mobileno_Holder, Organisation_Holder,
-                            Gst_Holder,Designation_Holder);
+                    VerificationCode();
+
                 }
                 else {
 
@@ -85,6 +90,44 @@ public class Add_Dealer extends Fragment {
         });
 
         return view;
+    }
+
+    private void VerificationCode() {
+
+        LayoutInflater layoutinflater = LayoutInflater.from(getActivity());
+        View promptUserView = layoutinflater.inflate(R.layout.code_verfication_dialogbox, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+
+        alertDialogBuilder.setView(promptUserView);
+
+        VerifayCode = (EditText) promptUserView.findViewById(R.id.username);
+        RegenrateCode = (TextView) promptUserView.findViewById(R.id.regenratecode);
+        Verify = (Button) promptUserView.findViewById(R.id.verified);
+
+
+        Verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
+       /* // prompt for username
+        alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                // If EditText is not empty and CheckEditText = True then this block will execute.
+                UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
+                        Email_Holder, Mobileno_Holder, Organisation_Holder,
+                        Gst_Holder,Designation_Holder);
+            }
+
+        });*/
+
+        // all set and time to build and show up!
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void CheckEditTextIsEmptyOrNot(){
@@ -169,35 +212,4 @@ public class Add_Dealer extends Fragment {
         userRegisterFunctionClass.execute(name,address,area,state,email,mobileno,organisation,gstno,designation);
     }
 
-    public void onBackPressed() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Are You Sure Want To Exit Register ?");
-        builder.setCancelable(true);
-        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (globalVariable.AccessType.contains("Admin")){
-                    intent = new Intent(getActivity(), List_VendorDealer.class);
-
-                } else if (globalVariable.AccessType.contains("Manager")){
-                    intent = new Intent(getActivity(), List_VendorDealer.class);
-
-                }
-
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                getActivity().finish();
-
-            }
-        });
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }

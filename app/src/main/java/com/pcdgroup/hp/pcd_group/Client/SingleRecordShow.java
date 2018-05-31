@@ -28,6 +28,8 @@ import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
+import com.pcdgroup.hp.pcd_group.VendorDealer.DealerList;
+import com.pcdgroup.hp.pcd_group.VendorDealer.DealerProducs;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +60,7 @@ public class SingleRecordShow extends AppCompatActivity {
     String FinalJSonObject ;
     String IdHolder,NameHolder, AddressHolder, Address1Holder,Address2Holder,MobileHolder,StateHolder,CountryHolder,
             PinHolder,CompnyHolder,EmailHolder,DesignationHolder;
-    Button UpdateButton, DeleteButton;
+    Button UpdateButton, DeleteButton, DealerAssign;
     ProgressDialog progressDialog2;
 
     Intent intent;
@@ -97,6 +99,7 @@ public class SingleRecordShow extends AppCompatActivity {
 
         UpdateButton = (Button)findViewById(R.id.buttonUpdate);
         DeleteButton = (Button)findViewById(R.id.buttonDelete);
+        DealerAssign = (Button)findViewById(R.id.buttonDealerAssign);
 
         //Receiving the ListView Clicked item value send by previous activity.
         IdHolder = getIntent().getStringExtra("id");
@@ -153,6 +156,16 @@ public class SingleRecordShow extends AppCompatActivity {
                 // Calling Client delete method to delete current record using Client ID.
                 ClientDelete(IdHolder);
 
+            }
+        });
+
+        // Add Click listener on DealerAssign button.
+        DealerAssign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(SingleRecordShow.this, DealerList.class);
+                startActivity(intent);
             }
         });
 

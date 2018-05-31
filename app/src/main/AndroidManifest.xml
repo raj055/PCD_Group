@@ -51,7 +51,9 @@
         <activity android:name=".Quotation.BrandList" android:label="PCD_Group" />
         <activity android:name=".Discount.Client_Discount" android:label="PCD_Group" />
         <activity android:name=".Client.ClientOfClientList" android:label="PCD_Group" />
-        <activity android:name=".VendorDealer.List_VendorDealer" android:label="PCD_Group" />
+        <activity android:name=".VendorDealer.VendorDealerMain" android:label="PCD_Group" />
+        <activity android:name=".VendorDealer.DealerProducs" android:label="PCD_Group" />
+        <activity android:name=".VendorDealer.DealerList" android:label="PCD_Group" />
 
     </application>
 

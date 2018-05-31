@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.pcdgroup.hp.pcd_group.VendorDealer.List_VendorDealer">
+    tools:context="com.pcdgroup.hp.pcd_group.VendorDealer.VendorDealerMain">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

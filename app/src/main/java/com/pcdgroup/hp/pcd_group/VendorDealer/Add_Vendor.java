@@ -170,34 +170,4 @@ public class Add_Vendor extends Fragment {
         userRegisterFunctionClass.execute(name,address,area,state,email,mobileno,organisation,gstno,designation);
     }
 
-    public void onBackPressed() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Are You Sure Want To Exit Register ?");
-        builder.setCancelable(true);
-        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (globalVariable.AccessType.contains("Admin")){
-                    intent = new Intent(getActivity(), List_VendorDealer.class);
-
-                } else if (globalVariable.AccessType.contains("Manager")){
-                    intent = new Intent(getActivity(), List_VendorDealer.class);
-
-                }
-
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }

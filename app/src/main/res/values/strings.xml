@@ -31,6 +31,7 @@
     <string name="search_hint">Type name…</string>
 
     <string name="username">Save pdf name</string>
+    <string name="verifiecode">Enter verify Code</string>
 
     <string-array name="dropdown_state">
         <item>Maharashtra</item>
