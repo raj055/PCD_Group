@@ -26,7 +26,6 @@ import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.List_VendorDealer;
-import com.pcdgroup.hp.pcd_group.VendorDealer.Vendor_Dealer;
 
 /**
  * @author Grasp
@@ -38,7 +37,7 @@ public class AdminDashboard extends AppCompatActivity {
     Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist,
             Discount, Vendor;
     TextView EmailShow;
-    public static String EmailHolder = " ";
+    public static String EmailHolder = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

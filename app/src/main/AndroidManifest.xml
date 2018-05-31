@@ -28,7 +28,6 @@
 
         <activity android:name=".UserLoginRegister.UserRegistarActivity" android:label="PCD_Group" />
         <activity android:name=".Client.ClientRegisterActivity" android:label="PCD_Group" />
-        <activity android:name=".AdminLogin.AdminLoginActivity" android:label="PCD_Group" />
         <activity android:name=".AdminLogin.AdminDashboard" android:label="PCD_Group" />
         <activity android:name=".AdminLogin.AdminSetting" android:label="PCD_Group" />
         <activity android:name=".Client.SingleRecordShow" android:label="PCD_Group" />
@@ -52,7 +51,6 @@
         <activity android:name=".Quotation.BrandList" android:label="PCD_Group" />
         <activity android:name=".Discount.Client_Discount" android:label="PCD_Group" />
         <activity android:name=".Client.ClientOfClientList" android:label="PCD_Group" />
-        <activity android:name=".VendorDealer.Vendor_Dealer" android:label="PCD_Group" />
         <activity android:name=".VendorDealer.List_VendorDealer" android:label="PCD_Group" />
 
     </application>

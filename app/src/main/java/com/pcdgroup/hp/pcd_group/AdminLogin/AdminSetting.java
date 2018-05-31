@@ -331,7 +331,7 @@ public class AdminSetting extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminSetting.this);
-        builder.setMessage("Are You Sure Want To Exit Register ?");
+        builder.setMessage("Are You Sure Want To Exit Brand Setting?");
         builder.setCancelable(true);
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override

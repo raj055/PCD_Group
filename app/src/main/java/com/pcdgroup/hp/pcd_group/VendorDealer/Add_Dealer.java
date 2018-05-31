@@ -6,31 +6,31 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import java.util.HashMap;
 
-public class Vendor_Dealer extends AppCompatActivity {
+public class Add_Dealer extends Fragment {
 
     EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
-    Spinner type;
     Button submit;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
-            Type_Holder, Organisation_Holder, Gst_Holder, Designation_Holder;
+             Organisation_Holder, Gst_Holder, Designation_Holder;
     String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/vendor_dealer.php";
+    String HttpURL = "http://dert.co.in/gFiles/dealer.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -38,28 +38,27 @@ public class Vendor_Dealer extends AppCompatActivity {
     Intent intent;
     GlobalVariable globalVariable;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vendordealer);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_dealer,container,false);
 
         globalVariable = GlobalVariable.getInstance();
 
         //Assign Id'S
-        name = (EditText) findViewById(R.id.name_et);
-        state = (EditText) findViewById(R.id.state_et);
-        address = (EditText) findViewById(R.id.address_et);
-        area = (EditText) findViewById(R.id.area_et);
-        state = (EditText) findViewById(R.id.state_et);
-        email = (EditText) findViewById(R.id.email_et);
-        mobileno = (EditText) findViewById(R.id.mobile_et);
-        organisation = (EditText) findViewById(R.id.organisation_et);
-        gstno = (EditText) findViewById(R.id.gstno_et);
-        designation = (EditText) findViewById(R.id.designation_et);
+        name = (EditText) view.findViewById(R.id.name_et);
+        state = (EditText) view.findViewById(R.id.state_et);
+        address = (EditText) view.findViewById(R.id.address_et);
+        area = (EditText) view.findViewById(R.id.area_et);
+        state = (EditText) view.findViewById(R.id.state_et);
+        email = (EditText) view.findViewById(R.id.email_et);
+        mobileno = (EditText) view.findViewById(R.id.mobile_et);
+        organisation = (EditText) view.findViewById(R.id.organisation_et);
+        gstno = (EditText) view.findViewById(R.id.gstno_et);
+        designation = (EditText) view.findViewById(R.id.designation_et);
 
-        type = (Spinner) findViewById(R.id.type_spinner);
-
-        submit = (Button) findViewById(R.id.submit_btn);
+        submit = (Button) view.findViewById(R.id.submit_btnDealer);
 
         //Adding Click Listener on button.
         submit.setOnClickListener(new View.OnClickListener() {
@@ -73,18 +72,19 @@ public class Vendor_Dealer extends AppCompatActivity {
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
                     UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
-                                Email_Holder, Mobileno_Holder,Type_Holder, Organisation_Holder,
-                                Gst_Holder,Designation_Holder);
+                            Email_Holder, Mobileno_Holder, Organisation_Holder,
+                            Gst_Holder,Designation_Holder);
                 }
                 else {
 
                     // If EditText is empty then this block will execute.
-                    Toast.makeText(Vendor_Dealer.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(getActivity(), "Please fill all form fields.", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+
+        return view;
     }
 
     public void CheckEditTextIsEmptyOrNot(){
@@ -99,7 +99,6 @@ public class Vendor_Dealer extends AppCompatActivity {
         Organisation_Holder = organisation.getText().toString();
         Gst_Holder = gstno.getText().toString();
         Designation_Holder = designation.getText().toString();
-        Type_Holder = type.getSelectedItem().toString();
 
         Name_Holder = Name_Holder.replace("'","''");
         Address_Hoder = Address_Hoder.replace("'","''");
@@ -121,9 +120,8 @@ public class Vendor_Dealer extends AppCompatActivity {
     //Register user in database details.
     public void UserRegisterFunction(final String name, final String address,final String area,
                                      final String state,final String email,
-                                     final String mobileno, final String type,
-                                     final String organisation, final String gstno,
-                                     final String designation){
+                                     final String mobileno, final String organisation,
+                                     final String gstno, final String designation){
 
         class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
 
@@ -131,7 +129,7 @@ public class Vendor_Dealer extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
 
-                progressDialog = ProgressDialog.show(Vendor_Dealer.this,"Loading Data",null,true,true);
+                progressDialog = ProgressDialog.show(getActivity(),"Loading Data",null,true,true);
             }
 
             @Override
@@ -141,7 +139,7 @@ public class Vendor_Dealer extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                Toast.makeText(Vendor_Dealer.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
 
             }
 
@@ -155,10 +153,9 @@ public class Vendor_Dealer extends AppCompatActivity {
                 hashMap.put("state",params[3]);
                 hashMap.put("email",params[4]);
                 hashMap.put("mobileno",params[5]);
-                hashMap.put("type",params[6]);
-                hashMap.put("organisation",params[7]);
-                hashMap.put("gstno",params[8]);
-                hashMap.put("designation",params[9]);
+                hashMap.put("organisation",params[6]);
+                hashMap.put("gstno",params[7]);
+                hashMap.put("designation",params[8]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
@@ -169,12 +166,11 @@ public class Vendor_Dealer extends AppCompatActivity {
 
         UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
 
-        userRegisterFunctionClass.execute(name,address,area,state,email,mobileno,type,organisation,gstno,designation);
+        userRegisterFunctionClass.execute(name,address,area,state,email,mobileno,organisation,gstno,designation);
     }
 
-    @Override
     public void onBackPressed() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_Dealer.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Are You Sure Want To Exit Register ?");
         builder.setCancelable(true);
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
@@ -182,16 +178,17 @@ public class Vendor_Dealer extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 if (globalVariable.AccessType.contains("Admin")){
-                    intent = new Intent(Vendor_Dealer.this, List_VendorDealer.class);
+                    intent = new Intent(getActivity(), List_VendorDealer.class);
 
                 } else if (globalVariable.AccessType.contains("Manager")){
-                    intent = new Intent(Vendor_Dealer.this, List_VendorDealer.class);
+                    intent = new Intent(getActivity(), List_VendorDealer.class);
 
                 }
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
+                getActivity().finish();
+
             }
         });
         builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {

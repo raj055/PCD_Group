@@ -33,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminLoginActivity;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
@@ -107,9 +106,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 //                saveUsername();
-
-                Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
-                startActivity(intent);
 
                 CheckEditTextIsEmptyOrNot();
 
@@ -232,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             Log.v("accesstype","" + accessType);
                             if(accessType.contains("Admin")) {
-                                Log.v("To be","in Adming mode" );
+                                Log.v("To be","in Admin mode" );
                                 Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
 
                                 intent.putExtra(UserEmail , email);

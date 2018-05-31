@@ -6,11 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
-import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
-import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.R;
 
 public class List_VendorDealer extends AppCompatActivity{
@@ -24,16 +21,6 @@ public class List_VendorDealer extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vendor_dealer);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(List_VendorDealer.this,Vendor_Dealer.class);
-                startActivity(intent);
-            }
-        });
-
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -46,8 +33,8 @@ public class List_VendorDealer extends AppCompatActivity{
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Tab1vendorFragment(), "VENDOR");
-        adapter.addFragment(new Tab2dealerFragment(), "DEALER");
+        adapter.addFragment(new Add_Vendor(), "VENDOR");
+        adapter.addFragment(new Add_Dealer(), "DEALER");
         viewPager.setAdapter(adapter);
     }
 }
