@@ -179,7 +179,7 @@ public class AccessAdmin extends AppCompatActivity {
             String accessTypeE = tmpDataGet.getAccessType();
             String accessTypeU = tempStoredata.getAccessType();
 
-            if ( accessTypeE != accessTypeU)
+            if (accessTypeE != accessTypeU)
             {
                 UserAccessUpdate(tmpDataGet.getEmail(), tmpDataGet.getAccessType());
             }

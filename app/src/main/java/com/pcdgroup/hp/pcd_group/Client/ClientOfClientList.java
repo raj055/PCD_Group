@@ -68,8 +68,6 @@ public class ClientOfClientList extends AppCompatActivity {
 
     ClientAdepter clientAdepter;
 
-    public static int REQUEST_PERMISSIONS = 1;
-    boolean boolean_permission;
     HttpParse httpParse;
 
     HashMap<String, String> hashMap = new HashMap<>();

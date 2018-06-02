@@ -41,9 +41,6 @@ public class Add_Dealer extends Fragment {
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     GlobalVariable globalVariable;
-    EditText VerifayCode;
-    TextView RegenrateCode;
-    Button Verify;
 
     @Nullable
     @Override
@@ -77,8 +74,10 @@ public class Add_Dealer extends Fragment {
 
                 if(CheckEditText){
 
-                    VerificationCode();
-
+                    // If EditText is not empty and CheckEditText = True then this block will execute.
+                    UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
+                            Email_Holder, Mobileno_Holder, Organisation_Holder,
+                            Gst_Holder,Designation_Holder);
                 }
                 else {
 
@@ -90,44 +89,6 @@ public class Add_Dealer extends Fragment {
         });
 
         return view;
-    }
-
-    private void VerificationCode() {
-
-        LayoutInflater layoutinflater = LayoutInflater.from(getActivity());
-        View promptUserView = layoutinflater.inflate(R.layout.code_verfication_dialogbox, null);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-
-        alertDialogBuilder.setView(promptUserView);
-
-        VerifayCode = (EditText) promptUserView.findViewById(R.id.username);
-        RegenrateCode = (TextView) promptUserView.findViewById(R.id.regenratecode);
-        Verify = (Button) promptUserView.findViewById(R.id.verified);
-
-
-        Verify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
-
-       /* // prompt for username
-        alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-                // If EditText is not empty and CheckEditText = True then this block will execute.
-                UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
-                        Email_Holder, Mobileno_Holder, Organisation_Holder,
-                        Gst_Holder,Designation_Holder);
-            }
-
-        });*/
-
-        // all set and time to build and show up!
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 
     public void CheckEditTextIsEmptyOrNot(){

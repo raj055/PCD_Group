@@ -178,24 +178,6 @@
                     android:hint="Gstno" />
             </TableRow>
 
-            <TableRow android:layout_height="73dp">
-
-                <Button
-                    android:id="@+id/designation_tv"
-                    android:layout_width="151dp"
-                    android:layout_height="45dp"
-                    android:text="Add Product"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/designation_et"
-                    android:layout_width="218dp"
-                    android:layout_height="match_parent"
-                    android:hint="Product list" />
-
-            </TableRow>
-
         </TableLayout>
 
         <Button

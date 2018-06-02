@@ -69,7 +69,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
     EditText Email, Password;
     Button LogIn,Register ;
     String PasswordHolder, EmailHolder, DiscountHolder;
@@ -284,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                hashMap.put("email",params[0]);
+                hashMap.put("email_id",params[0]);
 
                 hashMap.put("password",params[1]);
 

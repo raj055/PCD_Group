@@ -17,7 +17,8 @@
         android:gravity="center"
         android:text="Login Form"
         android:textColor="#D2691E"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <EditText
         android:layout_width="fill_parent"

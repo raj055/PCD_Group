@@ -22,7 +22,7 @@ import java.util.Map;
 public class HttpParse {
 
     String FinalHttpData = "";
-    String Result ;
+    String Result = new String();
     String line = null;
     BufferedWriter bufferedWriter ;
     OutputStream outputStream ;
