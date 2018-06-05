@@ -35,4 +35,9 @@ public class GlobalVariable {
     public String[] GlobalImageUpload = new String[10];
 
     public String[] GlobalImageSingleRecord = new String[10];
+
+
+    public  String[] globalVendor = new String[9];
+
+    public  String[] globalVendorProduct = new String[10];
 }

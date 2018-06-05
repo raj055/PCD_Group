@@ -182,7 +182,7 @@
 
 
                 <Button
-                    android:id="@+id/designation_tv"
+                    android:id="@+id/btn_vendor_product"
                     android:layout_width="151dp"
                     android:layout_height="45dp"
                     android:text="Add Product"

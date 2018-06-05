@@ -133,12 +133,13 @@ public class ClientOfClientList extends AppCompatActivity {
                         DataAdapter GetData = new DataAdapter();
 
                         GetData.setId(jsonObject.getString("id"));
-                        GetData.setName(jsonObject.getString("name"));
+                        GetData.setfName(jsonObject.getString("first_name"));
+                        GetData.setlName(jsonObject.getString("last_name"));
                         GetData.setType(jsonObject.getString("type"));
                         GetData.setAddress(jsonObject.getString("address"));
-                        GetData.setaddresline1(jsonObject.getString("addressline1"));
-                        GetData.setAddressline2(jsonObject.getString("addressline2"));
-                        GetData.setMobileno(jsonObject.getString("mobileno"));
+                        GetData.setaddresline1(jsonObject.getString("address_line1"));
+                        GetData.setAddressline2(jsonObject.getString("address_line2"));
+                        GetData.setMobileno(jsonObject.getString("mobile_num"));
                         GetData.setState(jsonObject.getString("state"));
                         GetData.setCountry(jsonObject.getString("country"));
                         GetData.setCompanyname(jsonObject.getString("company"));

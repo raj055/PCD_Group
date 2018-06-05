@@ -55,7 +55,9 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
 
         ClientDataAdapter clientDataAdapter =  dataListFiltered.get(position);
 
-        viewHolder.TextViewName.setText(clientDataAdapter.getName());
+        viewHolder.TextViewfName.setText(clientDataAdapter.getfName());
+
+        viewHolder.TextViewlName.setText(clientDataAdapter.getlName());
 
         viewHolder.TextViewAddress.setText(clientDataAdapter.getAddress());
 
@@ -83,7 +85,7 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.getfName().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
@@ -105,7 +107,8 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
 
      class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView TextViewName;
+        public TextView TextViewfName;
+        public TextView TextViewlName;
         public TextView TextViewAddress;
         public TextView TextViewCompanyName;
 
@@ -113,7 +116,8 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
 
             super(itemView);
 
-            TextViewName = (TextView) itemView.findViewById(R.id.tvname) ;
+            TextViewfName = (TextView) itemView.findViewById(R.id.tvfname) ;
+            TextViewlName = (TextView) itemView.findViewById(R.id.tvlname) ;
             TextViewAddress = (TextView) itemView.findViewById(R.id.tvaddress) ;
             TextViewCompanyName = (TextView) itemView.findViewById(R.id.tvcompanyname) ;
 

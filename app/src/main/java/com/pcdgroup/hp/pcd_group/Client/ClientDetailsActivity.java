@@ -53,11 +53,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     HttpParse httpParse = new HttpParse();
     HashMap<String,String> hashMap = new HashMap<>();
-    HashMap<String,String> ResultHash = new HashMap<>();
-    String IdHolder;
-    ProgressDialog pDialog;
-    String FinalJSonObject;
-    String ParseResult;
     String finalResult;
 
     // Http URL for delete Already Open Client Record.
@@ -80,7 +75,7 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
     RequestQueue requestQueue ;
 
-    String HttpURL = "http://dert.co.in/gFiles/ClientDataShow.php";
+    String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
 
     View ChildView;
 
@@ -149,15 +144,16 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
                     Integer id = Recyclerview.getChildAdapterPosition(ChildView);
                     DataAdapter cldata = DataAdapters.get(id);
                     intent.putExtra("id", cldata.getId());
-                    intent.putExtra("name", cldata.getName());
+                    intent.putExtra("first_name", cldata.getfName());
+                    intent.putExtra("last_name", cldata.getlName());
                     intent.putExtra("address", cldata.getAddress());
-                    intent.putExtra("addressline1", cldata.getAddressline1());
-                    intent.putExtra("addressline2", cldata.getAddressline2());
-                    intent.putExtra("mobileno", cldata.getMobileno());
+                    intent.putExtra("address_line1", cldata.getAddressline1());
+                    intent.putExtra("address_line2", cldata.getAddressline2());
+                    intent.putExtra("mobile_num", cldata.getMobileno());
                     intent.putExtra("pin", cldata.getPin());
                     intent.putExtra("state", cldata.getState());
                     intent.putExtra("country", cldata.getcountry());
-                    intent.putExtra("company", cldata.getCompanyname());
+                    intent.putExtra("company_name", cldata.getCompanyname());
                     intent.putExtra("email_id", cldata.getEmailid());
                     intent.putExtra("designation", cldata.getDesignation());
 
@@ -230,15 +226,16 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             try {
                 json = array.getJSONObject(i);
                 GetData.setId(json.getString("id"));
-                GetData.setName(json.getString("name"));
+                GetData.setfName(json.getString("first_name"));
+                GetData.setlName(json.getString("last_name"));
                 GetData.setType(json.getString("type"));
                 GetData.setAddress(json.getString("address"));
-                GetData.setaddresline1(json.getString("addressline1"));
-                GetData.setAddressline2(json.getString("addressline2"));
-                GetData.setMobileno(json.getString("mobileno"));
+                GetData.setaddresline1(json.getString("address_line1"));
+                GetData.setAddressline2(json.getString("address_line2"));
+                GetData.setMobileno(json.getString("mobile_num"));
                 GetData.setState(json.getString("state"));
                 GetData.setCountry(json.getString("country"));
-                GetData.setCompanyname(json.getString("company"));
+                GetData.setCompanyname(json.getString("company_name"));
                 GetData.setPin(json.getString( "pin"));
                 GetData.setEmailid(json.getString("email_id"));
                 GetData.setDesignation(json.getString("designation"));

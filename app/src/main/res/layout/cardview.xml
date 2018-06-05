@@ -20,14 +20,26 @@
         android:background="@drawable/bg_list_row">
 
         <TableRow>
+
             <TextView
-                android:id="@+id/tvname"
+            android:id="@+id/tvfname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="05dp"
+            android:textSize="20dp"
+            android:text="FName"
+            android:textStyle="bold"
+            android:textColor="#FF1493"
+            />
+
+            <TextView
+                android:id="@+id/tvlname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="30dp"
                 android:textSize="20dp"
-                android:text="Name "
+                android:text="Lname"
                 android:textStyle="bold"
                 android:textColor="#FF1493"
                 />
@@ -42,6 +54,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/Gray"
                 />
+
         </TableRow>
 
         <TableRow>

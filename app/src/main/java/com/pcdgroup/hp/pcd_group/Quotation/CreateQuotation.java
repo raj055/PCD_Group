@@ -322,7 +322,7 @@ public class CreateQuotation extends AppCompatActivity {
                         globalVariable.globalClient[4] = extras.getString("state");
                         globalVariable.globalClient[5] = extras.getString("country");
                         globalVariable.globalClient[6] = extras.getString("company");
-                        globalVariable.globalClient[7] = extras.getString("name");
+                        globalVariable.globalClient[7] = extras.getString("fname");
                     }
                     client.setText(globalVariable.globalClient[7]);
                 }

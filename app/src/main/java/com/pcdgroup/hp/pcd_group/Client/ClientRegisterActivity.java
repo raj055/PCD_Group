@@ -31,14 +31,14 @@ import java.util.HashMap;
 
 public class ClientRegisterActivity extends AppCompatActivity {
 
-    EditText name,address,addressline1,addressline2,mobileno,country,company_name,pin,email_id,designation;
+    EditText fname,lname,address,addressline1,addressline2,mobileno,country,company_name,pin,email_id,designation;
     Spinner type,state;
     Button submit;
-    String Name_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
+    String FName_Holder, LName_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
             State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder,
             UserClient_Holder;
     String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
+    String HttpURL = "http://dert.co.in/gFiles/ClientRegister.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -54,7 +54,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
         globalVariable = GlobalVariable.getInstance();
 
         //Assign Id'S
-        name = (EditText) findViewById(R.id.et_name);
+        fname = (EditText) findViewById(R.id.et_fname);
+        lname = (EditText) findViewById(R.id.et_lname);
         type = (Spinner) findViewById(R.id.spinner);
         state = (Spinner) findViewById(R.id.spinner2);
         address = (EditText) findViewById(R.id.et_address);
@@ -79,7 +80,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
                 if(CheckEditText){
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(Name_Holder, type_Holder, Address_Hoder, Addressline1_Holder,
+                    UserRegisterFunction(FName_Holder,LName_Holder, type_Holder, Address_Hoder, Addressline1_Holder,
                             Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder,
                             CompanyName_Holder,Pin_Holder, Emailid_Holder,Designation_Holder,UserClient_Holder);
                 }
@@ -87,9 +88,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
 
                     // If EditText is empty then this block will execute.
                     Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-
                 }
-
             }
         });
     }
@@ -97,7 +96,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
     public void CheckEditTextIsEmptyOrNot(){
 
         //Checking all EditText Empty or Not.
-        Name_Holder = name.getText().toString();
+        FName_Holder = fname.getText().toString();
+        LName_Holder = lname.getText().toString();
         type_Holder = type.getSelectedItem().toString();
         Address_Hoder = address.getText().toString();
         Addressline1_Holder = addressline1.getText().toString();
@@ -110,7 +110,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
         Pin_Holder = pin.getText().toString();
         Designation_Holder = designation.getText().toString();
 
-        Name_Holder = Name_Holder.replace("'","''");
+        FName_Holder = FName_Holder.replace("'","''");
+        LName_Holder = LName_Holder.replace("'","''");
         Address_Hoder = Address_Hoder.replace("'","''");
         Addressline1_Holder = Addressline1_Holder.replace("'","''");
         Addressline2_Holder = Addressline2_Holder.replace("'","''");
@@ -119,7 +120,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
 
         UserClient_Holder = globalVariable.currentUserEmail;
 
-        if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder))
+        if(TextUtils.isEmpty(FName_Holder) || TextUtils.isEmpty(LName_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder))
         {
             CheckEditText = false;
         }
@@ -129,8 +130,8 @@ public class ClientRegisterActivity extends AppCompatActivity {
     }
 
     //Register user in database details.
-    public void UserRegisterFunction(final String name, final String type, final String address,
-                                     final String addressline1,final String addressline2,
+    public void UserRegisterFunction(final String fname, final String lname, final String type,
+                                     final String address, final String addressline1,final String addressline2,
                                      final String mobileno,final String state,
                                      final String counntry, final String company_name,
                                      final  String pin,final String email_id, final String designation,
@@ -160,31 +161,31 @@ public class ClientRegisterActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                hashMap.put("name",params[0]);
-                hashMap.put("type",params[1]);
-                hashMap.put("address",params[2]);
-                hashMap.put("addressline1",params[3]);
-                hashMap.put("addressline2",params[4]);
-                hashMap.put("mobileno",params[5]);
-                hashMap.put("state",params[6]);
-                hashMap.put("country",params[7]);
-                hashMap.put("company_name",params[8]);
-                hashMap.put("pin",params[9]);
-                hashMap.put("email_id",params[10]);
-                hashMap.put("designation",params[11]);
-                hashMap.put("UserClient",params[12]);
+                hashMap.put("first_name",params[0]);
+                hashMap.put("last_name",params[1]);
+                hashMap.put("type",params[2]);
+                hashMap.put("address",params[3]);
+                hashMap.put("address_line1",params[4]);
+                hashMap.put("address_line2",params[5]);
+                hashMap.put("mobile_num",params[6]);
+                hashMap.put("state",params[7]);
+                hashMap.put("country",params[8]);
+                hashMap.put("company_name",params[9]);
+                hashMap.put("pin",params[10]);
+                hashMap.put("email_id",params[11]);
+                hashMap.put("designation",params[12]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 
                 return finalResult;
             }
-            public void execute(String name, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation, String userclient) {
+            public void execute(String fname,String lname, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation, String userclient) {
             }
         }
 
         UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
 
-        userRegisterFunctionClass.execute(name,type,address,addressline1,addressline2,mobileno,state,counntry,company_name,pin,email_id,designation,userclient);
+        userRegisterFunctionClass.execute(fname,lname,type,address,addressline1,addressline2,mobileno,state,counntry,company_name,pin,email_id,designation,userclient);
     }
 
     @Override

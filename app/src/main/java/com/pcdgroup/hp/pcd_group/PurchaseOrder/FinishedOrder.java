@@ -1,21 +1,13 @@
 package com.pcdgroup.hp.pcd_group.PurchaseOrder;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.Product.UploadImage;
-import com.pcdgroup.hp.pcd_group.Product.ViewImage;
-import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
-import com.pcdgroup.hp.pcd_group.Quotation.QuotationAdepter;
-import com.pcdgroup.hp.pcd_group.Quotation.ViewInvoice;
 import com.pcdgroup.hp.pcd_group.Quotation.pdf2;
 import com.pcdgroup.hp.pcd_group.R;
 
@@ -31,11 +23,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PO_List extends AppCompatActivity {
+public class FinishedOrder extends AppCompatActivity {
 
-    String PDF_FETCH_URL = "http://dert.co.in/gFiles/purchaseorder.php";
+    String PDF_FETCH_URL = "http://dert.co.in/gFiles/completeorder.php";
     ListView listView;
-    Purchaselist_Adepter adapter;
+    FinishedOrderList_Adepter adapter;
     List<pdf2> localPdf;
     InputStream is = null;
     String line = null;
@@ -45,31 +37,20 @@ public class PO_List extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_po_list);
+        setContentView(R.layout.activity_finished);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(PO_List.this,Create_New_PO.class);
-                startActivityForResult(intent, 1);
-
-            }
-        });
-
-        listView = (ListView) findViewById(R.id.lstv);
+        listView = (ListView) findViewById(R.id.lV_FinishedOrder);
 
 
         localPdf = new ArrayList<pdf2>();
 
-        adapter = new Purchaselist_Adepter(this, localPdf, this);
+        adapter = new FinishedOrderList_Adepter(this, localPdf, this);
         listView.setAdapter(adapter);
 
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        get_Po_List();
+        get_Finishorder_List();
 
         adapter.notifyDataSetChanged();
 
@@ -82,7 +63,7 @@ public class PO_List extends AppCompatActivity {
         });
     }
 
-    private void get_Po_List() {
+    private void get_Finishorder_List() {
 
         try {
             URL url = new URL(PDF_FETCH_URL);
@@ -139,6 +120,5 @@ public class PO_List extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }

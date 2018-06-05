@@ -8,7 +8,8 @@ package com.pcdgroup.hp.pcd_group.Client;
 public class DataAdapter {
 
     String id;
-    String name;
+    String fname;
+    String lname;
     String type;
     String address;
     String addressline1;
@@ -35,14 +36,24 @@ public class DataAdapter {
         this.id = id;
     }
 
-    public String getName() {
+    public String getfName() {
 
-        return name;
+        return fname;
     }
 
-    public void setName(String name) {
+    public void setfName(String fname) {
 
-        this.name = name;
+        this.fname = fname;
+    }
+
+    public String getlName() {
+
+        return lname;
+    }
+
+    public void setlName(String lname) {
+
+        this.lname = lname;
     }
 
     public String getType() {

@@ -41,7 +41,8 @@ public class ClientAdepter extends ArrayAdapter<DataAdapter> {
             LayoutInflater inflater = LayoutInflater.from(activity);
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new clienHolder();
-            holder.textViewName = (TextView) row.findViewById(R.id.tvname);
+            holder.textViewFName = (TextView) row.findViewById(R.id.tvfname);
+            holder.textViewLName = (TextView) row.findViewById(R.id.tvlname);
             holder.textViewType = (TextView) row.findViewById(R.id.tvtype);
             holder.textViewAddress = (TextView) row.findViewById(R.id.tvaddress);
             holder.textViewAddress1 = (TextView) row.findViewById(R.id.tvaddressline1);
@@ -59,7 +60,8 @@ public class ClientAdepter extends ArrayAdapter<DataAdapter> {
         }
 
         client = data.get(position);
-        holder.textViewName.setText(client.getName());
+        holder.textViewFName.setText(client.getfName());
+        holder.textViewLName.setText(client.getlName());
         holder.textViewType.setText(client.getType());
         holder.textViewAddress.setText(client.getAddress());
         holder.textViewAddress1.setText(client.getAddressline1());
@@ -75,7 +77,7 @@ public class ClientAdepter extends ArrayAdapter<DataAdapter> {
     }
 
     class clienHolder {
-        TextView textViewName, textViewType, textViewAddress, textViewAddress1, textViewAddress2,
+        TextView textViewFName, textViewLName, textViewType, textViewAddress, textViewAddress1, textViewAddress2,
                 textViewMobile, textViewState, textViewCounty, textViewCompany, textViewEmail, textViewPin ,textViewDesignation;
     }
 }

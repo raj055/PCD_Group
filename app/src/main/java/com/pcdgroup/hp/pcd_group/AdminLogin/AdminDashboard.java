@@ -22,6 +22,8 @@ import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
+import com.pcdgroup.hp.pcd_group.PurchaseOrder.FinishedOrder;
+import com.pcdgroup.hp.pcd_group.PurchaseOrder.PO_List;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
 import com.pcdgroup.hp.pcd_group.R;
@@ -35,7 +37,7 @@ import com.pcdgroup.hp.pcd_group.VendorDealer.VendorDealerMain;
 public class AdminDashboard extends AppCompatActivity {
 
     Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist,
-            Discount, Vendor;
+            Discount, Vendor,Purchase_order, Procure_product;
     TextView EmailShow;
     public static String EmailHolder = "";
 
@@ -54,6 +56,8 @@ public class AdminDashboard extends AppCompatActivity {
         Orderlist = (Button) findViewById(R.id.btn_orderlist);
         Discount = (Button) findViewById(R.id.btn_discount);
         Vendor = (Button) findViewById(R.id.btn_vender);
+        Purchase_order = (Button) findViewById(R.id.btn_po);
+        Procure_product = (Button) findViewById(R.id.btn_procure);
 
         EmailShow = (TextView) findViewById(R.id.EmailShow);
 
@@ -165,6 +169,28 @@ public class AdminDashboard extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(AdminDashboard.this, VendorDealerMain.class);
+
+                startActivity(intent);
+
+            }
+        });
+        // Click Vender button
+        Purchase_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(AdminDashboard.this, PO_List.class);
+
+                startActivity(intent);
+
+            }
+        });
+        // Click Vender button
+        Procure_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(AdminDashboard.this, FinishedOrder.class);
 
                 startActivity(intent);
 

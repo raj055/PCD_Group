@@ -62,7 +62,7 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
 
     RequestQueue requestQueue ;
 
-    String HttpURL = "http://dert.co.in/gFiles/ClientDataShow.php";
+    String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
 
     View ChildView ;
 
@@ -123,7 +123,8 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
 
                     Integer id = Recyclerview.getChildAdapterPosition(ChildView);
                     ClientDataAdapter cldata = clientDataAdapters.get(id);
-                    intent.putExtra("name", cldata.getName());
+                    intent.putExtra("fname", cldata.getfName());
+                    intent.putExtra("lname", cldata.getlName());
                     intent.putExtra("address", cldata.getAddress());
                     intent.putExtra("ad1", cldata.getAddressline1());
                     intent.putExtra("ad2", cldata.getAddressline2());
@@ -201,20 +202,22 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
             try {
                 json = array.getJSONObject(i);
 
-                GetClientDataAdapter2.setName(json.getString("name"));
+                GetClientDataAdapter2.setfName(json.getString("first_name"));
+
+                GetClientDataAdapter2.setlName(json.getString("last_name"));
 
                 GetClientDataAdapter2.setType(json.getString("type"));
 
                 GetClientDataAdapter2.setAddress(json.getString("address"));
 
-                GetClientDataAdapter2.setaddresline1(json.getString("addressline1"));
-                GetClientDataAdapter2.setAddressline2(json.getString("addressline2"));
-                GetClientDataAdapter2.setMobileno(json.getString("mobileno"));
+                GetClientDataAdapter2.setaddresline1(json.getString("address_line1"));
+                GetClientDataAdapter2.setAddressline2(json.getString("address_line2"));
+                GetClientDataAdapter2.setMobileno(json.getString("mobile_num"));
                 GetClientDataAdapter2.setState(json.getString("state"));
 
                 GetClientDataAdapter2.setCountry(json.getString("country"));
 
-                GetClientDataAdapter2.setCompanyname(json.getString("company"));
+                GetClientDataAdapter2.setCompanyname(json.getString("company_name"));
 
                 GetClientDataAdapter2.setPin(json.getString( "pin"));
                 GetClientDataAdapter2.setEmailid(json.getString("email_id"));

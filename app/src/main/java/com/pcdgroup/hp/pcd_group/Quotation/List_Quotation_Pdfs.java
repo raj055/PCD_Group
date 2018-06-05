@@ -139,8 +139,10 @@ public class List_Quotation_Pdfs extends AppCompatActivity {
                 String urlname = jo.getString("url");
                 String email = jo.getString("email");
                 String bill = jo.getString("Billing");
+                String purchseOrder = jo.getString("purchaseorder");
+                String completeOrder = jo.getString("completeorder");
 
-                pdf2 pdf= new pdf2(id,name,urlname,email,bill);
+                pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
                 localPdf.add(pdf);
             }
 

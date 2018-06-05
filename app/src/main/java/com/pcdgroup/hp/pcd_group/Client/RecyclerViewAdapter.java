@@ -81,7 +81,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         DataAdapter dataAdapter =  dataListFiltered.get(position);
 
-        viewHolder.TextViewName.setText(dataAdapter.getName());
+        viewHolder.TextViewfName.setText(dataAdapter.getfName());
+        viewHolder.TextViewlName.setText(dataAdapter.getlName());
         viewHolder.TextViewType.setText(dataAdapter.getType());
         viewHolder.TextViewAddress.setText(dataAdapter.getAddress());
         viewHolder.TextviewAddressline1.setText(dataAdapter.getAddressline1());
@@ -207,7 +208,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.getfName().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
@@ -229,7 +230,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
 
-        public TextView TextViewName;
+        public TextView TextViewfName;
+        public TextView TextViewlName;
         public TextView TextViewType;
         public TextView TextViewAddress;
         public TextView TextviewAddressline1;
@@ -247,7 +249,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             super(itemView);
 
-            TextViewName = (TextView) itemView.findViewById(R.id.tvname) ;
+            TextViewfName = (TextView) itemView.findViewById(R.id.tvfname) ;
+            TextViewlName = (TextView) itemView.findViewById(R.id.tvlname) ;
             TextViewType = (TextView) itemView.findViewById(R.id.tvtype) ;
             TextViewAddress = (TextView) itemView.findViewById(R.id.tvaddress) ;
             TextviewAddressline1 = (TextView) itemView.findViewById(R.id.tvaddressline1) ;

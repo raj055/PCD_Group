@@ -9,7 +9,8 @@ import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
 public class ClientDataAdapter {
 
-    String name;
+    String fname;
+    String lname;
     String type;
     String address;
     String addressline1;
@@ -26,15 +27,24 @@ public class ClientDataAdapter {
 
     }
 
+    public String getfName() {
 
-    public String getName() {
-
-        return name;
+        return lname;
     }
 
-    public void setName(String name) {
+    public void setfName(String fname) {
 
-        this.name = name;
+        this.fname = fname;
+    }
+
+    public String getlName() {
+
+        return lname;
+    }
+
+    public void setlName(String lname) {
+
+        this.lname = lname;
     }
 
 

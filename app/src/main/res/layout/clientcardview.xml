@@ -22,7 +22,7 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
@@ -32,13 +32,22 @@
                 />
 
             <TextView
-                android:id="@+id/tvname"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvfname"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:text="name Show"
+                android:text="fname"
+                android:textColor="#8A2BE2"/>
+            <TextView
+                android:id="@+id/tvlname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="lname"
                 android:textColor="#8A2BE2"/>
         </TableRow>
 

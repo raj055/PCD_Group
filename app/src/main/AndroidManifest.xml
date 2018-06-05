@@ -52,8 +52,14 @@
         <activity android:name=".Discount.Client_Discount" android:label="PCD_Group" />
         <activity android:name=".Client.ClientOfClientList" android:label="PCD_Group" />
         <activity android:name=".VendorDealer.VendorDealerMain" android:label="PCD_Group" />
-        <activity android:name=".VendorDealer.DealerProducs" android:label="PCD_Group" />
+        <activity android:name=".VendorDealer.VendorProductAdd" android:label="PCD_Group" />
         <activity android:name=".VendorDealer.DealerList" android:label="PCD_Group" />
+        <activity android:name=".VendorDealer.VendorList" android:label="PCD_Group" />
+        <activity android:name=".PurchaseOrder.PO_List" android:label="PCD_Group" />
+        <activity android:name=".PurchaseOrder.Create_New_PO" android:label="PCD_Group" />
+        <activity android:name=".PurchaseOrder.SelectVendorProducts" android:label="PCD_Group" />
+        <activity android:name=".PurchaseOrder.ViewPurchaseOrder" android:label="PCD_Group" />
+        <activity android:name=".PurchaseOrder.FinishedOrder" android:label="PCD_Group" />
 
     </application>
 

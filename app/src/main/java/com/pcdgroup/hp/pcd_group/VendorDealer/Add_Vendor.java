@@ -26,11 +26,11 @@ import java.util.HashMap;
 public class Add_Vendor extends Fragment {
 
     EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
-    private Button submit;
+    private Button submit,AddProduct;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Designation_Holder;
     String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/vendor.php";
+    String HttpURL = "http://dert.co.in/gFiles/vendorRegister.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -59,6 +59,7 @@ public class Add_Vendor extends Fragment {
         designation = (EditText) view.findViewById(R.id.designation_et);
 
         submit = (Button) view.findViewById(R.id.submit_btnVendor);
+        AddProduct = (Button) view.findViewById(R.id.btn_vendor_product);
 
         //Adding Click Listener on button.
         submit.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +83,15 @@ public class Add_Vendor extends Fragment {
 
                 }
 
+            }
+        });
+
+        AddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(),VendorProductAdd.class);
+                startActivity(intent);
             }
         });
 

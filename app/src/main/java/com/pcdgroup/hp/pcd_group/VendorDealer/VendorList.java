@@ -1,22 +1,18 @@
-package com.pcdgroup.hp.pcd_group.PurchaseOrder;
+package com.pcdgroup.hp.pcd_group.VendorDealer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.Product.UploadImage;
-import com.pcdgroup.hp.pcd_group.Product.ViewImage;
-import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
-import com.pcdgroup.hp.pcd_group.Quotation.QuotationAdepter;
-import com.pcdgroup.hp.pcd_group.Quotation.ViewInvoice;
-import com.pcdgroup.hp.pcd_group.Quotation.pdf2;
+import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
+import com.pcdgroup.hp.pcd_group.Product.Entity;
+import com.pcdgroup.hp.pcd_group.PurchaseOrder.Create_New_PO;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -31,12 +27,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PO_List extends AppCompatActivity {
+public class VendorList  extends AppCompatActivity {
 
-    String PDF_FETCH_URL = "http://dert.co.in/gFiles/purchaseorder.php";
+    String FETCH_URL = "http://dert.co.in/gFiles/vendorlist.php";
     ListView listView;
-    Purchaselist_Adepter adapter;
-    List<pdf2> localPdf;
+    VendorListAdapter adapter;
+    List<VendorData> localdata;
     InputStream is = null;
     String line = null;
     String result = null;
@@ -45,31 +41,19 @@ public class PO_List extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_po_list);
+        setContentView(R.layout.vendor_list);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        listView = (ListView) findViewById(R.id.listViewVendor);
 
-                Intent intent = new Intent(PO_List.this,Create_New_PO.class);
-                startActivityForResult(intent, 1);
+        localdata = new ArrayList<VendorData>();
 
-            }
-        });
-
-        listView = (ListView) findViewById(R.id.lstv);
-
-
-        localPdf = new ArrayList<pdf2>();
-
-        adapter = new Purchaselist_Adepter(this, localPdf, this);
+        adapter = new VendorListAdapter(this, localdata, this);
         listView.setAdapter(adapter);
 
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        get_Po_List();
+        getPdfs();
 
         adapter.notifyDataSetChanged();
 
@@ -78,14 +62,30 @@ public class PO_List extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Intent intent = new Intent(VendorList.this, Create_New_PO.class);
+
+                VendorData productdata = localdata.get(position);
+
+                intent.putExtra("id",productdata.getId());
+                intent.putExtra("name",productdata.getName());
+                intent.putExtra("address",productdata.getAddress());
+                intent.putExtra("location",productdata.getLocation());
+                intent.putExtra("state",productdata.getState());
+                intent.putExtra("email",productdata.getEmail());
+                intent.putExtra("mobileno",productdata.getMobileno());
+                intent.putExtra("organisation",productdata.getOrganisation());
+                intent.putExtra("gstno",productdata.getGst());
+
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
 
-    private void get_Po_List() {
+    private void getPdfs() {
 
         try {
-            URL url = new URL(PDF_FETCH_URL);
+            URL url = new URL(FETCH_URL);
             HttpURLConnection con= (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("GET");
@@ -126,19 +126,20 @@ public class PO_List extends AppCompatActivity {
                 jo=ja.getJSONObject(i);
                 String id = jo.getString("id");
                 String name = jo.getString("name");
-                String urlname = jo.getString("url");
+                String address = jo.getString("address");
+                String area = jo.getString("location");
+                String state = jo.getString("state");
                 String email = jo.getString("email");
-                String bill = jo.getString("Billing");
-                String purchseOrder = jo.getString("purchaseorder");
-                String completeOrder = jo.getString("completeorder");
+                String mobile = jo.getString("mobileno");
+                String organisation = jo.getString("organisation");
+                String gst = jo.getString("gstno");
 
-                pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
-                localPdf.add(pdf);
+                VendorData data= new VendorData(id,name,address,area,state,email,mobile,organisation,gst);
+                localdata.add(data);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
 }

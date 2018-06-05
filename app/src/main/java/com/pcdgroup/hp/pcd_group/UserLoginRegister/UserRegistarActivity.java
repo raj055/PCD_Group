@@ -61,9 +61,9 @@ public class UserRegistarActivity extends AppCompatActivity {
         //Assign Id'S
         First_Name = (EditText)findViewById(R.id.editTextF_Name);
         Last_Name = (EditText)findViewById(R.id.editTextL_Name);
-        MobileNo = (EditText)findViewById(R.id.editTextL_mobile);
         Email = (EditText)findViewById(R.id.editTextEmail);
         Password = (EditText)findViewById(R.id.editTextPassword);
+        MobileNo = (EditText)findViewById(R.id.editTextL_mobile);
 
         register = (Button)findViewById(R.id.Submit);
 
@@ -108,8 +108,6 @@ public class UserRegistarActivity extends AppCompatActivity {
         //Executing sendmail to send email
         sm.execute();
 
-        CodeGenrate(senderHolder,numberHolde,message_Holder,code_Holder);
-
         LayoutInflater layoutinflater = LayoutInflater.from(this);
         View promptUserView = layoutinflater.inflate(R.layout.code_verfication_dialogbox, null);
 
@@ -121,6 +119,8 @@ public class UserRegistarActivity extends AppCompatActivity {
         RegenrateCode = (TextView) promptUserView.findViewById(R.id.regenratecode);
         Verify = (Button) promptUserView.findViewById(R.id.verified);
 
+
+//        CodeGenrate(senderHolder,numberHolde,message_Holder,code_Holder);
 
         Log.v("message_Holder------",message_Holder);
 
@@ -150,7 +150,7 @@ public class UserRegistarActivity extends AppCompatActivity {
         RegenrateCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                VerificationCode();
             }
         });
 
@@ -163,16 +163,16 @@ public class UserRegistarActivity extends AppCompatActivity {
 
         F_Name_Holder = First_Name.getText().toString();
         L_Name_Holder = Last_Name.getText().toString();
-        MobileNo_Holder = MobileNo.getText().toString();
         EmailHolder = Email.getText().toString().trim();
         PasswordHolder = Password.getText().toString();
+        MobileNo_Holder = MobileNo.getText().toString();
         
         F_Name_Holder = F_Name_Holder.replace("'","''");
         L_Name_Holder = L_Name_Holder.replace("'","''");
 
         emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if(TextUtils.isEmpty(F_Name_Holder) || TextUtils.isEmpty(L_Name_Holder)  || TextUtils.isEmpty(EmailHolder) ||  TextUtils.isEmpty(MobileNo_Holder) || TextUtils.isEmpty(PasswordHolder))
+        if(TextUtils.isEmpty(F_Name_Holder) || TextUtils.isEmpty(L_Name_Holder)  || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder) ||  TextUtils.isEmpty(MobileNo_Holder))
         {
 
             CheckEditText = false;
@@ -186,7 +186,7 @@ public class UserRegistarActivity extends AppCompatActivity {
     }
 
     public void UserRegisterFunctionClass(final String F_Name, final String L_Name, final String email,
-                                     final String mobile, final String password){
+                                          final String password, final String mobile){
 
         class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
 
@@ -211,15 +211,15 @@ public class UserRegistarActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                hashMap.put("f_name",params[0]);
+                hashMap.put("first_name",params[0]);
 
-                hashMap.put("L_name",params[1]);
+                hashMap.put("last_name",params[1]);
 
                 hashMap.put("email_id",params[2]);
 
-                hashMap.put("mobile_num",params[3]);
+                hashMap.put("password",params[3]);
 
-                hashMap.put("password",params[4]);
+                hashMap.put("mobile_num",params[4]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 

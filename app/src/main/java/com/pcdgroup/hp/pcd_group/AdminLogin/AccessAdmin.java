@@ -229,7 +229,7 @@ public class AccessAdmin extends AppCompatActivity {
             for (int i=0; i<ja.length();i++){
 
                 jo=ja.getJSONObject(i);
-                String email = jo.getString("email");
+                String email = jo.getString("email_id");
                 String accessType = jo.getString("Access");
                 UserDataGet e = new UserDataGet(email);
                 UserDataGet tmp = new UserDataGet(email);
@@ -270,7 +270,7 @@ public class AccessAdmin extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                hashMap.put("email",params[0]);
+                hashMap.put("email_id",params[0]);
 
                 hashMap.put("access",params[1]);
 
