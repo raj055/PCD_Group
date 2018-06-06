@@ -60,7 +60,6 @@ public class Add_Dealer extends Fragment {
         mobileno = (EditText) view.findViewById(R.id.mobile_et);
         organisation = (EditText) view.findViewById(R.id.organisation_et);
         gstno = (EditText) view.findViewById(R.id.gstno_et);
-        designation = (EditText) view.findViewById(R.id.designation_et);
 
         submit = (Button) view.findViewById(R.id.submit_btnDealer);
 

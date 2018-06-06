@@ -1,5 +1,6 @@
 package com.pcdgroup.hp.pcd_group.VendorDealer;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,13 +60,8 @@ public class VendorProductAdd extends AppCompatActivity {
     String recordName,EmailHolders;
     List<ProductData> localEntity;
     GlobalVariable gblVar;
-
-    String HttpProductAdd = "http://dert.co.in/gFiles/MultipleProductsAdd.php";
-    ProgressDialog progressDialog;
-    HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
-    String Products_Holder;
-    String finalResult;
+    String id;
+    ProductData selectedRowLabel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,6 +134,7 @@ public class VendorProductAdd extends AppCompatActivity {
             for (int i=0; i<ja.length();i++){
 
                 jo=ja.getJSONObject(i);
+                id = jo.getString("id");
                 String picname = jo.getString("name");
                 String urlname = jo.getString("photo");
                 String price = jo.getString("price");
@@ -149,7 +147,7 @@ public class VendorProductAdd extends AppCompatActivity {
                 String reorderlevel=jo.getString("reorderlevel");
                 adapter.notifyDataSetChanged();
                 picNames.add(picname);
-                ProductData e = new ProductData(picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
+                ProductData e = new ProductData(id,picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
                 localEntity.add(e);
             }
 
@@ -164,6 +162,7 @@ public class VendorProductAdd extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -176,61 +175,35 @@ public class VendorProductAdd extends AppCompatActivity {
             if (selectedRows.size() > 0) {
                 StringBuilder stringBuilder = new StringBuilder();
                 //Loop to all the selected rows array
+
                 for (int i = 0; i < selectedRows.size(); i++) {
 
                     //Check if selected rows have value i.e. checked item
                     if (selectedRows.valueAt(i)) {
 
                         //Get the checked item text from array list by getting keyAt method of selectedRowsarray
-                        ProductData selectedRowLabel = localEntity.get(selectedRows.keyAt(i));
+                         selectedRowLabel = localEntity.get(selectedRows.keyAt(i));
 
                         //append the row label text
-                        stringBuilder.append(selectedRowLabel + "\n");
+                        stringBuilder.append(selectedRowLabel.getId() + ",");
+
                     }
                 }
-                AddProducts(Products_Holder);
+
+                String productString = new String ();
+
+                productString = String.valueOf((stringBuilder));
+
+                Intent intent = new Intent();
+
+                intent.putExtra("ProductID", productString);
+
+                setResult(RESULT_OK, intent);
+
                 finish();
             }
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void AddProducts(final String productadd){
-
-        class AddProducts extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(VendorProductAdd.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(VendorProductAdd.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("submit",params[0]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpProductAdd);
-
-                return finalResult;
-            }
-        }
-
-        AddProducts addProducts = new AddProducts();
-
-        addProducts.execute(productadd);
     }
 }

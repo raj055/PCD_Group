@@ -75,6 +75,7 @@ public class VendorList  extends AppCompatActivity {
                 intent.putExtra("mobileno",productdata.getMobileno());
                 intent.putExtra("organisation",productdata.getOrganisation());
                 intent.putExtra("gstno",productdata.getGst());
+                intent.putExtra("products",productdata.getProducts());
 
                 setResult(RESULT_OK, intent);
                 finish();
@@ -133,8 +134,9 @@ public class VendorList  extends AppCompatActivity {
                 String mobile = jo.getString("mobileno");
                 String organisation = jo.getString("organisation");
                 String gst = jo.getString("gstno");
+                String products = jo.getString("products");
 
-                VendorData data= new VendorData(id,name,address,area,state,email,mobile,organisation,gst);
+                VendorData data= new VendorData(id,name,address,area,state,email,mobile,organisation,gst,products);
                 localdata.add(data);
             }
 

@@ -110,6 +110,7 @@ public class Create_New_PO extends AppCompatActivity {
                         globalVariable.globalVendor[6] = extras.getString("mobileno");
                         globalVariable.globalVendor[7] = extras.getString("organisation");
                         globalVariable.globalVendor[8] = extras.getString("gstno");
+                        globalVariable.globalVendor[9] = extras.getString("products");
                     }
                     linearVendor.setVisibility(View.VISIBLE);
                     selectVendor.setVisibility(View.INVISIBLE);

@@ -25,17 +25,16 @@ import java.util.HashMap;
 
 public class Add_Vendor extends Fragment {
 
-    EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
+    EditText name,address,area,mobileno,state,email,organisation,gstno,products;
     private Button submit,AddProduct;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
-             Organisation_Holder, Gst_Holder, Designation_Holder;
+             Organisation_Holder, Gst_Holder, Products_Holder;
     String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/vendorRegister.php";
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
-    Intent intent;
     GlobalVariable globalVariable;
 
     @Nullable
@@ -56,7 +55,7 @@ public class Add_Vendor extends Fragment {
         mobileno = (EditText) view.findViewById(R.id.mobile_et);
         organisation = (EditText) view.findViewById(R.id.organisation_et);
         gstno = (EditText) view.findViewById(R.id.gstno_et);
-        designation = (EditText) view.findViewById(R.id.designation_et);
+        products = (EditText) view.findViewById(R.id.product_et);
 
         submit = (Button) view.findViewById(R.id.submit_btnVendor);
         AddProduct = (Button) view.findViewById(R.id.btn_vendor_product);
@@ -74,7 +73,7 @@ public class Add_Vendor extends Fragment {
                     // If EditText is not empty and CheckEditText = True then this block will execute.
                     UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
                                 Email_Holder, Mobileno_Holder, Organisation_Holder,
-                                Gst_Holder,Designation_Holder);
+                                Gst_Holder,Products_Holder);
                 }
                 else {
 
@@ -91,11 +90,37 @@ public class Add_Vendor extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getActivity(),VendorProductAdd.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == getActivity().RESULT_OK) {
+
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    // Client Details
+                    if (extras.containsKey("ProductID")) {
+                        globalVariable.globalAddVendorProduct[0] = extras.getString("ProductID");
+                        globalVariable.globalAddVendorProduct[1] = extras.getString("name");
+                        globalVariable.globalAddVendorProduct[2] = extras.getString("photo");
+                        globalVariable.globalAddVendorProduct[3] = extras.getString("price");
+                        globalVariable.globalAddVendorProduct[4] = extras.getString("hsncode");
+                        globalVariable.globalAddVendorProduct[5] = extras.getString("gst");
+                        globalVariable.globalAddVendorProduct[6] = extras.getString("stock");
+                        globalVariable.globalAddVendorProduct[7] = extras.getString("description");
+                    }
+                    products.setText(globalVariable.globalAddVendorProduct[0]);
+                }
+            }
+        }
     }
 
     public void CheckEditTextIsEmptyOrNot(){
@@ -109,7 +134,7 @@ public class Add_Vendor extends Fragment {
         Mobileno_Holder = mobileno.getText().toString();
         Organisation_Holder = organisation.getText().toString();
         Gst_Holder = gstno.getText().toString();
-        Designation_Holder = designation.getText().toString();
+        Products_Holder = products.getText().toString();
 
         Name_Holder = Name_Holder.replace("'","''");
         Address_Hoder = Address_Hoder.replace("'","''");
@@ -117,7 +142,7 @@ public class Add_Vendor extends Fragment {
         State_Holder = State_Holder.replace("'","''");
         Email_Holder = Email_Holder.replace("'","''");
         Organisation_Holder = Organisation_Holder.replace("'","''");
-        Designation_Holder = Designation_Holder.replace("'","''");
+        Products_Holder = Products_Holder.replace("'","''");
 
         if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(Email_Holder) || TextUtils.isEmpty(Mobileno_Holder))
         {
@@ -166,7 +191,7 @@ public class Add_Vendor extends Fragment {
                 hashMap.put("mobileno",params[5]);
                 hashMap.put("organisation",params[6]);
                 hashMap.put("gstno",params[7]);
-                hashMap.put("designation",params[8]);
+                hashMap.put("products",params[8]);
 
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
 

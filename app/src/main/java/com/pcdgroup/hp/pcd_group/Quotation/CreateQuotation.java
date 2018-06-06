@@ -66,7 +66,6 @@ public class CreateQuotation extends AppCompatActivity {
     public TextView client, textdate, textvaliddate, textaddres;
     public ListView product;
     public TextView tvDiscount;
-    Boolean CheckEditText;
     GlobalVariable globalVariable;
     ProductListAdapter itemsAdapter;
     public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();

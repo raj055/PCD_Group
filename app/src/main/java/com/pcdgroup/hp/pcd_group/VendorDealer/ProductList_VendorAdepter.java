@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.PurchaseOrder.ProductData;
 import com.pcdgroup.hp.pcd_group.PurchaseOrder.SelectVendorProducts;
+import com.pcdgroup.hp.pcd_group.Quotation.ProdactEntity;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ProductList_VendorAdepter extends BaseAdapter {
     private List<ProductData> productData;
     private boolean isListView;
     private SparseBooleanArray mSelectedItemsIds;
+    int id;
 
     public ProductList_VendorAdepter(Context context, List<ProductData> productData, VendorProductAdd listener) {
         this.activity = activity;
@@ -57,7 +59,7 @@ public class ProductList_VendorAdepter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_product, null);
 
 
-        TextView name = (TextView) convertView.findViewById(R.id.textViewName);
+        final TextView name = (TextView) convertView.findViewById(R.id.textViewName);
         CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
 
         // getting movie data for the row
@@ -71,6 +73,7 @@ public class ProductList_VendorAdepter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 checkCheckBox(position, !mSelectedItemsIds.get(position));
+
             }
         });
 

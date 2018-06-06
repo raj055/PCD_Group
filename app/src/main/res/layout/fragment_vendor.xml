@@ -190,7 +190,7 @@
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/designation_et"
+                    android:id="@+id/product_et"
                     android:layout_width="218dp"
                     android:layout_height="match_parent"
                     android:hint="Product list" />

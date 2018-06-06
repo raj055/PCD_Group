@@ -2,9 +2,10 @@ package com.pcdgroup.hp.pcd_group.PurchaseOrder;
 
 public class ProductData {
 
-    private String title,thumbnailUrl,description,price,minimum,hsncode,gst,stock,reorderlevel;
+    private String id,title,thumbnailUrl,description,price,minimum,hsncode,gst,stock,reorderlevel;
 
-    public ProductData(String name, String thumbnailUrl, String price, String quantity,String hsncode,String gst,String description,String stock,String reorderlevel) {
+    public ProductData(String id, String name, String thumbnailUrl, String price, String quantity,String hsncode,String gst,String description,String stock,String reorderlevel) {
+        this.id = id;
         this.title = name;
         this.price = price;
         this.minimum = quantity;
@@ -16,9 +17,10 @@ public class ProductData {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public String getTitle() {
-        return title;
+    public String getId() {
+        return id;
     }
+    public String getTitle() { return title; }
     public String getPrice() {return price;}
     public String getQuantity() {return minimum;}
     public String getHsncode() {return hsncode;}
@@ -27,6 +29,9 @@ public class ProductData {
     public String getstock() {return stock;}
     public String getReorderlevel() {return reorderlevel;}
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public void setTitle(String name) {
         this.title = name;
     }

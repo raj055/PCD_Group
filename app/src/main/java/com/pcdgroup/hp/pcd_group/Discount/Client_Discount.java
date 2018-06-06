@@ -245,7 +245,7 @@ public class Client_Discount extends AppCompatActivity {
             for (int i=0; i<ja.length();i++){
 
                 jo=ja.getJSONObject(i);
-                String email = jo.getString("email");
+                String email = jo.getString("email_id");
                 String accessType = jo.getString("Discount");
                 UserDataGet e = new UserDataGet(email);
                 UserDataGet tmp = new UserDataGet(email);

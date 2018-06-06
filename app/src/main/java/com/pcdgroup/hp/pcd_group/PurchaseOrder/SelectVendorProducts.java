@@ -125,6 +125,7 @@ public class SelectVendorProducts extends AppCompatActivity {
             for (int i=0; i<ja.length();i++){
 
                 jo=ja.getJSONObject(i);
+                String id = jo.getString("id");
                 String picname = jo.getString("name");
                 String urlname = jo.getString("photo");
                 String price = jo.getString("price");
@@ -137,7 +138,7 @@ public class SelectVendorProducts extends AppCompatActivity {
                 String reorderlevel=jo.getString("reorderlevel");
                 adapter.notifyDataSetChanged();
                 picNames.add(picname);
-                ProductData e = new ProductData(picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
+                ProductData e = new ProductData(id,picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
                 localEntity.add(e);
             }
 

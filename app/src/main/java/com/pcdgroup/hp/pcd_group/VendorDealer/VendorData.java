@@ -11,9 +11,10 @@ public class VendorData {
     private String mobileno;
     private String organisation;
     private String gst;
+    private String products;
 
     public VendorData(String id, String name, String address, String location, String state,
-                      String email, String mobileno, String organisation, String gst) {
+                      String email, String mobileno, String organisation, String gst, String products) {
 
         this.id = id;
         this.name = name;
@@ -24,6 +25,7 @@ public class VendorData {
         this.mobileno = mobileno;
         this.organisation = organisation;
         this.gst = gst;
+        this.products = products;
     }
 
     public String getAddress() {
@@ -74,6 +76,13 @@ public class VendorData {
         this.gst = gst;
     }
 
+    public String getProducts() {
+        return products;
+    }
+
+    public void setProducts(String products) {
+        this.products = products;
+    }
 
     public String getId() {
         return id;

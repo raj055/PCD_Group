@@ -37,7 +37,9 @@ public class GlobalVariable {
     public String[] GlobalImageSingleRecord = new String[10];
 
 
-    public  String[] globalVendor = new String[9];
+    public  String[] globalVendor = new String[10];
 
     public  String[] globalVendorProduct = new String[10];
+
+    public  String[] globalAddVendorProduct = new String[10];
 }
