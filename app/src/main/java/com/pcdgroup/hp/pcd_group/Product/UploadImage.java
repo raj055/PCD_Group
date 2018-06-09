@@ -41,6 +41,11 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
+import id.zelory.compressor.Compressor;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
@@ -53,6 +58,7 @@ public class UploadImage extends AppCompatActivity {
     Spinner brand;
     Spinner gst;
     Button pickImage, upload;
+    private File actualImage, compressedImage;
 
     private Bitmap bitmap;
     private String KEY_IMAGE = "image";
@@ -61,7 +67,7 @@ public class UploadImage extends AppCompatActivity {
     private String KEY_Minimum = "minimum";
     private String KEY_HSNCode = "HSNCode";
     private String KEY_Brand = "Brand";
-    private  String KEY_Gst= "gst";
+    private String KEY_Gst= "gst";
     private String KEY_Description = "Description";
     private String KEY_Stock = "Stock";
     private String KEY_Reorderlevel = "Reorderlevel";
@@ -160,8 +166,13 @@ public class UploadImage extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                actualImage = FileUtil.from(this, filePath);
+                Toast.makeText(this, "Image Size =  "+   actualImage.length()
+                  , Toast.LENGTH_LONG).show();
+                compressImage();
                 //Setting the Bitmap to ImageView
-                imageView.setImageBitmap(bitmap);
+
+//                imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -173,6 +184,41 @@ public class UploadImage extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+    public void compressImage() {
+        if (actualImage == null) {
+            showError("Please choose an image!");
+        } else {
+
+            // Compress image in main thread
+            // Compress image using RxJava in background thread
+            new Compressor(this)
+              .compressToFileAsFlowable(actualImage)
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new Consumer<File>() {
+                  @Override
+                  public void accept(File file) {
+                      compressedImage = file;
+                      setCompressedImage();
+                  }
+              }, new Consumer<Throwable>() {
+                  @Override
+                  public void accept(Throwable throwable) {
+                      throwable.printStackTrace();
+                      showError(throwable.getMessage());
+                  }
+              });
+        }
+    }
+    public void showError(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
+    private void setCompressedImage() {
+        imageView.setImageBitmap(BitmapFactory.decodeFile(compressedImage.getAbsolutePath()));
+        bitmap = BitmapFactory.decodeFile(compressedImage.getAbsolutePath());
+        Toast.makeText(this, "Compressed image = " + compressedImage.length(), Toast.LENGTH_LONG).show();
+        Log.d("Compressor", "Compressed image save in " + compressedImage.getPath());
     }
 
     private void uploadImage(){
@@ -192,7 +238,7 @@ public class UploadImage extends AppCompatActivity {
                         }
 
                         //Disimissing the progress dialog
-//                        loading.dismiss();
+                        //loading.dismiss();
                         //Showing toast message of the response
                         Toast.makeText(UploadImage.this,s , Toast.LENGTH_LONG).show();
                     }
