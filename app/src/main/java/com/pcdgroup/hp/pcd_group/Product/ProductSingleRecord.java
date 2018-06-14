@@ -56,7 +56,7 @@ public class ProductSingleRecord extends AppCompatActivity {
     // Http URL for delete Already Open product Record.
     String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteproduct.php";
 
-    String finalResult ;
+    String finalResult;
     HashMap<String,String> hashMap = new HashMap<>();
     String ParseResult ;
     HashMap<String,String> ResultHash = new HashMap<>();
