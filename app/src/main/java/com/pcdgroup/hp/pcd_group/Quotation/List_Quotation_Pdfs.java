@@ -1,6 +1,8 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.os.StrictMode;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -11,7 +13,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -57,13 +61,13 @@ public class List_Quotation_Pdfs extends AppCompatActivity {
     String result = null;
     String[] data;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listpdfs_activity);
 
         listView = (ListView) findViewById(R.id.listView);
-
 
         localPdf = new ArrayList<pdf2>();
 

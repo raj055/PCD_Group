@@ -474,7 +474,7 @@ public class ViewPurchaseOrder extends AppCompatActivity {
         targetPdf = fileName + ".pdf";
 
         File root = new File(Environment.getExternalStorageDirectory(), "PCDGroup");
-        File PcdQuotation = new File(root,"Quotation");
+        File PcdQuotation = new File(root,"PurchaseOrder");
 
         if(!PcdQuotation.exists())
         {

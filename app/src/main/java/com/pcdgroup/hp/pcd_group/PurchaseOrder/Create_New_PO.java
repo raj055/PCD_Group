@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,9 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
-import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
-import com.pcdgroup.hp.pcd_group.Quotation.ProductInfoAdapter;
-import com.pcdgroup.hp.pcd_group.Quotation.SelectProduct;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.VendorList;
 
@@ -70,7 +68,7 @@ public class Create_New_PO extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(Create_New_PO.this, SelectVendorProducts.class);
-
+                intent.putExtra("vendor_email", globalVariable.globalVendor);
                 startActivityForResult(intent, 2);
 
             }
@@ -137,7 +135,16 @@ public class Create_New_PO extends AppCompatActivity {
                         linearProduct.setVisibility(View.VISIBLE);
                         CreatePurchaseOrder.setVisibility(View.VISIBLE);
                         selectProduct.setVisibility(View.INVISIBLE);
-                        Product1.setText(globalVariable.globalVendorProduct[0]);
+
+                        String str = globalVariable.globalVendorProduct[0];
+
+                        Log.v("String value ===== ",str);
+
+                        for (int i =0; i < str.length()  ; i++) {
+                            Product1.setText(str);
+                            Product2.setText(str);
+                            Product3.setText(str);
+                        }
                     }
                 }
             }

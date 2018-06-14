@@ -48,16 +48,18 @@ public class Order_List extends AppCompatActivity {
 
     GlobalVariable globalVariable;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderlist);
 
+
         httpParse = new HttpParse();
 
         globalVariable = GlobalVariable.getInstance();
 
-        Intent intent = getIntent();
+        Intent intent = this.getIntent();
         emailId = intent.getStringExtra("emailid");
 
         lstVeiw = (ListView) findViewById(R.id.orderList);
@@ -74,8 +76,11 @@ public class Order_List extends AppCompatActivity {
             intent.putExtra("FileUrl", fileUrl);
             intent.putExtra("Activity", "OrderList");
             startActivity(intent);
+
             }
+
         });
+
     }
 
     // Method to Get the Invoice List
@@ -143,8 +148,9 @@ public class Order_List extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home,menu);
-        return super.onCreateOptionsMenu(menu);
+       getMenuInflater().inflate(R.menu.menu_home,menu);
+        super.onCreateOptionsMenu(menu);
+        return false;
     }
 
     @Override
@@ -155,17 +161,17 @@ public class Order_List extends AppCompatActivity {
         if(id==R.id.home) {
             if (globalVariable.AccessType.contains("Admin")) {
 
-                intent = new Intent(this, AdminDashboard.class);
+                intent = new Intent(Order_List.this, AdminDashboard.class);
 
             }
             else if (globalVariable.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(Order_List.this, UserDashbord.class);
 
             }
 
             startActivity(intent);
-            finish();
+           finish();
         }
         return super.onOptionsItemSelected(item);
     }

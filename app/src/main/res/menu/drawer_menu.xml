@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_quotation"
+            android:title="Quotation List" />
+        <item
+            android:id="@+id/nav_order"
+            android:title="Order List" />
+
+    </group>
+
+    <item android:title="VENDOR &amp; DEALER"
+        tools:ignore="HardcodedText">
+        <menu>
+            <item
+                android:id="@+id/nav_vendordealer"
+                android:title="New Vendor Dealer" />
+        </menu>
+    </item>
+
+    <item android:title="PURCHASE ORDER">
+        <menu>
+            <item
+                android:id="@+id/nav_po"
+                android:title="Purchase Order" />
+            <item
+                android:id="@+id/nav_finish"
+                android:title="Procure Product" />
+        </menu>
+    </item>
+
+    <item android:title="Profile">
+        <menu>
+            <item
+                android:id="@+id/nav_email"
+                android:title="Email" />
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>

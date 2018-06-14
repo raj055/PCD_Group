@@ -6,84 +6,81 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.pcdgroup.hp.pcd_group.Client.ClientAdepter;
+import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
 import com.pcdgroup.hp.pcd_group.Quotation.ProdactEntity;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.VendorData;
 import com.pcdgroup.hp.pcd_group.VendorDealer.VendorList;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class VendorProductAdapter extends BaseAdapter {
+public class VendorProductAdapter extends ArrayAdapter<ProductData> {
 
-    private Context context;
     private Activity activity;
     private LayoutInflater inflater;
-    private List<ProductData> productData;
     private boolean isListView;
     private SparseBooleanArray mSelectedItemsIds;
 
-    public VendorProductAdapter(Context context, List<ProductData> productData, SelectVendorProducts listener) {
+    int layoutResourceId;
+    ArrayList<ProductData> productData = new ArrayList<ProductData>();
+    ProductData product;
+
+    public VendorProductAdapter(Activity activity,int layoutResourceId, ArrayList<ProductData> productData) {
+        super(activity,layoutResourceId,productData);
         this.activity = activity;
         this.productData = productData;
         this.isListView = isListView;
-        inflater = LayoutInflater.from(context);
+        this.layoutResourceId = layoutResourceId;
+
         mSelectedItemsIds = new SparseBooleanArray();
     }
 
     @Override
-    public int getCount() {
-        return productData.size();
-    }
-
-    @Override
-    public Object getItem(int location) {
-        return productData.get(location);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        View row = convertView;
+        VendorProductAdapter.productHolder holder = null;
+        if (row == null) {
+            LayoutInflater inflater = LayoutInflater.from(activity);
+            row = inflater.inflate(layoutResourceId, parent, false);
+            holder = new VendorProductAdapter.productHolder();
+            holder.textViewName = (TextView) row.findViewById(R.id.textViewName);
+            holder.checkBox = (CheckBox) row.findViewById(R.id.checkbox);
+            row.setTag(holder);
+        } else {
+            holder = (VendorProductAdapter.productHolder) row.getTag();
+        }
 
-        if (inflater == null)
-            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null)
-            convertView = inflater.inflate(R.layout.list_product, null);
+        product = productData.get(position);
+        holder.textViewName.setText(product.getTitle());
+        holder.checkBox.setChecked(mSelectedItemsIds.get(position));
 
-
-        TextView name = (TextView) convertView.findViewById(R.id.textViewName);
-        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
-
-        // getting movie data for the row
-        ProductData m = productData.get(position);
-
-        // title
-        name.setText(m.gettitle());
-        checkBox.setChecked(mSelectedItemsIds.get(position));
-
-        name.setOnClickListener(new View.OnClickListener() {
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 checkCheckBox(position, !mSelectedItemsIds.get(position));
             }
         });
 
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 checkCheckBox(position, !mSelectedItemsIds.get(position));
             }
         });
 
-        return convertView;
+        return row;
+    }
 
+    class productHolder {
+        TextView textViewName;
+        CheckBox checkBox;
     }
 
     public void checkCheckBox(int position, boolean value) {

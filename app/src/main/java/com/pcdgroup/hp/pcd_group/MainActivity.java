@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,8 +71,18 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    RelativeLayout rellay1,rellay2;
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            rellay1.setVisibility(View.VISIBLE);
+            rellay2.setVisibility(View.VISIBLE);
+        }
+    };
+
     EditText Email, Password;
-    Button LogIn,Register ;
+    Button LogIn,Register;
     String PasswordHolder, EmailHolder, DiscountHolder;
     String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/UserLogin.php";
@@ -92,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
         if (username != null) {
             launchMainActivity();
         }*/
+
+        rellay1 = (RelativeLayout) findViewById(R.id.rellay1);
+        rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
+
+        handler.postDelayed(runnable, 2000); //2000 is the timeout for the splash
 
         Email = (EditText)findViewById(R.id.email);
         Password = (EditText)findViewById(R.id.password);

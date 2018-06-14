@@ -22,12 +22,12 @@ public class ProductList_VendorAdepter extends BaseAdapter {
     private Context context;
     private Activity activity;
     private LayoutInflater inflater;
-    private List<ProductData> productData;
+    private List<ProductdataVendor> productData;
     private boolean isListView;
     private SparseBooleanArray mSelectedItemsIds;
     int id;
 
-    public ProductList_VendorAdepter(Context context, List<ProductData> productData, VendorProductAdd listener) {
+    public ProductList_VendorAdepter(Context context, List<ProductdataVendor> productData, VendorProductAdd listener) {
         this.activity = activity;
         this.productData = productData;
         this.isListView = isListView;
@@ -63,7 +63,7 @@ public class ProductList_VendorAdepter extends BaseAdapter {
         CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
 
         // getting movie data for the row
-        ProductData m = productData.get(position);
+        ProductdataVendor m = productData.get(position);
 
         // title
         name.setText(m.gettitle());

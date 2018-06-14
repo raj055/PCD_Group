@@ -13,7 +13,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_brandsettings">Brand Settings</string>
+    <string name="action_accesslogin">Access Login</string>
+    <string name="action_discount">Discount Client</string>
+
+
     <string name="action_address">Address</string>
     <string name="action_access">Address</string>
     <string name="action_brand">Address</string>

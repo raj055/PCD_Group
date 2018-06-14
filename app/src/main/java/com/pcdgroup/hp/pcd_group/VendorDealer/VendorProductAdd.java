@@ -58,10 +58,10 @@ public class VendorProductAdd extends AppCompatActivity {
     String[] data;
     ArrayList<String> picNames;
     String recordName,EmailHolders;
-    List<ProductData> localEntity;
+    List<ProductdataVendor> localEntity;
     GlobalVariable gblVar;
     String id;
-    ProductData selectedRowLabel;
+    ProductdataVendor selectedRowLabel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class VendorProductAdd extends AppCompatActivity {
 
         gblVar = GlobalVariable.getInstance();
 
-        localEntity = new ArrayList<ProductData>();
+        localEntity = new ArrayList<ProductdataVendor>();
         recordName = new String("");
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
@@ -147,7 +147,7 @@ public class VendorProductAdd extends AppCompatActivity {
                 String reorderlevel=jo.getString("reorderlevel");
                 adapter.notifyDataSetChanged();
                 picNames.add(picname);
-                ProductData e = new ProductData(id,picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
+                ProductdataVendor e = new ProductdataVendor(id,picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
                 localEntity.add(e);
             }
 

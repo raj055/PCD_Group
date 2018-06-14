@@ -5,12 +5,12 @@
     android:id="@+id/activity_registar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/grad_bg"
     android:padding="20dp"
     tools:context="com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity">
 
     <TextView
-        android:text="User Registration Form"
+        android:text="Signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,16 +18,17 @@
         android:id="@+id/textView"
         android:gravity="center"
         android:textSize="20dp"
-        android:textColor="#D2691E"/>
+        android:textColor="@color/White"/>
 
     <EditText
         android:id="@+id/editTextF_Name"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
+        android:background="@drawable/et_bg"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView"
-        android:background="#D8BFD8"
+        android:layout_marginTop="20dp"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:ems="10"
         android:gravity="center"
@@ -37,12 +38,12 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#D8BFD8"
+        android:background="@drawable/et_bg"
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_below="@+id/editTextF_Name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/editTextL_Name"
         android:hint="Enter Your Last Name"
         android:gravity="center"/>
@@ -50,12 +51,12 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#D8BFD8"
+        android:background="@drawable/et_bg"
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_below="@+id/editTextL_Name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/editTextL_mobile"
         android:hint="Enter Your mobile No"
         android:gravity="center"/>
@@ -63,7 +64,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#D8BFD8"
+        android:background="@drawable/et_bg"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:layout_below="@+id/editTextL_mobile"
@@ -77,24 +78,24 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="#D8BFD8"
+        android:background="@drawable/et_bg"
         android:inputType="textPassword"
         android:ems="10"
         android:layout_below="@+id/editTextEmail"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/editTextPassword"
         android:hint="Enter Your Password"
         android:gravity="center"/>
 
     <Button
         android:id="@+id/Submit"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Base.Animation.AppCompat.Tooltip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:background="#7B68EE"
         android:text="Register" />
 

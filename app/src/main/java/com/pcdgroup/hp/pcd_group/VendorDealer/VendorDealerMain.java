@@ -2,15 +2,19 @@ package com.pcdgroup.hp.pcd_group.VendorDealer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.pcdgroup.hp.pcd_group.R;
 
-public class VendorDealerMain extends AppCompatActivity{
+public class VendorDealerMain extends AppCompatActivity {
 
     private SectionsPageAdapter mSectionsPageAdapter;
 
@@ -21,6 +25,7 @@ public class VendorDealerMain extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vendor_dealer);
 
+
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -29,6 +34,7 @@ public class VendorDealerMain extends AppCompatActivity{
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

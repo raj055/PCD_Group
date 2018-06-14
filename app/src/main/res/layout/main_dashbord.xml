@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/client_slider1"
+            android:id="@+id/imageViewmain" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/imageViewmain"
+            android:layout_marginTop="-120dp"
+            android:text="Client Details"
+            android:textSize="25sp"
+            android:id="@+id/textViewMain"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/imageViewmain1"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/imageViewmain"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/client_slider2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/imageViewmain1"
+            android:layout_marginTop="-120dp"
+            android:text="Product Details"
+            android:textSize="25sp"
+            android:id="@+id/textViewMain1"
+            android:gravity="center" />
+
+        <ImageView
+            android:id="@+id/imageViewmain2"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/imageViewmain1"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/client_slider3" />
+
+        <TextView
+            android:id="@+id/textViewMain2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/imageViewmain2"
+            android:layout_marginTop="-120dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="Create Quotaion"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

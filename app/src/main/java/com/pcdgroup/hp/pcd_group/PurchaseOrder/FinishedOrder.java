@@ -3,8 +3,11 @@ package com.pcdgroup.hp.pcd_group.PurchaseOrder;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -35,12 +38,11 @@ public class FinishedOrder extends AppCompatActivity {
     String[] data;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
 
         listView = (ListView) findViewById(R.id.lV_FinishedOrder);
-
 
         localPdf = new ArrayList<pdf2>();
 
@@ -61,6 +63,7 @@ public class FinishedOrder extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void get_Finishorder_List() {
