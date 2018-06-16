@@ -11,9 +11,11 @@ public enum DataGetUrl {
   CLIENT_LIST,
   CLIENT_REGISTER,
   DELETE_PRODUCTS,
+  ADD_PRODUCTS,
   EDIT_PRODUCTS;
 
   private String[] urls = {
+
     "http://dert.co.in/gFiles/ClientDetails.php",
     "http://dert.co.in/gFiles/deletemultiple.php",
     "http://dert.co.in/gFiles/DataClient.php",
