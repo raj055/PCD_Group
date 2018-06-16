@@ -32,6 +32,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.Quotation.PdfAdapter;
@@ -54,10 +58,7 @@ import retrofit2.http.GET;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ClientOfClientList extends AppCompatActivity {
-
-
-    public String httpUrl = "http://dert.co.in/gFiles/DataClient.php";
+public class ClientOfClientList extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
     ProgressDialog progressDialog;
@@ -68,8 +69,9 @@ public class ClientOfClientList extends AppCompatActivity {
 
     ClientAdepter clientAdepter;
 
-    HttpParse httpParse;
-
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
     HashMap<String, String> hashMap = new HashMap<>();
 
 
@@ -90,7 +92,6 @@ public class ClientOfClientList extends AppCompatActivity {
             }
         });
 
-        httpParse = new HttpParse();
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -99,84 +100,81 @@ public class ClientOfClientList extends AppCompatActivity {
 
         // intent
         Intent intent = getIntent();
-        emailId = intent.getStringExtra("emailid");
+        // Sending Client id.
+        Bundle bundle = intent.getExtras();
+        if(bundle!= null){
+            if(bundle.getString("emailId") != null) {
 
-        GetClientList(emailId);
-    }
-
-    // Method to Get the Invoice List
-    public void GetClientList(final String ClientID) {
-
-        class GetClientList extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
+                emailId = bundle.getString("emailId");
             }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                try {
-                    JSONObject obj = new JSONObject(httpResponseMsg);
-                    Toast.makeText(ClientOfClientList.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                    JSONArray jsonArray = obj.getJSONArray("client");
-
-                    for(int i=0;i<jsonArray.length();i++){
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                        DataAdapter GetData = new DataAdapter();
-
-                        GetData.setId(jsonObject.getString("id"));
-                        GetData.setfName(jsonObject.getString("first_name"));
-                        GetData.setlName(jsonObject.getString("last_name"));
-                        GetData.setType(jsonObject.getString("type"));
-                        GetData.setAddress(jsonObject.getString("address"));
-                        GetData.setaddresline1(jsonObject.getString("address_line1"));
-                        GetData.setAddressline2(jsonObject.getString("address_line2"));
-                        GetData.setMobileno(jsonObject.getString("mobile_num"));
-                        GetData.setState(jsonObject.getString("state"));
-                        GetData.setCountry(jsonObject.getString("country"));
-                        GetData.setCompanyname(jsonObject.getString("company"));
-                        GetData.setPin(jsonObject.getString("pin"));
-                        GetData.setEmailid(jsonObject.getString("email_id"));
-                        GetData.setDesignation(jsonObject.getString("designation"));
-
-                        ClientList.add(GetData);
-
-                    }
-
-                    clientAdepter=new ClientAdepter(ClientOfClientList.this,R.layout.cardview1, ClientList);
-
-                    listView.setAdapter(clientAdepter);
-
-                    clientAdepter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                // Sending Client id.
-                hashMap.put("emailId", emailId);
-
-                finalResult = httpParse.postRequest(hashMap, httpUrl);
-
-                return finalResult;
-            }
+            hashMap.put("emailId", emailId);
         }
 
-        GetClientList getClientList = new GetClientList();
 
-        getClientList.execute(ClientID);
+        urlQry = DataGetUrl.CLIENT_LIST;
+
+        typeOfQuery = CallType.POST_CALL;
+
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+           urlQry,
+          typeOfQuery,
+          getApplicationContext(),
+           ClientOfClientList.this
+          );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
+
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        JSONArray jsonArray = null;
+        try {
+            JSONObject obj = new JSONObject(response);
+            jsonArray = obj.getJSONArray("client");
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                DataAdapter GetData = new DataAdapter();
+
+                GetData.setId(jsonObject.getString("id"));
+                GetData.setfName(jsonObject.getString("first_name"));
+                GetData.setlName(jsonObject.getString("last_name"));
+                GetData.setType(jsonObject.getString("type"));
+                GetData.setAddress(jsonObject.getString("address"));
+                GetData.setaddresline1(jsonObject.getString("address_line1"));
+                GetData.setAddressline2(jsonObject.getString("address_line2"));
+                GetData.setMobileno(jsonObject.getString("mobile_num"));
+                GetData.setState(jsonObject.getString("state"));
+                GetData.setCountry(jsonObject.getString("country"));
+                GetData.setCompanyname(jsonObject.getString("company"));
+                GetData.setPin(jsonObject.getString("pin"));
+                GetData.setEmailid(jsonObject.getString("email_id"));
+                GetData.setDesignation(jsonObject.getString("designation"));
+
+                ClientList.add(GetData);
+
+            }
+
+            clientAdepter=new ClientAdepter(ClientOfClientList.this, R.layout.cardview1, ClientList);
+
+            listView.setAdapter(clientAdepter);
+
+            clientAdepter.notifyDataSetChanged();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        clientAdepter=new ClientAdepter(ClientOfClientList.this,R.layout.cardview1, ClientList);
+
+        listView.setAdapter(clientAdepter);
+
+        clientAdepter.notifyDataSetChanged();
+
     }
 }

@@ -32,6 +32,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
 import com.pcdgroup.hp.pcd_group.R;
@@ -46,20 +50,24 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-03-2018.
  */
 
-public class ClientDetailsActivity extends AppCompatActivity implements RecyclerViewAdapter.DataAdapterListener {
+public class ClientDetailsActivity extends AppCompatActivity
+  implements CallBackInterface , RecyclerViewAdapter.DataAdapterListener {
+
 
     HttpParse httpParse = new HttpParse();
-    HashMap<String,String> hashMap = new HashMap<>();
+    HashMap<String, String> hashMap = new HashMap<>();
     String finalResult;
 
     // Http URL for delete Already Open Client Record.
     String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deletemultiple.php";
 
+    //
     ProgressDialog progressDialog2;
 
+    //
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
 
@@ -82,6 +90,11 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
     SearchView searchView;
 
     int RecyclerViewClickedItemPOS;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,7 +128,20 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
         actionModeCallback = new ActionModeCallback();
 
         // JSON data web call function call from here.
-        JSON_WEB_CALL();
+        urlQry = DataGetUrl.GET_CLIENT_DETAILS;
+
+        typeOfQuery = CallType.JSON_CALL;
+
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+          urlQry,
+          typeOfQuery,
+          getApplicationContext(),
+          ClientDetailsActivity.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         //RecyclerView Item click listener code starts from here.
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -174,82 +200,6 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
 
             }
         });
-    }
-
-    public void JSON_WEB_CALL(){
-
-        jsonArrayRequest  = new JsonArrayRequest(HttpURL,
-
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        if (response == null) {
-                            Toast.makeText(getApplicationContext(), "Couldn't fetch the contacts! Pleas try again.", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        // adding contacts to contacts list
-                        DataAdapters.clear();
-
-                        // refreshing recycler view
-                        mAdepter.notifyDataSetChanged();
-
-                        JSON_PARSE_DATA_AFTER_WEBCALL(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error in getting json
-                        Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        MyApplication.getInstance().addToRequestQueue(jsonArrayRequest);
-
-        requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
-
-        Log.e("array", String.valueOf(array.length()));
-
-        for(int i = 0; i<array.length(); i++) {
-
-            DataAdapter GetData = new DataAdapter();
-
-            JSONObject json = null;
-
-            try {
-                json = array.getJSONObject(i);
-                GetData.setId(json.getString("id"));
-                GetData.setfName(json.getString("first_name"));
-                GetData.setlName(json.getString("last_name"));
-                GetData.setType(json.getString("type"));
-                GetData.setAddress(json.getString("address"));
-                GetData.setaddresline1(json.getString("address_line1"));
-                GetData.setAddressline2(json.getString("address_line2"));
-                GetData.setMobileno(json.getString("mobile_num"));
-                GetData.setState(json.getString("state"));
-                GetData.setCountry(json.getString("country"));
-                GetData.setCompanyname(json.getString("company_name"));
-                GetData.setPin(json.getString( "pin"));
-                GetData.setEmailid(json.getString("email_id"));
-                GetData.setDesignation(json.getString("designation"));
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-            DataAdapters.add(GetData);
-        }
-
-        mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
-
-        recyclerView.setAdapter(mAdepter);
     }
 
     @Override
@@ -381,8 +331,53 @@ public class ClientDetailsActivity extends AppCompatActivity implements Recycler
             mAdepter.notifyDataSetChanged();
         }
     }
+    @Override
+    public void ExecuteQueryResult(String response){
+      //adding contacts to contacts list
+      DataAdapters.clear();
 
-    private class ActionModeCallback implements ActionMode.Callback {
+      //refreshing recycler view
+      mAdepter.notifyDataSetChanged();
+
+      try {
+
+        JSONArray array = new JSONArray(response);
+        for (int i = 0; i < array.length(); i++) {
+          Log.e("array", String.valueOf(array.length()));
+          DataAdapter GetData = new DataAdapter();
+
+          JSONObject json = null;
+
+          json = array.getJSONObject(i);
+          GetData.setId(json.getString("id"));
+          GetData.setfName(json.getString("first_name"));
+          GetData.setlName(json.getString("last_name"));
+          GetData.setType(json.getString("type"));
+          GetData.setAddress(json.getString("address"));
+          GetData.setaddresline1(json.getString("address_line1"));
+          GetData.setAddressline2(json.getString("address_line2"));
+          GetData.setMobileno(json.getString("mobile_num"));
+          GetData.setState(json.getString("state"));
+          GetData.setCountry(json.getString("country"));
+          GetData.setCompanyname(json.getString("company_name"));
+          GetData.setPin(json.getString("pin"));
+          GetData.setEmailid(json.getString("email_id"));
+          GetData.setDesignation(json.getString("designation"));
+            DataAdapters.add(GetData);
+        }
+      }
+      catch (JSONException e)
+      {
+        e.printStackTrace();
+      }
+
+
+      mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
+
+      recyclerView.setAdapter(mAdepter);
+    }
+
+      private class ActionModeCallback implements ActionMode.Callback {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_contextual_mode, menu);

@@ -16,11 +16,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -29,7 +35,7 @@ import java.util.HashMap;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ClientRegisterActivity extends AppCompatActivity {
+public class ClientRegisterActivity extends AppCompatActivity implements CallBackInterface {
 
     EditText fname,lname,address,addressline1,addressline2,mobileno,country,company_name,pin,email_id,designation;
     Spinner type,state;
@@ -38,10 +44,14 @@ public class ClientRegisterActivity extends AppCompatActivity {
             State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder,
             UserClient_Holder;
     String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/ClientRegister.php";
+
     Boolean CheckEditText ;
     ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
+
     HttpParse httpParse = new HttpParse();
     Intent intent;
     GlobalVariable globalVariable;
@@ -80,12 +90,36 @@ public class ClientRegisterActivity extends AppCompatActivity {
                 if(CheckEditText){
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(FName_Holder,LName_Holder, type_Holder, Address_Hoder, Addressline1_Holder,
-                            Addressline2_Holder,Mobileno_Holder,State_Holder,Country_Holder,
-                            CompanyName_Holder,Pin_Holder, Emailid_Holder,Designation_Holder,UserClient_Holder);
+                    urlQry = DataGetUrl.CLIENT_REGISTER;
+
+                    typeOfQuery = CallType.POST_CALL;
+
+                    hashMap.put("first_name",FName_Holder);
+                    hashMap.put("last_name",LName_Holder);
+                    hashMap.put("type",type_Holder);
+                    hashMap.put("address",Address_Hoder);
+                    hashMap.put("address_line1",Addressline1_Holder);
+                    hashMap.put("address_line2",Addressline2_Holder);
+                    hashMap.put("mobile_num",Mobileno_Holder);
+                    hashMap.put("state",State_Holder);
+                    hashMap.put("country",Country_Holder);
+                    hashMap.put("company_name",CompanyName_Holder);
+                    hashMap.put("pin",Pin_Holder);
+                    hashMap.put("email_id",Emailid_Holder);
+                    hashMap.put("designation",Designation_Holder);
+                    hashMap.put("user",UserClient_Holder);
+
+                    //Send Database query for inquiring to the database.
+                    dataBaseQuery = new DataBaseQuery(hashMap,
+                      urlQry,
+                      typeOfQuery,
+                      getApplicationContext(),
+                      ClientRegisterActivity.this
+                    );
+                    //Prepare for the database query
+                    dataBaseQuery.PrepareForQuery();
                 }
                 else {
-
                     // If EditText is empty then this block will execute.
                     Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
                 }
@@ -128,66 +162,6 @@ public class ClientRegisterActivity extends AppCompatActivity {
             CheckEditText = true ;
         }
     }
-
-    //Register user in database details.
-    public void UserRegisterFunction(final String fname, final String lname, final String type,
-                                     final String address, final String addressline1,final String addressline2,
-                                     final String mobileno,final String state,
-                                     final String counntry, final String company_name,
-                                     final  String pin,final String email_id, final String designation,
-                                     final String userclient){
-
-        class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(ClientRegisterActivity.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(ClientRegisterActivity.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            // Creating Packet database string to HashMap.
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("first_name",params[0]);
-                hashMap.put("last_name",params[1]);
-                hashMap.put("type",params[2]);
-                hashMap.put("address",params[3]);
-                hashMap.put("address_line1",params[4]);
-                hashMap.put("address_line2",params[5]);
-                hashMap.put("mobile_num",params[6]);
-                hashMap.put("state",params[7]);
-                hashMap.put("country",params[8]);
-                hashMap.put("company_name",params[9]);
-                hashMap.put("pin",params[10]);
-                hashMap.put("email_id",params[11]);
-                hashMap.put("designation",params[12]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-            public void execute(String fname,String lname, String type, String address, String addressline1, String addressline2, String mobileno, EditText state, String counntry, String company_name, String pin, String email_id, String designation, String userclient) {
-            }
-        }
-
-        UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
-
-        userRegisterFunctionClass.execute(fname,lname,type,address,addressline1,addressline2,mobileno,state,counntry,company_name,pin,email_id,designation,userclient);
-    }
-
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(ClientRegisterActivity.this);
@@ -222,5 +196,10 @@ public class ClientRegisterActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(ClientRegisterActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
     }
 }
