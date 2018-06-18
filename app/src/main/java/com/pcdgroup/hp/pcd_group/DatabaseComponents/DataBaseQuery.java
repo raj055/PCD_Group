@@ -26,7 +26,8 @@ import java.util.HashMap;
 import okhttp3.HttpUrl;
 
 /**
- *
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
  */
 
 public class DataBaseQuery {

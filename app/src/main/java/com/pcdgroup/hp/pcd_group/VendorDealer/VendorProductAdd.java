@@ -22,6 +22,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
@@ -47,7 +51,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class VendorProductAdd extends AppCompatActivity {
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
+public class VendorProductAdd extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
     ProductList_VendorAdepter adapter;
@@ -62,6 +71,10 @@ public class VendorProductAdd extends AppCompatActivity {
     GlobalVariable gblVar;
     String id;
     ProductdataVendor selectedRowLabel;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -205,5 +218,10 @@ public class VendorProductAdd extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+
     }
 }

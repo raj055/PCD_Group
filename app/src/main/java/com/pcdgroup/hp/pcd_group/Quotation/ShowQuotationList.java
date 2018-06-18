@@ -19,6 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.R;
@@ -36,13 +40,11 @@ import java.util.HashMap;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ShowQuotationList extends AppCompatActivity {
+public class ShowQuotationList extends AppCompatActivity implements CallBackInterface {
 
-  public String httpUrl = "http://dert.co.in/gFiles/getpdfs.php";
   ListView listView;
   ProgressDialog progressDialog;
   String emailId;
-  String finalResult;
 
   ArrayList<Pdf> pdfList = new ArrayList<Pdf>();
 
@@ -53,6 +55,10 @@ public class ShowQuotationList extends AppCompatActivity {
   HttpParse httpParse;
 
   HashMap<String, String> hashMap = new HashMap<>();
+
+  DataGetUrl urlQry;
+  DataBaseQuery dataBaseQuery;
+  CallType typeOfQuery;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +75,21 @@ public class ShowQuotationList extends AppCompatActivity {
     emailId = intent.getStringExtra("emailid");
 
     Log.v("Email Id", emailId);
-    GetPdfList(emailId);
+
+    urlQry = DataGetUrl.SHOW_CLIENT_QUOTATION_LIST;
+    typeOfQuery = CallType.POST_CALL;
+
+    hashMap.put("emailId", emailId);
+
+    //Send Database query for inquiring to the database.
+    dataBaseQuery = new DataBaseQuery(hashMap,
+            urlQry,
+            typeOfQuery,
+            getApplicationContext(),
+            ShowQuotationList.this
+    );
+    //Prepare for the database query
+    dataBaseQuery.PrepareForQuery();
 
     //setting listView on item click listener
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,70 +105,6 @@ public class ShowQuotationList extends AppCompatActivity {
     });
   }
 
-  // Method to Get the Invoice List
-  public void GetPdfList(final String ClientID) {
-
-    class GetPdfList extends AsyncTask<String, Void, String> {
-
-      @Override
-      protected void onPreExecute() {
-        super.onPreExecute();
-
-      }
-
-      @Override
-      protected void onPostExecute(String httpResponseMsg) {
-
-        super.onPostExecute(httpResponseMsg);
-
-        try {
-          JSONObject obj = new JSONObject(httpResponseMsg);
-          Toast.makeText(ShowQuotationList.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-          JSONArray jsonArray = obj.getJSONArray("pdfs");
-
-          for(int i=0;i<jsonArray.length();i++){
-
-            //Declaring a json object corresponding to every pdf object in our json Array
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            //Declaring a Pdf object to add it to the ArrayList  pdfList
-            Pdf pdf  = new Pdf();
-            String pdfName = jsonObject.getString("name");
-            //String pdfEmail = jsonObject.getString("email");
-            pdf.setName(pdfName);
-            pdf.setEmail(emailId);
-            pdfList.add(pdf);
-          }
-
-          pdfAdapter=new PdfAdapter(ShowQuotationList.this,R.layout.list_layout, pdfList);
-
-          listView.setAdapter(pdfAdapter);
-
-          pdfAdapter.notifyDataSetChanged();
-
-        } catch (JSONException e) {
-          e.printStackTrace();
-        }
-
-      }
-
-      @Override
-      protected String doInBackground(String... params) {
-
-        // Sending Client id.
-        hashMap.put("emailId", emailId);
-
-        finalResult = httpParse.postRequest(hashMap, httpUrl);
-
-        return finalResult;
-      }
-    }
-
-    GetPdfList GetPdfList = new GetPdfList();
-
-    GetPdfList.execute(ClientID);
-  }
-
   @Override
   public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -162,6 +118,38 @@ public class ShowQuotationList extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Please allow the permission", Toast.LENGTH_LONG).show();
 
       }
+    }
+  }
+
+  @Override
+  public void ExecuteQueryResult(String response) {
+    try {
+      JSONObject obj = new JSONObject(response);
+      Toast.makeText(ShowQuotationList.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+      JSONArray jsonArray = obj.getJSONArray("pdfs");
+
+      for(int i=0;i<jsonArray.length();i++){
+
+        //Declaring a json object corresponding to every pdf object in our json Array
+        JSONObject jsonObject = jsonArray.getJSONObject(i);
+        //Declaring a Pdf object to add it to the ArrayList  pdfList
+        Pdf pdf  = new Pdf();
+        String pdfName = jsonObject.getString("name");
+        //String pdfEmail = jsonObject.getString("email");
+        pdf.setName(pdfName);
+        pdf.setEmail(emailId);
+        pdfList.add(pdf);
+      }
+
+      pdfAdapter=new PdfAdapter(ShowQuotationList.this,R.layout.list_layout, pdfList);
+
+      listView.setAdapter(pdfAdapter);
+
+      pdfAdapter.notifyDataSetChanged();
+
+    } catch (JSONException e) {
+      e.printStackTrace();
     }
   }
 }

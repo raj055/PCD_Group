@@ -22,6 +22,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
@@ -47,7 +51,7 @@ import java.util.List;
  * @version 1.0 on 28-03-2018.
  */
 
-public class AccessAdmin extends AppCompatActivity {
+public class AccessAdmin extends AppCompatActivity implements CallBackInterface {
 
     InputStream is = null;
     String line = null;
@@ -57,17 +61,17 @@ public class AccessAdmin extends AppCompatActivity {
     Button done;
     UserAdminAdepter adepter;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
     String currentAccValue;
     List<UserDataGet> userDataGets;
     List<UserDataGet> tempStoreDataValues;
     UserDataGet usrDGet;
-    ProgressDialog progressDialog;
 
     String accessValue = "";
-    String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/accessuserdetails.php";
-    String HttpURL2 = "http://dert.co.in/gFiles/updateuserdetails.php";
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +185,23 @@ public class AccessAdmin extends AppCompatActivity {
 
             if (accessTypeE != accessTypeU)
             {
-                UserAccessUpdate(tmpDataGet.getEmail(), tmpDataGet.getAccessType());
+
+                urlQry = DataGetUrl.UPDATE_ACCESS_USER_DETAILS;
+                typeOfQuery = CallType.POST_CALL;
+
+                hashMap.put("email_id",tmpDataGet.getEmail());
+
+                hashMap.put("access",tmpDataGet.getAccessType());
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                        urlQry,
+                        typeOfQuery,
+                        getApplicationContext(),
+                        AccessAdmin.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
             }
         }
         finish();
@@ -246,45 +266,6 @@ public class AccessAdmin extends AppCompatActivity {
         }
     }
 
-    public void UserAccessUpdate( String ClientEmailHolder, String ClientAccessHolder){
-
-        class UserAccessUpdate extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                progressDialog = ProgressDialog.show(AccessAdmin.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(AccessAdmin.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("email_id",params[0]);
-
-                hashMap.put("access",params[1]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL2);
-
-                return finalResult;
-            }
-        }
-
-        UserAccessUpdate UpdateClass = new UserAccessUpdate();
-
-        UpdateClass.execute( ClientEmailHolder, ClientAccessHolder);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
@@ -303,5 +284,10 @@ public class AccessAdmin extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(AccessAdmin.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

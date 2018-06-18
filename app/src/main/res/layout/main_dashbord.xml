@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:src="@drawable/client_slider1"
+            android:src="#ff10c7c6"
             android:id="@+id/imageViewmain" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_height="200dp"
             android:layout_below="@+id/imageViewmain"
             android:layout_marginTop="100dp"
-            android:src="@drawable/client_slider2" />
+            android:src="#ff10c7c6" />
 
         <TextView
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             android:layout_height="200dp"
             android:layout_below="@+id/imageViewmain1"
             android:layout_marginTop="100dp"
-            android:src="@drawable/client_slider3" />
+            android:src="#ff10c7c6" />
 
         <TextView
             android:id="@+id/textViewMain2"

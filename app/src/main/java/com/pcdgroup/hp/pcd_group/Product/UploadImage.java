@@ -32,6 +32,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.io.ByteArrayOutputStream;
@@ -51,7 +55,7 @@ import io.reactivex.schedulers.Schedulers;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class UploadImage extends AppCompatActivity {
+public class UploadImage extends AppCompatActivity implements CallBackInterface {
 
     EditText name,price,minimum,hsncode,description,stock,reorderlevel;
     ImageView imageView;
@@ -74,6 +78,10 @@ public class UploadImage extends AppCompatActivity {
     private String UPLOAD_URL ="http://dert.co.in/gFiles/upload.php";
 
     private int PICK_IMAGE_REQUEST = 1;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,5 +372,10 @@ public class UploadImage extends AppCompatActivity {
         }
         Log.d(debugTag,"inSampleSize: "+inSampleSize);
         return inSampleSize;
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+
     }
 }

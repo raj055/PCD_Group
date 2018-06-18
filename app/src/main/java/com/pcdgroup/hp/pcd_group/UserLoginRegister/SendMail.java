@@ -15,6 +15,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class SendMail extends AsyncTask<Void,Void,Void> {
 
     //Declaring Variables

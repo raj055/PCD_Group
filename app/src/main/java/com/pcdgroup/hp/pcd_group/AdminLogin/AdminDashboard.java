@@ -29,11 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Discount.Client_Discount;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
@@ -59,15 +54,12 @@ import java.util.TimerTask;
 
 public class AdminDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button LogOut, Client_Details, Image_upload, Quotation_pdf ,Quotation, Access, Orderlist,
-            Discount, Vendor,Purchase_order, Procure_product;
-    TextView EmailShow;
+
     public static String EmailHolder = "";
     Intent intent;
     private DrawerLayout drawer;
 
-   Context context;
-
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +75,23 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // get menu from navigationView
+        Menu menu = navigationView.getMenu();
+
+        // find MenuItem you want to change
+        MenuItem nav_email = menu.findItem(R.id.nav_email);
+
+        // intent
+        Intent intent = getIntent();
+        EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
+        nav_email.setTitle(EmailHolder);
+
+        GlobalVariable gblVar = GlobalVariable.getInstance();
+        gblVar.currentUserEmail = EmailHolder;
+
+        // hide items in menu drawer
+        menu.findItem(R.id.nav_quotation).setVisible(true);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -95,68 +104,37 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         // Setting view you want to display as a row element
         View view = inflater.inflate(R.layout.main_dashbord, mainLayout, false);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageViewmain);
+        ImageView imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
+        ImageView imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
+        ImageView imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminDashboard.this, ClientDetailsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mainLayout.addView(view);
-
-       /* //Assign Id'S
-        Client_Details = (Button) findViewById(R.id.clientdetails);
-        Image_upload = (Button) findViewById(R.id.imgupload);
-        Quotation = (Button) findViewById(R.id.quotation);
-
-        EmailShow = (TextView) findViewById(R.id.EmailShow);
-
-        // intent
-        Intent intent = getIntent();
-        EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
-        EmailShow.setText(EmailHolder);
-
-        GlobalVariable gblVar = GlobalVariable.getInstance();
-        gblVar.currentUserEmail = EmailHolder;
-
-        // Click Client_details button
-        Client_Details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
                 Intent intent = new Intent(AdminDashboard.this, ClientDetailsActivity.class);
                 intent.putExtra("emailid", EmailHolder);
                 startActivity(intent);
             }
         });
 
-        // Click image upload button
-        Image_upload.setOnClickListener(new View.OnClickListener() {
+        imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(AdminDashboard.this, ViewImage.class);
-
                 intent.putExtra("email",EmailHolder);
-
                 startActivity(intent);
             }
         });
 
-
-        // Click Quotation button
-        Quotation.setOnClickListener(new View.OnClickListener() {
+        imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(AdminDashboard.this, CreateQuotation.class);
-
                 startActivity(intent);
             }
-        });*/
+        });
+
+        mainLayout.addView(view);
 
     }
 
@@ -273,6 +251,5 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
-
     }
 }

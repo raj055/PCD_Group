@@ -15,6 +15,11 @@ import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.VendorList;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class Create_New_PO extends AppCompatActivity {
 
     Button selectVendor,selectProduct,CreatePurchaseOrder;

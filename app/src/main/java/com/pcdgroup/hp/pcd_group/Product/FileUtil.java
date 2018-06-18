@@ -14,11 +14,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Created on : June 18, 2016
- * Author     : zetbaitsu
- * Name       : Zetra
- * GitHub     : https://github.com/zetbaitsu
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
  */
+
 class FileUtil {
     private static final int EOF = -1;
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;

@@ -13,6 +13,11 @@ import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.List;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class Purchaselist_Adepter extends BaseAdapter {
 
     private Activity activity;

@@ -34,6 +34,10 @@ import com.pcdgroup.hp.pcd_group.Client.ClientRecyclerViewAdapter;
 import com.pcdgroup.hp.pcd_group.Client.DataAdapter;
 import com.pcdgroup.hp.pcd_group.Client.MyDividerItemDecoration;
 import com.pcdgroup.hp.pcd_group.Client.RecyclerViewAdapter;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -48,7 +52,8 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener {
+public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener ,
+        CallBackInterface {
 
     List<ClientDataAdapter> clientDataAdapters;
 
@@ -69,6 +74,10 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
     SearchView searchView;
 
     int RecyclerViewClickedItemPOS ;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -309,6 +318,11 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
 
     @Override
     public void onDataSelected(ClientDataAdapter dataAdapter) {
+
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
 
     }
 }

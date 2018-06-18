@@ -35,6 +35,10 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.AdminLogin.BrandAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.Category;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
@@ -59,7 +63,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class CreateQuotation extends AppCompatActivity {
+public class CreateQuotation extends AppCompatActivity implements CallBackInterface {
 
     private EditText quantity,transportationcost,discountprice;
     private Button add_client,add_product,preview,date,validdate,addAddress;
@@ -88,6 +92,10 @@ public class CreateQuotation extends AppCompatActivity {
     private int day;
 
     static final int DATE_PICKER_ID = 1111;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -503,4 +511,8 @@ public class CreateQuotation extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void ExecuteQueryResult(String response) {
+
+    }
 }

@@ -1,5 +1,10 @@
 package com.pcdgroup.hp.pcd_group.VendorDealer;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class ProductdataVendor {
 
     private String id,title,thumbnailUrl,description,price,minimum,hsncode,gst,stock,reorderlevel;

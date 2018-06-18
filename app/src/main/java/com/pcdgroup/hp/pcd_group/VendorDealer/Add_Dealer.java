@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
@@ -28,7 +32,7 @@ import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import java.util.HashMap;
 
-public class Add_Dealer extends Fragment {
+public class Add_Dealer extends Fragment implements CallBackInterface {
 
     EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
     Button submit;
@@ -41,6 +45,10 @@ public class Add_Dealer extends Fragment {
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     GlobalVariable globalVariable;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Nullable
     @Override
@@ -73,10 +81,29 @@ public class Add_Dealer extends Fragment {
 
                 if(CheckEditText){
 
-                    // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunction(Name_Holder, Address_Hoder, Area_Holder,State_Holder,
-                            Email_Holder, Mobileno_Holder, Organisation_Holder,
-                            Gst_Holder,Designation_Holder);
+                    urlQry = DataGetUrl.ADD_DEALER;
+                    typeOfQuery = CallType.POST_CALL;
+
+                    hashMap.put("name",Name_Holder);
+                    hashMap.put("address",Name_Holder);
+                    hashMap.put("area",Area_Holder);
+                    hashMap.put("state",State_Holder);
+                    hashMap.put("email",Email_Holder);
+                    hashMap.put("mobileno",Mobileno_Holder);
+                    hashMap.put("organisation",Organisation_Holder);
+                    hashMap.put("gstno",Gst_Holder);
+                    hashMap.put("designation",Designation_Holder);
+
+                    //Send Database query for inquiring to the database.
+                    dataBaseQuery = new DataBaseQuery(hashMap,
+                            urlQry,
+                            typeOfQuery,
+                            getActivity().getApplicationContext(),
+                            Add_Dealer.this
+                    );
+                    //Prepare for the database query
+                    dataBaseQuery.PrepareForQuery();
+
                 }
                 else {
 
@@ -120,56 +147,8 @@ public class Add_Dealer extends Fragment {
         }
     }
 
-    //Register user in database details.
-    public void UserRegisterFunction(final String name, final String address,final String area,
-                                     final String state,final String email,
-                                     final String mobileno, final String organisation,
-                                     final String gstno, final String designation){
-
-        class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(getActivity(),"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(getActivity(),httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            // Creating Packet database string to HashMap.
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("name",params[0]);
-                hashMap.put("address",params[1]);
-                hashMap.put("area",params[2]);
-                hashMap.put("state",params[3]);
-                hashMap.put("email",params[4]);
-                hashMap.put("mobileno",params[5]);
-                hashMap.put("organisation",params[6]);
-                hashMap.put("gstno",params[7]);
-                hashMap.put("designation",params[8]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-
-        }
-
-        UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
-
-        userRegisterFunctionClass.execute(name,address,area,state,email,mobileno,organisation,gstno,designation);
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(getActivity(),response.toString(), Toast.LENGTH_LONG).show();
     }
-
 }

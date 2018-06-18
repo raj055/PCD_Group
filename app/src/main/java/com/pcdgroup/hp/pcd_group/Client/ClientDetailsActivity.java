@@ -79,12 +79,6 @@ public class ClientDetailsActivity extends AppCompatActivity
 
     RecyclerViewAdapter mAdepter;
 
-    JsonArrayRequest jsonArrayRequest ;
-
-    RequestQueue requestQueue ;
-
-    String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
-
     View ChildView;
 
     SearchView searchView;

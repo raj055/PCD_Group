@@ -27,6 +27,10 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
@@ -45,7 +49,7 @@ import java.util.HashMap;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ProductSingleRecord extends AppCompatActivity {
+public class ProductSingleRecord extends AppCompatActivity implements CallBackInterface {
 
     HttpParse httpParse = new HttpParse();
     ProgressDialog pDialog;
@@ -53,10 +57,6 @@ public class ProductSingleRecord extends AppCompatActivity {
     // Http Url For Filter product Data from Id Sent from previous activity.
     String HttpURL = "http://dert.co.in/gFiles/filterproductdata.php";
 
-    // Http URL for delete Already Open product Record.
-    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteproduct.php";
-
-    String finalResult;
     HashMap<String,String> hashMap = new HashMap<>();
     String ParseResult ;
     HashMap<String,String> ResultHash = new HashMap<>();
@@ -76,10 +76,14 @@ public class ProductSingleRecord extends AppCompatActivity {
     public TextView TextViewRecordlevel;
     public TextView TextviewGst;
 
-    String EmailHolders,user;
+    String EmailHolders;
 
     Intent intent;
     GlobalVariable gblVar;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +92,7 @@ public class ProductSingleRecord extends AppCompatActivity {
 
         gblVar = GlobalVariable.getInstance();
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");
 
         TextViewName = (TextView) findViewById(R.id.p_name) ;
@@ -116,9 +120,23 @@ public class ProductSingleRecord extends AppCompatActivity {
         RecordlevelHolder = getIntent().getStringExtra("reorderlevel");
         GstHolder = getIntent().getStringExtra("gst");
 
-        //Calling method to filter product Record and open selected record.
+
         HttpWebCall(IdHolder);
 
+        urlQry = DataGetUrl.SINGLE_PRODUCT;
+        typeOfQuery = CallType.POST_CALL;
+
+        ResultHash.put("id",IdHolder);
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                ProductSingleRecord.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,8 +171,23 @@ public class ProductSingleRecord extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // Calling product delete method to delete current record using product ID.
-                productDelete(IdHolder);
+                urlQry = DataGetUrl.DELETE_PRODUCTS;
+                typeOfQuery = CallType.POST_CALL;
+
+                hashMap.put("id",IdHolder);
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                        urlQry,
+                        typeOfQuery,
+                        getApplicationContext(),
+                        ProductSingleRecord.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
+
+                Intent intent = new Intent(ProductSingleRecord.this,ViewImage.class);
+                startActivity(intent);
 
             }
         });
@@ -172,51 +205,6 @@ public class ProductSingleRecord extends AppCompatActivity {
         }
 
     }
-
-    // Method to Delete product Record
-    public void productDelete(final String productID) {
-
-        class productDeleteClass extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog2 = ProgressDialog.show(ProductSingleRecord.this, "Loading Data",
-                        null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog2.dismiss();
-
-                Toast.makeText(ProductSingleRecord.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                // Sending product id.
-                hashMap.put("id",IdHolder);
-
-                finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
-
-                return finalResult;
-            }
-        }
-
-        productDeleteClass productDeleteClass = new productDeleteClass();
-
-        productDeleteClass.execute(productID);
-
-        intent = new Intent(this,ViewImage.class);
-        startActivity(intent);
-    }
-
 
     //Method to show current record Current Selected Record
     public void HttpWebCall(final String PreviousListViewClickedItem){
@@ -248,7 +236,7 @@ public class ProductSingleRecord extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                ResultHash.put("id",IdHolder);
+
 
                 ParseResult = httpParse.postRequest(ResultHash, HttpURL);
 
@@ -377,4 +365,9 @@ public class ProductSingleRecord extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(ProductSingleRecord.this,response.toString(), Toast.LENGTH_LONG).show();
+
+    }
 }

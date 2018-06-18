@@ -38,6 +38,10 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
@@ -69,7 +73,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallBackInterface {
 
     RelativeLayout rellay1,rellay2;
     Handler handler = new Handler();
@@ -93,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String UserEmail = "";
     public static final String ClientDiscount = "";
     GlobalVariable gblVar;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +137,24 @@ public class MainActivity extends AppCompatActivity {
 
                 if(CheckEditText){
 
-                    UserLoginFunction(EmailHolder, PasswordHolder);
+                    urlQry = DataGetUrl.USER_LOGIN;
+                    typeOfQuery = CallType.POST_CALL;
+
+                    hashMap.put("email_id",EmailHolder);
+
+                    hashMap.put("password",PasswordHolder);
+
+                    //Send Database query for inquiring to the database.
+                    dataBaseQuery = new DataBaseQuery(hashMap,
+                            urlQry,
+                            typeOfQuery,
+                            getApplicationContext(),
+                            MainActivity.this
+                    );
+                    //Prepare for the database query
+                    dataBaseQuery.PrepareForQuery();
+
+//                    gblVar.AccessType = Email.getText().toString();
 
                 }
                 else {
@@ -199,121 +226,74 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void UserLoginFunction(final String email, final String password){
+    @Override
+    public void ExecuteQueryResult(String response) {
 
-        class UserLoginClass extends AsyncTask<String,Void,String> {
+        if(response.equalsIgnoreCase("Invalid Username or Password")){
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+            Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+        }
+        else{
+            try {
 
-                progressDialog = ProgressDialog.show(MainActivity.this,"Loading Data",
-                        null,true,true);
-            }
+                JSONArray ja = new JSONArray(response);
+                JSONObject jo = null;
+                String accessType = "";
+                String discountType = "";
+                String data[] = new String[ja.length()];
+                Log.v("length","" + ja.length());
+                for (int i=0; i<ja.length();i++){
 
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
+                    jo=ja.getJSONObject(i);
 
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-//                String str = httpResponseMsg.toString();
-
-                if(httpResponseMsg.equalsIgnoreCase("Invalid Username or Password")){
-
-                    Toast.makeText(MainActivity.this,httpResponseMsg,Toast.LENGTH_LONG).show();
+                    accessType = jo.getString("Access");
+                    discountType = jo.getString("Discount");
                 }
-                else{
-                    try {
+                if(accessType != null && discountType != null)
+                {
+                    Log.v("accesstype","" + accessType);
+                    if(accessType.contains("Admin")) {
+                        Log.v("To be","in Admin mode" );
+                         intent = new Intent(MainActivity.this, AdminDashboard.class);
 
-                        JSONArray ja = new JSONArray(httpResponseMsg);
-                        JSONObject jo = null;
-                        String accessType = "";
-                        String discountType = "";
-                        String data[] = new String[ja.length()];
-                        Log.v("length","" + ja.length());
-                        for (int i=0; i<ja.length();i++){
+                        gblVar.AccessType = "Admin";
+                        gblVar.DiscountType = "100";
 
-                            jo=ja.getJSONObject(i);
-
-                            accessType = jo.getString("Access");
-                            discountType = jo.getString("Discount");
-                        }
-                        if(accessType != null && discountType != null)
-                        {
-                            Log.v("accesstype","" + accessType);
-                            if(accessType.contains("Admin")) {
-                                Log.v("To be","in Admin mode" );
-                                Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
-
-                                intent.putExtra(UserEmail , email);
-                                gblVar.AccessType = "Admin";
-                                gblVar.DiscountType = "100";
-                                startActivity(intent);
-
-                                finish();
-                            }
-                            else if(accessType.contains("Manager")) {
-                                Log.v("To be","in Manager mode" );
-                                Intent intent = new Intent(MainActivity.this, UserDashbord.class);
-
-                                intent.putExtra(UserEmail , email);
-                                gblVar.AccessType = "Manager";
-                                gblVar.DiscountType = "100";
-                                startActivity(intent);
-
-                                finish();
-                            }
-                            else if(accessType.contains("Client")) {
-                                Log.v("To be","in Client mode" );
-                                Intent intent = new Intent(MainActivity.this, UserDashbord.class);
-
-                                intent.putExtra(UserEmail , email);
-                                gblVar.AccessType = "Client";
-                                gblVar.DiscountType = discountType;
-                                startActivity(intent);
-
-                                finish();
-                            }
-                            else{
-                                Intent intent = new Intent(MainActivity.this, ViewImage.class);
-
-                                intent.putExtra(UserEmail, email);
-                                gblVar.AccessType = "User";
-                                startActivity(intent);
-
-                                finish();
-                            }
-                        }
                     }
-                    catch (Exception e){
-                        Toast.makeText(getApplicationContext(),"The Username or password you entered is incorrect.", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                    else if(accessType.contains("Manager")) {
+                        Log.v("To be","in Manager mode" );
+                         intent = new Intent(MainActivity.this, UserDashbord.class);
+
+                        gblVar.AccessType = "Manager";
+                        gblVar.DiscountType = "100";
+
+                    }
+                    else if(accessType.contains("Client")) {
+                        Log.v("To be","in Client mode" );
+                         intent = new Intent(MainActivity.this, UserDashbord.class);
+
+                        gblVar.AccessType = "Client";
+                        gblVar.DiscountType = discountType;
+
+                    }
+                    else{
+                         intent = new Intent(MainActivity.this, ViewImage.class);
+                         gblVar.AccessType = "User";
 
                     }
 
+                    intent.putExtra(UserEmail , EmailHolder);
+                    startActivity(intent);
+                    finish();
                 }
+            }
+            catch (Exception e){
+                Toast.makeText(getApplicationContext(),"The Username or password you entered is incorrect.", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
 
             }
 
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("email_id",params[0]);
-
-                hashMap.put("password",params[1]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                gblVar.AccessType = Email.getText().toString();
-
-                return finalResult;
-            }
         }
 
-        UserLoginClass userLoginClass = new UserLoginClass();
-
-        userLoginClass.execute(email,password);
     }
 }

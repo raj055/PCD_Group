@@ -19,6 +19,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
@@ -41,7 +45,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ViewImage extends AppCompatActivity {
+public class ViewImage extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
     CustomListAdapter adapter;
@@ -55,6 +59,10 @@ public class ViewImage extends AppCompatActivity {
     List<Entity> localEntity;
     SearchView searchView;
     GlobalVariable gblVar;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,4 +323,8 @@ public class ViewImage extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void ExecuteQueryResult(String response) {
+
+    }
 }

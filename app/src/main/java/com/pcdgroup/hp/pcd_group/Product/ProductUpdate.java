@@ -54,7 +54,6 @@ import java.util.Map;
 public class ProductUpdate extends AppCompatActivity {
 
     String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
-    String HttpURLImage = "http://dert.co.in/gFiles/updateproductdetails12.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;

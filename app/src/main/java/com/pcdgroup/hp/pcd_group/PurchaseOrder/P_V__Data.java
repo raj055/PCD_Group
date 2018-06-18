@@ -1,5 +1,10 @@
 package com.pcdgroup.hp.pcd_group.PurchaseOrder;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class P_V__Data {
     private String id;
     private String name;

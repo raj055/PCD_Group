@@ -11,6 +11,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.PurchaseOrder.Create_New_PO;
 import com.pcdgroup.hp.pcd_group.R;
@@ -27,7 +31,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VendorList  extends AppCompatActivity {
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
+public class VendorList  extends AppCompatActivity implements CallBackInterface {
 
     String FETCH_URL = "http://dert.co.in/gFiles/vendorlist.php";
     ListView listView;
@@ -37,6 +46,10 @@ public class VendorList  extends AppCompatActivity {
     String line = null;
     String result = null;
     String[] data;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,5 +156,10 @@ public class VendorList  extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+
     }
 }

@@ -15,6 +15,10 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
 
@@ -31,7 +35,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DealerList extends AppCompatActivity {
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
+public class DealerList extends AppCompatActivity implements CallBackInterface {
 
     String FETCH_URL = "http://dert.co.in/gFiles/dealerlist.php";
     ListView listView;
@@ -42,12 +51,13 @@ public class DealerList extends AppCompatActivity {
     String result = null;
     String[] data;
 
-    String ASSIGN_DEALOR = "http://dert.co.in/gFiles/assigndealor.php";
-    ProgressDialog progressDialog;
-    String finalResult;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
+
     String emailId;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +89,20 @@ public class DealerList extends AppCompatActivity {
 
                 Intent intent = new Intent(DealerList.this, SingleRecordShow.class);
 
-                AssignDealor(emailId);
+                urlQry = DataGetUrl.DEALER_LISE;
+                typeOfQuery = CallType.POST_CALL;
+
+                hashMap.put("email", emailId);
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                        urlQry,
+                        typeOfQuery,
+                        getApplicationContext(),
+                        DealerList.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
 
                 Toast.makeText(DealerList.this,"Dealor Assign Successfully",Toast.LENGTH_LONG).toString();
 
@@ -149,41 +172,8 @@ public class DealerList extends AppCompatActivity {
         }
     }
 
-    private void AssignDealor(String DealorEmailHolder) {
-
-        class AssignDealor extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                progressDialog = ProgressDialog.show(DealerList.this, "Loading Data", null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(DealerList.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("email", emailId);
-
-                finalResult = httpParse.postRequest(hashMap, ASSIGN_DEALOR);
-
-                return finalResult;
-            }
-        }
-
-        AssignDealor UpdateClass = new AssignDealor();
-
-        UpdateClass.execute(DealorEmailHolder);
-
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(DealerList.this, response.toString(), Toast.LENGTH_LONG).show();
     }
 }

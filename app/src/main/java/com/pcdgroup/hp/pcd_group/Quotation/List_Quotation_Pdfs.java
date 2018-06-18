@@ -27,6 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
 import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.R;
@@ -50,7 +54,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class List_Quotation_Pdfs extends AppCompatActivity {
+public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackInterface {
 
     String PDF_FETCH_URL = "http://dert.co.in/gFiles/QuotationList.php";
     ListView listView;
@@ -61,6 +65,9 @@ public class List_Quotation_Pdfs extends AppCompatActivity {
     String result = null;
     String[] data;
 
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,4 +163,8 @@ public class List_Quotation_Pdfs extends AppCompatActivity {
 
     }
 
+    @Override
+    public void ExecuteQueryResult(String response) {
+
+    }
 }

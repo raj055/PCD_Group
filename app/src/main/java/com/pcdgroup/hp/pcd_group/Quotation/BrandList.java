@@ -10,6 +10,10 @@ import android.widget.ListView;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.BrandAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.Category;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.R;
 
 import org.json.JSONArray;
@@ -29,7 +33,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class BrandList  extends AppCompatActivity {
+public class BrandList  extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
     String HttpURL_get = "http://dert.co.in/gFiles/listbrands.php";
@@ -40,6 +44,10 @@ public class BrandList  extends AppCompatActivity {
     String line = null;
     String result = null;
     String[] data;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,5 +159,10 @@ public class BrandList  extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+
     }
 }

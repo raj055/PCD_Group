@@ -14,6 +14,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.DealerList;
@@ -25,7 +29,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SelectVendorProducts extends AppCompatActivity {
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
+public class SelectVendorProducts extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
     String HttpURL = "http://dert.co.in/gFiles/VendorProductList.php";
@@ -40,6 +49,10 @@ public class SelectVendorProducts extends AppCompatActivity {
     VendorProductAdapter productAdapter;
     HttpParse httpParse;
     HashMap<String, String> hashMap = new HashMap<>();
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,38 +111,7 @@ public class SelectVendorProducts extends AppCompatActivity {
 
                 super.onPostExecute(httpResponseMsg);
 
-                try {
-                    JSONObject obj = new JSONObject(httpResponseMsg);
-                    Toast.makeText(SelectVendorProducts.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                    JSONArray jsonArray = obj.getJSONArray("products");
-
-                    for(int i=0;i<jsonArray.length();i++){
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                        ProductData GetData = new ProductData();
-
-                        GetData.setId(jsonObject.getString("id"));
-                        GetData.setTitle(jsonObject.getString("name"));
-                        GetData.setPrice(jsonObject.getString("price"));
-                        GetData.setHsncode(jsonObject.getString("hsncode"));
-                        GetData.setGst(jsonObject.getString("gst"));
-                        GetData.setDescription(jsonObject.getString("description"));
-
-                        prductlist.add(GetData);
-
-                    }
-
-                    productAdapter = new VendorProductAdapter(SelectVendorProducts.this,R.layout.list_product, prductlist);
-
-                    listView.setAdapter(productAdapter);
-
-                    productAdapter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
             }
 
@@ -197,5 +179,41 @@ public class SelectVendorProducts extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        try {
+            JSONObject obj = new JSONObject(response);
+            Toast.makeText(SelectVendorProducts.this,obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+            JSONArray jsonArray = obj.getJSONArray("products");
+
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                ProductData GetData = new ProductData();
+
+                GetData.setId(jsonObject.getString("id"));
+                GetData.setTitle(jsonObject.getString("name"));
+                GetData.setPrice(jsonObject.getString("price"));
+                GetData.setHsncode(jsonObject.getString("hsncode"));
+                GetData.setGst(jsonObject.getString("gst"));
+                GetData.setDescription(jsonObject.getString("description"));
+
+                prductlist.add(GetData);
+
+            }
+
+            productAdapter = new VendorProductAdapter(SelectVendorProducts.this,R.layout.list_product, prductlist);
+
+            listView.setAdapter(productAdapter);
+
+            productAdapter.notifyDataSetChanged();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -7,6 +7,11 @@ import android.view.View;
 
 import com.pcdgroup.hp.pcd_group.R;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class FlipAnimator {
     private static String TAG = FlipAnimator.class.getSimpleName();
     private static AnimatorSet leftIn, rightOut, leftOut, rightIn;

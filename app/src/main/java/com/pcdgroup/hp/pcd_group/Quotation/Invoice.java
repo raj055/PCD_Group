@@ -50,6 +50,10 @@ import android.widget.Toast;
 
 import com.itextpdf.text.PageSize;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
 
@@ -77,7 +81,7 @@ import static android.app.PendingIntent.getActivity;
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
  */
-public class Invoice extends AppCompatActivity {
+public class Invoice extends AppCompatActivity  implements CallBackInterface {
 
     TextView name,address,state,company,country,pin;
     TextView state1,sgst,cgst1;
@@ -111,6 +115,10 @@ public class Invoice extends AppCompatActivity {
     String mCurrentDirectoryUri;
     String DiscountTVvalue;
     GlobalVariable globalVariable;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -617,5 +625,10 @@ public class Invoice extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+
     }
 }

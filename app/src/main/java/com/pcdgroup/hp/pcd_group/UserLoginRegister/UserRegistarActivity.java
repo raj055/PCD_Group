@@ -17,6 +17,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
@@ -30,7 +35,7 @@ import java.util.Random;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class UserRegistarActivity extends AppCompatActivity {
+public class UserRegistarActivity extends AppCompatActivity implements CallBackInterface {
 
     Button register;
     EditText First_Name, Last_Name,MobileNo, Email, Password ;
@@ -52,6 +57,10 @@ public class UserRegistarActivity extends AppCompatActivity {
     Random Number;
     int Rnumber;
     String finalResultcode;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,7 +129,27 @@ public class UserRegistarActivity extends AppCompatActivity {
         Verify = (Button) promptUserView.findViewById(R.id.verified);
 
 
-//        CodeGenrate(senderHolder,numberHolde,message_Holder,code_Holder);
+        urlQry = DataGetUrl.OTP_REGISTER;
+
+        typeOfQuery = CallType.POST_CALL;
+
+        hashMap.put("sender",senderHolder);
+
+        hashMap.put("numbers",numberHolde);
+
+        hashMap.put("message",message_Holder);
+
+        hashMap.put("code",code_Holder);
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                UserRegistarActivity.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         Log.v("message_Holder------",message_Holder);
 
@@ -132,9 +161,32 @@ public class UserRegistarActivity extends AppCompatActivity {
                 Log.v("strVerify----",strVerify);
 
                 if (strVerify.equals(message_Holder)) {
+
                     // If EditText is not empty and CheckEditText = True then this block will execute.
-                    UserRegisterFunctionClass(F_Name_Holder, L_Name_Holder, EmailHolder, MobileNo_Holder,
-                            PasswordHolder);
+                    urlQry = DataGetUrl.USER_REGISTER;
+
+                    typeOfQuery = CallType.POST_CALL;
+
+                    hashMap.put("first_name",F_Name_Holder);
+
+                    hashMap.put("last_name",L_Name_Holder);
+
+                    hashMap.put("email_id",EmailHolder);
+
+                    hashMap.put("password",PasswordHolder);
+
+                    hashMap.put("mobile_num",MobileNo_Holder);
+
+
+                    //Send Database query for inquiring to the database.
+                    dataBaseQuery = new DataBaseQuery(hashMap,
+                            urlQry,
+                            typeOfQuery,
+                            getApplicationContext(),
+                            UserRegistarActivity.this
+                    );
+                    //Prepare for the database query
+                    dataBaseQuery.PrepareForQuery();
 
                     Intent intent = new Intent(UserRegistarActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -185,94 +237,8 @@ public class UserRegistarActivity extends AppCompatActivity {
 
     }
 
-    public void UserRegisterFunctionClass(final String F_Name, final String L_Name, final String email,
-                                          final String password, final String mobile){
-
-        class UserRegisterFunctionClass extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(UserRegistarActivity.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(UserRegistarActivity.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("first_name",params[0]);
-
-                hashMap.put("last_name",params[1]);
-
-                hashMap.put("email_id",params[2]);
-
-                hashMap.put("password",params[3]);
-
-                hashMap.put("mobile_num",params[4]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-        }
-
-        UserRegisterFunctionClass userRegisterFunctionClass = new UserRegisterFunctionClass();
-
-        userRegisterFunctionClass.execute(F_Name,L_Name,email,mobile,password);
-    }
-
-    private void CodeGenrate(final String sender, final String number, final String message, final String code){
-
-        class CodeGenrate extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(UserRegistarActivity.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(UserRegistarActivity.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("sender",params[0]);
-
-                hashMap.put("numbers",params[1]);
-
-                hashMap.put("message",params[2]);
-
-                hashMap.put("code",params[3]);
-
-                finalResultcode = httpParse.postRequest(hashMap, HttpURLVERIFYCODE);
-
-                return finalResultcode;
-            }
-        }
-
-        CodeGenrate codeGenrate = new CodeGenrate();
-
-        codeGenrate.execute(sender,number,message,code);
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(UserRegistarActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

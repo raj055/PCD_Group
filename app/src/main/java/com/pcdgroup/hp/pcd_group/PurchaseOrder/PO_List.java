@@ -14,6 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Product.UploadImage;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
@@ -34,7 +38,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PO_List extends AppCompatActivity {
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
+public class PO_List extends AppCompatActivity implements CallBackInterface {
 
     String PDF_FETCH_URL = "http://dert.co.in/gFiles/purchaseorder.php";
     ListView listView;
@@ -44,6 +53,10 @@ public class PO_List extends AppCompatActivity {
     String line = null;
     String result = null;
     String[] data;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +154,11 @@ public class PO_List extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
 
     }
 }

@@ -21,6 +21,10 @@ import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserAdminAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
@@ -45,7 +49,7 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class Client_Discount extends AppCompatActivity {
+public class Client_Discount extends AppCompatActivity implements CallBackInterface {
 
     InputStream is = null;
     String line = null;
@@ -55,19 +59,19 @@ public class Client_Discount extends AppCompatActivity {
     Button done;
     UserAdminAdepter adepter;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
     String currentDicountValue;
     List<UserDataGet> userDataGets;
     List<UserDataGet> tempStoreDataValues;
     UserDataGet usrDGet;
-    ProgressDialog progressDialog;
     Intent intent;
     GlobalVariable gblv;
 
     String discountValue = "";
-    String finalResult;
     String HttpURL = "http://dert.co.in/gFiles/accessuserdetails.php";
-    String HttpURL2 = "http://dert.co.in/gFiles/DiscountDetails.php";
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,7 +201,23 @@ public class Client_Discount extends AppCompatActivity {
 
             if ( accessTypeE != accessTypeU)
             {
-                UserAccessUpdate(tmpDataGet.getEmail(), tmpDataGet.getAccessType());
+                urlQry = DataGetUrl.DISCOUNT_DETAILS;
+                typeOfQuery = CallType.POST_CALL;
+
+                hashMap.put("email",tmpDataGet.getEmail());
+
+                hashMap.put("discount",tmpDataGet.getAccessType());
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                        urlQry,
+                        typeOfQuery,
+                        getApplicationContext(),
+                        Client_Discount.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
+
             }
         }
         finish();
@@ -262,46 +282,6 @@ public class Client_Discount extends AppCompatActivity {
         }
     }
 
-    public void UserAccessUpdate( String ClientEmailHolder, String ClientAccessHolder){
-
-        class UserAccessUpdate extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                progressDialog = ProgressDialog.show(Client_Discount.this,"Loading Data",null,true,true);
-
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(Client_Discount.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("email",params[0]);
-
-                hashMap.put("discount",params[1]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL2);
-
-                return finalResult;
-            }
-        }
-
-        UserAccessUpdate UpdateClass = new UserAccessUpdate();
-
-        UpdateClass.execute( ClientEmailHolder, ClientAccessHolder);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
@@ -328,5 +308,10 @@ public class Client_Discount extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(Client_Discount.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -22,6 +22,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
@@ -37,14 +41,10 @@ import java.util.HashMap;
  * @version 1.0 on 28-03-2018.
  */
 
-public class UpdateActivity extends AppCompatActivity {
+public class UpdateActivity extends AppCompatActivity implements CallBackInterface {
 
-    String HttpURL = "http://dert.co.in/gFiles/updateclientdetails.php";
-    ProgressDialog progressDialog;
-    String finalResult;
     Boolean CheckEditText;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
     EditText ClientName, ClientAddress,ClientAddressline1,ClientAddressline2,ClientMobileno,ClientState,
             ClientCountry, ClientEmail, ClientCompany,ClientPin, ClientDesignation;
     Button UpdateStudent;
@@ -53,6 +53,10 @@ public class UpdateActivity extends AppCompatActivity {
             ClientComapnyHolder, ClientDesignationHolder;
     Intent intent;
     GlobalVariable gblVar;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +115,44 @@ public class UpdateActivity extends AppCompatActivity {
                 GetDataFromEditText();
 
                 if(CheckEditText){
-                    ClientRecordUpdate (ClientIdHolder,ClientNameHolder,ClientAddressHolder,ClientAddressline1Holder,
-                            ClientAddressline2Holder, ClientMobilenoHolder,ClientStateHolder, ClientCountryHolder,
-                            ClientEmailHolder,ClientPinoHolder, ClientComapnyHolder, ClientDesignationHolder);
+
+                    urlQry = DataGetUrl.EDIT_CLIENT;
+                    typeOfQuery = CallType.POST_CALL;
+
+                    hashMap.put("id",ClientIdHolder);
+
+                    hashMap.put("name",ClientNameHolder);
+
+                    hashMap.put("address",ClientAddressHolder);
+
+                    hashMap.put("addressline1",ClientAddressline1Holder);
+
+                    hashMap.put("addressline2",ClientAddressline2Holder);
+
+                    hashMap.put("mobileno",ClientMobilenoHolder);
+
+                    hashMap.put("state",ClientStateHolder);
+
+                    hashMap.put("country",ClientCountryHolder);
+
+                    hashMap.put("email_id",ClientEmailHolder);
+
+                    hashMap.put("pin",ClientPinoHolder);
+
+                    hashMap.put("company",ClientComapnyHolder);
+
+                    hashMap.put("designation",ClientDesignationHolder);
+
+                    //Send Database query for inquiring to the database.
+                    dataBaseQuery = new DataBaseQuery(hashMap,
+                            urlQry,
+                            typeOfQuery,
+                            getApplicationContext(),
+                            UpdateActivity.this
+                    );
+                    //Prepare for the database query
+                    dataBaseQuery.PrepareForQuery();
+
                 }else {
 
                     // If EditText is empty then this block will execute.
@@ -159,73 +198,6 @@ public class UpdateActivity extends AppCompatActivity {
             CheckEditText = true ;
         }
 
-    }
-
-    // Method to Update Student Record.
-    public void ClientRecordUpdate( String ClientIdHolder, String ClientNameHolder, String ClientAddressHolder, String ClientAddressline1Holder,
-                                    String ClientAddressline2Holder, String ClientMobilenoHolder,
-                                    String ClientStateHolder, String ClientCountryHolder, String ClientEmailHolder,
-                                   String ClientPinoHolder, String ClientComapnyHolder, String ClientDesignationHolder){
-
-        class ClientRecordUpdateClass extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(UpdateActivity.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(UpdateActivity.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("id",params[0]);
-
-                hashMap.put("name",params[1]);
-
-                hashMap.put("address",params[2]);
-
-                hashMap.put("addressline1",params[3]);
-
-                hashMap.put("addressline2",params[4]);
-
-                hashMap.put("mobileno",params[5]);
-
-                hashMap.put("state",params[6]);
-
-                hashMap.put("country",params[7]);
-
-                hashMap.put("email_id",params[8]);
-
-                hashMap.put("pin",params[9]);
-
-                hashMap.put("company",params[10]);
-
-                hashMap.put("designation",params[11]);
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-        }
-
-        ClientRecordUpdateClass clientRecordUpdateClass = new ClientRecordUpdateClass();
-
-        clientRecordUpdateClass.execute(ClientIdHolder,ClientNameHolder, ClientAddressHolder, ClientAddressline1Holder,
-                                         ClientAddressline2Holder, ClientMobilenoHolder,
-                                         ClientStateHolder, ClientCountryHolder, ClientEmailHolder,
-                                         ClientPinoHolder, ClientComapnyHolder, ClientDesignationHolder);
     }
 
     @Override
@@ -288,5 +260,10 @@ public class UpdateActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(UpdateActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

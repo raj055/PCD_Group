@@ -42,6 +42,10 @@ import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
@@ -71,10 +75,9 @@ import java.util.UUID;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ViewInvoice  extends AppCompatActivity {
+public class ViewInvoice  extends AppCompatActivity implements CallBackInterface {
 
-  TextView name,address,state,company,country,add1,add2,pin,state1;
-  HttpParse httpParse = new HttpParse();
+  TextView name,address,state,company,country,pin,state1;
 
   TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1,
                     TransportationCost,DiscountValue,DiscountTextview;
@@ -95,23 +98,20 @@ public class ViewInvoice  extends AppCompatActivity {
   Bitmap bitmap;
   ProgressDialog progressDialog;
 
-  ProgressDialog progressDialog2;
-  String finalResult ;
   boolean igst = false;
 
   String state_holder,state1_holder;
 
   HashMap<String, String> map = new HashMap<String, String>();
 
-  // Http Url For adding the bills to the admin.
-  String HttpURL = "http://dert.co.in/gFiles/updatebill.php";
-
-  public static final String UPLOAD_URL = "http://dert.co.in/gFiles/server_upload_bills.php";
   String fileName, targetPdf;
   String fileUrl ;
 
-  Intent intent;
   GlobalVariable gblVar;
+
+  DataGetUrl urlQry;
+  DataBaseQuery dataBaseQuery;
+  CallType typeOfQuery;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -323,7 +323,25 @@ public class ViewInvoice  extends AppCompatActivity {
               startActivity(intent1);
             }
 
-            AddToOrderList(fileUrl);
+            urlQry = DataGetUrl.UPDATE_BILL;
+            typeOfQuery = CallType.POST_CALL;
+
+            String billedStatus = "True";
+
+            // Sending Client id.
+            hashMap.put("billed", billedStatus);
+            hashMap.put("url", fileUrl);
+
+            //Send Database query for inquiring to the database.
+            dataBaseQuery = new DataBaseQuery(hashMap,
+                    urlQry,
+                    typeOfQuery,
+                    getApplicationContext(),
+                    ViewInvoice.this
+            );
+            //Prepare for the database query
+            dataBaseQuery.PrepareForQuery();
+
           }
         });
 
@@ -335,49 +353,6 @@ public class ViewInvoice  extends AppCompatActivity {
     }
     return super.onOptionsItemSelected(item);
   }
-  private void AddToOrderList(final String textFile) {
-
-      class AddToOrderList extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-          super.onPreExecute();
-
-          progressDialog2 = ProgressDialog.show(ViewInvoice.this, "Loading Data",
-            null, true, true);
-        }
-
-        @Override
-        protected void onPostExecute(String httpResponseMsg) {
-
-          super.onPostExecute(httpResponseMsg);
-
-          progressDialog2.dismiss();
-
-          Toast.makeText(ViewInvoice.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-          String billedStatus = "True";
-
-          // Sending Client id.
-          hashMap.put("billed", billedStatus);
-          hashMap.put("url", textFile);
-
-
-          finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-          return finalResult;
-        }
-      }
-
-    AddToOrderList AddToOrderList = new AddToOrderList();
-
-    AddToOrderList.execute(textFile);
-    }
 
   public static Bitmap loadBitmapFromView(View v, int width, int height) {
     Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -457,4 +432,8 @@ public class ViewInvoice  extends AppCompatActivity {
     return sb;
   }
 
+  @Override
+  public void ExecuteQueryResult(String response) {
+    Toast.makeText(ViewInvoice.this, response.toString(), Toast.LENGTH_LONG).show();
+  }
 }

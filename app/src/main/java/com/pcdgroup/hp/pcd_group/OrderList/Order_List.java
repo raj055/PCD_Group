@@ -13,6 +13,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
@@ -33,13 +37,11 @@ import java.util.HashMap;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class Order_List extends AppCompatActivity {
+public class Order_List extends AppCompatActivity implements CallBackInterface {
 
     ArrayList<Pdf> pdfList = new ArrayList<Pdf>();
     PdfAdapter billAdepter;
-    public String httpUrl = "http://dert.co.in/gFiles/orderlist.php";
     HttpParse httpParse;
-    String finalResult;
     ListView lstVeiw;
     Intent intent;
     String emailId;
@@ -48,6 +50,9 @@ public class Order_List extends AppCompatActivity {
 
     GlobalVariable globalVariable;
 
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,21 @@ public class Order_List extends AppCompatActivity {
         emailId = intent.getStringExtra("emailid");
 
         lstVeiw = (ListView) findViewById(R.id.orderList);
-        GetPdfList(emailId);
+
+        urlQry = DataGetUrl.ORDERLIST_DETAILS;
+        typeOfQuery = CallType.JSON_CALL;
+
+        hashMap.put("billed",emailId);
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                Order_List.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         lstVeiw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,69 +100,6 @@ public class Order_List extends AppCompatActivity {
 
         });
 
-    }
-
-    // Method to Get the Invoice List
-    public void GetPdfList(final String ClientID) {
-
-        class GetPdfList extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                try {
-                    JSONObject obj = new JSONObject(httpResponseMsg);
-                    Toast.makeText(Order_List.this,obj.getString("message"),
-                      Toast.LENGTH_SHORT).show();
-
-                    JSONArray jsonArray = obj.getJSONArray("pdfs");
-
-                    for(int i=0; i < jsonArray.length() ; i++){
-
-                        //Declaring a json object corresponding to every pdf object in our json Array
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        //Declaring a Pdf object to add it to the ArrayList  pdfList
-                        Pdf pdf  = new Pdf();
-                        String pdfBill = jsonObject.getString("name");
-                        String url = jsonObject.getString("url");
-//                        String pdfEmail = jsonObject.getString("email");
-                        pdf.setName(pdfBill);
-                        pdf.setEmail(emailId);
-                        pdf.setUrl(url);
-                        pdfList.add(pdf);
-                    }
-
-                    billAdepter = new PdfAdapter(Order_List.this,R.layout.list_layout, pdfList);
-                    lstVeiw.setAdapter(billAdepter);
-
-                    billAdepter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                // Sending Client id.
-                hashMap.put("billed", "true");
-                finalResult = httpParse.postRequest(hashMap, httpUrl);
-                return finalResult;
-            }
-        }
-
-        GetPdfList GetPdfList = new GetPdfList();
-        GetPdfList.execute(ClientID);
     }
 
     @Override
@@ -174,5 +130,39 @@ public class Order_List extends AppCompatActivity {
            finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        try {
+            JSONObject obj = new JSONObject(response);
+            Toast.makeText(Order_List.this,obj.getString("message"),
+                    Toast.LENGTH_SHORT).show();
+
+            JSONArray jsonArray = obj.getJSONArray("pdfs");
+
+            for(int i=0; i < jsonArray.length() ; i++){
+
+                //Declaring a json object corresponding to every pdf object in our json Array
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                //Declaring a Pdf object to add it to the ArrayList  pdfList
+                Pdf pdf  = new Pdf();
+                String pdfBill = jsonObject.getString("name");
+                String url = jsonObject.getString("url");
+//                        String pdfEmail = jsonObject.getString("email");
+                pdf.setName(pdfBill);
+                pdf.setEmail(emailId);
+                pdf.setUrl(url);
+                pdfList.add(pdf);
+            }
+
+            billAdepter = new PdfAdapter(Order_List.this,R.layout.list_layout, pdfList);
+            lstVeiw.setAdapter(billAdepter);
+
+            billAdepter.notifyDataSetChanged();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

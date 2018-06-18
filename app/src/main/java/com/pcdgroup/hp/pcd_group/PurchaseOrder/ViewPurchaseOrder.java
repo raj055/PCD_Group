@@ -50,6 +50,11 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.UUID;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class ViewPurchaseOrder extends AppCompatActivity {
 
     TextView name,address,state,company,country,pin;

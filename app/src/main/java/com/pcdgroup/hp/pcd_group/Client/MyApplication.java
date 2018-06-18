@@ -1,10 +1,5 @@
 package com.pcdgroup.hp.pcd_group.Client;
 
-/**
- * @author Grasp
- *  @version 1.0 on 28-03-2018.
- */
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.text.TextUtils;
@@ -12,6 +7,11 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
 
 public class MyApplication extends Application {
 

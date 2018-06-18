@@ -26,6 +26,10 @@ import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.MainActivity;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
@@ -52,7 +56,7 @@ import java.util.List;
  * @author Grasp
  *  @version 1.0 on 28-03-2018.
  */
-public class AdminSetting extends AppCompatActivity {
+public class AdminSetting extends AppCompatActivity implements CallBackInterface {
 
     Button Brand;
     EditText brandname, address, address1, address2,pincode,mobileno,email,website,pan,gst;
@@ -62,12 +66,8 @@ public class AdminSetting extends AppCompatActivity {
     Boolean CheckEditText;
     String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
       State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
-    String finalResult;
-    ProgressDialog progressDialog;
-    HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
 
-    String HttpURL = "http://dert.co.in/gFiles/brandadd.php";
+    HashMap<String,String> hashMap = new HashMap<>();
 
     String HttpURL_get = "http://dert.co.in/gFiles/listbrands.php";
 
@@ -79,6 +79,10 @@ public class AdminSetting extends AppCompatActivity {
     String line = null;
     String result = null;
     String[] data;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,9 +197,30 @@ public class AdminSetting extends AppCompatActivity {
                 Website_Holde = website.getText().toString();
                 GST_Holder = gst.getText().toString();
 
+                urlQry = DataGetUrl.ADD_BRAND;
+                typeOfQuery = CallType.POST_CALL;
 
-                    BrandRegisterFunction(Name_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder,
-                            Pin_Holder, State_Holder, Mobileno_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder);
+                hashMap.put("name",Name_Holder);
+                hashMap.put("address",Address_Hoder);
+                hashMap.put("address1",Addressline1_Holder);
+                hashMap.put("address2",Addressline2_Holder);
+                hashMap.put("pincode",Pin_Holder);
+                hashMap.put("state",State_Holder);
+                hashMap.put("mobileno",Mobileno_Holder);
+                hashMap.put("email",Emailid_Holder);
+                hashMap.put("website",Website_Holde);
+                hashMap.put("pan",Pan_Holde);
+                hashMap.put("gst",GST_Holder);
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                        urlQry,
+                        typeOfQuery,
+                        getApplicationContext(),
+                        AdminSetting.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
 
                 finish();
 
@@ -211,58 +236,6 @@ public class AdminSetting extends AppCompatActivity {
         // all set and time to build and show up!
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    //Register brand in database details.
-    public void BrandRegisterFunction(final String name, final String address,final String addressline1,final String addressline2,final  String pin, final String state, final String mobileno,final String email_id, final String website, final String pan, final String gst){
-
-        class BrandRegisterFunction extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog = ProgressDialog.show(AdminSetting.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog.dismiss();
-
-                Toast.makeText(AdminSetting.this,httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            // Creating Packet database string to HashMap.
-            @Override
-            protected String doInBackground(String... params) {
-
-                hashMap.put("name",params[0]);
-                hashMap.put("address",params[1]);
-                hashMap.put("address1",params[2]);
-                hashMap.put("address2",params[3]);
-                hashMap.put("pincode",params[4]);
-                hashMap.put("state",params[5]);
-                hashMap.put("mobileno",params[6]);
-                hashMap.put("email",params[7]);
-                hashMap.put("website",params[8]);
-                hashMap.put("pan",params[9]);
-                hashMap.put("gst",params[10]);
-
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-        }
-
-        BrandRegisterFunction userRegisterFunctionClass = new BrandRegisterFunction();
-
-        userRegisterFunctionClass.execute( name,  address, addressline1, addressline2,pin,
-                state, mobileno, email_id, website, pan, gst);
     }
 
     private void getData(){
@@ -362,11 +335,13 @@ public class AdminSetting extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id==R.id.home) {
-            Toast.makeText(this, "Main menu", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AdminSetting.this, AdminDashboard.class);
-            startActivity(intent);
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(AdminSetting.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

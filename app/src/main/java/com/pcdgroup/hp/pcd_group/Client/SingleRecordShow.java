@@ -15,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
@@ -33,7 +37,7 @@ import java.util.HashMap;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class SingleRecordShow extends AppCompatActivity {
+public class SingleRecordShow extends AppCompatActivity implements CallBackInterface {
 
     HttpParse httpParse = new HttpParse();
     ProgressDialog pDialog;
@@ -68,6 +72,10 @@ public class SingleRecordShow extends AppCompatActivity {
     public TextView TextviewPin;
     public TextView TextViewEmailID;
     public TextView TextViewDesignation;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,9 +152,24 @@ public class SingleRecordShow extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // Calling Client delete method to delete current record using Client ID.
-                ClientDelete(IdHolder);
+                urlQry = DataGetUrl.SINGLE_DELETE;
+                typeOfQuery = CallType.POST_CALL;
 
+                hashMap.put("id",IdHolder);
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                        urlQry,
+                        typeOfQuery,
+                        getApplicationContext(),
+                        SingleRecordShow.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
+
+                intent = new Intent(SingleRecordShow.this,ClientDetailsActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -160,53 +183,6 @@ public class SingleRecordShow extends AppCompatActivity {
             }
         });
 
-    }
-
-    // Method to Delete Client Record
-    public void ClientDelete(final String ClientID) {
-
-        class ClientDeleteClass extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog2 = ProgressDialog.show(SingleRecordShow.this, "Loading Data",
-                  null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog2.dismiss();
-
-                Toast.makeText(SingleRecordShow.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                // Sending Client id.
-                hashMap.put("id",ClientID);
-
-                Log.v("id ====== ", IdHolder);
-
-                finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
-
-                return finalResult;
-            }
-        }
-
-        ClientDeleteClass ClientDeleteClass = new ClientDeleteClass();
-
-        ClientDeleteClass.execute(ClientID);
-
-        intent = new Intent(this,ClientDetailsActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     //Method to show current record Current Selected Record
@@ -251,7 +227,6 @@ public class SingleRecordShow extends AppCompatActivity {
 
         httpWebCallFunction.execute(PreviousListViewClickedItem);
     }
-
 
     // Parsing Complete JSON Object.
     private class GetHttpResponse extends AsyncTask<Void, Void, Void>
@@ -374,4 +349,9 @@ public class SingleRecordShow extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void ExecuteQueryResult(String response) {
+        Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
+
+    }
 }

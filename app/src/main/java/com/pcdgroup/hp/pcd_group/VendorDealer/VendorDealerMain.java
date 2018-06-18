@@ -14,6 +14,11 @@ import android.view.ViewGroup;
 
 import com.pcdgroup.hp.pcd_group.R;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 18-06-2018.
+ */
+
 public class VendorDealerMain extends AppCompatActivity {
 
     private SectionsPageAdapter mSectionsPageAdapter;
