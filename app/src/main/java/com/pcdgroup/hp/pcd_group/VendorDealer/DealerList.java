@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
@@ -42,19 +43,13 @@ import java.util.List;
 
 public class DealerList extends AppCompatActivity implements CallBackInterface {
 
-    String FETCH_URL = "http://dert.co.in/gFiles/dealerlist.php";
     ListView listView;
     DealerListAdapter adapter;
     List<DealerData> localdata;
-    InputStream is = null;
-    String line = null;
     String result = null;
     String[] data;
-
     HashMap<String,String> hashMap = new HashMap<>();
-
     String emailId;
-
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -74,7 +69,18 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        getPdfs();
+        urlQry = DataGetUrl.DEALER_LISE;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                DealerList.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         adapter.notifyDataSetChanged();
 
@@ -89,7 +95,7 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
 
                 Intent intent = new Intent(DealerList.this, SingleRecordShow.class);
 
-                urlQry = DataGetUrl.DEALER_LISE;
+                urlQry = DataGetUrl.ASSIGN_DEALER;
                 typeOfQuery = CallType.POST_CALL;
 
                 hashMap.put("email", emailId);
@@ -111,69 +117,41 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
         });
     }
 
-    private void getPdfs() {
-
-        try {
-            URL url = new URL(FETCH_URL);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
-        try {
-
-            JSONArray ja = new JSONArray(result);
-            JSONObject jo = null;
-
-            data = new String[ja.length()];
-
-            for (int i=0; i<ja.length();i++){
-
-                jo=ja.getJSONObject(i);
-                String id = jo.getString("id");
-                String name = jo.getString("name");
-                String address = jo.getString("address");
-                String area = jo.getString("location");
-                String state = jo.getString("state");
-                String email = jo.getString("email");
-                String mobile = jo.getString("mobileno");
-                String organisation = jo.getString("organisation");
-                String gst = jo.getString("gstno");
-
-                DealerData data= new DealerData(id,name,address,area,state,email,mobile,organisation,gst);
-                localdata.add(data);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
-    public void ExecuteQueryResult(String response) {
-        Toast.makeText(DealerList.this, response.toString(), Toast.LENGTH_LONG).show();
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+
+        if (dataGetUrl.equals(DataGetUrl.DEALER_LISE)) {
+
+            try {
+
+                JSONArray ja = new JSONArray(result);
+                JSONObject jo = null;
+
+                data = new String[ja.length()];
+
+                for (int i = 0; i < ja.length(); i++) {
+
+                    jo = ja.getJSONObject(i);
+                    String id = jo.getString("id");
+                    String name = jo.getString("name");
+                    String address = jo.getString("address");
+                    String area = jo.getString("location");
+                    String state = jo.getString("state");
+                    String email = jo.getString("email");
+                    String mobile = jo.getString("mobileno");
+                    String organisation = jo.getString("organisation");
+                    String gst = jo.getString("gstno");
+
+                    DealerData data = new DealerData(id, name, address, area, state, email, mobile, organisation, gst);
+                    localdata.add(data);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+
+            Toast.makeText(DealerList.this, response.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }

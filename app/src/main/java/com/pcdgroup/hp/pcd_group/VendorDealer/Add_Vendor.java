@@ -33,14 +33,9 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
     private Button submit,AddProduct;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Products_Holder;
-    String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/vendorRegister.php";
     Boolean CheckEditText ;
-    ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
     GlobalVariable globalVariable;
-
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -180,7 +175,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(getActivity(),response.toString(), Toast.LENGTH_LONG).show();
     }
 }

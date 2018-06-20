@@ -11,27 +11,27 @@ public enum DataGetUrl {
   USER_REGISTER,
   OTP_REGISTER,
 
-  GET_CLIENT_DETAILS,//
-  DELETE_MULTIPLE_CLIENT,
+  GET_CLIENT_DETAILS,
+  DELETE_MULTIPLE_CLIENT, //.
   CLIENT_LIST,
   CLIENT_REGISTER,
   EDIT_CLIENT,
-  SINGLE_CLIENT,//
+  SINGLE_CLIENT,
   SINGLE_DELETE,
 
-  VIEW_PRODUCT,//
+  VIEW_PRODUCT,
   DELETE_PRODUCTS,
   ADD_PRODUCTS,//
   EDIT_PRODUCTS,//
-  SINGLE_PRODUCT,//
+  SINGLE_PRODUCT,
 
-  ACCESS_DETAILS,//
+  ACCESS_DETAILS,
   UPDATE_ACCESS_USER_DETAILS,
 
   ADD_BRAND,
-  LIST_BRAND,//
+  LIST_BRAND,
 
-  ACCESS_USER_DETAILS,//
+  ACCESS_USER_DETAILS,
   DISCOUNT_DETAILS,
 
   ORDERLIST_DETAILS,
@@ -39,21 +39,16 @@ public enum DataGetUrl {
   ADD_DEALER,
   ADD_VENDOR,
   DEALER_LISE,
-  ASSIGN_DEALER,//
-  VENDOR_LIST,//
-  VENDOR_PRODUCT_LIST,//
+  ASSIGN_DEALER,
+  VENDOR_LIST,
 
-  PURCHASE_ORDER_DETAILS,//
-  COMPLETE_ORDER_DETAILS,//
-  ADD_VENDOR_PRODUCT_LIST,//
+  PURCHASE_ORDER_DETAILS,
+  COMPLETE_ORDER_DETAILS,
+  VENDOR_PRODUCT_LIST,
 
-  SELECT_BRAND_LIST,//
-  SELECT_BRAND_QUOTATION_LIST,//
-  SELECT_PRODUCT_QUOTATION_LIST,
-  SELECT_CLIENT_QUOTATION_LIST,
   UPLOAD_TEXT_FILE_QUOTATION_LIST,//
   SHOW_CLIENT_QUOTATION_LIST,
-  ALL_QUOTATION_LIST,//
+  ALL_QUOTATION_LIST,
   UPDATE_BILL;
 
   private String[] urls = {
@@ -92,17 +87,12 @@ public enum DataGetUrl {
           "http://dert.co.in/gFiles/dealerlist.php",                //DEALER_LISE
           "http://dert.co.in/gFiles/assigndealor.php",              //ASSIGN_DEALER
           "http://dert.co.in/gFiles/vendorlist.php",                //VENDOR_LIST
-          "http://dert.co.in/gFiles/fimage.php",                    //ADD_VENDOR_PRODUCT_LIST   00
 
           "http://dert.co.in/gFiles/purchaseorder.php",             //PURCHASE_ORDER_DETAILS
           "http://dert.co.in/gFiles/completeorder.php",             //COMPLETE_ORDER_DETAILS
           "http://dert.co.in/gFiles/VendorProductList.php",         //VENDOR_PRODUCT_LIST
           //upload po link pending
 
-          "http://dert.co.in/gFiles/listbrands.php",                //SELECT_BRAND_LIST   00
-          "http://dert.co.in/gFiles/listbrands.php",                //SELECT_BRAND_QUOTATION_LIST   00
-          "http://dert.co.in/gFiles/fimage.php",                    //SELECT_PRODUCT_QUOTATION_LIST   00
-          "http://dert.co.in/gFiles/ClientDetails.php",             //SELECT_CLIENT_QUOTATION_LIST    00
           "http://dert.co.in/gFiles/uploadtxtfile.php",             //UPLOAD_TEXT_FILE_QUOTATION_LIST
           "http://dert.co.in/gFiles/getpdfs.php",                   //SHOW_CLIENT_QUOTATION_LIST
           "http://dert.co.in/gFiles/QuotationList.php",             //ALL_QUOTATION_LIST

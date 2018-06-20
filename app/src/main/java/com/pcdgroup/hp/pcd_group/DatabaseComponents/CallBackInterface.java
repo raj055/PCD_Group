@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public interface CallBackInterface {
 
-  void ExecuteQueryResult(String response);
+  void ExecuteQueryResult(String response, DataGetUrl dataGetUrl);
 
 
 }

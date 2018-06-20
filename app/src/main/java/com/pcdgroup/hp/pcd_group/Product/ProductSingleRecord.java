@@ -51,20 +51,12 @@ import java.util.HashMap;
 
 public class ProductSingleRecord extends AppCompatActivity implements CallBackInterface {
 
-    HttpParse httpParse = new HttpParse();
-    ProgressDialog pDialog;
-
-    // Http Url For Filter product Data from Id Sent from previous activity.
-    String HttpURL = "http://dert.co.in/gFiles/filterproductdata.php";
-
     HashMap<String,String> hashMap = new HashMap<>();
-    String ParseResult ;
     HashMap<String,String> ResultHash = new HashMap<>();
     String FinalJSonObject ;
     String IdHolder,NameHolder, PriceHolder, MinimumHolder,HsnHolder,BrandHolder,DescriptionHolder,
             StockHolder, RecordlevelHolder,GstHolder;
     Button UpdateButton, DeleteButton;
-    ProgressDialog progressDialog2;
 
     public TextView TextViewName;
     public TextView TextViewPrice;
@@ -77,7 +69,6 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
     public TextView TextviewGst;
 
     String EmailHolders;
-
     Intent intent;
     GlobalVariable gblVar;
 
@@ -119,9 +110,6 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         StockHolder = getIntent().getStringExtra("stock");
         RecordlevelHolder = getIntent().getStringExtra("reorderlevel");
         GstHolder = getIntent().getStringExtra("gst");
-
-
-        HttpWebCall(IdHolder);
 
         urlQry = DataGetUrl.SINGLE_PRODUCT;
         typeOfQuery = CallType.POST_CALL;
@@ -206,127 +194,6 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
 
     }
 
-    //Method to show current record Current Selected Record
-    public void HttpWebCall(final String PreviousListViewClickedItem){
-
-        class HttpWebCallFunction extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                pDialog = ProgressDialog.show(ProductSingleRecord.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                pDialog.dismiss();
-
-                //Storing Complete JSon Object into String Variable.
-                FinalJSonObject = httpResponseMsg ;
-
-                //Parsing the Stored JSOn String to GetHttpResponse Method.
-                new ProductSingleRecord.GetHttpResponse(ProductSingleRecord.this).execute();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-
-
-                ParseResult = httpParse.postRequest(ResultHash, HttpURL);
-
-                return ParseResult;
-            }
-        }
-
-        HttpWebCallFunction httpWebCallFunction = new HttpWebCallFunction();
-
-        httpWebCallFunction.execute(PreviousListViewClickedItem);
-    }
-
-
-    // Parsing Complete JSON Object.
-    private class GetHttpResponse extends AsyncTask<Void, Void, Void>
-    {
-        public Context context;
-
-        public GetHttpResponse(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0)
-        {
-            try
-            {
-                if(FinalJSonObject != null)
-                {
-                    JSONArray jsonArray = null;
-
-                    try {
-                        jsonArray = new JSONArray(FinalJSonObject);
-
-                        JSONObject jsonObject;
-
-                        for(int i=0; i<jsonArray.length(); i++)
-                        {
-                            jsonObject = jsonArray.getJSONObject(i);
-
-                            // Storing product Name, Phone Number, Class into Variables.
-                            IdHolder =  jsonObject.getString("id").toString() ;
-                            NameHolder = jsonObject.getString("name").toString() ;
-                            PriceHolder = jsonObject.getString("price").toString() ;
-                            MinimumHolder = jsonObject.getString("minimum").toString() ;
-                            HsnHolder = jsonObject.getString("hsncode").toString() ;
-                            BrandHolder = jsonObject.getString("brand").toString() ;
-                            DescriptionHolder = jsonObject.getString("description").toString() ;
-                            StockHolder = jsonObject.getString("stock").toString() ;
-                            RecordlevelHolder = jsonObject.getString("reorderlevel").toString() ;
-                            GstHolder = jsonObject.getString("gst").toString() ;
-                        }
-                    }
-                    catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result)
-        {
-            // Setting product Name, Phone Number, Class into TextView after done all process .
-            TextViewName.setText(NameHolder);
-            TextViewPrice.setText(PriceHolder);
-            TextviewMinimum.setText(MinimumHolder);
-            TextviewHsn.setText(HsnHolder);
-            TextviewBrand.setText(BrandHolder);
-            TextviewDescription.setText(DescriptionHolder);
-            TextviewStock.setText(StockHolder);
-            TextViewRecordlevel.setText(RecordlevelHolder);
-            TextviewGst.setText(GstHolder);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
@@ -366,8 +233,60 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
-        Toast.makeText(ProductSingleRecord.this,response.toString(), Toast.LENGTH_LONG).show();
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+        if (dataGetUrl.equals(DataGetUrl.SINGLE_PRODUCT)){
+            try
+            {
+                if(FinalJSonObject != null)
+                {
+                    JSONArray jsonArray = null;
 
+                    try {
+                        jsonArray = new JSONArray(FinalJSonObject);
+
+                        JSONObject jsonObject;
+
+                        for(int i=0; i<jsonArray.length(); i++)
+                        {
+                            jsonObject = jsonArray.getJSONObject(i);
+
+                            // Storing product Name, Phone Number, Class into Variables.
+                            IdHolder =  jsonObject.getString("id").toString() ;
+                            NameHolder = jsonObject.getString("name").toString() ;
+                            PriceHolder = jsonObject.getString("price").toString() ;
+                            MinimumHolder = jsonObject.getString("minimum").toString() ;
+                            HsnHolder = jsonObject.getString("hsncode").toString() ;
+                            BrandHolder = jsonObject.getString("brand").toString() ;
+                            DescriptionHolder = jsonObject.getString("description").toString() ;
+                            StockHolder = jsonObject.getString("stock").toString() ;
+                            RecordlevelHolder = jsonObject.getString("reorderlevel").toString() ;
+                            GstHolder = jsonObject.getString("gst").toString() ;
+                        }
+                    }
+                    catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // Setting product Name, Phone Number, Class into TextView after done all process .
+            TextViewName.setText(NameHolder);
+            TextViewPrice.setText(PriceHolder);
+            TextviewMinimum.setText(MinimumHolder);
+            TextviewHsn.setText(HsnHolder);
+            TextviewBrand.setText(BrandHolder);
+            TextviewDescription.setText(DescriptionHolder);
+            TextviewStock.setText(StockHolder);
+            TextViewRecordlevel.setText(RecordlevelHolder);
+            TextviewGst.setText(GstHolder);
+        }else {
+            Toast.makeText(ProductSingleRecord.this, response.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }

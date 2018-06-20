@@ -263,7 +263,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(UpdateActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

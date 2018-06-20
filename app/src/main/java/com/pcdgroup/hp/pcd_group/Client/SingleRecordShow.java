@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
@@ -39,24 +40,12 @@ import java.util.HashMap;
 
 public class SingleRecordShow extends AppCompatActivity implements CallBackInterface {
 
-    HttpParse httpParse = new HttpParse();
-    ProgressDialog pDialog;
-
-    // Http Url For Filter Client Data from Id Sent from previous activity.
-    String HttpURL = "http://dert.co.in/gFiles/filterclientdata.php";
-
-    // Http URL for delete Already Open Client Record.
-    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deleteclient.php";
-
-    String finalResult ;
     HashMap<String,String> hashMap = new HashMap<>();
-    String ParseResult ;
     HashMap<String,String> ResultHash = new HashMap<>();
     String FinalJSonObject ;
     String IdHolder,NameHolder, AddressHolder, Address1Holder,Address2Holder,MobileHolder,StateHolder,CountryHolder,
             PinHolder,CompnyHolder,EmailHolder,DesignationHolder;
     Button UpdateButton, DeleteButton, DealerAssign;
-    ProgressDialog progressDialog2;
 
     Intent intent;
     GlobalVariable gblVar;
@@ -84,21 +73,21 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
         gblVar = GlobalVariable.getInstance();
 
-        TextViewName = (TextView) findViewById(R.id.tvname) ;
-        TextViewAddress = (TextView) findViewById(R.id.tvaddress) ;
-        TextviewAddressline1 = (TextView) findViewById(R.id.tvaddressline1) ;
-        TextviewAddressline2 = (TextView) findViewById(R.id.tvaddressline2) ;
-        TextviewMobileno = (TextView) findViewById(R.id.tv_Mobileno) ;
-        TextviewState = (TextView) findViewById(R.id.tv_state) ;
-        TextviewCountry = (TextView) findViewById(R.id.tvCountry) ;
-        TextViewCompanyName = (TextView) findViewById(R.id.tv_companyname) ;
-        TextviewPin = (TextView) findViewById(R.id.tvpin) ;
-        TextViewEmailID = (TextView) findViewById(R.id.tvemailid) ;
-        TextViewDesignation = (TextView) findViewById(R.id.tvdesignation) ;
+        TextViewName = (TextView) findViewById(R.id.tvname);
+        TextViewAddress = (TextView) findViewById(R.id.tvaddress);
+        TextviewAddressline1 = (TextView) findViewById(R.id.tvaddressline1);
+        TextviewAddressline2 = (TextView) findViewById(R.id.tvaddressline2);
+        TextviewMobileno = (TextView) findViewById(R.id.tv_Mobileno);
+        TextviewState = (TextView) findViewById(R.id.tv_state);
+        TextviewCountry = (TextView) findViewById(R.id.tvCountry);
+        TextViewCompanyName = (TextView) findViewById(R.id.tv_companyname);
+        TextviewPin = (TextView) findViewById(R.id.tvpin);
+        TextViewEmailID = (TextView) findViewById(R.id.tvemailid);
+        TextViewDesignation = (TextView) findViewById(R.id.tvdesignation);
 
-        UpdateButton = (Button)findViewById(R.id.buttonUpdate);
-        DeleteButton = (Button)findViewById(R.id.buttonDelete);
-        DealerAssign = (Button)findViewById(R.id.buttonDealerAssign);
+        UpdateButton = (Button) findViewById(R.id.buttonUpdate);
+        DeleteButton = (Button) findViewById(R.id.buttonDelete);
+        DealerAssign = (Button) findViewById(R.id.buttonDealerAssign);
 
         //Receiving the ListView Clicked item value send by previous activity.
         IdHolder = getIntent().getStringExtra("id");
@@ -114,18 +103,30 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         EmailHolder = getIntent().getStringExtra("email_id");
         DesignationHolder = getIntent().getStringExtra("designation");
 
-        //Calling method to filter Client Record and open selected record.
-        HttpWebCall(IdHolder);
+        urlQry = DataGetUrl.SINGLE_CLIENT;
+        typeOfQuery = CallType.JSON_CALL;
+
+        ResultHash.put("id", IdHolder);
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                SingleRecordShow.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
 
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(SingleRecordShow.this,UpdateActivity.class);
+                Intent intent = new Intent(SingleRecordShow.this, UpdateActivity.class);
 
                 // Sending Client Id, Name, Number and Class to next UpdateActivity.
-                intent.putExtra("id",IdHolder);
+                intent.putExtra("id", IdHolder);
                 intent.putExtra("name", NameHolder);
                 intent.putExtra("address", AddressHolder);
                 intent.putExtra("addressline1", Address1Holder);
@@ -155,7 +156,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
                 urlQry = DataGetUrl.SINGLE_DELETE;
                 typeOfQuery = CallType.POST_CALL;
 
-                hashMap.put("id",IdHolder);
+                hashMap.put("id", IdHolder);
 
                 //Send Database query for inquiring to the database.
                 dataBaseQuery = new DataBaseQuery(hashMap,
@@ -167,7 +168,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
                 //Prepare for the database query
                 dataBaseQuery.PrepareForQuery();
 
-                intent = new Intent(SingleRecordShow.this,ClientDetailsActivity.class);
+                intent = new Intent(SingleRecordShow.this, ClientDetailsActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -183,131 +184,6 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
             }
         });
 
-    }
-
-    //Method to show current record Current Selected Record
-    public void HttpWebCall(final String PreviousListViewClickedItem){
-
-        class HttpWebCallFunction extends AsyncTask<String,Void,String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                pDialog = ProgressDialog.show(SingleRecordShow.this,"Loading Data",null,true,true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                pDialog.dismiss();
-
-                //Storing Complete JSon Object into String Variable.
-                FinalJSonObject = httpResponseMsg ;
-
-                //Parsing the Stored JSOn String to GetHttpResponse Method.
-                new GetHttpResponse(SingleRecordShow.this).execute();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                ResultHash.put("id",IdHolder);
-
-                ParseResult = httpParse.postRequest(ResultHash, HttpURL);
-
-                return ParseResult;
-            }
-        }
-
-        HttpWebCallFunction httpWebCallFunction = new HttpWebCallFunction();
-
-        httpWebCallFunction.execute(PreviousListViewClickedItem);
-    }
-
-    // Parsing Complete JSON Object.
-    private class GetHttpResponse extends AsyncTask<Void, Void, Void>
-    {
-        public Context context;
-
-        public GetHttpResponse(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0)
-        {
-            try
-            {
-                if(FinalJSonObject != null)
-                {
-                    JSONArray jsonArray = null;
-
-                    try {
-                        jsonArray = new JSONArray(FinalJSonObject);
-
-                        JSONObject jsonObject;
-
-                        for(int i=0; i<jsonArray.length(); i++)
-                        {
-                            jsonObject = jsonArray.getJSONObject(i);
-
-                            // Storing Client Name, Phone Number, Class into Variables.
-                            IdHolder =  jsonObject.getString("id").toString() ;
-                            NameHolder = jsonObject.getString("name").toString() ;
-                            AddressHolder = jsonObject.getString("address").toString() ;
-                            Address1Holder = jsonObject.getString("addressline1").toString() ;
-                            Address2Holder = jsonObject.getString("addressline2").toString() ;
-                            MobileHolder = jsonObject.getString("mobileno").toString() ;
-                            StateHolder = jsonObject.getString("state").toString() ;
-                            CountryHolder = jsonObject.getString("country").toString() ;
-                            PinHolder = jsonObject.getString("pin").toString() ;
-                            CompnyHolder = jsonObject.getString("company").toString() ;
-                            EmailHolder = jsonObject.getString("email_id").toString() ;
-                            DesignationHolder = jsonObject.getString("designation").toString() ;
-
-                        }
-                    }
-                    catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result)
-        {
-            // Setting Client Name, Phone Number, Class into TextView after done all process .
-            TextViewName.setText(NameHolder);
-            TextViewAddress.setText(AddressHolder);
-            TextviewAddressline1.setText(Address1Holder);
-            TextviewAddressline2.setText(Address2Holder);
-            TextviewMobileno.setText(MobileHolder);
-            TextviewState.setText(StateHolder);
-            TextviewCountry.setText(CountryHolder);
-            TextviewPin.setText(PinHolder);
-            TextViewCompanyName.setText(CompnyHolder);
-            TextViewEmailID.setText(EmailHolder);
-            TextViewDesignation.setText(DesignationHolder);
-        }
     }
 
     @Override
@@ -350,8 +226,68 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
-        Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
+        if (dataGetUrl.equals(DataGetUrl.SINGLE_CLIENT)){
+
+            try
+            {
+                if(FinalJSonObject != null)
+                {
+                    JSONArray jsonArray = null;
+
+                    try {
+                        jsonArray = new JSONArray(FinalJSonObject);
+
+                        JSONObject jsonObject;
+
+                        for(int i=0; i<jsonArray.length(); i++)
+                        {
+                            jsonObject = jsonArray.getJSONObject(i);
+
+                            // Storing Client Name, Phone Number, Class into Variables.
+                            IdHolder =  jsonObject.getString("id").toString() ;
+                            NameHolder = jsonObject.getString("name").toString() ;
+                            AddressHolder = jsonObject.getString("address").toString() ;
+                            Address1Holder = jsonObject.getString("addressline1").toString() ;
+                            Address2Holder = jsonObject.getString("addressline2").toString() ;
+                            MobileHolder = jsonObject.getString("mobileno").toString() ;
+                            StateHolder = jsonObject.getString("state").toString() ;
+                            CountryHolder = jsonObject.getString("country").toString() ;
+                            PinHolder = jsonObject.getString("pin").toString() ;
+                            CompnyHolder = jsonObject.getString("company").toString() ;
+                            EmailHolder = jsonObject.getString("email_id").toString() ;
+                            DesignationHolder = jsonObject.getString("designation").toString() ;
+
+                        }
+                    }
+                    catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // Setting Client Name, Phone Number, Class into TextView after done all process .
+            TextViewName.setText(NameHolder);
+            TextViewAddress.setText(AddressHolder);
+            TextviewAddressline1.setText(Address1Holder);
+            TextviewAddressline2.setText(Address2Holder);
+            TextviewMobileno.setText(MobileHolder);
+            TextviewState.setText(StateHolder);
+            TextviewCountry.setText(CountryHolder);
+            TextviewPin.setText(PinHolder);
+            TextViewCompanyName.setText(CompnyHolder);
+            TextViewEmailID.setText(EmailHolder);
+            TextViewDesignation.setText(DesignationHolder);
+
+        }else {
+            Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }

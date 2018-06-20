@@ -78,18 +78,12 @@ import java.util.UUID;
 public class ViewInvoice  extends AppCompatActivity implements CallBackInterface {
 
   TextView name,address,state,company,country,pin,state1;
-
   TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1,
                     TransportationCost,DiscountValue,DiscountTextview;
   TextView finalprice, finalquantity, finalamount, nameBill, brandname;
-
   TextView date,validdate, finalPayable;
   HashMap<String,String> hashMap = new HashMap<>();
-
   EditText userAnswer;
-
-  float totalPrice, totalAmount;
-  int totalquantity;
 
   public static int REQUEST_PERMISSIONS = 1;
   ConstraintLayout cl_pdflayout;
@@ -97,13 +91,10 @@ public class ViewInvoice  extends AppCompatActivity implements CallBackInterface
   boolean boolean_save;
   Bitmap bitmap;
   ProgressDialog progressDialog;
-
   boolean igst = false;
 
   String state_holder,state1_holder;
-
   HashMap<String, String> map = new HashMap<String, String>();
-
   String fileName, targetPdf;
   String fileUrl ;
 
@@ -433,7 +424,7 @@ public class ViewInvoice  extends AppCompatActivity implements CallBackInterface
   }
 
   @Override
-  public void ExecuteQueryResult(String response) {
+  public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
     Toast.makeText(ViewInvoice.this, response.toString(), Toast.LENGTH_LONG).show();
   }
 }

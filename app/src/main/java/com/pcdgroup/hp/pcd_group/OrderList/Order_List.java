@@ -133,7 +133,7 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
             JSONObject obj = new JSONObject(response);
             Toast.makeText(Order_List.this,obj.getString("message"),

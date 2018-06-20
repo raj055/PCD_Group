@@ -32,6 +32,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
@@ -57,17 +58,8 @@ public class ClientDetailsActivity extends AppCompatActivity
   implements CallBackInterface , RecyclerViewAdapter.DataAdapterListener {
 
 
-    HttpParse httpParse = new HttpParse();
     HashMap<String, String> hashMap = new HashMap<>();
-    String finalResult;
 
-    // Http URL for delete Already Open Client Record.
-    String HttpUrlDeleteRecord = "http://dert.co.in/gFiles/deletemultiple.php";
-
-    //
-    ProgressDialog progressDialog2;
-
-    //
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
 
@@ -326,49 +318,53 @@ public class ClientDetailsActivity extends AppCompatActivity
         }
     }
     @Override
-    public void ExecuteQueryResult(String response){
-      //adding contacts to contacts list
-      DataAdapters.clear();
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl){
 
-      //refreshing recycler view
-      mAdepter.notifyDataSetChanged();
+        if (dataGetUrl.equals(DataGetUrl.GET_CLIENT_DETAILS)) {
+            //adding contacts to contacts list
+            DataAdapters.clear();
 
-      try {
+            //refreshing recycler view
+            mAdepter.notifyDataSetChanged();
 
-        JSONArray array = new JSONArray(response);
-        for (int i = 0; i < array.length(); i++) {
-          Log.e("array", String.valueOf(array.length()));
-          DataAdapter GetData = new DataAdapter();
+            try {
 
-          JSONObject json = null;
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    Log.e("array", String.valueOf(array.length()));
+                    DataAdapter GetData = new DataAdapter();
 
-          json = array.getJSONObject(i);
-          GetData.setId(json.getString("id"));
-          GetData.setfName(json.getString("first_name"));
-          GetData.setlName(json.getString("last_name"));
-          GetData.setType(json.getString("type"));
-          GetData.setAddress(json.getString("address"));
-          GetData.setaddresline1(json.getString("address_line1"));
-          GetData.setAddressline2(json.getString("address_line2"));
-          GetData.setMobileno(json.getString("mobile_num"));
-          GetData.setState(json.getString("state"));
-          GetData.setCountry(json.getString("country"));
-          GetData.setCompanyname(json.getString("company_name"));
-          GetData.setPin(json.getString("pin"));
-          GetData.setEmailid(json.getString("email_id"));
-          GetData.setDesignation(json.getString("designation"));
-            DataAdapters.add(GetData);
+                    JSONObject json = null;
+
+                    json = array.getJSONObject(i);
+                    GetData.setId(json.getString("id"));
+                    GetData.setfName(json.getString("first_name"));
+                    GetData.setlName(json.getString("last_name"));
+                    GetData.setType(json.getString("type"));
+                    GetData.setAddress(json.getString("address"));
+                    GetData.setaddresline1(json.getString("address_line1"));
+                    GetData.setAddressline2(json.getString("address_line2"));
+                    GetData.setMobileno(json.getString("mobile_num"));
+                    GetData.setState(json.getString("state"));
+                    GetData.setCountry(json.getString("country"));
+                    GetData.setCompanyname(json.getString("company_name"));
+                    GetData.setPin(json.getString("pin"));
+                    GetData.setEmailid(json.getString("email_id"));
+                    GetData.setDesignation(json.getString("designation"));
+                    DataAdapters.add(GetData);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
+
+            recyclerView.setAdapter(mAdepter);
+        } else {
+
+            Toast.makeText(ClientDetailsActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+
         }
-      }
-      catch (JSONException e)
-      {
-        e.printStackTrace();
-      }
-
-
-      mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
-
-      recyclerView.setAdapter(mAdepter);
     }
 
       private class ActionModeCallback implements ActionMode.Callback {
@@ -400,7 +396,20 @@ public class ClientDetailsActivity extends AppCompatActivity
                         hashMap.put(key, str);
                         mAdepter.removeData(selectedItemPositions.get(i));
                     }
-                    deleteMessages("");
+
+                    urlQry = DataGetUrl.DELETE_MULTIPLE_CLIENT;
+                    typeOfQuery = CallType.JSON_CALL;
+
+                    //Send Database query for inquiring to the database.
+                    dataBaseQuery = new DataBaseQuery(hashMap,
+                            urlQry,
+                            typeOfQuery,
+                            getApplicationContext(),
+                            ClientDetailsActivity.this
+                    );
+                    //Prepare for the database query
+                    dataBaseQuery.PrepareForQuery();
+
                     mAdepter.notifyDataSetChanged();
                     mode.finish();
                     return true;
@@ -421,44 +430,5 @@ public class ClientDetailsActivity extends AppCompatActivity
                 }
             });
         }
-    }
-
-    // deleting the messages from recycler view
-    private void deleteMessages(final String ClientID) {
-
-        class ClientDeleteClass extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressDialog2 = ProgressDialog.show(ClientDetailsActivity.this, "Loading Data",
-                        null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-                progressDialog2.dismiss();
-
-                Toast.makeText(ClientDetailsActivity.this, httpResponseMsg.toString(), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                // Sending Client id.
-                finalResult = httpParse.postRequest(hashMap, HttpUrlDeleteRecord);
-
-                return finalResult;
-            }
-        }
-
-        ClientDeleteClass ClientDeleteClass = new ClientDeleteClass();
-
-        ClientDeleteClass.execute(ClientID);
     }
 }

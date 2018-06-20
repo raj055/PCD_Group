@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -87,11 +89,8 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
     EditText Email, Password;
     Button LogIn,Register;
-    String PasswordHolder, EmailHolder, DiscountHolder;
-    String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/UserLogin.php";
+    String PasswordHolder, EmailHolder;
     Boolean CheckEditText ;
-    ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
@@ -108,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(!isConnected(MainActivity.this)) buildDialog(MainActivity.this).show();
+        else {
+            Toast.makeText(MainActivity.this,"Welcome", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_main);
+        }
 
         /* // check to see if the user is already logged in
         String username = MySharedPreferences.getUsername(this);
@@ -227,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
         if(response.equalsIgnoreCase("Invalid Username or Password")){
 
@@ -295,5 +300,38 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         }
 
+    }
+
+    public boolean isConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting())) return true;
+            else return false;
+        } else
+            return false;
+    }
+
+    public android.support.v7.app.AlertDialog.Builder buildDialog(Context c) {
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(c);
+        builder.setTitle("INTERNET REQUIRED");
+        builder.setMessage("You must connect the internet to use this application. Please connect and try again");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finish();
+            }
+        });
+
+        return builder;
     }
 }

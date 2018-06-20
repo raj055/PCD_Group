@@ -45,15 +45,11 @@ public class ShowQuotationList extends AppCompatActivity implements CallBackInte
   ListView listView;
   ProgressDialog progressDialog;
   String emailId;
-
   ArrayList<Pdf> pdfList = new ArrayList<Pdf>();
-
   PdfAdapter pdfAdapter;
-
   public static int REQUEST_PERMISSIONS = 1;
   boolean boolean_permission;
   HttpParse httpParse;
-
   HashMap<String, String> hashMap = new HashMap<>();
 
   DataGetUrl urlQry;
@@ -122,7 +118,7 @@ public class ShowQuotationList extends AppCompatActivity implements CallBackInte
   }
 
   @Override
-  public void ExecuteQueryResult(String response) {
+  public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
     try {
       JSONObject obj = new JSONObject(response);
       Toast.makeText(ShowQuotationList.this,obj.getString("message"), Toast.LENGTH_SHORT).show();

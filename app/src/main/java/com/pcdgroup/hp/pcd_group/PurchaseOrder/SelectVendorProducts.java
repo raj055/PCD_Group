@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
@@ -37,10 +38,9 @@ import java.util.HashMap;
 public class SelectVendorProducts extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
-    String HttpURL = "http://dert.co.in/gFiles/VendorProductList.php";
     String recordName;
     int position;
-    String str,str1;
+    String str1;
     ArrayList<String> id;
     ProgressDialog progressDialog;
     String emailId;
@@ -92,41 +92,18 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
             }
         }
 
-        //Retrieve
-        GetProductList(id);
-    }
+        urlQry = DataGetUrl.VENDOR_PRODUCT_LIST;
+        typeOfQuery = CallType.JSON_CALL;
 
-    public void GetProductList(final ArrayList<String> productID) {
-
-        class GetProductList extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-            }
-
-            @Override
-            protected void onPostExecute(String httpResponseMsg) {
-
-                super.onPostExecute(httpResponseMsg);
-
-
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-                return finalResult;
-            }
-        }
-
-        GetProductList getProductList = new GetProductList();
-
-        getProductList.execute(String.valueOf(productID));
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                SelectVendorProducts.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
     }
 
     @Override
@@ -156,7 +133,7 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
                         ProductData selectedRowLabel = prductlist.get(selectedRows.keyAt(i));
 
                         //append the row label text
-//                        stringBuilder.append(selectedRowLabel + "\n");
+                        stringBuilder.append(selectedRowLabel + "\n");
 
                         Log.v("Selected String ===== ", String.valueOf(selectedRowLabel));
                     }
@@ -182,7 +159,7 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
             JSONObject obj = new JSONObject(response);
             Toast.makeText(SelectVendorProducts.this,obj.getString("message"), Toast.LENGTH_SHORT).show();

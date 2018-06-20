@@ -41,22 +41,15 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     EditText First_Name, Last_Name,MobileNo, Email, Password ;
     String F_Name_Holder, L_Name_Holder, MobileNo_Holder, EmailHolder, PasswordHolder;
     String emailPattern;
-    String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/UserRegistration.php";
     Boolean CheckEditText ;
-    ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
-
-    String HttpURLVERIFYCODE = "http://dert.co.in/gFiles/otp_registration_user.php";
     EditText VerifayCode;
     TextView RegenrateCode;
     Button Verify;
-    String strVerify,genrateCode;
+    String strVerify;
     String senderHolder,numberHolde,message_Holder,code_Holder;
     Random Number;
     int Rnumber;
-    String finalResultcode;
 
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -238,7 +231,7 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(UserRegistarActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
 }

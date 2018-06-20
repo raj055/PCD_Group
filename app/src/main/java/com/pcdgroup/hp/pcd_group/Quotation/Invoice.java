@@ -628,7 +628,7 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
     }
 }

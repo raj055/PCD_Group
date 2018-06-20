@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
@@ -60,10 +61,6 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
 
     ListView listView;
     ProductList_VendorAdepter adapter;
-    String HttpURL1 = "http://dert.co.in/gFiles/fimage.php";
-    InputStream is = null;
-    String line = null;
-    String result = null;
     String[] data;
     ArrayList<String> picNames;
     String recordName,EmailHolders;
@@ -71,7 +68,7 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
     GlobalVariable gblVar;
     String id;
     ProductdataVendor selectedRowLabel;
-
+    HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -97,76 +94,22 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        //Retrieve
-        getData();
+        urlQry = DataGetUrl.VIEW_PRODUCT;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                VendorProductAdd.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         //Adepter
         adapter.notifyDataSetChanged();
 
-    }
-
-    private void getData(){
-
-        try {
-            URL url = new URL(HttpURL1);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
-        try {
-
-            JSONArray ja = new JSONArray(result);
-            JSONObject jo = null;
-
-            data = new String[ja.length()];
-
-            for (int i=0; i<ja.length();i++){
-
-                jo=ja.getJSONObject(i);
-                id = jo.getString("id");
-                String picname = jo.getString("name");
-                String urlname = jo.getString("photo");
-                String price = jo.getString("price");
-                String minimum = jo.getString("minimum");
-                String hsncode=jo.getString("hsncode");
-                String gst = jo.getString("gst");
-                String brand=jo.getString("brand");
-                String description=jo.getString("description");
-                String stock=jo.getString("stock");
-                String reorderlevel=jo.getString("reorderlevel");
-                adapter.notifyDataSetChanged();
-                picNames.add(picname);
-                ProductdataVendor e = new ProductdataVendor(id,picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
-                localEntity.add(e);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -221,7 +164,36 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+        try {
 
+            JSONArray ja = new JSONArray(response);
+            JSONObject jo = null;
+
+            data = new String[ja.length()];
+
+            for (int i=0; i<ja.length();i++){
+
+                jo=ja.getJSONObject(i);
+                id = jo.getString("id");
+                String picname = jo.getString("name");
+                String urlname = jo.getString("photo");
+                String price = jo.getString("price");
+                String minimum = jo.getString("minimum");
+                String hsncode=jo.getString("hsncode");
+                String gst = jo.getString("gst");
+                String brand=jo.getString("brand");
+                String description=jo.getString("description");
+                String stock=jo.getString("stock");
+                String reorderlevel=jo.getString("reorderlevel");
+                adapter.notifyDataSetChanged();
+                picNames.add(picname);
+                ProductdataVendor e = new ProductdataVendor(id,picname,urlname,price,gst, minimum,hsncode,description,stock,reorderlevel);
+                localEntity.add(e);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

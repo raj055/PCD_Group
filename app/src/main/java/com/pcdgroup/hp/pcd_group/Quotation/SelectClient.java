@@ -45,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,27 +53,16 @@ import java.util.List;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener ,
+public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener,
         CallBackInterface {
 
     List<ClientDataAdapter> clientDataAdapters;
-
     RecyclerView recyclerView;
-
     RecyclerView.LayoutManager recyclerViewlayoutManager;
-
     ClientRecyclerViewAdapter mAdepter;
-
-    JsonArrayRequest jsonArrayRequest ;
-
-    RequestQueue requestQueue ;
-
-    String HttpURL = "http://dert.co.in/gFiles/ClientDetails.php";
-
     View ChildView ;
-
     SearchView searchView;
-
+    HashMap<String,String> hashMap = new HashMap<>();
     int RecyclerViewClickedItemPOS ;
 
     DataGetUrl urlQry;
@@ -86,25 +76,34 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
 
         clientDataAdapters = new ArrayList<>();
 
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView1);
 
         mAdepter = new ClientRecyclerViewAdapter(this, clientDataAdapters, this);
 
         recyclerView.setHasFixedSize(true);
 
-
         // white background notification bar
         whiteNotificationBar(recyclerView);
 
         recyclerViewlayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewlayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, DividerItemDecoration.VERTICAL, 36));
         recyclerView.setAdapter(mAdepter);
 
         // JSON data web call function call from here.
-        JSON_WEB_CALL();
+        urlQry = DataGetUrl.GET_CLIENT_DETAILS;
+
+        typeOfQuery = CallType.JSON_CALL;
+
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                SelectClient.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         //RecyclerView Item click listener code starts from here.
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -163,91 +162,6 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
             }
         });
 
-    }
-
-    public void JSON_WEB_CALL(){
-
-        jsonArrayRequest = new JsonArrayRequest(HttpURL,
-
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        if (response == null) {
-                            Toast.makeText(getApplicationContext(), "Couldn't fetch the contacts! Pleas try again.", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        // adding contacts to contacts list
-                        clientDataAdapters.clear();
-
-                        // refreshing recycler view
-                        mAdepter.notifyDataSetChanged();
-
-                        JSON_PARSE_DATA_AFTER_WEBCALL(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error in getting json
-                        Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-        requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    public void JSON_PARSE_DATA_AFTER_WEBCALL(JSONArray array){
-
-        for(int i = 0; i<array.length(); i++) {
-
-            ClientDataAdapter GetClientDataAdapter2 = new ClientDataAdapter();
-
-            JSONObject json = null;
-            try {
-                json = array.getJSONObject(i);
-
-                GetClientDataAdapter2.setfName(json.getString("first_name"));
-
-                GetClientDataAdapter2.setlName(json.getString("last_name"));
-
-                GetClientDataAdapter2.setType(json.getString("type"));
-
-                GetClientDataAdapter2.setAddress(json.getString("address"));
-
-                GetClientDataAdapter2.setaddresline1(json.getString("address_line1"));
-                GetClientDataAdapter2.setAddressline2(json.getString("address_line2"));
-                GetClientDataAdapter2.setMobileno(json.getString("mobile_num"));
-                GetClientDataAdapter2.setState(json.getString("state"));
-
-                GetClientDataAdapter2.setCountry(json.getString("country"));
-
-                GetClientDataAdapter2.setCompanyname(json.getString("company_name"));
-
-                GetClientDataAdapter2.setPin(json.getString( "pin"));
-                GetClientDataAdapter2.setEmailid(json.getString("email_id"));
-
-                GetClientDataAdapter2.setDesignation(json.getString("designation"));
-
-            }
-            catch (JSONException e)
-            {
-
-                e.printStackTrace();
-            }
-
-            clientDataAdapters.add(GetClientDataAdapter2);
-
-        }
-
-
-        mAdepter = new ClientRecyclerViewAdapter(this,clientDataAdapters, this);
-
-        recyclerView.setAdapter(mAdepter);
     }
 
     @Override
@@ -322,7 +236,57 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+        // adding contacts to contacts list
+        clientDataAdapters.clear();
 
+        // refreshing recycler view
+        mAdepter.notifyDataSetChanged();
+
+            try {
+
+                JSONArray array = new JSONArray(response);
+
+                for(int i = 0; i<array.length(); i++) {
+
+                    ClientDataAdapter GetClientDataAdapter2 = new ClientDataAdapter();
+
+                    JSONObject json = null;
+
+                    json = array.getJSONObject(i);
+
+                    GetClientDataAdapter2.setfName(json.getString("first_name"));
+
+                    GetClientDataAdapter2.setlName(json.getString("last_name"));
+
+                    GetClientDataAdapter2.setType(json.getString("type"));
+
+                    GetClientDataAdapter2.setAddress(json.getString("address"));
+
+                    GetClientDataAdapter2.setaddresline1(json.getString("address_line1"));
+                    GetClientDataAdapter2.setAddressline2(json.getString("address_line2"));
+                    GetClientDataAdapter2.setMobileno(json.getString("mobile_num"));
+                    GetClientDataAdapter2.setState(json.getString("state"));
+
+                    GetClientDataAdapter2.setCountry(json.getString("country"));
+
+                    GetClientDataAdapter2.setCompanyname(json.getString("company_name"));
+
+                    GetClientDataAdapter2.setPin(json.getString("pin"));
+                    GetClientDataAdapter2.setEmailid(json.getString("email_id"));
+
+                    GetClientDataAdapter2.setDesignation(json.getString("designation"));
+                }
+
+            }
+            catch (JSONException e)
+            {
+
+                e.printStackTrace();
+            }
+
+        mAdepter = new ClientRecyclerViewAdapter(this,clientDataAdapters, this);
+
+        recyclerView.setAdapter(mAdepter);
     }
 }

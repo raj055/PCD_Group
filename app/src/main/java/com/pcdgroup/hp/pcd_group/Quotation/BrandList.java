@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.AdminLogin.BrandAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.Category;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
@@ -26,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,15 +38,10 @@ import java.util.List;
 public class BrandList  extends AppCompatActivity implements CallBackInterface {
 
     ListView listView;
-    String HttpURL_get = "http://dert.co.in/gFiles/listbrands.php";
-
     List<Category> categoriesList;
     BrandAdepter adepter;
-    InputStream is = null;
-    String line = null;
-    String result = null;
     String[] data;
-
+    HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -93,46 +90,26 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
              }
          });
 
-        //Retrieve
-        getData();
+        urlQry = DataGetUrl.LIST_BRAND;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                BrandList.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
     }
 
-    private void getData(){
-
-        try {
-            URL url = new URL(HttpURL_get);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
+    @Override
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
 
-            JSONArray ja = new JSONArray(result);
+            JSONArray ja = new JSONArray(response);
             JSONObject jo = null;
 
             data = new String[ja.length()];
@@ -159,10 +136,5 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void ExecuteQueryResult(String response) {
-
     }
 }

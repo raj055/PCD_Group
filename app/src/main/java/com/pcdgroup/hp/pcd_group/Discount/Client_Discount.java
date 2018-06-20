@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserAdminAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
@@ -51,9 +52,7 @@ import java.util.List;
 
 public class Client_Discount extends AppCompatActivity implements CallBackInterface {
 
-    InputStream is = null;
-    String line = null;
-    String result = null;
+
     String[] data;
     ListView listView;
     Button done;
@@ -65,10 +64,7 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
     UserDataGet usrDGet;
     Intent intent;
     GlobalVariable gblv;
-
     String discountValue = "";
-    String HttpURL = "http://dert.co.in/gFiles/accessuserdetails.php";
-
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -92,8 +88,19 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        //Retrieve
-        getData();
+        urlQry = DataGetUrl.ACCESS_USER_DETAILS;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                Client_Discount.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
+
 
         //Adepter
         adepter.notifyDataSetChanged();
@@ -222,66 +229,6 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         }
         finish();
     }
-
-    private void getData(){
-
-        try {
-            URL url = new URL(HttpURL);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
-        try {
-
-            JSONArray ja = new JSONArray(result);
-            JSONObject jo = null;
-
-            data = new String[ja.length()];
-
-            for (int i=0; i<ja.length();i++){
-
-                jo=ja.getJSONObject(i);
-                String email = jo.getString("email_id");
-                String accessType = jo.getString("Discount");
-                UserDataGet e = new UserDataGet(email);
-                UserDataGet tmp = new UserDataGet(email);
-                e.setAccessType(accessType);
-                tmp.setAccessType(accessType);
-                userDataGets.add(e);
-                //Store the set values
-
-                tempStoreDataValues.add(tmp);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
@@ -311,7 +258,38 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
-        Toast.makeText(Client_Discount.this,response.toString(), Toast.LENGTH_LONG).show();
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+
+        if (dataGetUrl.equals(DataGetUrl.ACCESS_USER_DETAILS)) {
+
+            try {
+
+                JSONArray ja = new JSONArray(response);
+                JSONObject jo = null;
+
+                data = new String[ja.length()];
+
+                for (int i=0; i<ja.length();i++){
+
+                    jo=ja.getJSONObject(i);
+                    String email = jo.getString("email_id");
+                    String accessType = jo.getString("Discount");
+                    UserDataGet e = new UserDataGet(email);
+                    UserDataGet tmp = new UserDataGet(email);
+                    e.setAccessType(accessType);
+                    tmp.setAccessType(accessType);
+                    userDataGets.add(e);
+                    //Store the set values
+
+                    tempStoreDataValues.add(tmp);
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        } else {
+            Toast.makeText(Client_Discount.this, response.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }

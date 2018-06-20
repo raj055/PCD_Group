@@ -38,14 +38,9 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
     Button submit;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Designation_Holder;
-    String finalResult;
-    String HttpURL = "http://dert.co.in/gFiles/dealer.php";
     Boolean CheckEditText ;
-    ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
     GlobalVariable globalVariable;
-
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -148,7 +143,7 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(getActivity(),response.toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -43,6 +43,7 @@ public class DataBaseQuery {
   private CallType queryType;
   JsonArrayRequest jsonArrayRequest;
   RequestQueue requestQueue ;
+  DataGetUrl dataGetUrl;
 
   public DataBaseQuery(HashMap<String, String> hashMapRef,
                             DataGetUrl urlQry,
@@ -66,6 +67,8 @@ public class DataBaseQuery {
     resultReceiver = callBackExecutor;
 
     queryType = typeOfQuery;
+
+    dataGetUrl = urlQry;
   }
 
   public void PrepareForQuery(){
@@ -98,7 +101,7 @@ public class DataBaseQuery {
       protected void onPostExecute(String httpResponseMsg) {
 
         super.onPostExecute(httpResponseMsg);
-        resultReceiver.ExecuteQueryResult(httpResponseMsg);
+        resultReceiver.ExecuteQueryResult(httpResponseMsg,dataGetUrl);
       }
 
       @Override
@@ -126,7 +129,7 @@ public class DataBaseQuery {
             return;
           }
 
-          resultReceiver.ExecuteQueryResult(response.toString());
+          resultReceiver.ExecuteQueryResult(response.toString(),dataGetUrl);
         }
       },
       new Response.ErrorListener() {

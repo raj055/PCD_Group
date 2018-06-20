@@ -129,7 +129,7 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         JSONArray jsonArray = null;
         try {
             JSONObject obj = new JSONObject(response);

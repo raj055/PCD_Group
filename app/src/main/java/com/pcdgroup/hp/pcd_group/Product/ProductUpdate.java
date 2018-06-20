@@ -34,6 +34,10 @@ import com.android.volley.toolbox.Volley;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
 import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
+import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
@@ -51,7 +55,7 @@ import java.util.Map;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ProductUpdate extends AppCompatActivity {
+public class ProductUpdate extends AppCompatActivity implements CallBackInterface {
 
     String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
     ProgressDialog progressDialog;
@@ -72,6 +76,10 @@ public class ProductUpdate extends AppCompatActivity {
     private Bitmap bitmap = null;
 
     private int PICK_IMAGE_REQUEST = 1;
+
+    DataGetUrl urlQry;
+    DataBaseQuery dataBaseQuery;
+    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -349,5 +357,10 @@ public class ProductUpdate extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
+
     }
 }

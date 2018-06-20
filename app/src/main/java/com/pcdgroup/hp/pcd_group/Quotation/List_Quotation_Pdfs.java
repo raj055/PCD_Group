@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
@@ -47,6 +48,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,15 +58,11 @@ import java.util.List;
 
 public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackInterface {
 
-    String PDF_FETCH_URL = "http://dert.co.in/gFiles/QuotationList.php";
     ListView listView;
     QuotationAdepter adapter;
     List<pdf2> localPdf;
-    InputStream is = null;
-    String line = null;
-    String result = null;
     String[] data;
-
+    HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -84,7 +82,18 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        getPdfs();
+        urlQry = DataGetUrl.ALL_QUOTATION_LIST;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                List_Quotation_Pdfs.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         adapter.notifyDataSetChanged();
 
@@ -103,41 +112,11 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
 
     }
 
-    private void getPdfs() {
-
-        try {
-            URL url = new URL(PDF_FETCH_URL);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
+    @Override
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
 
-            JSONArray ja = new JSONArray(result);
+            JSONArray ja = new JSONArray(response);
             JSONObject jo = null;
 
             data = new String[ja.length()];
@@ -160,11 +139,5 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
         }catch (Exception e){
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void ExecuteQueryResult(String response) {
-
     }
 }

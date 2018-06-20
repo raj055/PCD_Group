@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
+import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.AdminLogin.BrandAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.Category;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
@@ -56,6 +57,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -74,16 +76,9 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     ProductListAdapter itemsAdapter;
     public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();
     public ArrayList<String[]> PrdList = new ArrayList<String[]>();
-
-    String HttpURL_get = "http://dert.co.in/gFiles/listbrands.php";
-
     List<Category> categoriesList;
     BrandAdepter adepter;
-    InputStream is = null;
-    String line = null;
-    String result = null;
     String[] data;
-
     Intent intent;
     String Tpcost,discount,DiscountVallue;
 
@@ -92,6 +87,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     private int day;
 
     static final int DATE_PICKER_ID = 1111;
+
+    HashMap<String,String> hashMap = new HashMap<>();
 
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -130,7 +127,18 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
         tvDiscount.setText("Discount" + "\t\t" + DiscountVallue + "%");
 
-        getData();
+        urlQry = DataGetUrl.LIST_BRAND;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                CreateQuotation.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         final Calendar c = Calendar.getInstance();
         year  = c.get(Calendar.YEAR);
@@ -408,69 +416,6 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         }
     };
 
-    private void getData(){
-
-        try {
-            URL url = new URL(HttpURL_get);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
-        try {
-
-            JSONArray ja = new JSONArray(result);
-            JSONObject jo = null;
-
-            data = new String[ja.length()];
-
-            for (int i=0; i<ja.length();i++){
-
-                jo=ja.getJSONObject(i);
-                String name = jo.getString("name");
-                String address = jo.getString("address");
-                String address1 = jo.getString("address1");
-                String address2 = jo.getString("address2");
-                String pincode = jo.getString("pincode");
-                String state = jo.getString("state");
-                String mobileno = jo.getString("mobileno");
-                String email = jo.getString("email");
-                String website = jo.getString("website");
-                String pan = jo.getString("pan");
-                String gst = jo.getString("gst");
-                Category e = new Category(name, address, address1, address2, pincode,
-                        state, mobileno, email, website, pan, gst);
-                categoriesList.add(e);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
@@ -512,7 +457,35 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+        try {
 
+            JSONArray ja = new JSONArray(response);
+            JSONObject jo = null;
+
+            data = new String[ja.length()];
+
+            for (int i=0; i<ja.length();i++){
+
+                jo=ja.getJSONObject(i);
+                String name = jo.getString("name");
+                String address = jo.getString("address");
+                String address1 = jo.getString("address1");
+                String address2 = jo.getString("address2");
+                String pincode = jo.getString("pincode");
+                String state = jo.getString("state");
+                String mobileno = jo.getString("mobileno");
+                String email = jo.getString("email");
+                String website = jo.getString("website");
+                String pan = jo.getString("pan");
+                String gst = jo.getString("gst");
+                Category e = new Category(name, address, address1, address2, pincode,
+                        state, mobileno, email, website, pan, gst);
+                categoriesList.add(e);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

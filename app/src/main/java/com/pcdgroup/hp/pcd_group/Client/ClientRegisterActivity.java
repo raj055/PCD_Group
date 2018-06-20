@@ -43,16 +43,13 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
     String FName_Holder, LName_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
             State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder,
             UserClient_Holder;
-    String finalResult;
 
     Boolean CheckEditText ;
-    ProgressDialog progressDialog;
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
-    HttpParse httpParse = new HttpParse();
     Intent intent;
     GlobalVariable globalVariable;
 
@@ -199,7 +196,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
+    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(ClientRegisterActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
     }
 }

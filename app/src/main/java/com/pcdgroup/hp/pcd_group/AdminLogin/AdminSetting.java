@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
+import com.pcdgroup.hp.pcd_group.Client.SingleRecordShow;
 import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
@@ -69,15 +70,10 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
 
     HashMap<String,String> hashMap = new HashMap<>();
 
-    String HttpURL_get = "http://dert.co.in/gFiles/listbrands.php";
-
     View promptUserView;
 
     List<Category> categoriesList;
     BrandAdepter adepter;
-    InputStream is = null;
-    String line = null;
-    String result = null;
     String[] data;
 
     DataGetUrl urlQry;
@@ -117,8 +113,18 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-        //Retrieve
-        getData();
+        urlQry = DataGetUrl.LIST_BRAND;
+        typeOfQuery = CallType.JSON_CALL;
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                AdminSetting.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
 
         //Adepter
         adepter.notifyDataSetChanged();
@@ -238,69 +244,6 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
         alertDialog.show();
     }
 
-    private void getData(){
-
-        try {
-            URL url = new URL(HttpURL_get);
-            HttpURLConnection con= (HttpURLConnection) url.openConnection();
-
-            con.setRequestMethod("GET");
-
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Read in content into String
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result = sb.toString();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        //Parse json data
-        try {
-
-            JSONArray ja = new JSONArray(result);
-            JSONObject jo = null;
-
-            data = new String[ja.length()];
-
-            for (int i=0; i<ja.length();i++){
-
-                jo=ja.getJSONObject(i);
-                String name = jo.getString("name");
-                String address = jo.getString("address");
-                String address1 = jo.getString("address1");
-                String address2 = jo.getString("address2");
-                String pincode = jo.getString("pincode");
-                String state = jo.getString("state");
-                String mobileno = jo.getString("mobileno");
-                String email = jo.getString("email");
-                String website = jo.getString("website");
-                String pan = jo.getString("pan");
-                String gst = jo.getString("gst");
-                Category e = new Category(name, address, address1, address2, pincode,
-                         state, mobileno, email, website, pan, gst);
-                categoriesList.add(e);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onBackPressed() {
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminSetting.this);
@@ -341,7 +284,40 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
     }
 
     @Override
-    public void ExecuteQueryResult(String response) {
-        Toast.makeText(AdminSetting.this,response.toString(), Toast.LENGTH_LONG).show();
+    public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
+
+        if (dataGetUrl.equals(DataGetUrl.LIST_BRAND)) {
+            try {
+
+                JSONArray ja = new JSONArray(response);
+                JSONObject jo = null;
+
+                data = new String[ja.length()];
+
+                for (int i = 0; i < ja.length(); i++) {
+
+                    jo = ja.getJSONObject(i);
+                    String name = jo.getString("name");
+                    String address = jo.getString("address");
+                    String address1 = jo.getString("address1");
+                    String address2 = jo.getString("address2");
+                    String pincode = jo.getString("pincode");
+                    String state = jo.getString("state");
+                    String mobileno = jo.getString("mobileno");
+                    String email = jo.getString("email");
+                    String website = jo.getString("website");
+                    String pan = jo.getString("pan");
+                    String gst = jo.getString("gst");
+                    Category e = new Category(name, address, address1, address2, pincode,
+                            state, mobileno, email, website, pan, gst);
+                    categoriesList.add(e);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(AdminSetting.this, response.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }
