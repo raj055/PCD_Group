@@ -144,6 +144,7 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
 
                     DealerData data = new DealerData(id, name, address, area, state, email, mobile, organisation, gst);
                     localdata.add(data);
+                    adapter.notifyDataSetChanged();
                 }
 
             } catch (Exception e) {

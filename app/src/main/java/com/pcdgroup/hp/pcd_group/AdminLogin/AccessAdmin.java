@@ -1,47 +1,28 @@
 package com.pcdgroup.hp.pcd_group.AdminLogin;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
-import com.pcdgroup.hp.pcd_group.Http.HttpParse;
-import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
-import com.pcdgroup.hp.pcd_group.Product.Entity;
-import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,9 +64,6 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
         listView.setAdapter(adepter);
         adepter.notifyDataSetChanged();
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
         urlQry = DataGetUrl.ACCESS_DETAILS;
         typeOfQuery = CallType.JSON_CALL;
 
@@ -96,11 +74,9 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
                 getApplicationContext(),
                 AccessAdmin.this
         );
+
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-
-        //Adepter
-        adepter.notifyDataSetChanged();
 
         //done click listener
         done.setOnClickListener(new View.OnClickListener() {
@@ -258,6 +234,9 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
                     //Store the set values
 
                     tempStoreDataValues.add(tmp);
+
+                    adepter.notifyDataSetChanged();
+
                 }
 
             }catch (Exception e){

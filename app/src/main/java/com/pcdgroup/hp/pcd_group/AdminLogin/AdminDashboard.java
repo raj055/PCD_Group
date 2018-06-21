@@ -40,6 +40,7 @@ import com.pcdgroup.hp.pcd_group.PurchaseOrder.PO_List;
 import com.pcdgroup.hp.pcd_group.Quotation.CreateQuotation;
 import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
 import com.pcdgroup.hp.pcd_group.Quotation.List_Quotation_Pdfs;
+import com.pcdgroup.hp.pcd_group.Quotation.ShowQuotationList;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.VendorDealerMain;
 
@@ -58,7 +59,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     public static String EmailHolder = "";
     Intent intent;
     private DrawerLayout drawer;
-
+    GlobalVariable gblv;
     Context context;
 
     @Override
@@ -67,6 +68,8 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_admindashboard);
 
         context = this;
+
+        gblv = GlobalVariable.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,11 +89,10 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
         nav_email.setTitle(EmailHolder);
 
-        GlobalVariable gblVar = GlobalVariable.getInstance();
-        gblVar.currentUserEmail = EmailHolder;
+        gblv.currentUserEmail = EmailHolder;
 
         // hide items in menu drawer
-        menu.findItem(R.id.nav_quotation).setVisible(true);
+        menu.findItem(R.id.nav_myQuotation).setVisible(false);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -107,6 +109,23 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         ImageView imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
         ImageView imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
         ImageView imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
+
+        if (gblv.AccessType.contains("Manager")) {
+
+            menu.findItem(R.id.nav_myQuotation).setVisible(false);
+
+        }
+        else if (gblv.AccessType.contains("Client")){
+
+            menu.findItem(R.id.nav_quotation).setVisible(false);
+            menu.findItem(R.id.nav_order).setVisible(false);
+
+            menu.findItem(R.id.main_vendor).setVisible(false);
+            menu.findItem(R.id.main_po).setVisible(false);
+
+            menu.findItem(R.id.nav_myQuotation).setVisible(true);
+
+        }
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +163,11 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
             case R.id.nav_quotation:
                 intent = new Intent(AdminDashboard.this,List_Quotation_Pdfs.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_myQuotation:
+                intent = new Intent(AdminDashboard.this,ShowQuotationList.class);
                 startActivity(intent);
                 break;
 

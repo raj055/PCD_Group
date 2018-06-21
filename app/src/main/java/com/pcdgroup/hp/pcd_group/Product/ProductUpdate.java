@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,18 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
-import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
@@ -41,14 +29,10 @@ import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Grasp
@@ -315,12 +299,12 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
             }
             else if (gblVar.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else if (gblVar.AccessType.contains("Client")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else {

@@ -115,8 +115,6 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
 
-        //Adepter
-        adapter.notifyDataSetChanged();
 
     }
 
@@ -219,6 +217,9 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
                 picNames.add(picname);
                 ProdactEntity e = new ProdactEntity(picname,urlname,price, quantity,hsncode,gst,description,stock,reorderlevel,id);
                 prodactEntities.add(e);
+
+                //Adepter
+                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){

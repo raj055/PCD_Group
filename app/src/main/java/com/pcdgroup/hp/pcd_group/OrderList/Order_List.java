@@ -1,7 +1,6 @@
 package com.pcdgroup.hp.pcd_group.OrderList;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,7 +22,6 @@ import com.pcdgroup.hp.pcd_group.Quotation.Pdf;
 import com.pcdgroup.hp.pcd_group.Quotation.PdfAdapter;
 import com.pcdgroup.hp.pcd_group.Quotation.ViewInvoice;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +57,6 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderlist);
 
-
         httpParse = new HttpParse();
 
         globalVariable = GlobalVariable.getInstance();
@@ -70,9 +67,9 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
         lstVeiw = (ListView) findViewById(R.id.orderList);
 
         urlQry = DataGetUrl.ORDERLIST_DETAILS;
-        typeOfQuery = CallType.JSON_CALL;
+        typeOfQuery = CallType.POST_CALL;
 
-        hashMap.put("billed",emailId);
+        hashMap.put("billed","true");
 
         //Send Database query for inquiring to the database.
         dataBaseQuery = new DataBaseQuery(hashMap,
@@ -122,7 +119,7 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
             }
             else if (globalVariable.AccessType.contains("Manager")) {
 
-                intent = new Intent(Order_List.this, UserDashbord.class);
+                intent = new Intent(Order_List.this, AdminDashboard.class);
 
             }
 

@@ -276,7 +276,10 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
                     GetClientDataAdapter2.setEmailid(json.getString("email_id"));
 
                     GetClientDataAdapter2.setDesignation(json.getString("designation"));
+
+                    clientDataAdapters.add(GetClientDataAdapter2);
                 }
+
 
             }
             catch (JSONException e)
@@ -288,5 +291,6 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
         mAdepter = new ClientRecyclerViewAdapter(this,clientDataAdapters, this);
 
         recyclerView.setAdapter(mAdepter);
+
     }
 }

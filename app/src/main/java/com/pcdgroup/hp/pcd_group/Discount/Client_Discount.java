@@ -1,14 +1,11 @@
 package com.pcdgroup.hp.pcd_group.Discount;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,9 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserAdminAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
@@ -27,20 +22,11 @@ import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
-import com.pcdgroup.hp.pcd_group.Http.HttpParse;
-import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,10 +71,7 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         listView.setAdapter(adepter);
         adepter.notifyDataSetChanged();
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
-        urlQry = DataGetUrl.ACCESS_USER_DETAILS;
+        urlQry = DataGetUrl.ACCESS_DETAILS;
         typeOfQuery = CallType.JSON_CALL;
 
         //Send Database query for inquiring to the database.
@@ -247,7 +230,7 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
 
             } else if (gblv.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
 
@@ -260,7 +243,7 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
-        if (dataGetUrl.equals(DataGetUrl.ACCESS_USER_DETAILS)) {
+        if (dataGetUrl.equals(DataGetUrl.ACCESS_DETAILS)) {
 
             try {
 
@@ -282,6 +265,7 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
                     //Store the set values
 
                     tempStoreDataValues.add(tmp);
+                    adepter.notifyDataSetChanged();
                 }
 
             }catch (Exception e){

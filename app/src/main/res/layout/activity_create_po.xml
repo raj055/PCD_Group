@@ -67,76 +67,13 @@
     <LinearLayout
         android:id="@+id/ll_Product"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="250dp">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/product1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Product_1 : "
-                    android:textColor="#8A2BE2"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/et_p1"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Quantity"
-                    android:gravity="center"/>
-
-            </TableRow>
-
-            <TableRow android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/product2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Product 2 : "
-                    android:textColor="#8A2BE2"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/et_p2"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Quantity"
-                    android:gravity="center"/>
-
-            </TableRow>
-
-            <TableRow android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/product3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Product 3 : "
-                    android:textColor="#8A2BE2"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/et_p3"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Quantity"
-                    android:gravity="center"/>
-
-            </TableRow>
-
-        </TableLayout>
+        <ListView
+            android:id="@+id/p_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:transcriptMode="alwaysScroll"/>
 
     </LinearLayout>
 
@@ -145,8 +82,8 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginLeft="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="80dp"
         android:text="Create Purchase Order"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

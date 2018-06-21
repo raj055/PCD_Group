@@ -1,74 +1,35 @@
 package com.pcdgroup.hp.pcd_group;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ImageSpan;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.AdminLogin.UserDataGet;
-import com.pcdgroup.hp.pcd_group.Client.ClientDetailsActivity;
-import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
-import com.pcdgroup.hp.pcd_group.OrderList.Order_List;
-import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
-import com.pcdgroup.hp.pcd_group.Product.Entity;
-import com.pcdgroup.hp.pcd_group.Product.ProductSingleRecord;
-import com.pcdgroup.hp.pcd_group.Product.ProductUpdate;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
-import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author Grasp
@@ -267,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                     }
                     else if(accessType.contains("Manager")) {
                         Log.v("To be","in Manager mode" );
-                         intent = new Intent(MainActivity.this, UserDashbord.class);
+                         intent = new Intent(MainActivity.this, AdminDashboard.class);
 
                         gblVar.AccessType = "Manager";
                         gblVar.DiscountType = "100";
@@ -275,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                     }
                     else if(accessType.contains("Client")) {
                         Log.v("To be","in Client mode" );
-                         intent = new Intent(MainActivity.this, UserDashbord.class);
+                         intent = new Intent(MainActivity.this, AdminDashboard.class);
 
                         gblVar.AccessType = "Client";
                         gblVar.DiscountType = discountType;

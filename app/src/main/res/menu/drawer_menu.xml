@@ -9,12 +9,16 @@
             android:id="@+id/nav_quotation"
             android:title="Quotation List" />
         <item
+            android:id="@+id/nav_myQuotation"
+            android:title="MyQuotation List" />
+        <item
             android:id="@+id/nav_order"
             android:title="Order List" />
 
     </group>
 
-    <item android:title="@string/vendor"
+    <item android:id="@+id/main_vendor"
+        android:title="@string/vendor"
         tools:ignore="HardcodedText">
         <menu>
             <item
@@ -23,7 +27,8 @@
         </menu>
     </item>
 
-    <item android:title="@string/purchase">
+    <item android:id="@+id/main_po"
+        android:title="@string/purchase">
         <menu>
             <item
                 android:id="@+id/nav_po"

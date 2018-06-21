@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
@@ -23,8 +24,8 @@ import com.pcdgroup.hp.pcd_group.VendorDealer.VendorList;
 public class Create_New_PO extends AppCompatActivity {
 
     Button selectVendor,selectProduct,CreatePurchaseOrder;
-    TextView VendorName,Product1,Product2,Product3;
-    EditText editProduct1,editProduct2,editProduct3;
+    TextView VendorName;
+    ListView listView;
     LinearLayout linearVendor,linearProduct;
     GlobalVariable globalVariable;
 
@@ -40,13 +41,9 @@ public class Create_New_PO extends AppCompatActivity {
         CreatePurchaseOrder = (Button) findViewById(R.id.btn_create_po);
 
         VendorName = (TextView) findViewById(R.id.tv_selectvendor);
-        Product1 = (TextView) findViewById(R.id.product1);
-        Product2 = (TextView) findViewById(R.id.product2);
-        Product3 = (TextView) findViewById(R.id.product3);
+        listView = (ListView) findViewById(R.id.p_list);
 
-        editProduct1 = (EditText) findViewById(R.id.et_p1);
-        editProduct2 = (EditText) findViewById(R.id.et_p2);
-        editProduct3 = (EditText) findViewById(R.id.et_p3);
+
 
         linearVendor = (LinearLayout) findViewById(R.id.ll_vendor);
         linearProduct = (LinearLayout) findViewById(R.id.ll_Product);
@@ -145,11 +142,6 @@ public class Create_New_PO extends AppCompatActivity {
 
                         Log.v("String value ===== ",str);
 
-                        for (int i =0; i < str.length()  ; i++) {
-                            Product1.setText(str);
-                            Product2.setText(str);
-                            Product3.setText(str);
-                        }
                     }
                 }
             }

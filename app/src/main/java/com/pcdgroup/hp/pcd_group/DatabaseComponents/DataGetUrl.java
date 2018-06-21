@@ -12,7 +12,7 @@ public enum DataGetUrl {
   OTP_REGISTER,
 
   GET_CLIENT_DETAILS,
-  DELETE_MULTIPLE_CLIENT, //.
+  DELETE_MULTIPLE_CLIENT,
   CLIENT_LIST,
   CLIENT_REGISTER,
   EDIT_CLIENT,
@@ -21,8 +21,6 @@ public enum DataGetUrl {
 
   VIEW_PRODUCT,
   DELETE_PRODUCTS,
-  ADD_PRODUCTS,//
-  EDIT_PRODUCTS,//
   SINGLE_PRODUCT,
 
   ACCESS_DETAILS,
@@ -31,7 +29,6 @@ public enum DataGetUrl {
   ADD_BRAND,
   LIST_BRAND,
 
-  ACCESS_USER_DETAILS,
   DISCOUNT_DETAILS,
 
   ORDERLIST_DETAILS,
@@ -46,7 +43,6 @@ public enum DataGetUrl {
   COMPLETE_ORDER_DETAILS,
   VENDOR_PRODUCT_LIST,
 
-  UPLOAD_TEXT_FILE_QUOTATION_LIST,//
   SHOW_CLIENT_QUOTATION_LIST,
   ALL_QUOTATION_LIST,
   UPDATE_BILL;
@@ -67,17 +63,14 @@ public enum DataGetUrl {
 
           "http://dert.co.in/gFiles/fimage.php",                    //VIEW_PRODUCT    00
           "http://dert.co.in/gFiles/deleteproduct.php",             //DELETE_PRODUCTS
-          "http://dert.co.in/gFiles/upload.php",                    //ADD_PRODUCTS
-          "http://dert.co.in/gFiles/updateproductdetails.php",      //EDIT_PRODUCTS
           "http://dert.co.in/gFiles/filterproductdata.php",         //SINGLE_PRODUCT
 
-          "http://dert.co.in/gFiles/accessuserdetails.php",         // ACCESS_DETAILS
+          "http://dert.co.in/gFiles/accessuserdetails.php",         // ACCESS_DETAILS 00
           "http://dert.co.in/gFiles/updateuserdetails.php",         //UPDATE_ACCEESS_USER_DETAILS
 
           "http://dert.co.in/gFiles/brandadd.php",                  //ADD_BRAND
           "http://dert.co.in/gFiles/listbrands.php",                //LIST_BRAND  00
 
-          "http://dert.co.in/gFiles/accessuserdetails.php",         //ACCESS_USER_DETAILS
           "http://dert.co.in/gFiles/DiscountDetails.php",           //DISCOUNT_DETAILS
 
           "http://dert.co.in/gFiles/orderlist.php",                 //ORDERLIST_DETAILS
@@ -93,7 +86,6 @@ public enum DataGetUrl {
           "http://dert.co.in/gFiles/VendorProductList.php",         //VENDOR_PRODUCT_LIST
           //upload po link pending
 
-          "http://dert.co.in/gFiles/uploadtxtfile.php",             //UPLOAD_TEXT_FILE_QUOTATION_LIST
           "http://dert.co.in/gFiles/getpdfs.php",                   //SHOW_CLIENT_QUOTATION_LIST
           "http://dert.co.in/gFiles/QuotationList.php",             //ALL_QUOTATION_LIST
           "http://dert.co.in/gFiles/updatebill.php",                //UPDATE_BILL

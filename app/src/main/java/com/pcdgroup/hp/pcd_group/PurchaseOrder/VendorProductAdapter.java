@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.Client.ClientAdepter;
@@ -57,6 +58,7 @@ public class VendorProductAdapter extends ArrayAdapter<ProductData> {
             holder = new VendorProductAdapter.productHolder();
             holder.textViewName = (TextView) row.findViewById(R.id.textViewName);
             holder.checkBox = (CheckBox) row.findViewById(R.id.checkbox);
+            holder.quontity = (EditText) row.findViewById(R.id.et_quantity);
             row.setTag(holder);
         } else {
             holder = (VendorProductAdapter.productHolder) row.getTag();
@@ -86,6 +88,7 @@ public class VendorProductAdapter extends ArrayAdapter<ProductData> {
     class productHolder {
         TextView textViewName;
         CheckBox checkBox;
+        EditText quontity;
     }
 
     public void checkCheckBox(int position, boolean value) {

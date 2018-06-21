@@ -61,7 +61,7 @@ public class ProductList_VendorAdepter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.list_product, null);
+            convertView = inflater.inflate(R.layout.list_product1, null);
 
 
         final TextView name = (TextView) convertView.findViewById(R.id.textViewName);

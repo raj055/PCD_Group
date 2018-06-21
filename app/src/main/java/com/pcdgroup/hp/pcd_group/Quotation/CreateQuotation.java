@@ -2,38 +2,25 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.style.ImageSpan;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pcdgroup.hp.pcd_group.AdminLogin.AccessAdmin;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.AdminLogin.BrandAdepter;
 import com.pcdgroup.hp.pcd_group.AdminLogin.Category;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
@@ -43,18 +30,10 @@ import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -435,12 +414,12 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
             }
             else if (globalVariable.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else if (globalVariable.AccessType.contains("Client")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else {

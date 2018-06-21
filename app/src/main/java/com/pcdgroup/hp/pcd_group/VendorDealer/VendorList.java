@@ -131,6 +131,7 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
 
                 VendorData data= new VendorData(id,name,address,area,state,email,mobile,organisation,gst,products);
                 localdata.add(data);
+                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){

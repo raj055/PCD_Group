@@ -7,18 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.Client.UpdateActivity;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.shockwave.pdfium.PdfDocument;
 
 import java.io.File;
@@ -125,12 +122,12 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
             }
             else if (gblVar.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else if (gblVar.AccessType.contains("Client")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else {

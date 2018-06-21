@@ -1,12 +1,8 @@
 package com.pcdgroup.hp.pcd_group.Client;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,16 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard;
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
-import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
 import com.pcdgroup.hp.pcd_group.R;
-import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserDashbord;
 import com.pcdgroup.hp.pcd_group.VendorDealer.DealerList;
 
 import org.json.JSONArray;
@@ -119,6 +112,8 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         dataBaseQuery.PrepareForQuery();
 
 
+
+
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,12 +200,12 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
             }
             else if (gblVar.AccessType.contains("Manager")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else if (gblVar.AccessType.contains("Client")) {
 
-                intent = new Intent(this, UserDashbord.class);
+                intent = new Intent(this, AdminDashboard.class);
 
             }
             else {

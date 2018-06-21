@@ -91,7 +91,8 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
     TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountTextview;
 
     float amt;
-    String transport,discount;
+    String transport;
+    String discount = String.valueOf(0);
     boolean igst = false;
     EditText userAnswer;
     float gstValue;

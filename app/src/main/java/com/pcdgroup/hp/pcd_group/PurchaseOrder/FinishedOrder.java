@@ -110,6 +110,7 @@ public class FinishedOrder extends AppCompatActivity implements CallBackInterfac
 
                 pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
                 localPdf.add(pdf);
+                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){

@@ -57,7 +57,6 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
 
         adepter = new BrandAdepter(this, categoriesList);
         listView.setAdapter(adepter);
-        adepter.notifyDataSetChanged();
 
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
@@ -131,6 +130,7 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
                 Category e = new Category(name, address, address1, address2, pincode,
                         state, mobileno, email, website, pan, gst);
                 categoriesList.add(e);
+                adepter.notifyDataSetChanged();
             }
 
         }catch (Exception e){

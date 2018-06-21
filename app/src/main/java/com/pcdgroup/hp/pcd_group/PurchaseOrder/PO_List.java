@@ -79,9 +79,6 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
         adapter = new Purchaselist_Adepter(this, localPdf, this);
         listView.setAdapter(adapter);
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
         urlQry = DataGetUrl.PURCHASE_ORDER_DETAILS;
         typeOfQuery = CallType.JSON_CALL;
 
@@ -94,8 +91,6 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-
-        adapter.notifyDataSetChanged();
 
         //setting listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,6 +123,7 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
 
                 pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
                 localPdf.add(pdf);
+                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){

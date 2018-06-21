@@ -36,6 +36,7 @@
         <activity android:name=".Client.SingleRecordShow" android:label="PCD_Group" />
         <activity android:name=".Client.ClientDetailsActivity" android:label="PCD_Group" />
         <activity android:name=".Client.UpdateActivity" android:label="PCD_Group" />
+        <activity android:name=".OrderList.Order_List" android:label="PCD_Group" />
         <activity android:name=".Quotation.ShowQuotationList" android:label="PCD_Group" />
         <activity android:name=".Quotation.ViewInvoice" android:label="PCD_Group" />
         <activity android:name=".Quotation.CreateQuotation" android:label="PCD_Group" />
@@ -44,7 +45,6 @@
         <activity android:name=".Quotation.SelectProduct" android:label="PCD_Group" />
         <activity android:name=".Quotation.PDFViewActivity" android:label="PCD_Group" />
         <activity android:name=".Quotation.List_Quotation_Pdfs" android:label="PCD_Group" />
-        <activity android:name=".UserLoginRegister.UserDashbord" android:label="PCD_Group" />
         <activity android:name=".Product.UploadImage" android:label="PCD_Group" />
         <activity android:name=".Product.ViewImage" android:label="PCD_Group" />
         <activity android:name=".Product.ProductSingleRecord" android:label="PCD_Group" />

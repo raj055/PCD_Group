@@ -56,6 +56,8 @@ public class DataBaseQuery {
     hashMap.putAll(hashMapRef);
     httpParse = new HttpParse();
 
+    dataGetUrl = urlQry;
+
     //Get the required url.
     url = urlQry.getUrl(urlQry);
     Log.v("Url Enum----", urlQry.toString());
@@ -68,7 +70,6 @@ public class DataBaseQuery {
 
     queryType = typeOfQuery;
 
-    dataGetUrl = urlQry;
   }
 
   public void PrepareForQuery(){

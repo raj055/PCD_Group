@@ -104,7 +104,7 @@ public class HttpParse {
 
             stringBuilder.append("=");
 
-            stringBuilder.append(URLEncoder.encode(map_entry.getValue(), "UTF-8"));
+            stringBuilder.append(URLEncoder.encode(map_entry .getValue(), "UTF-8"));
         }
 
         Result = stringBuilder.toString();

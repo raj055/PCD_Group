@@ -65,6 +65,7 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
 
         httpParse = new HttpParse();
 
+        str1 = new String();
         finalResult = new String();
         id = new ArrayList<String>();
         progressDialog = new ProgressDialog(this);
@@ -93,7 +94,7 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
         }
 
         urlQry = DataGetUrl.VENDOR_PRODUCT_LIST;
-        typeOfQuery = CallType.JSON_CALL;
+        typeOfQuery = CallType.POST_CALL;
 
         //Send Database query for inquiring to the database.
         dataBaseQuery = new DataBaseQuery(hashMap,

@@ -1,52 +1,22 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
-import android.os.StrictMode;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.pcdgroup.hp.pcd_group.AdminLogin.AdminSetting;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
-import com.pcdgroup.hp.pcd_group.Product.CustomListAdapter;
-import com.pcdgroup.hp.pcd_group.Product.Entity;
 import com.pcdgroup.hp.pcd_group.R;
 
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,9 +48,6 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
 
         adapter = new QuotationAdepter(this, localPdf, this);
         listView.setAdapter(adapter);
-
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
         urlQry = DataGetUrl.ALL_QUOTATION_LIST;
         typeOfQuery = CallType.JSON_CALL;
@@ -134,6 +101,8 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
 
                 pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
                 localPdf.add(pdf);
+
+                adapter.notifyDataSetChanged();
             }
 
         }catch (Exception e){
