@@ -14,17 +14,8 @@
         android:padding="10dp"
         android:textColor="@android:color/black"
         android:textSize="18dp"
-        android:textStyle="bold" />
-
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/et_quantity"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:textAlignment="center"/>
+
 
 </LinearLayout>

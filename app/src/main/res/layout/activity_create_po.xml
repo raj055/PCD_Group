@@ -67,13 +67,20 @@
     <LinearLayout
         android:id="@+id/ll_Product"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/p_list"
             android:layout_width="wrap_content"
+            android:layout_height="215dp" />
+
+        <EditText
+            android:id="@+id/et_addQuantity"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:transcriptMode="alwaysScroll"/>
+            android:background="@color/SkyBlue"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 
@@ -82,7 +89,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="80dp"
         android:text="Create Purchase Order"
         app:layout_constraintBottom_toBottomOf="parent"

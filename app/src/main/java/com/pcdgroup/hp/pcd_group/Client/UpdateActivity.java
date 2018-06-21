@@ -33,10 +33,10 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
 
     Boolean CheckEditText;
     HashMap<String,String> hashMap = new HashMap<>();
-    EditText ClientName, ClientAddress,ClientAddressline1,ClientAddressline2,ClientMobileno,ClientState,
+    EditText ClientName, ClientNameL, ClientAddress,ClientAddressline1,ClientAddressline2,ClientMobileno,ClientState,
             ClientCountry, ClientEmail, ClientCompany,ClientPin, ClientDesignation;
     Button UpdateStudent;
-    String ClientIdHolder,ClientNameHolder,ClientAddressHolder,ClientAddressline1Holder,ClientAddressline2Holder,
+    String ClientIdHolder,ClientFNameHolder,ClientLNameHolder,ClientAddressHolder,ClientAddressline1Holder,ClientAddressline2Holder,
             ClientMobilenoHolder,ClientStateHolder,ClientCountryHolder, ClientEmailHolder,ClientPinoHolder,
             ClientComapnyHolder, ClientDesignationHolder;
     Intent intent;
@@ -54,6 +54,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         gblVar = GlobalVariable.getInstance();
 
         ClientName = (EditText)findViewById(R.id.editName);
+        ClientNameL = (EditText)findViewById(R.id.editNamel);
         ClientAddress = (EditText)findViewById(R.id.editAddress);
         ClientAddressline1 = (EditText)findViewById(R.id.editAddressline1);
         ClientAddressline2 = (EditText)findViewById(R.id.editAddressline2);
@@ -69,11 +70,12 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
 
         // Receive Client ID, Name , Address , Email, etc.. Send by previous ShowSingleRecordActivity.
         ClientIdHolder = getIntent().getStringExtra("id");
-        ClientNameHolder = getIntent().getStringExtra("name");
+        ClientFNameHolder = getIntent().getStringExtra("first_name");
+        ClientLNameHolder = getIntent().getStringExtra("last_name");
         ClientAddressHolder = getIntent().getStringExtra("address");
-        ClientAddressline1Holder = getIntent().getStringExtra("addressline1");
-        ClientAddressline2Holder = getIntent().getStringExtra("addressline2");
-        ClientMobilenoHolder = getIntent().getStringExtra("mobileno");
+        ClientAddressline1Holder = getIntent().getStringExtra("address_line1");
+        ClientAddressline2Holder = getIntent().getStringExtra("address_line2");
+        ClientMobilenoHolder = getIntent().getStringExtra("mobile_num");
         ClientStateHolder = getIntent().getStringExtra("state");
         ClientCountryHolder = getIntent().getStringExtra("country");
         ClientPinoHolder = getIntent().getStringExtra("pin");
@@ -82,7 +84,8 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientDesignationHolder = getIntent().getStringExtra("designation");
 
         // Setting Received Student Name, Phone Number, Class into EditText.
-        ClientName.setText(ClientNameHolder);
+        ClientName.setText(ClientFNameHolder);
+        ClientNameL.setText(ClientLNameHolder);
         ClientAddress.setText(ClientAddressHolder);
         ClientAddressline1.setText(ClientAddressline1Holder);
         ClientAddressline2.setText(ClientAddressline2Holder);
@@ -109,15 +112,17 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
 
                     hashMap.put("id",ClientIdHolder);
 
-                    hashMap.put("name",ClientNameHolder);
+                    hashMap.put("first_name",ClientFNameHolder);
+
+                    hashMap.put("last_name",ClientLNameHolder);
 
                     hashMap.put("address",ClientAddressHolder);
 
-                    hashMap.put("addressline1",ClientAddressline1Holder);
+                    hashMap.put("address_line1",ClientAddressline1Holder);
 
-                    hashMap.put("addressline2",ClientAddressline2Holder);
+                    hashMap.put("address_line2",ClientAddressline2Holder);
 
-                    hashMap.put("mobileno",ClientMobilenoHolder);
+                    hashMap.put("mobile_num",ClientMobilenoHolder);
 
                     hashMap.put("state",ClientStateHolder);
 
@@ -155,7 +160,8 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     // Method to get existing data from EditText.
     public void GetDataFromEditText(){
 
-        ClientNameHolder = ClientName.getText().toString();
+        ClientFNameHolder = ClientName.getText().toString();
+        ClientLNameHolder = ClientNameL.getText().toString();
         ClientAddressHolder = ClientAddress.getText().toString();
         ClientAddressline1Holder = ClientAddressline1.getText().toString();
         ClientAddressline2Holder = ClientAddressline2.getText().toString();
@@ -166,15 +172,16 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientPinoHolder = ClientPin.getText().toString();
         ClientComapnyHolder = ClientCompany.getText().toString();
         ClientDesignationHolder = ClientDesignation.getText().toString();
-        
-        ClientNameHolder = ClientNameHolder.replace("'","''");
-        ClientAddressHolder = ClientNameHolder.replace("'","''");
+
+        ClientFNameHolder = ClientFNameHolder.replace("'","''");
+        ClientLNameHolder = ClientLNameHolder.replace("'","''");
+        ClientAddressHolder = ClientAddressHolder.replace("'","''");
         ClientAddressline1Holder = ClientAddressline1Holder.replace("'","''");
         ClientAddressline2Holder = ClientAddressline2Holder.replace("'","''");
         ClientComapnyHolder = ClientComapnyHolder.replace("'","''");
         ClientDesignationHolder = ClientDesignationHolder.replace("'","''");
 
-        if(TextUtils.isEmpty(ClientNameHolder) || TextUtils.isEmpty(ClientAddressHolder) || TextUtils.isEmpty(ClientAddressline1Holder)
+        if(TextUtils.isEmpty(ClientFNameHolder) || TextUtils.isEmpty(ClientLNameHolder) || TextUtils.isEmpty(ClientAddressHolder) || TextUtils.isEmpty(ClientAddressline1Holder)
                 || TextUtils.isEmpty(ClientAddressline2Holder) || TextUtils.isEmpty(ClientMobilenoHolder)
                 || TextUtils.isEmpty(ClientStateHolder) || TextUtils.isEmpty(ClientCountryHolder)
                 || TextUtils.isEmpty(ClientEmailHolder)|| TextUtils.isEmpty(ClientPinoHolder)

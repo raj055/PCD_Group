@@ -2,6 +2,7 @@ package com.pcdgroup.hp.pcd_group.PurchaseOrder;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class VendorProductAdapter extends ArrayAdapter<ProductData> {
     private SparseBooleanArray mSelectedItemsIds;
 
     int layoutResourceId;
-    ArrayList<ProductData> productData = new ArrayList<ProductData>();
+    public static ArrayList<ProductData> productData = new ArrayList<ProductData>();
     ProductData product;
 
     public VendorProductAdapter(Activity activity,int layoutResourceId, ArrayList<ProductData> productData) {
@@ -51,14 +52,12 @@ public class VendorProductAdapter extends ArrayAdapter<ProductData> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        VendorProductAdapter.productHolder holder = null;
+        productHolder holder = null;
         if (row == null) {
             LayoutInflater inflater = LayoutInflater.from(activity);
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new VendorProductAdapter.productHolder();
             holder.textViewName = (TextView) row.findViewById(R.id.textViewName);
-            holder.checkBox = (CheckBox) row.findViewById(R.id.checkbox);
-            holder.quontity = (EditText) row.findViewById(R.id.et_quantity);
             row.setTag(holder);
         } else {
             holder = (VendorProductAdapter.productHolder) row.getTag();
@@ -66,29 +65,14 @@ public class VendorProductAdapter extends ArrayAdapter<ProductData> {
 
         product = productData.get(position);
         holder.textViewName.setText(product.getTitle());
-        holder.checkBox.setChecked(mSelectedItemsIds.get(position));
 
-        holder.textViewName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCheckBox(position, !mSelectedItemsIds.get(position));
-            }
-        });
 
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCheckBox(position, !mSelectedItemsIds.get(position));
-            }
-        });
-
+        Log.v("quantity",product.toString());
         return row;
     }
 
     class productHolder {
         TextView textViewName;
-        CheckBox checkBox;
-        EditText quontity;
     }
 
     public void checkCheckBox(int position, boolean value) {

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +15,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
+import com.pcdgroup.hp.pcd_group.Quotation.ProductInfoAdapter;
+import com.pcdgroup.hp.pcd_group.Quotation.ProductListAdapter;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.VendorList;
+import com.pcdgroup.hp.pcd_group.VendorDealer.VendorProductAdd;
+
+import java.util.ArrayList;
 
 /**
  * @author Grasp
@@ -26,8 +33,12 @@ public class Create_New_PO extends AppCompatActivity {
     Button selectVendor,selectProduct,CreatePurchaseOrder;
     TextView VendorName;
     ListView listView;
+    EditText AddQuantity;
     LinearLayout linearVendor,linearProduct;
     GlobalVariable globalVariable;
+    ProductListAdapter itemsAdapter;
+    public ArrayList<ProductInfoAdapter> items = new ArrayList<ProductInfoAdapter>();
+    public ArrayList<String[]> PrdList = new ArrayList<String[]>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,9 +52,8 @@ public class Create_New_PO extends AppCompatActivity {
         CreatePurchaseOrder = (Button) findViewById(R.id.btn_create_po);
 
         VendorName = (TextView) findViewById(R.id.tv_selectvendor);
+        AddQuantity = (EditText) findViewById(R.id.et_addQuantity);
         listView = (ListView) findViewById(R.id.p_list);
-
-
 
         linearVendor = (LinearLayout) findViewById(R.id.ll_vendor);
         linearProduct = (LinearLayout) findViewById(R.id.ll_Product);
@@ -51,6 +61,9 @@ public class Create_New_PO extends AppCompatActivity {
         linearVendor.setVisibility(View.INVISIBLE);
         linearProduct.setVisibility(View.INVISIBLE);
         CreatePurchaseOrder.setVisibility(View.INVISIBLE);
+
+        itemsAdapter = new ProductListAdapter(this,  items);
+        listView.setAdapter(itemsAdapter);
 
         // selectVendor in database
         selectVendor.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +101,28 @@ public class Create_New_PO extends AppCompatActivity {
             }
         });
 
+        AddQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String str = editable.toString();
+                int listSize = items.size() ;
+                if(listSize != 0) {
+                    listSize -= 1;
+                    ProductInfoAdapter prinfo = items.get(listSize);
+                    prinfo.setAmount(str);
+                    itemsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
@@ -130,17 +165,20 @@ public class Create_New_PO extends AppCompatActivity {
                             globalVariable.globalVendorProduct[1] = extras.getString("price");
                             globalVariable.globalVendorProduct[2] = extras.getString("hsncode");
                             globalVariable.globalVendorProduct[3] = extras.getString("gst");
-                            globalVariable.globalVendorProduct[4] = extras.getString("stock");
-                            globalVariable.globalVendorProduct[5] = extras.getString("description");
-                            globalVariable.globalVendorProduct[6] = extras.getString("reorderlevel");
+
+                            Log.v("name =====",globalVariable.globalVendorProduct[0]);
                         }
                         linearProduct.setVisibility(View.VISIBLE);
                         CreatePurchaseOrder.setVisibility(View.VISIBLE);
-                        selectProduct.setVisibility(View.INVISIBLE);
 
-                        String str = globalVariable.globalVendorProduct[0];
+                        ProductInfoAdapter tempAdapter = new ProductInfoAdapter();
+                        tempAdapter.setName(globalVariable.globalVendorProduct[0]);
+                        items.add(tempAdapter);
+                        itemsAdapter.notifyDataSetChanged();
 
-                        Log.v("String value ===== ",str);
+                        String[] strpr = globalVariable.globalVendorProduct.clone();
+                        PrdList.add(strpr);
+
 
                     }
                 }

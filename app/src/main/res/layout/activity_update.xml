@@ -22,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Update Record Form"
+            android:text="Update Client Record"
             android:textColor="#A52A2A"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +49,28 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
+            android:id="@+id/editNamel"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/Seashell"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Namel"
+            android:inputType="textPersonName"
+            android:textColor="#000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editName" />
+
+
+        <EditText
             android:id="@+id/editAddress"
-            android:hint="Address"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/editName"
@@ -61,11 +81,13 @@
             android:background="@color/Snow"
             android:ems="10"
             android:gravity="center"
+            android:hint="Address"
             android:inputType="textPersonName"
             android:textColor="#000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editName" />
+            app:layout_constraintTop_toBottomOf="@+id/editNamel" />
+
 
         <EditText
             android:id="@+id/editAddressline1"

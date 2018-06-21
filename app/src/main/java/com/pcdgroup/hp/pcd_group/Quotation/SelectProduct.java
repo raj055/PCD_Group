@@ -98,10 +98,6 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
             }
         });
 
-
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
         urlQry = DataGetUrl.VIEW_PRODUCT;
         typeOfQuery = CallType.JSON_CALL;
 

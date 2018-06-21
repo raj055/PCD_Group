@@ -25,6 +25,7 @@ import java.util.List;
  */
 
 public class ProductCustomListAdapter extends BaseAdapter implements Filterable {
+
     private Activity activity;
     private LayoutInflater inflater;
     private List<ProdactEntity> prodactEntities;

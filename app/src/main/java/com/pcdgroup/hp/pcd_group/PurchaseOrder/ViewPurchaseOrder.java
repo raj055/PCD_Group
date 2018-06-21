@@ -98,47 +98,23 @@ public class ViewPurchaseOrder extends AppCompatActivity {
 
         initialiseLayouts();
 
-        transport = getIntent().getExtras().getString("transportioncost");
-        TransportationCost.setText(transport);
-
-        discount = getIntent().getExtras().getString("discountperce");
-        DiscountTVvalue = globalVariable.DiscountType;
-
-        DiscountTextview.setText("Discount:" + "\t" + DiscountTVvalue + "%");
-
         String str;
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras != null) {
+                
+                // vendor
+                String[]   vendorInfo =  extras.getStringArray("vendorInfo");
 
-                //Brand
-                String[] brandAddress = extras.getStringArray("SelectedBrand");
-                b_name.setText(brandAddress[0]);
-                str = brandAddress[1] + "," + "\n" + brandAddress[2] + "," + "\n" + brandAddress[3];
-                b_address.setText(str);
-
-                b_state.setText(brandAddress[5]);
-
-                b_pin.setText(brandAddress[4]);
-
-                str = brandAddress[6] + "," + "\n" + brandAddress[7] + "," + "\n" + brandAddress[8];
-                b_mobile.setText(str);
-
-                str = brandAddress[9] + "," + "\n" + brandAddress[10];
-                b_pan.setText(str);
-
-                // Client
-                String[]   clientInfo =  extras.getStringArray("ClientInfo");
-
-                name.setText(clientInfo[7]);
-                str =clientInfo[0] + "," + "\n" + clientInfo[1] + "," + "\n"+ clientInfo[2];
-//                  + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
+                name.setText(vendorInfo[7]);
+                str =vendorInfo[0] + "," + "\n" + vendorInfo[1] + "," + "\n"+ vendorInfo[2];
+//                  + "\n"+ vendorInfo[3] + "\n"+ vendorInfo[4];
 
                 address.setText(str);
-                state.setText(clientInfo[4]);
-                pin.setText(clientInfo[3]);
-                company.setText(clientInfo[6]);
-                country.setText(clientInfo[5]);
+                state.setText(vendorInfo[4]);
+                pin.setText(vendorInfo[3]);
+                company.setText(vendorInfo[6]);
+                country.setText(vendorInfo[5]);
 
                 //Product
                 ArrayList<String[]> PrdList = (ArrayList<String[]>) extras.getSerializable("ProductInfo");

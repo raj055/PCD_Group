@@ -11,6 +11,8 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,8 +22,10 @@ import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataBaseQuery;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
+import com.pcdgroup.hp.pcd_group.Quotation.ProdactEntity;
 import com.pcdgroup.hp.pcd_group.R;
 import com.pcdgroup.hp.pcd_group.VendorDealer.DealerList;
+import com.pcdgroup.hp.pcd_group.VendorDealer.VendorProductAdd;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,8 +74,28 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
         id = new ArrayList<String>();
         progressDialog = new ProgressDialog(this);
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        //Adding ListView Item click Listener.
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // TODO Auto-generated method stub
+
+                Intent intent = new Intent();
+
+                // Sending ListView clicked value using intent.
+                ProductData pcdata = prductlist.get((int) id);
+                intent.putExtra("name", pcdata.getTitle());
+                intent.putExtra("hsncode", pcdata.getHsncode());
+                intent.putExtra("gst", pcdata.getGst());
+                intent.putExtra("price", pcdata.getPrice());
+                setResult(RESULT_OK, intent);
+
+                finish();
+
+            }
+        });
 
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -105,58 +129,6 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.done,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if(id==R.id.action_done) {
-
-            SparseBooleanArray selectedRows = productAdapter.getSelectedIds();//Get the selected ids from adapter
-            //Check if item is selected or not via size
-            if (selectedRows.size() > 0) {
-                StringBuilder stringBuilder = new StringBuilder();
-                //Loop to all the selected rows array
-                for (int i = 0; i < selectedRows.size(); i++) {
-
-                    //Check if selected rows have value i.e. checked item
-                    if (selectedRows.valueAt(i)) {
-
-                        //Get the checked item text from array list by getting keyAt method of selectedRowsarray
-                        ProductData selectedRowLabel = prductlist.get(selectedRows.keyAt(i));
-
-                        //append the row label text
-                        stringBuilder.append(selectedRowLabel + "\n");
-
-                        Log.v("Selected String ===== ", String.valueOf(selectedRowLabel));
-                    }
-                }
-            }
-
-            Intent intent = new Intent(SelectVendorProducts.this,PO_List.class);
-
-            ProductData productdata = prductlist.get(position);
-
-            intent.putExtra("name",productdata.getTitle());
-            intent.putExtra("price", productdata.getPrice());
-            intent.putExtra("hsncode", productdata.getHsncode());
-            intent.putExtra("gst", productdata.getGst());
-            intent.putExtra("description", productdata.getDescription());
-
-            setResult(RESULT_OK, intent);
-            finish();
-
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

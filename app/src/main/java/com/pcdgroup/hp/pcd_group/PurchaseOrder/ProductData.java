@@ -42,7 +42,6 @@ public class ProductData {
     public void setGst(String gst) {this.gst = gst;}
     public  void setDescription (String description) { this.description= description ;}
 
-
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }

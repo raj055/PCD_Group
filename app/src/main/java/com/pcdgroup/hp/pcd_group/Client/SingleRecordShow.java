@@ -36,7 +36,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     HashMap<String,String> hashMap = new HashMap<>();
     HashMap<String,String> ResultHash = new HashMap<>();
     String FinalJSonObject ;
-    String IdHolder,NameHolder, AddressHolder, Address1Holder,Address2Holder,MobileHolder,StateHolder,CountryHolder,
+    String IdHolder,fNameHolder, lNameHolder, AddressHolder, Address1Holder,Address2Holder,MobileHolder,StateHolder,CountryHolder,
             PinHolder,CompnyHolder,EmailHolder,DesignationHolder;
     Button UpdateButton, DeleteButton, DealerAssign;
 
@@ -44,6 +44,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     GlobalVariable gblVar;
 
     public TextView TextViewName;
+    public TextView TextViewNameL;
     public TextView TextViewAddress;
     public TextView TextviewAddressline1;
     public TextView TextviewAddressline2;
@@ -67,6 +68,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         gblVar = GlobalVariable.getInstance();
 
         TextViewName = (TextView) findViewById(R.id.tvname);
+        TextViewNameL = (TextView) findViewById(R.id.tvnamel);
         TextViewAddress = (TextView) findViewById(R.id.tvaddress);
         TextviewAddressline1 = (TextView) findViewById(R.id.tvaddressline1);
         TextviewAddressline2 = (TextView) findViewById(R.id.tvaddressline2);
@@ -84,11 +86,12 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
         //Receiving the ListView Clicked item value send by previous activity.
         IdHolder = getIntent().getStringExtra("id");
-        NameHolder = getIntent().getStringExtra("name");
+        fNameHolder = getIntent().getStringExtra("first_name");
+        lNameHolder = getIntent().getStringExtra("last_name");
         AddressHolder = getIntent().getStringExtra("address");
-        Address1Holder = getIntent().getStringExtra("addressline1");
-        Address2Holder = getIntent().getStringExtra("addressline2");
-        MobileHolder = getIntent().getStringExtra("mobileno");
+        Address1Holder = getIntent().getStringExtra("address_line1");
+        Address2Holder = getIntent().getStringExtra("address_line2");
+        MobileHolder = getIntent().getStringExtra("mobile_num");
         StateHolder = getIntent().getStringExtra("state");
         CountryHolder = getIntent().getStringExtra("country");
         PinHolder = getIntent().getStringExtra("pin");
@@ -122,11 +125,12 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
                 // Sending Client Id, Name, Number and Class to next UpdateActivity.
                 intent.putExtra("id", IdHolder);
-                intent.putExtra("name", NameHolder);
+                intent.putExtra("first_name", fNameHolder);
+                intent.putExtra("last_name", lNameHolder);
                 intent.putExtra("address", AddressHolder);
-                intent.putExtra("addressline1", Address1Holder);
-                intent.putExtra("addressline2", Address2Holder);
-                intent.putExtra("mobileno", MobileHolder);
+                intent.putExtra("address_line1", Address1Holder);
+                intent.putExtra("address_line2", Address2Holder);
+                intent.putExtra("mobile_num", MobileHolder);
                 intent.putExtra("state", StateHolder);
                 intent.putExtra("country", CountryHolder);
                 intent.putExtra("pin", PinHolder);
@@ -242,11 +246,12 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
                             // Storing Client Name, Phone Number, Class into Variables.
                             IdHolder =  jsonObject.getString("id").toString() ;
-                            NameHolder = jsonObject.getString("name").toString() ;
+                            fNameHolder = jsonObject.getString("first_name").toString() ;
+                            lNameHolder = jsonObject.getString("last_name").toString() ;
                             AddressHolder = jsonObject.getString("address").toString() ;
-                            Address1Holder = jsonObject.getString("addressline1").toString() ;
-                            Address2Holder = jsonObject.getString("addressline2").toString() ;
-                            MobileHolder = jsonObject.getString("mobileno").toString() ;
+                            Address1Holder = jsonObject.getString("address_line1").toString() ;
+                            Address2Holder = jsonObject.getString("address_line2").toString() ;
+                            MobileHolder = jsonObject.getString("mobile_num").toString() ;
                             StateHolder = jsonObject.getString("state").toString() ;
                             CountryHolder = jsonObject.getString("country").toString() ;
                             PinHolder = jsonObject.getString("pin").toString() ;
@@ -269,7 +274,8 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
             }
 
             // Setting Client Name, Phone Number, Class into TextView after done all process .
-            TextViewName.setText(NameHolder);
+            TextViewName.setText(fNameHolder);
+            TextViewNameL.setText(lNameHolder);
             TextViewAddress.setText(AddressHolder);
             TextviewAddressline1.setText(Address1Holder);
             TextviewAddressline2.setText(Address2Holder);
