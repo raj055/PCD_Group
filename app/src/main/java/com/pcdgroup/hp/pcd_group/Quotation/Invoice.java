@@ -393,7 +393,7 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
 
                 userAnswer = (EditText) promptUserView.findViewById(R.id.username);
 
-                alertDialogBuilder.setTitle("Save File Name.");
+                alertDialogBuilder.setTitle("Save Invoice File Name.");
 
                 // prompt for username
                 alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {

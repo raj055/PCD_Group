@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,10 +20,12 @@ import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +37,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
+import com.pcdgroup.hp.pcd_group.Quotation.Invoice;
+import com.pcdgroup.hp.pcd_group.Quotation.PDFViewActivity;
 import com.pcdgroup.hp.pcd_group.R;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -79,7 +84,7 @@ public class ViewPurchaseOrder extends AppCompatActivity {
     ProgressDialog progressDialog;
     HashMap<String, String> hsmap = new HashMap<String, String>();
     public static final String UPLOAD_URL =
-            "http://dert.co.in/gFiles/uploadtxtfile.php";
+            "http://dert.co.in/gFiles/uploadtextfile_po.php";
 
     String fileName, targetPdf;
     LinearLayout lyt;
@@ -296,18 +301,46 @@ public class ViewPurchaseOrder extends AppCompatActivity {
 
         if(id==R.id.action_send) {
 
-            fileName =  userAnswer.getText().toString();
-            targetPdf =  fileName + ".pdf";
+            LayoutInflater layoutinflater = LayoutInflater.from(this);
+            View promptUserView = layoutinflater.inflate(R.layout.name_dialog_box, null);
 
-            fn_permission();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-            if (boolean_permission) {
-                progressDialog = new ProgressDialog(ViewPurchaseOrder.this);
-                progressDialog.setMessage("Please wait");
-                createPdf();
-            }
+            alertDialogBuilder.setView(promptUserView);
 
-            UploadPdf();
+            userAnswer = (EditText) promptUserView.findViewById(R.id.username);
+
+            alertDialogBuilder.setTitle("Save PurchaseOrder File Name.");
+
+            // prompt for username
+            alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    fileName =  userAnswer.getText().toString();
+                    targetPdf =  fileName + ".pdf";
+
+                    fn_permission();
+
+                    if (boolean_permission) {
+                        progressDialog = new ProgressDialog(ViewPurchaseOrder.this);
+                        progressDialog.setMessage("Please wait");
+                        bitmap = loadBitmapFromView(cl_pdflayout, cl_pdflayout.getWidth(), cl_pdflayout.getHeight());
+                        createPdf();
+                    }
+                    if (boolean_save) {
+                        Intent intent1 = new Intent(getApplicationContext(), PDFViewActivity.class);
+                        intent1.putExtra("FileName",targetPdf);
+                        startActivity(intent1);
+                    }
+
+                    UploadPdf();
+                }
+
+            });
+
+            // all set and time to build and show up!
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
 
 
             Intent intent = new Intent(ViewPurchaseOrder.this, PO_List.class);
@@ -457,6 +490,14 @@ public class ViewPurchaseOrder extends AppCompatActivity {
         }
         // close the document
         document.close();
+    }
+
+    public static Bitmap loadBitmapFromView(View v, int width, int height) {
+        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+
+        return b;
     }
 
     private void fn_permission() {

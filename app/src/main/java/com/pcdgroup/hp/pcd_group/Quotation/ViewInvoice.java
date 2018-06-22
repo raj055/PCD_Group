@@ -58,7 +58,7 @@ import java.util.Properties;
  *  @version 1.0 on 28-03-2018.
  */
 
-public class ViewInvoice  extends AppCompatActivity implements CallBackInterface {
+public class ViewInvoice extends AppCompatActivity implements CallBackInterface {
 
   TextView name,address,state,company,country,pin,state1;
   TextView item,hsn,gst,cgst,price,quantity,amount, sgst, cgst1,

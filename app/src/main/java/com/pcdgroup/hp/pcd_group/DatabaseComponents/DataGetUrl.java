@@ -42,6 +42,7 @@ public enum DataGetUrl {
   PURCHASE_ORDER_DETAILS,
   COMPLETE_ORDER_DETAILS,
   VENDOR_PRODUCT_LIST,
+  COMPLETE_ORDER,
 
   SHOW_CLIENT_QUOTATION_LIST,
   ALL_QUOTATION_LIST,
@@ -84,7 +85,7 @@ public enum DataGetUrl {
           "http://dert.co.in/gFiles/purchaseorder.php",             //PURCHASE_ORDER_DETAILS
           "http://dert.co.in/gFiles/completeorder.php",             //COMPLETE_ORDER_DETAILS
           "http://dert.co.in/gFiles/VendorProductList.php",         //VENDOR_PRODUCT_LIST
-          //upload po link pending
+          "http://dert.co.in/gFiles/completeorder.php",             //COMPLETE_ORDER
 
           "http://dert.co.in/gFiles/getpdfs.php",                   //SHOW_CLIENT_QUOTATION_LIST
           "http://dert.co.in/gFiles/QuotationList.php",             //ALL_QUOTATION_LIST
