@@ -45,6 +45,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
@@ -57,15 +58,14 @@ import java.util.UUID;
 
 public class ViewPurchaseOrder extends AppCompatActivity {
 
-    TextView name,address,state,company,country,pin;
+    TextView name,address,state;
     TextView state1,sgst,cgst1;
     TextView item,hsn,gst,cgst,price,quantity,amount;
     TextView finalprice, finalquantity, finalamount;
     TextView b_name,b_address,b_pin,b_state,b_mobile,b_pan;
-    TextView date,validdate, finalPayable,TransportationCost,DiscountValue,DiscountTextview;
+    TextView date, finalPayable;
 
     float amt;
-    String transport,discount;
     boolean igst = false;
     EditText userAnswer;
     float gstValue;
@@ -85,11 +85,12 @@ public class ViewPurchaseOrder extends AppCompatActivity {
     LinearLayout lyt;
     String getAllProducts, getGst, getCgst, getPrice, getQuantity, getAmount, getHsn;
 
-    private int REQUEST_CODE_OPEN_DIRECTORY = 0;
     public static int REQUEST_PERMISSIONS = 1;
-    String mCurrentDirectoryUri;
-    String DiscountTVvalue;
     GlobalVariable globalVariable;
+
+    private int year;
+    private int month;
+    private int day;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,16 +106,9 @@ public class ViewPurchaseOrder extends AppCompatActivity {
                 
                 // vendor
                 String[]   vendorInfo =  extras.getStringArray("vendorInfo");
-
-                name.setText(vendorInfo[7]);
-                str =vendorInfo[0] + "," + "\n" + vendorInfo[1] + "," + "\n"+ vendorInfo[2];
-//                  + "\n"+ vendorInfo[3] + "\n"+ vendorInfo[4];
-
-                address.setText(str);
+                name.setText(vendorInfo[1]);
+                address.setText(vendorInfo[2]);
                 state.setText(vendorInfo[4]);
-                pin.setText(vendorInfo[3]);
-                company.setText(vendorInfo[6]);
-                country.setText(vendorInfo[5]);
 
                 //Product
                 ArrayList<String[]> PrdList = (ArrayList<String[]>) extras.getSerializable("ProductInfo");
@@ -174,8 +168,6 @@ public class ViewPurchaseOrder extends AppCompatActivity {
                     getPrice =getPrice.concat(",");
                     Integer quantityStr = Integer.valueOf(stringList[4]);
 
-
-
                     amt = gstValue * priceStr/100 + priceStr;
                     if(igst != true)gstValue /= 2;
                     gst.setText(String.valueOf(gstValue));
@@ -204,30 +196,16 @@ public class ViewPurchaseOrder extends AppCompatActivity {
                     totalAmount += amt;
                     totalquantity += quantityStr;
                 }
+
                 finalprice.setText(String.valueOf(totalPrice));
                 finalquantity.setText(String.valueOf(totalquantity));
                 finalamount.setText(String.valueOf(totalAmount));
 
-                float totalDiscount = Float.valueOf(discount);
-                float tDiscount = totalDiscount * amt /100;
-                DiscountValue.setText(String.valueOf(tDiscount));
-
-                float totalTransport = Float.valueOf(transport);
-                totalAmount += totalTransport;
-
-                totalAmount -= tDiscount;
-
                 finalPayable.setText(String.valueOf(totalAmount));
 
-                str = extras.getString("date");
                 String str2 = getAllProducts;
                 Log.v("Products---------", str2);
                 Log.v("Products---------", getAllProducts);
-                Log.v("Date Put---------", str);
-
-                date.setText(str);
-                str = extras.getString("validdate");
-                validdate.setText(str);
 
                 fillHashMap();
             }
@@ -235,21 +213,13 @@ public class ViewPurchaseOrder extends AppCompatActivity {
     }
 
     void fillHashMap(){
-        hsmap.put("date", date.getText().toString());
         hsmap.put("name", name.getText().toString());
-        hsmap.put("validdate", validdate.getText().toString());
         hsmap.put("address", address.getText().toString());
-        hsmap.put("company", company.getText().toString());
-        hsmap.put("country", country.getText().toString());
-        hsmap.put("pin", pin.getText().toString());
         hsmap.put("state", state.getText().toString());
         hsmap.put("state1", state1.getText().toString());
 
         hsmap.put("finalprice", finalprice.getText().toString());
         hsmap.put("finalquantity", finalquantity.getText().toString());
-        hsmap.put("transportfee", TransportationCost.getText().toString());
-        hsmap.put("discountValue", DiscountValue.getText().toString());
-        hsmap.put("discountText", DiscountTextview.getText().toString());
         hsmap.put("finalpayable", finalPayable.getText().toString());
 
 
@@ -267,15 +237,11 @@ public class ViewPurchaseOrder extends AppCompatActivity {
 
     void initialiseLayouts() {
         date = (TextView) findViewById(R.id.date_tv);
-        validdate = (TextView) findViewById(R.id.validdate_tv);
         quantity = (TextView) findViewById(R.id.tvquantity);
 
         name = (TextView) findViewById(R.id.client_name);
         address = (TextView) findViewById(R.id.textView19);
         state = (TextView)findViewById(R.id.text_state);
-        pin = (TextView)findViewById(R.id.text_pin);
-        company = (TextView) findViewById(R.id.textView22);
-        country = (TextView) findViewById(R.id.textView21);
 
         state1 = (TextView)findViewById(R.id.text_state1);
         sgst = (TextView)findViewById(R.id.sgst);
@@ -290,9 +256,6 @@ public class ViewPurchaseOrder extends AppCompatActivity {
         finalquantity = ( TextView) findViewById(R.id.finalQuantity);
         finalamount = (TextView) findViewById(R.id.finalAmount);
         finalPayable = (TextView) findViewById(R.id.textView25);
-        TransportationCost =(TextView) findViewById(R.id.textView18);
-        DiscountValue =(TextView ) findViewById(R.id.textView27);
-        DiscountTextview =(TextView ) findViewById(R.id.textView20);
 
         lyt = (LinearLayout) findViewById(R.id.tableRow2);
         cl_pdflayout = (ConstraintLayout) findViewById(R.id.cl_pdf);
@@ -305,6 +268,18 @@ public class ViewPurchaseOrder extends AppCompatActivity {
         b_pan = (TextView) findViewById(R.id.textView16);
 
         globalVariable = GlobalVariable.getInstance();
+
+
+        final Calendar c = Calendar.getInstance();
+        year  = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day   = c.get(Calendar.DAY_OF_MONTH);
+
+        date.setText(new StringBuilder()
+                .append(day).append("-")
+                .append(month + 1).append("-")
+                .append(year).append(" "));
+
     }
 
     @Override

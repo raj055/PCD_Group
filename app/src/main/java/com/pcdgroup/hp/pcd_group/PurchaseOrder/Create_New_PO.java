@@ -96,6 +96,19 @@ public class Create_New_PO extends AppCompatActivity {
 
                 Intent intent = new Intent(Create_New_PO.this, ViewPurchaseOrder.class);
 
+                //vendor
+                intent.putExtra("vendorInfo", globalVariable.globalVendor);
+
+                //product
+                int itemsCount = 0;
+                for (ProductInfoAdapter pradap: items){
+
+                    String[] glstr = PrdList.get(itemsCount++);
+                    if(glstr != null)
+                        glstr[4] =  pradap.getAmount();
+                }
+                intent.putExtra("ProductInfo", PrdList);
+
                 startActivity(intent);
                 finish();
             }
