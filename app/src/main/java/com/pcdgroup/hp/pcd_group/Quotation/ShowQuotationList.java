@@ -26,7 +26,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ShowQuotationList
+ * @description show quotation list of client to add him self
  */
 
 public class ShowQuotationList extends AppCompatActivity implements CallBackInterface {
@@ -49,6 +51,12 @@ public class ShowQuotationList extends AppCompatActivity implements CallBackInte
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.listpdfs_activity);
+
+      /*
+          - show quotation list
+          - client add quotation to show this quotation
+      */
+
     httpParse = new HttpParse();
 
     listView = (ListView) findViewById(R.id.listView);

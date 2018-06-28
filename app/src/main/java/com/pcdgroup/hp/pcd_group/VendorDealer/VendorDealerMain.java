@@ -16,7 +16,9 @@ import com.pcdgroup.hp.pcd_group.R;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name VendorDealerMain
+ * @description main class of vendor and dealer to fragment
  */
 
 public class VendorDealerMain extends AppCompatActivity {
@@ -30,6 +32,10 @@ public class VendorDealerMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vendor_dealer);
 
+        /*
+            - add vendor fragment
+            - add dealer fragment
+        */
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 

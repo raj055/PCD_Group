@@ -2,7 +2,9 @@ package com.pcdgroup.hp.pcd_group.VendorDealer;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name DealerData
+ * @description data of dealer details to get and set name
  */
 
 public class DealerData {

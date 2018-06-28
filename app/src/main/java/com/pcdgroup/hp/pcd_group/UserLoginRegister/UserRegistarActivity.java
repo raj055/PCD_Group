@@ -32,7 +32,9 @@ import java.util.Random;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name UserRegistarActivity
+ * @description register new user to use this application
  */
 
 public class UserRegistarActivity extends AppCompatActivity implements CallBackInterface {
@@ -59,6 +61,11 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registar);
+
+         /*
+            - new user register in database
+            - conform this user send otp to user email and mobile no
+        */
 
         //Assign Id'S
         First_Name = (EditText)findViewById(R.id.editTextF_Name);

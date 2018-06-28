@@ -13,9 +13,12 @@ import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.List;
 import com.pcdgroup.hp.pcd_group.R;
+
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ProductListAdapter
+ * @description product list adepter to show list of product and his name
  */
 
 public class ProductListAdapter extends BaseAdapter {

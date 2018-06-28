@@ -36,7 +36,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name SelectVendorProducts
+ * @description select selected vendor product
  */
 
 public class SelectVendorProducts extends AppCompatActivity implements CallBackInterface {
@@ -62,6 +64,10 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_products);
+
+        /*
+            - list of product to selected vendor
+        */
 
         prductlist = new ArrayList<ProductData>();
         recordName = new String("");

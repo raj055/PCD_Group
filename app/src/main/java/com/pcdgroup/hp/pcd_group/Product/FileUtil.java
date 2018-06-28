@@ -15,7 +15,9 @@ import java.io.OutputStream;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name FileUtil
+ * @description image upload in data base to link name
  */
 
 class FileUtil {

@@ -50,7 +50,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name SelectClient
+ * @description select client to create invoice
  */
 
 public class SelectClient extends AppCompatActivity implements ClientRecyclerViewAdapter.DataAdapterListener,
@@ -73,6 +75,10 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectclient);
+
+        /*
+            - selected client to create new invoice
+        */
 
         clientDataAdapters = new ArrayList<>();
 

@@ -55,7 +55,9 @@ import retrofit2.http.GET;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ClientOfClientList
+ * @description client of client is client add there new  client list
  */
 
 public class ClientOfClientList extends AppCompatActivity implements CallBackInterface {
@@ -79,6 +81,10 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientofclient);
+
+        /*
+            - client add new client show data
+        */
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

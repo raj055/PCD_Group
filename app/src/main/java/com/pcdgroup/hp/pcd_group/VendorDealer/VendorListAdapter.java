@@ -14,7 +14,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name VendorListAdapter
+ * @description vendor list adepter to shoe vendor name in adepter
  */
 
 public class VendorListAdapter extends BaseAdapter {

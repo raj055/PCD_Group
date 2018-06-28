@@ -33,11 +33,12 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name Client_Discount
+ * @description admin set how many get discount get client
  */
 
 public class Client_Discount extends AppCompatActivity implements CallBackInterface {
-
 
     String[] data;
     ListView listView;
@@ -59,6 +60,11 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount);
+
+        /*
+            - list of user database
+            - set discount to user to create new quotation to another
+        */
 
         userDataGets = new ArrayList<UserDataGet>();
         tempStoreDataValues = new ArrayList<UserDataGet>();

@@ -22,7 +22,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name CustomListAdapter
+ * @description product custom list adepter to display product data
  */
 
 public class CustomListAdapter extends BaseAdapter implements Filterable {

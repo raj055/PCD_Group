@@ -27,6 +27,13 @@ import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.HashMap;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 28-06-2018.
+ * @class_name Add_Vendor
+ * @description add new Vendor in database and add this product
+ */
+
 public class Add_Vendor extends Fragment implements CallBackInterface {
 
     EditText name,address,area,mobileno,state,email,organisation,gstno,products;
@@ -45,6 +52,11 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_vendor,container,false);
+
+        /*
+            - add vendor product in product list
+            - add vendor details in database
+        */
 
         globalVariable = GlobalVariable.getInstance();
 

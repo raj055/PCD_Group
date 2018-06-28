@@ -42,7 +42,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name PO_List
+ * @description list of purchase order
  */
 
 public class PO_List extends AppCompatActivity implements CallBackInterface {
@@ -60,6 +62,11 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_po_list);
+
+        /*
+            - list of purchase order
+            - create new purchase order
+        */
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -33,7 +33,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name MainActivity
+ * @description login page to user add email and password to login activity
  */
 
 public class MainActivity extends AppCompatActivity implements CallBackInterface {
@@ -68,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         /*
+            - login page to login activity
+            - check database to access type after this type user login
+	    */
 
         if(!isConnected(MainActivity.this)) buildDialog(MainActivity.this).show();
         else {

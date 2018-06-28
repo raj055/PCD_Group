@@ -16,7 +16,9 @@ import java.util.Map;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name HttpParse
+ * @description this class set request in has map to link database to class variable
  */
 
 public class HttpParse {

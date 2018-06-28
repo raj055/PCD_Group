@@ -32,7 +32,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name Order_List
+ * @description order list is a quotation going in process
  */
 
 public class Order_List extends AppCompatActivity implements CallBackInterface {
@@ -56,6 +58,11 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderlist);
+
+        /*
+            - display all order list
+            - create order list to bill
+        */
 
         httpParse = new HttpParse();
 

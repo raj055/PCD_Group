@@ -35,7 +35,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name VendorList
+ * @description list of vendor  in list view to vendor name
  */
 
 public class VendorList  extends AppCompatActivity implements CallBackInterface {
@@ -54,6 +56,10 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vendor_list);
+
+        /*
+            - list of vendor name
+        */
 
         listView = (ListView) findViewById(R.id.listViewVendor);
 

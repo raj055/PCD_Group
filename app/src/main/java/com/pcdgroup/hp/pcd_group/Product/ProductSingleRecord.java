@@ -26,9 +26,10 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ProductSingleRecord
+ * @description show full product single record
  */
-
 public class ProductSingleRecord extends AppCompatActivity implements CallBackInterface {
 
     HashMap<String,String> hashMap = new HashMap<>();
@@ -60,6 +61,11 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.productrecord_activity);
+
+        /*
+            - display single record
+            - this record update and delete button show
+        */
 
         gblVar = GlobalVariable.getInstance();
 

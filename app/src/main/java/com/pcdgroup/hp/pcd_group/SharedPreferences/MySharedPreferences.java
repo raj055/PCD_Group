@@ -7,7 +7,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name MySharedPreferences
+ * @description In this class one time login user to save login details to local memory
  */
 
 public class MySharedPreferences {

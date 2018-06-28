@@ -41,7 +41,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name CreateQuotation
+ * @description create new quotation to send client
  */
 
 public class CreateQuotation extends AppCompatActivity implements CallBackInterface {
@@ -77,6 +79,11 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation);
+
+        /*
+            - select date, brand, add brand, add product
+            - create invoice to pdf view
+        */
 
         globalVariable = GlobalVariable.getInstance();
 

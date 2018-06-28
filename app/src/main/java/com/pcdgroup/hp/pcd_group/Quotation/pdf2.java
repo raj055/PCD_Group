@@ -2,7 +2,9 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name pdf2
+ * @description pdf to set and get name
  */
 
 public class pdf2 {

@@ -2,7 +2,9 @@ package com.pcdgroup.hp.pcd_group.Client;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name DataAdapter
+ * @description data adapter to display all client field
  */
 
 public class DataAdapter {

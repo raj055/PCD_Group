@@ -1,10 +1,11 @@
 package com.pcdgroup.hp.pcd_group.AdminLogin;
 
-import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name Category
+ * @description category of all client details to set and get data
  */
 
 public class Category {

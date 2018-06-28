@@ -17,7 +17,9 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name SendMail
+ * @description sending email Configuring properties for gmail
  */
 
 public class SendMail extends AsyncTask<Void,Void,Void> {
@@ -36,6 +38,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
     //Class Constructor
     public SendMail(Context context, String email, String subject, String message){
+
         //Initializing variables
         this.context = context;
         this.email = email;

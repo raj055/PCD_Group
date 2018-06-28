@@ -14,7 +14,9 @@ import com.android.volley.toolbox.ImageLoader;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name CustomVolleyRequest
+ * @description this class volley request to display best product list
  */
 
 public class CustomVolleyRequest {

@@ -52,7 +52,9 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name UploadImage
+ * @description upload image to server in compress images
  */
 
 public class UploadImage extends AppCompatActivity implements CallBackInterface {
@@ -87,6 +89,11 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_image_layout);
+
+        /*
+            - compress image to upload to server
+            - set name image and upload database
+        */
 
         //Assign Id'S
         name= (EditText) findViewById(R.id.name);

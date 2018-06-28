@@ -44,7 +44,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ViewImage
+ * @description view image to show a product data and image to list view
  */
 
 public class ViewImage extends AppCompatActivity implements CallBackInterface {
@@ -66,6 +68,11 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_image_layout);
+
+        /*
+            - show image in list view
+            - product details shoe in card view
+        */
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

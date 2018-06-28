@@ -23,7 +23,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name PDFViewActivity
+ * @description pdf view activity to show pdf of quotation
  */
 
 public class PDFViewActivity extends AppCompatActivity implements OnPageChangeListener,OnLoadCompleteListener {
@@ -42,6 +44,10 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
+
+        /*
+            - display pdf of quotation
+        */
 
         gblVar = GlobalVariable.getInstance();
 

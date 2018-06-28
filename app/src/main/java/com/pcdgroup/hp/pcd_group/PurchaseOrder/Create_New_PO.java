@@ -25,7 +25,9 @@ import java.util.ArrayList;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name Create_New_PO
+ * @description crete new purchase order
  */
 
 public class Create_New_PO extends AppCompatActivity {
@@ -44,6 +46,12 @@ public class Create_New_PO extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_po);
+
+        /*
+            - select vendor in vendor list
+            - select product in product list
+            - create purchase order to click button
+        */
 
         globalVariable = GlobalVariable.getInstance();
 

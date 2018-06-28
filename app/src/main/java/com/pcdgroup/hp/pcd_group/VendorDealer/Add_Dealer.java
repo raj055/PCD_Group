@@ -20,6 +20,13 @@ import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.HashMap;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 28-06-2018.
+ * @class_name Add_Dealer
+ * @description add dealer in database to all information of dealer
+ */
+
 public class Add_Dealer extends Fragment implements CallBackInterface {
 
     EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
@@ -38,6 +45,10 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_dealer,container,false);
+
+        /*
+            - add dealer details in database
+        */
 
         globalVariable = GlobalVariable.getInstance();
 

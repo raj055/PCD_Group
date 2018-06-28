@@ -51,7 +51,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ClientDetailsActivity
+ * @description client details activity to display client details
  */
 
 public class ClientDetailsActivity extends AppCompatActivity
@@ -86,6 +88,11 @@ public class ClientDetailsActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientdetails);
+
+        /*
+            - client details to display client list
+            - add new client button to add new
+         */
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -9,7 +9,9 @@ import com.pcdgroup.hp.pcd_group.R;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name FlipAnimator
+ * @description set animation to splash screen
  */
 
 public class FlipAnimator {

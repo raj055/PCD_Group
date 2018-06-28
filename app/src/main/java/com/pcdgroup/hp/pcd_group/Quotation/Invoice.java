@@ -79,8 +79,11 @@ import static android.app.PendingIntent.getActivity;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name Invoice
+ * @description create invoice  to add client and company details
  */
+
 public class Invoice extends AppCompatActivity  implements CallBackInterface {
 
     TextView name,address,state,company,country,pin;
@@ -125,6 +128,11 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice);
+
+        /*
+            - show pdf of invoice
+            - send to server and create invoice to quotation
+        */
 
         initialiseLayouts();
 

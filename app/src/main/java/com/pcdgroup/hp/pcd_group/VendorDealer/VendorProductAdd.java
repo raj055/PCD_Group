@@ -54,7 +54,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name VendorProductAdd
+ * @description  vendor add new product in database
  */
 
 public class VendorProductAdd extends AppCompatActivity implements CallBackInterface {
@@ -77,6 +79,11 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_view);
+
+        /*
+            - add vendor product to show in details
+            - show product to product id
+        */
 
         Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");

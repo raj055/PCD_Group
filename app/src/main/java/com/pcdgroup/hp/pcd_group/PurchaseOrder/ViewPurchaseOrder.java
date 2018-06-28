@@ -58,7 +58,9 @@ import java.util.UUID;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ViewPurchaseOrder
+ * @description purchase order show how to build
  */
 
 public class ViewPurchaseOrder extends AppCompatActivity {
@@ -101,6 +103,11 @@ public class ViewPurchaseOrder extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_purchaseorder);
+
+        /*
+            - create purchase order pdf in memory
+            - send to server a new created purchase order
+        */
 
         initialiseLayouts();
 

@@ -2,7 +2,9 @@ package com.pcdgroup.hp.pcd_group.PurchaseOrder;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name P_V__Data
+ * @description procuct data set and get data
  */
 
 public class P_V__Data {

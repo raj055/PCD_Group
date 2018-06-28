@@ -28,7 +28,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name SingleRecordShow
+ * @description show single record of client
  */
 
 public class SingleRecordShow extends AppCompatActivity implements CallBackInterface {
@@ -64,6 +66,11 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_record);
+
+        /*
+            - update button to update record and delete record
+            - selected record details show
+        */
 
         gblVar = GlobalVariable.getInstance();
 

@@ -36,7 +36,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ProductUpdate
+ * @description product update to is all details and image
  */
 
 public class ProductUpdate extends AppCompatActivity implements CallBackInterface {
@@ -69,6 +71,11 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_product);
+
+        /*
+            - update product
+            - update image
+        */
 
         gblVar = GlobalVariable.getInstance();
 

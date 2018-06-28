@@ -15,7 +15,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name
+ * @description
  */
 
 public class Purchaselist_Adepter extends BaseAdapter {

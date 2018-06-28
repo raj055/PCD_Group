@@ -1,10 +1,11 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
-import com.pcdgroup.hp.pcd_group.Client.ClientRegisterActivity;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ClientDataAdapter
+ * @description client adepter to set and get client details
  */
 
 public class ClientDataAdapter {

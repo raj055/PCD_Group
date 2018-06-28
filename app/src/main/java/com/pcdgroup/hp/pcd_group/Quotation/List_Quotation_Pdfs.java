@@ -23,7 +23,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name List_Quotation_Pdfs
+ * @description list of all quotation list
  */
 
 public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackInterface {
@@ -41,6 +43,11 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listpdfs_activity);
+
+        /*
+            - list of all quotation
+            - click quotation to show and create bill
+        */
 
         listView = (ListView) findViewById(R.id.listView);
 

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name GlobalVariable
+ * @description global variable to declared in some class
  */
 
 public class GlobalVariable {

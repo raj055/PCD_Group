@@ -12,6 +12,13 @@ import com.pcdgroup.hp.pcd_group.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Grasp
+ * @version 1.0 on 28-06-2018.
+ * @class_name ImageAdapter
+ * @description image adepter to set image size and his name to link in database
+ */
+
 public class ImageAdapter extends BaseAdapter {
 
     private Activity activity;

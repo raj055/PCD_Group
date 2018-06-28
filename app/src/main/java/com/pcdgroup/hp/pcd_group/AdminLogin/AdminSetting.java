@@ -32,8 +32,11 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name AdminSetting
+ * @description admin setting set add brand and display brand list to full details
  */
+
 public class AdminSetting extends AppCompatActivity implements CallBackInterface {
 
     Button Brand;
@@ -61,6 +64,11 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminsetting);
+
+        /*
+            - add new brand in database and show in spinner list view
+            - All details show to selected item in spinner
+        */
 
         LayoutInflater layoutinflater = LayoutInflater.from(this);
         promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box,null);

@@ -13,7 +13,9 @@ import android.view.View;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name MyDividerItemDecoration
+ * @description set margin and orientation
  */
 
 public class MyDividerItemDecoration extends RecyclerView.ItemDecoration {

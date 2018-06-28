@@ -50,11 +50,12 @@ import java.util.TimerTask;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name AdminDashboard
+ * @description Main Activity to after login. Show in all field to Admin, Manager,client and user.
  */
 
 public class AdminDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
 
     public static String EmailHolder = "";
     Intent intent;
@@ -66,6 +67,11 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admindashboard);
+
+        /*
+            - drawer menu bar to show field and information
+            - click field after go new Activity
+	    */
 
         context = this;
 
@@ -103,6 +109,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
         // Inflating layout
         LayoutInflater inflater = getLayoutInflater();
+
         // Setting view you want to display as a row element
         View view = inflater.inflate(R.layout.main_dashbord, mainLayout, false);
 

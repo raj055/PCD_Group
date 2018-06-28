@@ -38,7 +38,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name DealerList
+ * @description dealer list show in data base
  */
 
 public class DealerList extends AppCompatActivity implements CallBackInterface {
@@ -58,6 +60,10 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dealer_list);
+
+        /*
+            - shoe list of data to dealer
+         */
 
         listView = (ListView) findViewById(R.id.listViewDealer);
 

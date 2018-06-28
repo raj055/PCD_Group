@@ -18,7 +18,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name UserAdminAdepter
+ * @description Admin Adepter to load image and get email id.
  */
 
 public class UserAdminAdepter extends BaseAdapter {
@@ -29,6 +31,7 @@ public class UserAdminAdepter extends BaseAdapter {
     private ImageLoader imageLoader;
 
     public UserAdminAdepter(Activity activity, List<UserDataGet> userDataGets) {
+
         this.activity = activity;
         this.userDataGets = userDataGets;
         imageLoader = CustomVolleyRequest.getInstance(activity.getApplicationContext())

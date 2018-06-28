@@ -24,7 +24,9 @@ import java.util.HashMap;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ClientRegisterActivity
+ * @description add new client register in database
  */
 
 public class ClientRegisterActivity extends AppCompatActivity implements CallBackInterface {
@@ -49,6 +51,10 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientregister);
+
+        /*
+            - add new client details
+        */
 
         globalVariable = GlobalVariable.getInstance();
 

@@ -40,7 +40,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name SelectProduct
+ * @description product list to select product in quotation
  */
 
 public class SelectProduct  extends AppCompatActivity implements ProductCustomListAdapter.DataAdapterListener ,
@@ -63,6 +65,10 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_view);
+
+        /*
+            - selected product to create new invoice
+        */
 
         prodactEntities = new ArrayList<ProdactEntity>();
         recordName = new String("");

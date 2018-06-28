@@ -27,7 +27,9 @@ import okhttp3.HttpUrl;
 
 /**
  * @author Grasp
- * @version 1.0 on 18-06-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name DataBaseQuery
+ * @description declared database query to postdata, getdata and get json format
  */
 
 public class DataBaseQuery {

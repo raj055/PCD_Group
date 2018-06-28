@@ -29,7 +29,9 @@ import java.util.List;
 
 /**
  * @author Grasp
- * @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name AccessAdmin
+ * @description Admin set & change the access type of user.
  */
 
 public class AccessAdmin extends AppCompatActivity implements CallBackInterface {
@@ -43,9 +45,7 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
     List<UserDataGet> userDataGets;
     List<UserDataGet> tempStoreDataValues;
     UserDataGet usrDGet;
-
     String accessValue = "";
-
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -54,6 +54,10 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminaccess);
+        /*
+            - Display List of users
+            - set & change Access level of users
+         */
 
         userDataGets = new ArrayList<UserDataGet>();
         tempStoreDataValues = new ArrayList<UserDataGet>();
@@ -85,7 +89,6 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
                 SaveAccess();
             }
         });
-
 
         //access listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

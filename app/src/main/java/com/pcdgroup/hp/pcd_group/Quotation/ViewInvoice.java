@@ -55,7 +55,9 @@ import java.util.Properties;
 
 /**
  * @author Grasp
- *  @version 1.0 on 28-03-2018.
+ * @version 1.0 on 28-06-2018.
+ * @class_name ViewInvoice
+ * @description view invoice to create client
  */
 
 public class ViewInvoice extends AppCompatActivity implements CallBackInterface {
@@ -91,6 +93,10 @@ public class ViewInvoice extends AppCompatActivity implements CallBackInterface 
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.invoice);
+
+      /*
+          - view invoice
+      */
 
     gblVar = GlobalVariable.getInstance();
 
