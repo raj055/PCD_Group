@@ -4,7 +4,8 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item android:title="@string/quotation" />
+        <item android:title="@string/quotation"
+              tools:ignore="HardcodedText"/>
         <item
             android:id="@+id/nav_quotation"
             android:title="Quotation List" />

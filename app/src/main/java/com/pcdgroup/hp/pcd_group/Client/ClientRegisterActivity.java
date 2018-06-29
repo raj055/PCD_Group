@@ -31,15 +31,15 @@ import java.util.HashMap;
 
 public class ClientRegisterActivity extends AppCompatActivity implements CallBackInterface {
 
-    EditText fname,lname,address,addressline1,addressline2,mobileno,country,company_name,pin,email_id,designation;
-    Spinner type,state;
+    EditText fname, lname, address, addressline1, addressline2, mobileno, country, company_name, pin, email_id, designation;
+    Spinner type, state;
     Button submit;
-    String FName_Holder, LName_Holder, type_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
-            State_Holder,Country_Holder, CompanyName_Holder,Pin_Holder, Emailid_Holder, Designation_Holder,
+    String FName_Holder, LName_Holder, type_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder, Mobileno_Holder,
+            State_Holder, Country_Holder, CompanyName_Holder, Pin_Holder, Emailid_Holder, Designation_Holder,
             UserClient_Holder;
 
-    Boolean CheckEditText ;
-    HashMap<String,String> hashMap = new HashMap<>();
+    Boolean CheckEditText;
+    HashMap<String, String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -66,10 +66,10 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         address = (EditText) findViewById(R.id.et_address);
         addressline1 = (EditText) findViewById(R.id.et_addressline1);
         addressline2 = (EditText) findViewById(R.id.et_addressline2);
-        mobileno=(EditText) findViewById(R.id.et_Mobileno);
-        country=(EditText) findViewById(R.id.et_Country);
+        mobileno = (EditText) findViewById(R.id.et_Mobileno);
+        country = (EditText) findViewById(R.id.et_Country);
         company_name = (EditText) findViewById(R.id.et_companyname);
-        pin=(EditText) findViewById(R.id.et_Pin);
+        pin = (EditText) findViewById(R.id.et_Pin);
         email_id = (EditText) findViewById(R.id.et_email);
         designation = (EditText) findViewById(R.id.et_designation);
         submit = (Button) findViewById(R.id.btn_submit);
@@ -82,39 +82,38 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
                 // Checking whether EditText is Empty or Not.
                 CheckEditTextIsEmptyOrNot();
 
-                if(CheckEditText){
+                if (CheckEditText) {
 
                     // If EditText is not empty and CheckEditText = True then this block will execute.
                     urlQry = DataGetUrl.CLIENT_REGISTER;
 
                     typeOfQuery = CallType.POST_CALL;
 
-                    hashMap.put("first_name",FName_Holder);
-                    hashMap.put("last_name",LName_Holder);
-                    hashMap.put("type",type_Holder);
-                    hashMap.put("address",Address_Hoder);
-                    hashMap.put("address_line1",Addressline1_Holder);
-                    hashMap.put("address_line2",Addressline2_Holder);
-                    hashMap.put("mobile_num",Mobileno_Holder);
-                    hashMap.put("state",State_Holder);
-                    hashMap.put("country",Country_Holder);
-                    hashMap.put("company_name",CompanyName_Holder);
-                    hashMap.put("pin",Pin_Holder);
-                    hashMap.put("email_id",Emailid_Holder);
-                    hashMap.put("designation",Designation_Holder);
-                    hashMap.put("user",UserClient_Holder);
+                    hashMap.put("first_name", FName_Holder);
+                    hashMap.put("last_name", LName_Holder);
+                    hashMap.put("type", type_Holder);
+                    hashMap.put("address", Address_Hoder);
+                    hashMap.put("address_line1", Addressline1_Holder);
+                    hashMap.put("address_line2", Addressline2_Holder);
+                    hashMap.put("mobile_num", Mobileno_Holder);
+                    hashMap.put("state", State_Holder);
+                    hashMap.put("country", Country_Holder);
+                    hashMap.put("company_name", CompanyName_Holder);
+                    hashMap.put("pin", Pin_Holder);
+                    hashMap.put("email_id", Emailid_Holder);
+                    hashMap.put("designation", Designation_Holder);
+                    hashMap.put("user", UserClient_Holder);
 
                     //Send Database query for inquiring to the database.
                     dataBaseQuery = new DataBaseQuery(hashMap,
-                      urlQry,
-                      typeOfQuery,
-                      getApplicationContext(),
-                      ClientRegisterActivity.this
+                            urlQry,
+                            typeOfQuery,
+                            getApplicationContext(),
+                            ClientRegisterActivity.this
                     );
                     //Prepare for the database query
                     dataBaseQuery.PrepareForQuery();
-                }
-                else {
+                } else {
                     // If EditText is empty then this block will execute.
                     Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
                 }
@@ -122,7 +121,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         });
     }
 
-    public void CheckEditTextIsEmptyOrNot(){
+    public void CheckEditTextIsEmptyOrNot() {
 
         //Checking all EditText Empty or Not.
         FName_Holder = fname.getText().toString();
@@ -132,31 +131,30 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         Addressline1_Holder = addressline1.getText().toString();
         Addressline2_Holder = addressline2.getText().toString();
         Mobileno_Holder = mobileno.getText().toString();
-        State_Holder=state.getSelectedItem().toString();
-        Country_Holder=country.getText().toString();
+        State_Holder = state.getSelectedItem().toString();
+        Country_Holder = country.getText().toString();
         CompanyName_Holder = company_name.getText().toString();
         Emailid_Holder = email_id.getText().toString();
         Pin_Holder = pin.getText().toString();
         Designation_Holder = designation.getText().toString();
 
-        FName_Holder = FName_Holder.replace("'","''");
-        LName_Holder = LName_Holder.replace("'","''");
-        Address_Hoder = Address_Hoder.replace("'","''");
-        Addressline1_Holder = Addressline1_Holder.replace("'","''");
-        Addressline2_Holder = Addressline2_Holder.replace("'","''");
-        CompanyName_Holder = CompanyName_Holder.replace("'","''");
-        Designation_Holder = Designation_Holder.replace("'","''");
+        FName_Holder = FName_Holder.replace("'", "''");
+        LName_Holder = LName_Holder.replace("'", "''");
+        Address_Hoder = Address_Hoder.replace("'", "''");
+        Addressline1_Holder = Addressline1_Holder.replace("'", "''");
+        Addressline2_Holder = Addressline2_Holder.replace("'", "''");
+        CompanyName_Holder = CompanyName_Holder.replace("'", "''");
+        Designation_Holder = Designation_Holder.replace("'", "''");
 
         UserClient_Holder = globalVariable.currentUserEmail;
 
-        if(TextUtils.isEmpty(FName_Holder) || TextUtils.isEmpty(LName_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder))
-        {
+        if (TextUtils.isEmpty(FName_Holder) || TextUtils.isEmpty(LName_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder)) {
             CheckEditText = false;
-        }
-        else {
-            CheckEditText = true ;
+        } else {
+            CheckEditText = true;
         }
     }
+
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(ClientRegisterActivity.this);
@@ -166,13 +164,13 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if (globalVariable.AccessType.contains("Admin")){
+                if (globalVariable.AccessType.contains("Admin")) {
                     intent = new Intent(ClientRegisterActivity.this, ClientDetailsActivity.class);
 
-                } else if (globalVariable.AccessType.contains("Manager")){
+                } else if (globalVariable.AccessType.contains("Manager")) {
                     intent = new Intent(ClientRegisterActivity.this, ClientDetailsActivity.class);
 
-                } else if (globalVariable.AccessType.contains("Client")){
+                } else if (globalVariable.AccessType.contains("Client")) {
                     intent = new Intent(ClientRegisterActivity.this, ClientOfClientList.class);
                     intent.putExtra("emailid", globalVariable.currentUserEmail);
 
@@ -194,7 +192,26 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
     }
 
     @Override
-    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+    public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
         Toast.makeText(ClientRegisterActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fname = null;
+        lname = null;
+        address = null;
+        addressline1 = null;
+        addressline2 = null;
+        mobileno = null;
+        country = null;
+        company_name = null;
+        pin = null;
+        email_id = null;
+        designation = null;
+        submit = null;
+        state = null;
+        type = null;
     }
 }

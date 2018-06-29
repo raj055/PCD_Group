@@ -97,10 +97,10 @@
     <string name="otp_msg"> \u0020 is your OTP Password For Register PCD_GROUP User</string>
 
     // drawer menu change item color
-    <string name="profile"><font color="#303F9F">Profile</font></string>
-    <string name="logout"><font color="#FF0000">LogOut</font></string>
-    <string name="quotation"><font color="#303F9F">QUOTATION &amp; ORDER</font></string>
-    <string name="vendor"><font color="#303F9F">VENDOR &amp; DEALER</font></string>
-    <string name="purchase"><font color="#303F9F">PURCHASE ORDER</font></string>
+    <string name="profile">Profile</string>
+    <string name="logout">LogOut</string>
+    <string name="quotation">QUOTATION &amp; ORDER</string>
+    <string name="vendor">VENDOR &amp; DEALER</string>
+    <string name="purchase">PURCHASE ORDER</string>
 
 </resources>

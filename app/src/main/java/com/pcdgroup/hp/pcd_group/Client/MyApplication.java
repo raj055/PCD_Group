@@ -1,12 +1,14 @@
 package com.pcdgroup.hp.pcd_group.Client;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * @author Grasp
@@ -16,6 +18,13 @@ import com.android.volley.toolbox.Volley;
  */
 
 public class MyApplication extends Application {
+
+//    private RefWatcher refWatcher;
+//
+//    public static  RefWatcher getRefwatchar(Context context){
+//        MyApplication application = (MyApplication) context.getApplicationContext();
+//        return application.refWatcher;
+//    }
 
     public static final String TAG = MyApplication.class
             .getSimpleName();
@@ -28,6 +37,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+//        refWatcher = LeakCanary.install(this);
     }
 
     public static synchronized MyApplication getInstance() {

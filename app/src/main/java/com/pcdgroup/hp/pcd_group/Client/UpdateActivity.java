@@ -34,12 +34,12 @@ import java.util.HashMap;
 public class UpdateActivity extends AppCompatActivity implements CallBackInterface {
 
     Boolean CheckEditText;
-    HashMap<String,String> hashMap = new HashMap<>();
-    EditText ClientName, ClientNameL, ClientAddress,ClientAddressline1,ClientAddressline2,ClientMobileno,ClientState,
-            ClientCountry, ClientEmail, ClientCompany,ClientPin, ClientDesignation;
+    HashMap<String, String> hashMap = new HashMap<>();
+    EditText ClientName, ClientNameL, ClientAddress, ClientAddressline1, ClientAddressline2, ClientMobileno, ClientState,
+            ClientCountry, ClientEmail, ClientCompany, ClientPin, ClientDesignation;
     Button UpdateStudent;
-    String ClientIdHolder,ClientFNameHolder,ClientLNameHolder,ClientAddressHolder,ClientAddressline1Holder,ClientAddressline2Holder,
-            ClientMobilenoHolder,ClientStateHolder,ClientCountryHolder, ClientEmailHolder,ClientPinoHolder,
+    String ClientIdHolder, ClientFNameHolder, ClientLNameHolder, ClientAddressHolder, ClientAddressline1Holder, ClientAddressline2Holder,
+            ClientMobilenoHolder, ClientStateHolder, ClientCountryHolder, ClientEmailHolder, ClientPinoHolder,
             ClientComapnyHolder, ClientDesignationHolder;
     Intent intent;
     GlobalVariable gblVar;
@@ -59,20 +59,20 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
 
         gblVar = GlobalVariable.getInstance();
 
-        ClientName = (EditText)findViewById(R.id.editName);
-        ClientNameL = (EditText)findViewById(R.id.editNamel);
-        ClientAddress = (EditText)findViewById(R.id.editAddress);
-        ClientAddressline1 = (EditText)findViewById(R.id.editAddressline1);
-        ClientAddressline2 = (EditText)findViewById(R.id.editAddressline2);
-        ClientMobileno = (EditText)findViewById(R.id.editMobileno);
-        ClientState = (EditText)findViewById(R.id.editState);
-        ClientCountry = (EditText)findViewById(R.id.editCountry);
-        ClientEmail = (EditText)findViewById(R.id.editEmail);
-        ClientPin= (EditText)findViewById(R.id.editPin);
-        ClientCompany = (EditText)findViewById(R.id.editCompany);
-        ClientDesignation = (EditText)findViewById(R.id.editDesignation);
+        ClientName = (EditText) findViewById(R.id.editName);
+        ClientNameL = (EditText) findViewById(R.id.editNamel);
+        ClientAddress = (EditText) findViewById(R.id.editAddress);
+        ClientAddressline1 = (EditText) findViewById(R.id.editAddressline1);
+        ClientAddressline2 = (EditText) findViewById(R.id.editAddressline2);
+        ClientMobileno = (EditText) findViewById(R.id.editMobileno);
+        ClientState = (EditText) findViewById(R.id.editState);
+        ClientCountry = (EditText) findViewById(R.id.editCountry);
+        ClientEmail = (EditText) findViewById(R.id.editEmail);
+        ClientPin = (EditText) findViewById(R.id.editPin);
+        ClientCompany = (EditText) findViewById(R.id.editCompany);
+        ClientDesignation = (EditText) findViewById(R.id.editDesignation);
 
-        UpdateStudent = (Button)findViewById(R.id.UpdateButton);
+        UpdateStudent = (Button) findViewById(R.id.UpdateButton);
 
         // Receive Client ID, Name , Address , Email, etc.. Send by previous ShowSingleRecordActivity.
         ClientIdHolder = getIntent().getStringExtra("id");
@@ -111,36 +111,36 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
                 // Getting data from EditText after button click.
                 GetDataFromEditText();
 
-                if(CheckEditText){
+                if (CheckEditText) {
 
                     urlQry = DataGetUrl.EDIT_CLIENT;
                     typeOfQuery = CallType.POST_CALL;
 
-                    hashMap.put("id",ClientIdHolder);
+                    hashMap.put("id", ClientIdHolder);
 
-                    hashMap.put("first_name",ClientFNameHolder);
+                    hashMap.put("first_name", ClientFNameHolder);
 
-                    hashMap.put("last_name",ClientLNameHolder);
+                    hashMap.put("last_name", ClientLNameHolder);
 
-                    hashMap.put("address",ClientAddressHolder);
+                    hashMap.put("address", ClientAddressHolder);
 
-                    hashMap.put("address_line1",ClientAddressline1Holder);
+                    hashMap.put("address_line1", ClientAddressline1Holder);
 
-                    hashMap.put("address_line2",ClientAddressline2Holder);
+                    hashMap.put("address_line2", ClientAddressline2Holder);
 
-                    hashMap.put("mobile_num",ClientMobilenoHolder);
+                    hashMap.put("mobile_num", ClientMobilenoHolder);
 
-                    hashMap.put("state",ClientStateHolder);
+                    hashMap.put("state", ClientStateHolder);
 
-                    hashMap.put("country",ClientCountryHolder);
+                    hashMap.put("country", ClientCountryHolder);
 
-                    hashMap.put("email_id",ClientEmailHolder);
+                    hashMap.put("email_id", ClientEmailHolder);
 
-                    hashMap.put("pin",ClientPinoHolder);
+                    hashMap.put("pin", ClientPinoHolder);
 
-                    hashMap.put("company",ClientComapnyHolder);
+                    hashMap.put("company", ClientComapnyHolder);
 
-                    hashMap.put("designation",ClientDesignationHolder);
+                    hashMap.put("designation", ClientDesignationHolder);
 
                     //Send Database query for inquiring to the database.
                     dataBaseQuery = new DataBaseQuery(hashMap,
@@ -152,7 +152,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
                     //Prepare for the database query
                     dataBaseQuery.PrepareForQuery();
 
-                }else {
+                } else {
 
                     // If EditText is empty then this block will execute.
                     Toast.makeText(UpdateActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
@@ -164,7 +164,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     }
 
     // Method to get existing data from EditText.
-    public void GetDataFromEditText(){
+    public void GetDataFromEditText() {
 
         ClientFNameHolder = ClientName.getText().toString();
         ClientLNameHolder = ClientNameL.getText().toString();
@@ -179,31 +179,29 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientComapnyHolder = ClientCompany.getText().toString();
         ClientDesignationHolder = ClientDesignation.getText().toString();
 
-        ClientFNameHolder = ClientFNameHolder.replace("'","''");
-        ClientLNameHolder = ClientLNameHolder.replace("'","''");
-        ClientAddressHolder = ClientAddressHolder.replace("'","''");
-        ClientAddressline1Holder = ClientAddressline1Holder.replace("'","''");
-        ClientAddressline2Holder = ClientAddressline2Holder.replace("'","''");
-        ClientComapnyHolder = ClientComapnyHolder.replace("'","''");
-        ClientDesignationHolder = ClientDesignationHolder.replace("'","''");
+        ClientFNameHolder = ClientFNameHolder.replace("'", "''");
+        ClientLNameHolder = ClientLNameHolder.replace("'", "''");
+        ClientAddressHolder = ClientAddressHolder.replace("'", "''");
+        ClientAddressline1Holder = ClientAddressline1Holder.replace("'", "''");
+        ClientAddressline2Holder = ClientAddressline2Holder.replace("'", "''");
+        ClientComapnyHolder = ClientComapnyHolder.replace("'", "''");
+        ClientDesignationHolder = ClientDesignationHolder.replace("'", "''");
 
-        if(TextUtils.isEmpty(ClientFNameHolder) || TextUtils.isEmpty(ClientLNameHolder) || TextUtils.isEmpty(ClientAddressHolder) || TextUtils.isEmpty(ClientAddressline1Holder)
+        if (TextUtils.isEmpty(ClientFNameHolder) || TextUtils.isEmpty(ClientLNameHolder) || TextUtils.isEmpty(ClientAddressHolder) || TextUtils.isEmpty(ClientAddressline1Holder)
                 || TextUtils.isEmpty(ClientAddressline2Holder) || TextUtils.isEmpty(ClientMobilenoHolder)
                 || TextUtils.isEmpty(ClientStateHolder) || TextUtils.isEmpty(ClientCountryHolder)
-                || TextUtils.isEmpty(ClientEmailHolder)|| TextUtils.isEmpty(ClientPinoHolder)
-                || TextUtils.isEmpty(ClientComapnyHolder) || TextUtils.isEmpty(ClientDesignationHolder))
-        {
+                || TextUtils.isEmpty(ClientEmailHolder) || TextUtils.isEmpty(ClientPinoHolder)
+                || TextUtils.isEmpty(ClientComapnyHolder) || TextUtils.isEmpty(ClientDesignationHolder)) {
             CheckEditText = false;
-        }
-        else {
-            CheckEditText = true ;
+        } else {
+            CheckEditText = true;
         }
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home,menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -212,23 +210,20 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
 
         int id = item.getItemId();
 
-        if(id==R.id.home) {
+        if (id == R.id.home) {
             if (gblVar.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }
-            else if (gblVar.AccessType.contains("Manager")) {
+            } else if (gblVar.AccessType.contains("Manager")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }
-            else if (gblVar.AccessType.contains("Client")) {
+            } else if (gblVar.AccessType.contains("Client")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }
-            else {
+            } else {
 
                 intent = new Intent(this, ViewImage.class);
             }
@@ -264,7 +259,25 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     }
 
     @Override
-    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
-        Toast.makeText(UpdateActivity.this,response.toString(), Toast.LENGTH_LONG).show();
+    public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
+        Toast.makeText(UpdateActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ClientName = null;
+        ClientNameL = null;
+        ClientAddress = null;
+        ClientAddressline1 = null;
+        ClientAddressline2 = null;
+        ClientMobileno = null;
+        ClientState = null;
+        ClientCountry = null;
+        ClientEmail = null;
+        ClientCompany = null;
+        ClientPin = null;
+        ClientDesignation = null;
+        UpdateStudent = null;
     }
 }

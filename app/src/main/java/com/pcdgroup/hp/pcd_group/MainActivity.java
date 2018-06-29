@@ -302,4 +302,15 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         return builder;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        rellay1 = null;
+        rellay2 = null;
+        Email = null;
+        Password = null;
+        LogIn = null;
+        Register = null;
+    }
 }

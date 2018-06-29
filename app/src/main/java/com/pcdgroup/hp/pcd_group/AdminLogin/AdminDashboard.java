@@ -62,6 +62,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawer;
     GlobalVariable gblv;
     Context context;
+    ImageView imageView,imageView1,imageView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +73,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             - drawer menu bar to show field and information
             - click field after go new Activity
 	    */
-
-        context = this;
 
         gblv = GlobalVariable.getInstance();
 
@@ -113,9 +112,9 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         // Setting view you want to display as a row element
         View view = inflater.inflate(R.layout.main_dashbord, mainLayout, false);
 
-        ImageView imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
-        ImageView imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
-        ImageView imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
+         imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
+         imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
+         imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
 
         if (gblv.AccessType.contains("Manager")) {
 
@@ -137,7 +136,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminDashboard.this, ClientDetailsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ClientDetailsActivity.class);
                 intent.putExtra("emailid", EmailHolder);
                 startActivity(intent);
             }
@@ -146,7 +145,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminDashboard.this, ViewImage.class);
+                Intent intent = new Intent(getApplicationContext(), ViewImage.class);
                 intent.putExtra("email",EmailHolder);
                 startActivity(intent);
             }
@@ -155,7 +154,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminDashboard.this, CreateQuotation.class);
+                Intent intent = new Intent(getApplicationContext(), CreateQuotation.class);
                 startActivity(intent);
             }
         });
@@ -169,37 +168,37 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         switch (item.getItemId()) {
 
             case R.id.nav_quotation:
-                intent = new Intent(AdminDashboard.this,List_Quotation_Pdfs.class);
+                intent = new Intent(getApplicationContext(),List_Quotation_Pdfs.class);
                 startActivity(intent);
                 break;
 
             case R.id.nav_myQuotation:
-                intent = new Intent(AdminDashboard.this,ShowQuotationList.class);
+                intent = new Intent(getApplicationContext(),ShowQuotationList.class);
                 startActivity(intent);
                 break;
 
             case R.id.nav_order:
-                intent = new Intent(AdminDashboard.this,Order_List.class);
+                intent = new Intent(getApplicationContext(),Order_List.class);
                 startActivity(intent);
                 break;
 
             case R.id.nav_vendordealer:
-                intent = new Intent(AdminDashboard.this,VendorDealerMain.class);
+                intent = new Intent(getApplicationContext(),VendorDealerMain.class);
                 startActivity(intent);
                 break;
 
             case R.id.nav_po:
-                intent = new Intent(AdminDashboard.this,PO_List.class);
+                intent = new Intent(getApplicationContext(),PO_List.class);
                 startActivity(intent);
                 break;
 
             case R.id.nav_finish:
-                intent = new Intent(AdminDashboard.this,FinishedOrder.class);
+                intent = new Intent(getApplicationContext(),FinishedOrder.class);
                 startActivity(intent);
                 break;
 
             case R.id.nav_logout:
-                intent = new Intent(AdminDashboard.this,MainActivity.class);
+                intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -224,17 +223,17 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         int id = item.getItemId();
         switch (id) {
             case 1:
-                intent = new Intent(AdminDashboard.this, AdminSetting.class);
+                intent = new Intent(getApplicationContext(), AdminSetting.class);
                 startActivity(intent);
                 break;
 
             case 2:
-                intent = new Intent(AdminDashboard.this, AccessAdmin.class);
+                intent = new Intent(getApplicationContext(), AccessAdmin.class);
                 startActivity(intent);
                 break;
 
             case 3:
-                intent = new Intent(AdminDashboard.this, Client_Discount.class);
+                intent = new Intent(getApplicationContext(), Client_Discount.class);
                 startActivity(intent);
                 break;
 
@@ -264,7 +263,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
         } else {
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(AdminDashboard.this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
             builder.setMessage("Are You Sure Want To Exit ?");
             builder.setCancelable(true);
             builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
@@ -282,5 +281,15 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        drawer = null;
+        imageView = null;
+        imageView1 = null;
+        imageView2 = null;
     }
 }

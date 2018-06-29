@@ -42,7 +42,7 @@ import java.util.List;
 
 public class VendorList  extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     VendorListAdapter adapter;
     List<VendorData> localdata;
     String[] data;
@@ -144,4 +144,11 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
+    }
+
 }

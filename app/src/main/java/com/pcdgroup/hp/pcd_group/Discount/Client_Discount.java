@@ -282,4 +282,11 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
             Toast.makeText(Client_Discount.this, response.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
+        done = null;
+    }
 }

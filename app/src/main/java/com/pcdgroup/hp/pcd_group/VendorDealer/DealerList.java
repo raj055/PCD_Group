@@ -161,4 +161,11 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
             Toast.makeText(DealerList.this, response.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
+    }
+
 }

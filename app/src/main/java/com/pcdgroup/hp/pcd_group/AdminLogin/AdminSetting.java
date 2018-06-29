@@ -306,4 +306,23 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
             Toast.makeText(AdminSetting.this, response.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Brand = null;
+        brandname = null;
+        address = null;
+        address1 = null;
+        address2 = null;
+        pincode = null;
+        mobileno = null;
+        email = null;
+        website = null;
+        pan = null;
+        gst = null;
+        state = null;
+        SpinerBrand = null;
+    }
 }

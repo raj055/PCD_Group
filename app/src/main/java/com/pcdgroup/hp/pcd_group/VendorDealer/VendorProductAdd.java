@@ -61,7 +61,7 @@ import java.util.List;
 
 public class VendorProductAdd extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     ProductList_VendorAdepter adapter;
     String[] data;
     ArrayList<String> picNames;
@@ -203,4 +203,11 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
+    }
+
 }

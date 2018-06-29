@@ -190,4 +190,20 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(getActivity(),response.toString(), Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        name = null;
+        address = null;
+        area = null;
+        mobileno = null;
+        state = null;
+        email = null;
+        organisation = null;
+        gstno = null;
+        products = null;
+        submit = null;
+        AddProduct = null;
+    }
 }

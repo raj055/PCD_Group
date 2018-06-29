@@ -62,7 +62,7 @@ import retrofit2.http.GET;
 
 public class ClientOfClientList extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     ProgressDialog progressDialog;
     String emailId;
     String finalResult;
@@ -181,6 +181,11 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
         listView.setAdapter(clientAdepter);
 
         clientAdepter.notifyDataSetChanged();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
     }
 }

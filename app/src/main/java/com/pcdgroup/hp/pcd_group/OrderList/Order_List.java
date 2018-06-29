@@ -169,4 +169,11 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        lstVeiw = null;
+    }
 }

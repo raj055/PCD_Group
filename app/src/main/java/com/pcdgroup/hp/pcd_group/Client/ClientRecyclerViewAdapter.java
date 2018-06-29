@@ -137,4 +137,5 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
     public interface DataAdapterListener {
         void onDataSelected(ClientDataAdapter dataAdapter);
     }
+
 }

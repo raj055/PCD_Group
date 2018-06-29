@@ -241,4 +241,18 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(UserRegistarActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        register = null;
+        First_Name = null;
+        Last_Name = null;
+        MobileNo = null;
+        Email = null;
+        Password = null;
+        RegenrateCode = null;
+        VerifayCode = null;
+        Verify = null;
+    }
 }

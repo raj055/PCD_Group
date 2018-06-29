@@ -35,28 +35,19 @@ import java.util.HashMap;
 
 public class SingleRecordShow extends AppCompatActivity implements CallBackInterface {
 
-    HashMap<String,String> hashMap = new HashMap<>();
-    HashMap<String,String> ResultHash = new HashMap<>();
-    String FinalJSonObject ;
-    String IdHolder,fNameHolder, lNameHolder, AddressHolder, Address1Holder,Address2Holder,MobileHolder,StateHolder,CountryHolder,
-            PinHolder,CompnyHolder,EmailHolder,DesignationHolder;
+    HashMap<String, String> hashMap = new HashMap<>();
+    HashMap<String, String> ResultHash = new HashMap<>();
+    String FinalJSonObject;
+    String IdHolder, fNameHolder, lNameHolder, AddressHolder, Address1Holder, Address2Holder, MobileHolder, StateHolder, CountryHolder,
+            PinHolder, CompnyHolder, EmailHolder, DesignationHolder;
     Button UpdateButton, DeleteButton, DealerAssign;
 
     Intent intent;
     GlobalVariable gblVar;
 
-    public TextView TextViewName;
-    public TextView TextViewNameL;
-    public TextView TextViewAddress;
-    public TextView TextviewAddressline1;
-    public TextView TextviewAddressline2;
-    public TextView TextviewMobileno;
-    public TextView TextviewState;
-    public TextView TextviewCountry;
-    public TextView TextViewCompanyName;
-    public TextView TextviewPin;
-    public TextView TextViewEmailID;
-    public TextView TextViewDesignation;
+    private TextView TextViewName, TextViewNameL, TextViewAddress, TextviewAddressline1, TextviewAddressline2,
+                    TextviewMobileno, TextviewState, TextviewCountry, TextViewCompanyName, TextviewPin,
+                    TextViewEmailID, TextViewDesignation;
 
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -120,8 +111,6 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-
-
 
 
         UpdateButton.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +183,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home,menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -203,23 +192,20 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
         int id = item.getItemId();
 
-        if(id==R.id.home) {
+        if (id == R.id.home) {
             if (gblVar.AccessType.contains("Admin")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }
-            else if (gblVar.AccessType.contains("Manager")) {
+            } else if (gblVar.AccessType.contains("Manager")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }
-            else if (gblVar.AccessType.contains("Client")) {
+            } else if (gblVar.AccessType.contains("Client")) {
 
                 intent = new Intent(this, AdminDashboard.class);
 
-            }
-            else {
+            } else {
 
                 intent = new Intent(this, ViewImage.class);
             }
@@ -232,14 +218,12 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     }
 
     @Override
-    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
+    public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
 
-        if (dataGetUrl.equals(DataGetUrl.SINGLE_CLIENT)){
+        if (dataGetUrl.equals(DataGetUrl.SINGLE_CLIENT)) {
 
-            try
-            {
-                if(FinalJSonObject != null)
-                {
+            try {
+                if (FinalJSonObject != null) {
                     JSONArray jsonArray = null;
 
                     try {
@@ -247,35 +231,31 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
                         JSONObject jsonObject;
 
-                        for(int i=0; i<jsonArray.length(); i++)
-                        {
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             jsonObject = jsonArray.getJSONObject(i);
 
                             // Storing Client Name, Phone Number, Class into Variables.
-                            IdHolder =  jsonObject.getString("id").toString() ;
-                            fNameHolder = jsonObject.getString("first_name").toString() ;
-                            lNameHolder = jsonObject.getString("last_name").toString() ;
-                            AddressHolder = jsonObject.getString("address").toString() ;
-                            Address1Holder = jsonObject.getString("address_line1").toString() ;
-                            Address2Holder = jsonObject.getString("address_line2").toString() ;
-                            MobileHolder = jsonObject.getString("mobile_num").toString() ;
-                            StateHolder = jsonObject.getString("state").toString() ;
-                            CountryHolder = jsonObject.getString("country").toString() ;
-                            PinHolder = jsonObject.getString("pin").toString() ;
-                            CompnyHolder = jsonObject.getString("company").toString() ;
-                            EmailHolder = jsonObject.getString("email_id").toString() ;
-                            DesignationHolder = jsonObject.getString("designation").toString() ;
+                            IdHolder = jsonObject.getString("id").toString();
+                            fNameHolder = jsonObject.getString("first_name").toString();
+                            lNameHolder = jsonObject.getString("last_name").toString();
+                            AddressHolder = jsonObject.getString("address").toString();
+                            Address1Holder = jsonObject.getString("address_line1").toString();
+                            Address2Holder = jsonObject.getString("address_line2").toString();
+                            MobileHolder = jsonObject.getString("mobile_num").toString();
+                            StateHolder = jsonObject.getString("state").toString();
+                            CountryHolder = jsonObject.getString("country").toString();
+                            PinHolder = jsonObject.getString("pin").toString();
+                            CompnyHolder = jsonObject.getString("company").toString();
+                            EmailHolder = jsonObject.getString("email_id").toString();
+                            DesignationHolder = jsonObject.getString("designation").toString();
 
                         }
-                    }
-                    catch (JSONException e) {
+                    } catch (JSONException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -294,8 +274,28 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
             TextViewEmailID.setText(EmailHolder);
             TextViewDesignation.setText(DesignationHolder);
 
-        }else {
+        } else {
             Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TextViewName = null;
+        TextViewNameL = null;
+        TextViewAddress = null;
+        TextviewAddressline1 = null;
+        TextviewAddressline2 = null;
+        TextviewMobileno = null;
+        TextviewState = null;
+        TextviewCountry = null;
+        TextViewCompanyName = null;
+        TextviewPin = null;
+        TextViewEmailID = null;
+        TextViewDesignation = null;
+        UpdateButton = null;
+        DeleteButton = null;
+        DealerAssign = null;
     }
 }
