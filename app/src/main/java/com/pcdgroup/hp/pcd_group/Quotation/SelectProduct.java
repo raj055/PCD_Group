@@ -48,7 +48,7 @@ import java.util.List;
 public class SelectProduct  extends AppCompatActivity implements ProductCustomListAdapter.DataAdapterListener ,
         CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     ProductCustomListAdapter adapter;
     String[] data;
     ArrayList<String> picNames;
@@ -227,5 +227,11 @@ public class SelectProduct  extends AppCompatActivity implements ProductCustomLi
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
     }
 }

@@ -307,4 +307,10 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
+    }
 }

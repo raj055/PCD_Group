@@ -39,15 +39,8 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
             StockHolder, RecordlevelHolder,GstHolder;
     Button UpdateButton, DeleteButton;
 
-    public TextView TextViewName;
-    public TextView TextViewPrice;
-    public TextView TextviewMinimum;
-    public TextView TextviewHsn;
-    public TextView TextviewBrand;
-    public TextView TextviewDescription;
-    public TextView TextviewStock;
-    public TextView TextViewRecordlevel;
-    public TextView TextviewGst;
+    private TextView TextViewName, TextViewPrice, TextviewMinimum, TextviewHsn, TextviewBrand,
+            TextviewDescription, TextviewStock, TextViewRecordlevel, TextviewGst;
 
     String EmailHolders;
     Intent intent;
@@ -274,5 +267,20 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         }else {
             Toast.makeText(ProductSingleRecord.this, response.toString(), Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TextViewName = null;
+        TextViewPrice = null;
+        TextviewMinimum = null;
+        TextviewHsn = null;
+        TextviewBrand = null;
+        TextviewDescription = null;
+        TextviewStock = null;
+        TextViewRecordlevel = null;
+        TextviewGst = null;
+        UpdateButton = null;
+        DeleteButton = null;
     }
 }

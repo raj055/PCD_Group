@@ -124,4 +124,10 @@ public class FinishedOrder extends AppCompatActivity implements CallBackInterfac
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
+    }
 }

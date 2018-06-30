@@ -354,4 +354,21 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        productName = null;
+        productPrice = null;
+        productMinimum = null;
+        productHsncode = null;
+        productBrand = null;
+        productDescription = null;
+        productStock = null;
+        productRecordlevel = null;
+        productgst = null;
+        imageView_Upload = null;
+        UpdateProduct = null;
+        Image_Upload = null;
+    }
 }

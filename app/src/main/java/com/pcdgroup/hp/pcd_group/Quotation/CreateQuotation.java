@@ -50,9 +50,9 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
     private EditText quantity,transportationcost,discountprice;
     private Button add_client,add_product,preview,date,validdate,addAddress;
-    public TextView client, textdate, textvaliddate, textaddres;
-    public ListView product;
-    public TextView tvDiscount;
+    private TextView client, textdate, textvaliddate, textaddres;
+    private ListView product;
+    private TextView tvDiscount;
     GlobalVariable globalVariable;
     ProductListAdapter itemsAdapter;
     public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();
@@ -473,5 +473,25 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        quantity = null;
+        transportationcost = null;
+        discountprice = null;
+        add_client = null;
+        add_product = null;
+        preview = null;
+        date = null;
+        validdate = null;
+        addAddress = null;
+        client = null;
+        textdate = null;
+        textvaliddate = null;
+        textaddres = null;
+        product = null;
+        tvDiscount = null;
     }
 }

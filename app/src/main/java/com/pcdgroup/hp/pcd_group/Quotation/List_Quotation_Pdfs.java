@@ -30,7 +30,7 @@ import java.util.List;
 
 public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     QuotationAdepter adapter;
     List<pdf2> localPdf;
     String[] data;
@@ -115,5 +115,11 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
     }
 }

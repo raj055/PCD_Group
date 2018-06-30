@@ -143,4 +143,10 @@ public class ShowQuotationList extends AppCompatActivity implements CallBackInte
       e.printStackTrace();
     }
   }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    listView = null;
+  }
 }

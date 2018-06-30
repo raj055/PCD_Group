@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 public class SelectVendorProducts extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     String recordName;
     int position;
     String str1;
@@ -171,5 +171,11 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
     }
 }

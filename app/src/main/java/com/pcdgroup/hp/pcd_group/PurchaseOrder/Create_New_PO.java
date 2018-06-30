@@ -207,4 +207,19 @@ public class Create_New_PO extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        selectVendor = null;
+        selectProduct = null;
+        CreatePurchaseOrder = null;
+        VendorName = null;
+        listView = null;
+        AddQuantity = null;
+        linearVendor = null;
+        linearProduct = null;
+
+    }
+
 }

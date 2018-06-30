@@ -640,4 +640,41 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        name = null;
+        address = null;
+        state = null;
+        company = null;
+        country = null;
+        pin = null;
+        state1 = null;
+        sgst = null;
+        cgst1 = null;
+        item = null;
+        hsn = null;
+        gst = null;
+        cgst = null;
+        price = null;
+        quantity = null;
+        amount = null;
+        finalprice = null;
+        finalquantity = null;
+        finalamount = null;
+        b_name = null;
+        b_address = null;
+        b_pin = null;
+        b_state = null;
+        b_mobile = null;
+        b_pan = null;
+        date = null;
+        validdate = null;
+        finalPayable = null;
+        TransportationCost = null;
+        DiscountValue = null;
+        DiscountTextview = null;
+        userAnswer = null;
+    }
 }

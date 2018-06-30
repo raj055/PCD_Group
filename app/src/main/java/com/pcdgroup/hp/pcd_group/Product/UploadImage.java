@@ -385,4 +385,21 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        name = null;
+        price = null;
+        minimum = null;
+        hsncode = null;
+        description = null;
+        stock = null;
+        reorderlevel = null;
+        imageView = null;
+        brand = null;
+        gst = null;
+        pickImage = null;
+        upload = null;
+    }
 }

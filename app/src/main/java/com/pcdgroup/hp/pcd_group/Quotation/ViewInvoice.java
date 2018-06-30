@@ -416,4 +416,38 @@ public class ViewInvoice extends AppCompatActivity implements CallBackInterface 
   public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
     Toast.makeText(ViewInvoice.this, response.toString(), Toast.LENGTH_LONG).show();
   }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    name = null;
+    address = null;
+    state = null;
+    company = null;
+    country = null;
+    pin = null;
+    state1 = null;
+    item = null;
+    hsn = null;
+    gst = null;
+    cgst = null;
+    price = null;
+    quantity = null;
+    amount = null;
+    sgst = null;
+    cgst1 = null;
+    TransportationCost = null;
+    DiscountValue = null;
+    DiscountTextview = null;
+    finalprice = null;
+    finalquantity = null;
+    finalamount = null;
+    nameBill = null;
+    brandname = null;
+    date = null;
+    validdate = null;
+    finalPayable = null;
+    userAnswer = null;
+    progressDialog = null;
+  }
 }

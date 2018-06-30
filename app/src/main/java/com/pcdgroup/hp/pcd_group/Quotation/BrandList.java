@@ -39,7 +39,7 @@ import java.util.List;
 
 public class BrandList  extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     List<Category> categoriesList;
     BrandAdepter adepter;
     String[] data;
@@ -143,5 +143,11 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
     }
 }

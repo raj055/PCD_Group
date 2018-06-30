@@ -49,7 +49,7 @@ import java.util.List;
 
 public class PO_List extends AppCompatActivity implements CallBackInterface {
 
-    ListView listView;
+    private ListView listView;
     Purchaselist_Adepter adapter;
     List<pdf2> localPdf;
     String[] data;
@@ -136,5 +136,11 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listView = null;
     }
 }
