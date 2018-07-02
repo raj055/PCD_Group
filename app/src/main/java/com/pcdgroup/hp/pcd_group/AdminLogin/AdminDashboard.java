@@ -263,23 +263,8 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
         } else {
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            builder.setMessage("Are You Sure Want To Exit ?");
-            builder.setCancelable(true);
-            builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-            builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+            finish();
+            super.onBackPressed();
         }
     }
 

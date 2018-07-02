@@ -177,6 +177,7 @@ public class ClientDetailsActivity extends AppCompatActivity
                     intent.putExtra("designation", cldata.getDesignation());
 
                     startActivity(intent);
+                    finish();
 
                 }
 

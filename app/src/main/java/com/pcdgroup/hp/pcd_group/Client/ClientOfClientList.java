@@ -63,19 +63,17 @@ import retrofit2.http.GET;
 public class ClientOfClientList extends AppCompatActivity implements CallBackInterface {
 
     private ListView listView;
-    ProgressDialog progressDialog;
-    String emailId;
+    private ProgressDialog progressDialog;
+    private String emailId;
     String finalResult;
 
     ArrayList<DataAdapter> ClientList = new ArrayList<DataAdapter>();
-
     ClientAdepter clientAdepter;
 
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
     HashMap<String, String> hashMap = new HashMap<>();
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,5 +185,6 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
     protected void onDestroy() {
         super.onDestroy();
         listView = null;
+        progressDialog = null;
     }
 }

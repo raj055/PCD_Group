@@ -154,6 +154,7 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
                 intent.putExtra("email",EmailHolders);
 
                 startActivityForResult(intent, 2);
+                finish();
 
             }
         });
