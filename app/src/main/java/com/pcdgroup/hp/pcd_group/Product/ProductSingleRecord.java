@@ -90,20 +90,17 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         RecordlevelHolder = getIntent().getStringExtra("reorderlevel");
         GstHolder = getIntent().getStringExtra("gst");
 
-        urlQry = DataGetUrl.SINGLE_PRODUCT;
-        typeOfQuery = CallType.POST_CALL;
 
-        ResultHash.put("id",IdHolder);
-
-        //Send Database query for inquiring to the database.
-        dataBaseQuery = new DataBaseQuery(hashMap,
-                urlQry,
-                typeOfQuery,
-                getApplicationContext(),
-                ProductSingleRecord.this
-        );
-        //Prepare for the database query
-        dataBaseQuery.PrepareForQuery();
+        // Setting product Name, Phone Number, Class into TextView after done all process .
+        TextViewName.setText(NameHolder);
+        TextViewPrice.setText(PriceHolder);
+        TextviewMinimum.setText(MinimumHolder);
+        TextviewHsn.setText(HsnHolder);
+        TextviewBrand.setText(BrandHolder);
+        TextviewDescription.setText(DescriptionHolder);
+        TextviewStock.setText(StockHolder);
+        TextViewRecordlevel.setText(RecordlevelHolder);
+        TextviewGst.setText(GstHolder);
 
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,60 +210,9 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
 
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
-        if (dataGetUrl.equals(DataGetUrl.SINGLE_PRODUCT)){
-            try
-            {
-                if(FinalJSonObject != null)
-                {
-                    JSONArray jsonArray = null;
 
-                    try {
-                        jsonArray = new JSONArray(FinalJSonObject);
+        Toast.makeText(ProductSingleRecord.this, response.toString(), Toast.LENGTH_LONG).show();
 
-                        JSONObject jsonObject;
-
-                        for(int i=0; i<jsonArray.length(); i++)
-                        {
-                            jsonObject = jsonArray.getJSONObject(i);
-
-                            // Storing product Name, Phone Number, Class into Variables.
-                            IdHolder =  jsonObject.getString("id").toString() ;
-                            NameHolder = jsonObject.getString("name").toString() ;
-                            PriceHolder = jsonObject.getString("price").toString() ;
-                            MinimumHolder = jsonObject.getString("minimum").toString() ;
-                            HsnHolder = jsonObject.getString("hsncode").toString() ;
-                            BrandHolder = jsonObject.getString("brand").toString() ;
-                            DescriptionHolder = jsonObject.getString("description").toString() ;
-                            StockHolder = jsonObject.getString("stock").toString() ;
-                            RecordlevelHolder = jsonObject.getString("reorderlevel").toString() ;
-                            GstHolder = jsonObject.getString("gst").toString() ;
-                        }
-                    }
-                    catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            // Setting product Name, Phone Number, Class into TextView after done all process .
-            TextViewName.setText(NameHolder);
-            TextViewPrice.setText(PriceHolder);
-            TextviewMinimum.setText(MinimumHolder);
-            TextviewHsn.setText(HsnHolder);
-            TextviewBrand.setText(BrandHolder);
-            TextviewDescription.setText(DescriptionHolder);
-            TextviewStock.setText(StockHolder);
-            TextViewRecordlevel.setText(RecordlevelHolder);
-            TextviewGst.setText(GstHolder);
-        }else {
-            Toast.makeText(ProductSingleRecord.this, response.toString(), Toast.LENGTH_LONG).show();
-        }
     }
     @Override
     protected void onDestroy() {

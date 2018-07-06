@@ -68,9 +68,6 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
         adapter = new VendorListAdapter(this, localdata, this);
         listView.setAdapter(adapter);
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
         urlQry = DataGetUrl.VENDOR_LIST;
         typeOfQuery = CallType.JSON_CALL;
 
@@ -83,8 +80,6 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-
-        adapter.notifyDataSetChanged();
 
         //setting listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

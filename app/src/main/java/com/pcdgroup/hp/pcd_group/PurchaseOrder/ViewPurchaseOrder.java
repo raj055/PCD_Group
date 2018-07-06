@@ -349,12 +349,6 @@ public class ViewPurchaseOrder extends AppCompatActivity {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
 
-
-            Intent intent = new Intent(ViewPurchaseOrder.this, PO_List.class);
-
-            startActivity(intent);
-            finish();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -429,7 +423,7 @@ public class ViewPurchaseOrder extends AppCompatActivity {
                 //Creating a multi part request
                 new MultipartUploadRequest(this, uploadId, UPLOAD_URL)
                         .addFileToUpload(targetPdf, "txt") //Adding file
-                        .addParameter("name", name) //Adding text parameter to the request
+                        .addParameter("purchaseorder", name) //Adding text parameter to the request
                         .addParameter("email", emailId)
                         .setNotificationConfig(new UploadNotificationConfig())
                         .setMaxRetries(2)

@@ -48,7 +48,6 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
     ListView listView;
     DealerListAdapter adapter;
     List<DealerData> localdata;
-    String result = null;
     String[] data;
     HashMap<String,String> hashMap = new HashMap<>();
     String emailId;
@@ -72,10 +71,7 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
         adapter = new DealerListAdapter(this, localdata, this);
         listView.setAdapter(adapter);
 
-        //Allow network in main thread
-        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
-        urlQry = DataGetUrl.DEALER_LISE;
+        urlQry = DataGetUrl.DEALER_LIST;
         typeOfQuery = CallType.JSON_CALL;
 
         //Send Database query for inquiring to the database.
@@ -87,8 +83,6 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-
-        adapter.notifyDataSetChanged();
 
         // intent
         Intent intent = getIntent();
@@ -126,11 +120,11 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
-        if (dataGetUrl.equals(DataGetUrl.DEALER_LISE)) {
+        if (dataGetUrl.equals(DataGetUrl.DEALER_LIST)) {
 
             try {
 
-                JSONArray ja = new JSONArray(result);
+                JSONArray ja = new JSONArray(response);
                 JSONObject jo = null;
 
                 data = new String[ja.length()];
@@ -150,9 +144,10 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
 
                     DealerData data = new DealerData(id, name, address, area, state, email, mobile, organisation, gst);
                     localdata.add(data);
-                    adapter.notifyDataSetChanged();
+
                 }
 
+                adapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }

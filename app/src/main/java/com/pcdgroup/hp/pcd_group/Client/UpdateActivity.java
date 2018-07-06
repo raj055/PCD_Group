@@ -85,7 +85,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientStateHolder = getIntent().getStringExtra("state");
         ClientCountryHolder = getIntent().getStringExtra("country");
         ClientPinoHolder = getIntent().getStringExtra("pin");
-        ClientComapnyHolder = getIntent().getStringExtra("company");
+        ClientComapnyHolder = getIntent().getStringExtra("company_name");
         ClientEmailHolder = getIntent().getStringExtra("email_id");
         ClientDesignationHolder = getIntent().getStringExtra("designation");
 
@@ -138,7 +138,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
 
                     hashMap.put("pin", ClientPinoHolder);
 
-                    hashMap.put("company", ClientComapnyHolder);
+                    hashMap.put("company_name", ClientComapnyHolder);
 
                     hashMap.put("designation", ClientDesignationHolder);
 

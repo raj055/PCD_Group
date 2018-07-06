@@ -410,7 +410,7 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
                         fileName =  userAnswer.getText().toString();
                         targetPdf =  fileName + ".pdf";
 
-                        fn_permission();
+//                        fn_permission();
 
                         if (boolean_permission) {
                             progressDialog = new ProgressDialog(Invoice.this);
@@ -595,7 +595,7 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
         return b;
     }
 
-    private void fn_permission() {
+   /* private void fn_permission() {
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)||
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
 
@@ -629,7 +629,7 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
 
             }
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

@@ -18,12 +18,10 @@ public enum DataGetUrl {
   CLIENT_LIST,
   CLIENT_REGISTER,
   EDIT_CLIENT,
-  SINGLE_CLIENT,
   SINGLE_DELETE,
 
   VIEW_PRODUCT,
   DELETE_PRODUCTS,
-  SINGLE_PRODUCT,
 
   ACCESS_DETAILS,
   UPDATE_ACCESS_USER_DETAILS,
@@ -37,7 +35,7 @@ public enum DataGetUrl {
 
   ADD_DEALER,
   ADD_VENDOR,
-  DEALER_LISE,
+  DEALER_LIST,
   ASSIGN_DEALER,
   VENDOR_LIST,
 
@@ -61,12 +59,10 @@ public enum DataGetUrl {
           "http://dert.co.in/gFiles/DataClient.php",                //CLIENT_LIST
           "http://dert.co.in/gFiles/ClientRegister.php",            //CLIENT_REGISTER
           "http://dert.co.in/gFiles/updateclientdetails.php",       //EDIT_CLIENT
-          "http://dert.co.in/gFiles/filterclientdata.php",          //SINGLE_CLIENT
           "http://dert.co.in/gFiles/deleteclient.php",              //SINGLE_DELETE
 
           "http://dert.co.in/gFiles/fimage.php",                    //VIEW_PRODUCT    00
           "http://dert.co.in/gFiles/deleteproduct.php",             //DELETE_PRODUCTS
-          "http://dert.co.in/gFiles/filterproductdata.php",         //SINGLE_PRODUCT
 
           "http://dert.co.in/gFiles/accessuserdetails.php",         // ACCESS_DETAILS 00
           "http://dert.co.in/gFiles/updateuserdetails.php",         //UPDATE_ACCEESS_USER_DETAILS
@@ -80,7 +76,7 @@ public enum DataGetUrl {
 
           "http://dert.co.in/gFiles/dealer.php",                    //ADD_DEALER
           "http://dert.co.in/gFiles/vendorRegister.php",            //ADD_VENDOR
-          "http://dert.co.in/gFiles/dealerlist.php",                //DEALER_LISE
+          "http://dert.co.in/gFiles/dealerlist.php",                //DEALER_LIST
           "http://dert.co.in/gFiles/assigndealor.php",              //ASSIGN_DEALER
           "http://dert.co.in/gFiles/vendorlist.php",                //VENDOR_LIST
 
@@ -91,7 +87,7 @@ public enum DataGetUrl {
 
           "http://dert.co.in/gFiles/getpdfs.php",                   //SHOW_CLIENT_QUOTATION_LIST
           "http://dert.co.in/gFiles/QuotationList.php",             //ALL_QUOTATION_LIST
-          "http://dert.co.in/gFiles/updatebill.php",                //UPDATE_BILL
+          "http://dert.co.in/gFiles/updatebill.php"                //UPDATE_BILL
   };
 
   public String getUrl(DataGetUrl getUrl){

@@ -57,7 +57,7 @@ import io.reactivex.schedulers.Schedulers;
  * @description upload image to server in compress images
  */
 
-public class UploadImage extends AppCompatActivity implements CallBackInterface {
+public class UploadImage extends AppCompatActivity {
 
     EditText name,price,minimum,hsncode,description,stock,reorderlevel;
     ImageView imageView;
@@ -80,10 +80,6 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
     private String UPLOAD_URL ="http://dert.co.in/gFiles/upload.php";
 
     private int PICK_IMAGE_REQUEST = 1;
-
-    DataGetUrl urlQry;
-    DataBaseQuery dataBaseQuery;
-    CallType typeOfQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,9 +181,6 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
                 Toast.makeText(this, "Image Size =  "+   actualImage.length()
                   , Toast.LENGTH_LONG).show();
                 compressImage();
-                //Setting the Bitmap to ImageView
-
-//                imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -238,8 +231,6 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
 
     private void uploadImage(){
 
-//        resizeAndCompressImageBeforeSend();
-
         //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
@@ -252,8 +243,6 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
                             }
                         }
 
-                        //Disimissing the progress dialog
-                        //loading.dismiss();
                         //Showing toast message of the response
                         Toast.makeText(UploadImage.this,s , Toast.LENGTH_LONG).show();
                     }
@@ -311,79 +300,6 @@ public class UploadImage extends AppCompatActivity implements CallBackInterface 
 
         //Adding request to the queue
         requestQueue.add(stringRequest);
-    }
-
-    public static String resizeAndCompressImageBeforeSend(Context context, String filePath, String fileName){
-        final int MAX_IMAGE_SIZE = 700 * 1024; // max final file size in kilobytes
-
-        // First decode with inJustDecodeBounds=true to check dimensions of image
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(filePath,options);
-
-        // Calculate inSampleSize(First we are going to resize the image to 800x800 image, in order to not have a big but very low quality image.
-        //resizing the image will already reduce the file size, but after resizing we will check the file size and start to compress image
-        options.inSampleSize = calculateInSampleSize(options, 800, 800);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        options.inPreferredConfig= Bitmap.Config.ARGB_8888;
-
-        Bitmap bmpPic = BitmapFactory.decodeFile(filePath,options);
-
-
-        int compressQuality = 100; // quality decreasing by 5 every loop.
-        int streamLength;
-        do{
-            ByteArrayOutputStream bmpStream = new ByteArrayOutputStream();
-            Log.d("compressBitmap", "Quality: " + compressQuality);
-            bmpPic.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream);
-            byte[] bmpPicByteArray = bmpStream.toByteArray();
-            streamLength = bmpPicByteArray.length;
-            compressQuality -= 5;
-            Log.d("compressBitmap", "Size: " + streamLength/1024+" kb");
-        }while (streamLength >= MAX_IMAGE_SIZE);
-
-        try {
-            //save the resized and compressed file to disk cache
-            Log.d("compressBitmap","cacheDir: "+context.getCacheDir());
-            FileOutputStream bmpFile = new FileOutputStream(context.getCacheDir()+fileName);
-            bmpPic.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpFile);
-            bmpFile.flush();
-            bmpFile.close();
-        } catch (Exception e) {
-            Log.e("compressBitmap", "Error on saving file");
-        }
-        //return the path of resized and compressed file
-        return  context.getCacheDir()+fileName;
-    }
-
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        String debugTag = "MemoryInformation";
-        // Image nin islenmeden onceki genislik ve yuksekligi
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        Log.d(debugTag,"image height: "+height+ "---image width: "+ width);
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-        Log.d(debugTag,"inSampleSize: "+inSampleSize);
-        return inSampleSize;
-    }
-
-    @Override
-    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.pcdgroup.hp.pcd_group.Client;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     Intent intent;
     GlobalVariable gblVar;
 
-    private TextView TextViewName, TextViewNameL, TextViewAddress, TextviewAddressline1, TextviewAddressline2,
+    TextView TextViewName, TextViewNameL, TextViewAddress, TextviewAddressline1, TextviewAddressline2,
                     TextviewMobileno, TextviewState, TextviewCountry, TextViewCompanyName, TextviewPin,
                     TextViewEmailID, TextViewDesignation;
 
@@ -93,25 +94,22 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         StateHolder = getIntent().getStringExtra("state");
         CountryHolder = getIntent().getStringExtra("country");
         PinHolder = getIntent().getStringExtra("pin");
-        CompnyHolder = getIntent().getStringExtra("company");
+        CompnyHolder = getIntent().getStringExtra("company_name");
         EmailHolder = getIntent().getStringExtra("email_id");
         DesignationHolder = getIntent().getStringExtra("designation");
 
-        urlQry = DataGetUrl.SINGLE_CLIENT;
-        typeOfQuery = CallType.JSON_CALL;
-
-        ResultHash.put("id", IdHolder);
-
-        //Send Database query for inquiring to the database.
-        dataBaseQuery = new DataBaseQuery(hashMap,
-                urlQry,
-                typeOfQuery,
-                getApplicationContext(),
-                SingleRecordShow.this
-        );
-        //Prepare for the database query
-        dataBaseQuery.PrepareForQuery();
-
+        TextViewName.setText(fNameHolder);
+        TextViewNameL.setText(lNameHolder);
+        TextViewAddress.setText(AddressHolder);
+        TextviewAddressline1.setText(Address1Holder);
+        TextviewAddressline2.setText(Address2Holder);
+        TextviewMobileno.setText(MobileHolder);
+        TextviewState.setText(StateHolder);
+        TextviewCountry.setText(CountryHolder);
+        TextviewPin.setText(PinHolder);
+        TextViewCompanyName.setText(CompnyHolder);
+        TextViewEmailID.setText(EmailHolder);
+        TextViewDesignation.setText(DesignationHolder);
 
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +128,7 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
                 intent.putExtra("state", StateHolder);
                 intent.putExtra("country", CountryHolder);
                 intent.putExtra("pin", PinHolder);
-                intent.putExtra("company", CompnyHolder);
+                intent.putExtra("company_name", CompnyHolder);
                 intent.putExtra("email_id", EmailHolder);
                 intent.putExtra("designation", DesignationHolder);
 
@@ -220,63 +218,8 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
 
-        if (dataGetUrl.equals(DataGetUrl.SINGLE_CLIENT)) {
+        Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
 
-            try {
-                if (FinalJSonObject != null) {
-                    JSONArray jsonArray = null;
-
-                    try {
-                        jsonArray = new JSONArray(FinalJSonObject);
-
-                        JSONObject jsonObject;
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            jsonObject = jsonArray.getJSONObject(i);
-
-                            // Storing Client Name, Phone Number, Class into Variables.
-                            IdHolder = jsonObject.getString("id").toString();
-                            fNameHolder = jsonObject.getString("first_name").toString();
-                            lNameHolder = jsonObject.getString("last_name").toString();
-                            AddressHolder = jsonObject.getString("address").toString();
-                            Address1Holder = jsonObject.getString("address_line1").toString();
-                            Address2Holder = jsonObject.getString("address_line2").toString();
-                            MobileHolder = jsonObject.getString("mobile_num").toString();
-                            StateHolder = jsonObject.getString("state").toString();
-                            CountryHolder = jsonObject.getString("country").toString();
-                            PinHolder = jsonObject.getString("pin").toString();
-                            CompnyHolder = jsonObject.getString("company").toString();
-                            EmailHolder = jsonObject.getString("email_id").toString();
-                            DesignationHolder = jsonObject.getString("designation").toString();
-
-                        }
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            // Setting Client Name, Phone Number, Class into TextView after done all process .
-            TextViewName.setText(fNameHolder);
-            TextViewNameL.setText(lNameHolder);
-            TextViewAddress.setText(AddressHolder);
-            TextviewAddressline1.setText(Address1Holder);
-            TextviewAddressline2.setText(Address2Holder);
-            TextviewMobileno.setText(MobileHolder);
-            TextviewState.setText(StateHolder);
-            TextviewCountry.setText(CountryHolder);
-            TextviewPin.setText(PinHolder);
-            TextViewCompanyName.setText(CompnyHolder);
-            TextViewEmailID.setText(EmailHolder);
-            TextViewDesignation.setText(DesignationHolder);
-
-        } else {
-            Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
