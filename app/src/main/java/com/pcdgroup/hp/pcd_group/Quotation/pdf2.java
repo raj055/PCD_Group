@@ -15,18 +15,13 @@ public class pdf2 {
     private String billed;
     private String email;
 
-    private String purchaseorder;
-    private String completeorder;
-
-    public pdf2(String id, String name, String urlname, String email, String bill, String purchaseorder, String completeorder) {
+    public pdf2(String id, String name, String urlname, String email, String bill) {
         this.id = id;
         this.name = name;
         this.url = urlname;
         this.email = email;
         this.billed = bill;
 
-        this.purchaseorder = purchaseorder;
-        this.completeorder = completeorder;
     }
 
     public String getUrl() {
@@ -57,14 +52,5 @@ public class pdf2 {
     public String getEmail(){return email;}
 
     public void setEmail(String email){this.email = email;}
-
-
-    public String getPurchaseorder(){return purchaseorder;}
-
-    public void setPurchaseorder(String purchaseorder){this.purchaseorder = purchaseorder;}
-
-    public String getCompleteorder(){return completeorder;}
-
-    public void setCompleteorder(String completeorder){this.completeorder = completeorder;}
 
 }

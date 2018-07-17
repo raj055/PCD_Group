@@ -51,7 +51,7 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
 
     private ListView listView;
     Purchaselist_Adepter adapter;
-    List<pdf2> localPdf;
+    List<PurchaseData> localPdf;
     String[] data;
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
@@ -81,7 +81,7 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
 
         listView = (ListView) findViewById(R.id.lstv);
 
-        localPdf = new ArrayList<pdf2>();
+        localPdf = new ArrayList<PurchaseData>();
 
         adapter = new Purchaselist_Adepter(this, localPdf, this);
         listView.setAdapter(adapter);
@@ -121,14 +121,12 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
 
                 jo=ja.getJSONObject(i);
                 String id = jo.getString("id");
-                String name = jo.getString("name");
-                String urlname = jo.getString("url");
+                String urlname = jo.getString("url_po");
                 String email = jo.getString("email");
-                String bill = jo.getString("Billing");
                 String purchseOrder = jo.getString("purchaseorder");
                 String completeOrder = jo.getString("completeorder");
 
-                pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
+                PurchaseData pdf= new PurchaseData(id,urlname,email,purchseOrder,completeOrder);
                 localPdf.add(pdf);
                 adapter.notifyDataSetChanged();
             }

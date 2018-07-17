@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.pcdgroup.hp.pcd_group.Quotation.pdf2;
 import com.pcdgroup.hp.pcd_group.R;
 
 import java.util.List;
@@ -24,21 +22,21 @@ public class FinishedOrderList_Adepter extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
-    private List<pdf2> pdf2List;
+    private List<PurchaseData> purchaseData;
 
-    public FinishedOrderList_Adepter(Activity activity, List<pdf2> pdf2List, FinishedOrder listener) {
+    public FinishedOrderList_Adepter(Activity activity, List<PurchaseData> purchaseData, FinishedOrder listener) {
         this.activity = activity;
-        this.pdf2List = pdf2List;
+        this.purchaseData = purchaseData;
     }
 
     @Override
     public int getCount() {
-        return pdf2List.size();
+        return purchaseData.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return pdf2List.get(location);
+        return purchaseData.get(location);
     }
 
     @Override
@@ -59,11 +57,11 @@ public class FinishedOrderList_Adepter extends BaseAdapter {
         TextView email = (TextView) convertView.findViewById(R.id.textViewEmail);
 
         // getting movie data for the row
-        pdf2 m = pdf2List.get(position);
+        PurchaseData m = purchaseData.get(position);
 
 
         // title
-        name.setText(m.getName());
+        name.setText(m.getCompleteorder());
         email.setText(m.getEmail());
 
         return convertView;

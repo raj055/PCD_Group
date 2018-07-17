@@ -24,19 +24,19 @@ public class Purchaselist_Adepter extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
-    private List<pdf2> pdf2List;
+    private List<PurchaseData> purchaseData;
 
-    public Purchaselist_Adepter(Activity activity, List<pdf2> pdf2List, PO_List listener) {
+    public Purchaselist_Adepter(Activity activity, List<PurchaseData> purchaseData, PO_List listener) {
         this.activity = activity;
-        this.pdf2List = pdf2List;
+        this.purchaseData = purchaseData;
     }
 
     @Override
-    public int getCount() { return pdf2List.size(); }
+    public int getCount() { return purchaseData.size(); }
 
     @Override
     public Object getItem(int location) {
-        return pdf2List.get(location);
+        return purchaseData.get(location);
     }
 
     @Override
@@ -57,11 +57,11 @@ public class Purchaselist_Adepter extends BaseAdapter {
         TextView email = (TextView) convertView.findViewById(R.id.textViewEmail);
 
         // getting movie data for the row
-        pdf2 m = pdf2List.get(position);
+        PurchaseData m = purchaseData.get(position);
 
 
         // title
-        name.setText(m.getName());
+        name.setText(m.getPurchaseorder());
         email.setText(m.getEmail());
 
         return convertView;

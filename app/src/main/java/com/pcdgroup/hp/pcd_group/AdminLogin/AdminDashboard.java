@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -63,6 +64,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     GlobalVariable gblv;
     Context context;
     ImageView imageView,imageView1,imageView2;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,10 +264,27 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             drawer.closeDrawer(GravityCompat.START);
 
         } else {
-
-            finish();
-            super.onBackPressed();
+            DoubleClick();
         }
+    }
+
+    private void DoubleClick() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Click Again To Exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     @Override

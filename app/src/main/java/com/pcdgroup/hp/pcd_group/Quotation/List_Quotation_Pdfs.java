@@ -103,10 +103,8 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
                 String urlname = jo.getString("url");
                 String email = jo.getString("email");
                 String bill = jo.getString("Billing");
-                String purchseOrder = jo.getString("purchaseorder");
-                String completeOrder = jo.getString("completeorder");
 
-                pdf2 pdf= new pdf2(id,name,urlname,email,bill,purchseOrder,completeOrder);
+                pdf2 pdf= new pdf2(id,name,urlname,email,bill);
                 localPdf.add(pdf);
 
                 adapter.notifyDataSetChanged();
