@@ -21,8 +21,8 @@ import com.pcdgroup.hp.pcd_group.R;
  * @description product list adepter to show list of product and his name
  */
 
-public class ProductListAdapter extends BaseAdapter {
-  private Activity activity;
+ public class ProductListAdapter extends BaseAdapter {
+ private Activity activity;
   private LayoutInflater inflater;
   private List<ProductInfoAdapter> entityItems;
 
@@ -48,7 +48,6 @@ public class ProductListAdapter extends BaseAdapter {
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    ListView product = activity.findViewById(R.id.tv_product);
     if (inflater == null)
       inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     if (convertView == null) {

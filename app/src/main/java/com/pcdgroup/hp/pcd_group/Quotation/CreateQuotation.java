@@ -48,26 +48,12 @@ import java.util.List;
 
 public class CreateQuotation extends AppCompatActivity implements CallBackInterface {
 
-    private EditText quantity,transportationcost,discountprice;
-    private Button add_client,add_product,preview,date,validdate,addAddress;
-    private TextView client, textdate, textvaliddate, textaddres;
-    private ListView product;
-    private TextView tvDiscount;
+    private Button add_client, addAddress, next;
+    private TextView client,textaddres;
     GlobalVariable globalVariable;
-    ProductListAdapter itemsAdapter;
-    public ArrayList<ProductInfoAdapter>  items = new ArrayList<ProductInfoAdapter>();
-    public ArrayList<String[]> PrdList = new ArrayList<String[]>();
     List<Category> categoriesList;
-    BrandAdepter adepter;
     String[] data;
     Intent intent;
-    String Tpcost,discount,DiscountVallue;
-
-    private int year;
-    private int month;
-    private int day;
-
-    static final int DATE_PICKER_ID = 1111;
 
     HashMap<String,String> hashMap = new HashMap<>();
 
@@ -87,31 +73,13 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
         globalVariable = GlobalVariable.getInstance();
 
-        tvDiscount = (TextView) findViewById(R.id.textView12);
-
-        quantity = (EditText) findViewById(R.id.quantity_et);
-        transportationcost = (EditText) findViewById(R.id.editText10);
-        discountprice = (EditText) findViewById(R.id.editText11);
-
         client = (TextView) findViewById(R.id.tv_client);
-        product = (ListView) findViewById(R.id.tv_product);
-        textdate = (TextView) findViewById(R.id.tv_date);
-        textvaliddate = (TextView) findViewById(R.id.tv_uptodate);
         textaddres = (TextView) findViewById(R.id.address);
 
         add_client = (Button) findViewById(R.id.btn_client);
-        add_product = (Button) findViewById(R.id.btn_product);
-        preview = (Button) findViewById(R.id.btn_preview);
-        date = (Button) findViewById(R.id.btn_date);
-        validdate = (Button) findViewById(R.id.btn_validupto);
         addAddress = (Button) findViewById(R.id.btn_address);
 
-        categoriesList = new ArrayList<Category>();
-        adepter = new BrandAdepter(this, categoriesList);
-
-        DiscountVallue = globalVariable.DiscountType;
-
-        tvDiscount.setText("Discount" + "\t\t" + DiscountVallue + "%");
+        next = (Button) findViewById(R.id.btn_next);
 
         urlQry = DataGetUrl.LIST_BRAND;
         typeOfQuery = CallType.JSON_CALL;
@@ -126,19 +94,6 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
 
-        final Calendar c = Calendar.getInstance();
-        year  = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day   = c.get(Calendar.DAY_OF_MONTH);
-
-        textdate.setText(new StringBuilder()
-                .append(day).append("-")
-                .append(month + 1).append("-")
-                .append(year).append(" "));
-
-        itemsAdapter = new ProductListAdapter(this,  items);
-        product.setAdapter(itemsAdapter);
-
         // Client add in database
         add_client.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,18 +102,6 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
                 Intent intent = new Intent(CreateQuotation.this, SelectClient.class);
 
                 startActivityForResult(intent, 1);
-            }
-        });
-
-        // Product add in database
-        add_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(CreateQuotation.this, SelectProduct.class);
-
-                startActivityForResult(intent, 3);
-
             }
         });
 
@@ -173,136 +116,21 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
             }
         });
 
-        // Date add
-        date.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                showDialog(DATE_PICKER_ID);
-            }
-        });
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateQuotation.this, Quotation_product.class);
 
-        // Valid up to Date
-        validdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DATE_PICKER_ID);
-            }
-        });
-
-        discountprice.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-//                String str = editable.toString();
-               final String str = new String(editable.toString());
-
-                if((str != null) && (str != "") && (str.matches("^[0-9]+$"))) {
-                    int discount=Integer.parseInt(str);
-                    int currDiscountVal=Integer.parseInt(DiscountVallue);
-                    if (discount > currDiscountVal) {
-
-                        Toast.makeText(getApplicationContext(), "Discount Value wrong.", Toast.LENGTH_SHORT).show();
-
-                        AlertDialog.Builder builder;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            builder = new AlertDialog.Builder(CreateQuotation.this, android.R.style.Theme_Material_Dialog_Alert);
-                        } else {
-                            builder = new AlertDialog.Builder(CreateQuotation.this);
-                        }
-                        builder.setTitle("Wrong Discount Value")
-                                .setMessage("Please Enter Perfect Value Of Discount.")
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        String str = discountprice.getText().toString();
-                                        str = str.substring ( 0, str.length() - 1 );
-                                        discountprice.setText(str);
-
-                                        dialog.cancel();
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
-                    }
-                }
-            }
-        });
-
-        // Preview add in database
-        preview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(CreateQuotation.this, Invoice.class);
                 //customer
                 intent.putExtra("ClientInfo", globalVariable.globalClient);
-
-                //product
-                int itemsCount = 0;
-                for (ProductInfoAdapter pradap: items){
-
-                    String[] glstr = PrdList.get(itemsCount++);
-                    if(glstr != null)
-                        glstr[4] =  pradap.getAmount();
-                }
-                intent.putExtra("ProductInfo", PrdList);
-    //                intent.putExtra("proqunt", quantity.getText());
-                intent.putExtra("date", textdate.getText());
-                intent.putExtra("validdate", textvaliddate.getText());
-
-                Tpcost = transportationcost.getText().toString();
-                intent.putExtra("transportioncost",Tpcost);
-
-                discount = discountprice.getText().toString();
-                intent.putExtra("discountperce",discount);
-
-                intent.putExtra(("SelectedBrand"),globalVariable.globalBarnd);
+                //brand
+                intent.putExtra("SelectedBrand",globalVariable.globalBarnd);
 
                 startActivity(intent);
-                finish();
+                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
             }
         });
 
-        quantity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                String str = editable.toString();
-                int listSize = items.size() ;
-                if(listSize != 0) {
-                    listSize -= 1;
-                    ProductInfoAdapter prinfo = items.get(listSize);
-                    prinfo.setAmount(str);
-                    itemsAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_PICKER_ID:
-                return new DatePickerDialog(this, pickerListener, year, month,day);
-        }
-        return null;
     }
 
     @Override
@@ -352,55 +180,7 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
                     }
                 }
         }
-        else {
-            if (requestCode == 3) {
-                if(resultCode == RESULT_OK) {
-                    Bundle extras = data.getExtras();
-                    if (extras != null) {
-
-                        //Product Details
-                        if (extras.containsKey("pname")) {
-                            globalVariable.globalProduct[0] = extras.getString("pname");
-                            Integer temp = new Integer(extras.getInt("phsn"));
-                            globalVariable.globalProduct[1] = temp.toString();
-                            temp = extras.getInt("pgst");
-                            globalVariable.globalProduct[2] = temp.toString();
-                            temp = extras.getInt("pprice");
-                            globalVariable.globalProduct[3] = temp.toString();
-                            globalVariable.globalProduct[4] = "0";
-
-                            ProductInfoAdapter tempAdapter = new ProductInfoAdapter();
-                            tempAdapter.setName(globalVariable.globalProduct[0]);
-                            items.add(tempAdapter);
-                            itemsAdapter.notifyDataSetChanged();
-
-                            String[] strpr = globalVariable.globalProduct.clone();
-                            PrdList.add(strpr);
-                        }
-                    }
-                }
-            }
-
-        }
     }
-    private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        // when dialog box is closed, below method will be called.
-        @Override
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-
-            year  = selectedYear;
-            month = selectedMonth;
-            day   = selectedDay;
-
-            // Show selected date
-            textvaliddate.setText(new StringBuilder()
-                    .append(day).append("-")
-                    .append(month + 1).append("-")
-                    .append(year).append(" "));
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -478,20 +258,9 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        quantity = null;
-        transportationcost = null;
-        discountprice = null;
         add_client = null;
-        add_product = null;
-        preview = null;
-        date = null;
-        validdate = null;
         addAddress = null;
         client = null;
-        textdate = null;
-        textvaliddate = null;
         textaddres = null;
-        product = null;
-        tvDiscount = null;
     }
 }

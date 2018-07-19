@@ -41,6 +41,9 @@
         <activity android:name=".Quotation.ShowQuotationList" android:label="PCD_Group" />
         <activity android:name=".Quotation.ViewInvoice" android:label="PCD_Group" />
         <activity android:name=".Quotation.CreateQuotation" android:label="PCD_Group" />
+        <activity android:name=".Quotation.Quotation_product" android:label="PCD_Group" />
+        <activity android:name=".Quotation.Quotation_quantity" android:label="PCD_Group" />
+        <activity android:name=".Quotation.Quotation_finish" android:label="PCD_Group" />
         <activity android:name=".Quotation.Invoice" android:label="PCD_Group" />
         <activity android:name=".Quotation.SelectClient" android:label="PCD_Group" />
         <activity android:name=".Quotation.SelectProduct" android:label="PCD_Group" />
