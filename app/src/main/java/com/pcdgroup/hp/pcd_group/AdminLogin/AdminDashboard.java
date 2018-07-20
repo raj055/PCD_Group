@@ -162,7 +162,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         });
 
         mainLayout.addView(view);
-
     }
 
     @Override
