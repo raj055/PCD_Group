@@ -24,6 +24,7 @@ import com.pcdgroup.hp.pcd_group.DatabaseComponents.DataGetUrl;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.Http.HttpParse;
 import com.pcdgroup.hp.pcd_group.Product.ViewImage;
+import com.pcdgroup.hp.pcd_group.SharedPreferences.MySharedPreferences;
 import com.pcdgroup.hp.pcd_group.UserLoginRegister.UserRegistarActivity;
 
 import org.json.JSONArray;
@@ -42,13 +43,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
     RelativeLayout rellay1,rellay2;
     Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            rellay1.setVisibility(View.VISIBLE);
-            rellay2.setVisibility(View.VISIBLE);
-        }
-    };
 
     EditText Email, Password;
     Button LogIn,Register;
@@ -58,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
     public static final String ClientDiscount = "";
+    boolean shutdown = false;
     GlobalVariable gblVar;
 
     DataGetUrl urlQry;
@@ -65,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     CallType typeOfQuery;
 
     Intent intent;
+
+    Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,23 +71,41 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
          /*
             - login page to login activity
             - check database to access type after this type user login
-	    */
+        */
 
         if(!isConnected(MainActivity.this)) buildDialog(MainActivity.this).show();
         else {
             Toast.makeText(MainActivity.this,"Welcome", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_main);
         }
-
-        /* // check to see if the user is already logged in
-        String username = MySharedPreferences.getUsername(this);
-        if (username != null) {
-            launchMainActivity();
-        }*/
-
         rellay1 = (RelativeLayout) findViewById(R.id.rellay1);
         rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
+        runnable= new Runnable() {
 
+            @Override
+            public void run() {
+//                while (!shutdown){
+                if(rellay1 != null)
+                    rellay1.setVisibility(View.VISIBLE);
+                if(rellay2 != null)
+                    rellay2.setVisibility(View.VISIBLE);
+//                }
+            }
+        };
+
+         // check to see if the user is already logged in
+        String username = MySharedPreferences.getUsername(this);
+        String password = MySharedPreferences.getPassword(this);
+
+        if ((username != null) && (password != null)) {
+            Log.v("Username----",username);
+            Log.v("Password----", password);
+
+        //    launchMainActivity();
+            EmailHolder = username;
+            PasswordHolder = password;
+            QueryTheDataBase();
+        }
         handler.postDelayed(runnable, 2000); //2000 is the timeout for the splash
 
         Email = (EditText)findViewById(R.id.email);
@@ -109,29 +124,9 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                 CheckEditTextIsEmptyOrNot();
 
                 if(CheckEditText){
-
-                    urlQry = DataGetUrl.USER_LOGIN;
-                    typeOfQuery = CallType.POST_CALL;
-
-                    hashMap.put("email_id",EmailHolder);
-
-                    hashMap.put("password",PasswordHolder);
-
-                    //Send Database query for inquiring to the database.
-                    dataBaseQuery = new DataBaseQuery(hashMap,
-                            urlQry,
-                            typeOfQuery,
-                            getApplicationContext(),
-                            MainActivity.this
-                    );
-                    //Prepare for the database query
-                    dataBaseQuery.PrepareForQuery();
-
-//                    gblVar.AccessType = Email.getText().toString();
-
+                    QueryTheDataBase();
                 }
                 else {
-
                     Toast.makeText(MainActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
                 }
             }
@@ -171,7 +166,27 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         });*/
     }
 
-    /*private void saveUsername() {
+    private void QueryTheDataBase(){
+
+        urlQry = DataGetUrl.USER_LOGIN;
+        typeOfQuery = CallType.POST_CALL;
+
+        hashMap.put("email_id",EmailHolder);
+
+        hashMap.put("password",PasswordHolder);
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+          urlQry,
+          typeOfQuery,
+          getApplicationContext(),
+          MainActivity.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
+
+    }
+    private void saveUsername() {
         String username = Email.getText().toString();
         String userpassword =  Password.getText().toString();
         MySharedPreferences.storeUsername(this, username, userpassword);
@@ -180,9 +195,10 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     }
 
     private void launchMainActivity() {
-        Intent intent = new Intent(MainActivity.this, UserDashbord.class);
+        Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
         startActivity(intent);
-    }*/
+        finish();
+    }
 
     public void CheckEditTextIsEmptyOrNot(){
 
@@ -256,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                     }
 
                     intent.putExtra(UserEmail , EmailHolder);
+                    saveUsername();
                     startActivity(intent);
                     finish();
                 }
@@ -306,6 +323,8 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        shutdown = true;
+        runnable = null;
         rellay1 = null;
         rellay2 = null;
         Email = null;

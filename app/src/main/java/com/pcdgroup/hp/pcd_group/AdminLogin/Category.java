@@ -5,7 +5,7 @@ package com.pcdgroup.hp.pcd_group.AdminLogin;
  * @author Grasp
  * @version 1.0 on 28-06-2018.
  * @class_name Category
- * @description category of all client details to set and get data
+ * @description Holds all the entities (related data) of client / users
  */
 
 public class Category {

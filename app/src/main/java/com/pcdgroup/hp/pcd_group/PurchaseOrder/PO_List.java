@@ -72,10 +72,8 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(PO_List.this,Create_New_PO.class);
+                Intent intent = new Intent(PO_List.this, Create_New_PO.class);
                 startActivityForResult(intent, 1);
-
             }
         });
 

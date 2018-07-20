@@ -29,8 +29,16 @@ public class MySharedPreferences {
 
     public static String getUsername(Context context) {
         // check to see if the user is already logged in
-        SharedPreferences prefs = context.getSharedPreferences("userinfo", MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(PREFERENCES_FILENAME, MODE_PRIVATE);
         String username = prefs.getString(PREF_USERNAME, null);
         return username;
+    }
+
+    public static String getPassword(Context context) {
+        // check to see if the user is already logged in
+        SharedPreferences prefs = context.getSharedPreferences(PREFERENCES_FILENAME, MODE_PRIVATE);
+
+        String password = prefs.getString(PREF_USERPASSWORD, null);
+        return password;
     }
 }

@@ -62,6 +62,7 @@ import retrofit2.http.GET;
 
 public class ClientOfClientList extends AppCompatActivity implements CallBackInterface {
 
+    //Clients List Components
     private ListView listView;
     private ProgressDialog progressDialog;
     private String emailId;
@@ -70,6 +71,7 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
     ArrayList<DataAdapter> ClientList = new ArrayList<DataAdapter>();
     ClientAdepter clientAdepter;
 
+    //Database Query Parameters
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -114,17 +116,14 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
             hashMap.put("emailId", emailId);
         }
 
-
         urlQry = DataGetUrl.CLIENT_LIST;
-
         typeOfQuery = CallType.POST_CALL;
-
 
         //Send Database query for inquiring to the database.
         dataBaseQuery = new DataBaseQuery(hashMap,
-           urlQry,
-          typeOfQuery,
-          getApplicationContext(),
+            urlQry,
+            typeOfQuery,
+            getApplicationContext(),
            ClientOfClientList.this
           );
         //Prepare for the database query
@@ -180,7 +179,11 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
 
         clientAdepter.notifyDataSetChanged();
     }
-
+    /**
+     * @name  onDestroy
+     *
+     * @description Releases the memory of all the components after intent finishes.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

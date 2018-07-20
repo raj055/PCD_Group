@@ -93,12 +93,11 @@ public enum DataGetUrl {
   public String getUrl(DataGetUrl getUrl){
 
     //Get the relevant Url for the Data.
-    if(getUrl != null) {
+    if(getUrl != null){
       return urls[getUrl.ordinal()];
     }
     else {
       return null;
     }
-
   }
 }

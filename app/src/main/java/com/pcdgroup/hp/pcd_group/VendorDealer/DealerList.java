@@ -81,7 +81,7 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
                 getApplicationContext(),
                 DealerList.this
         );
-        //Prepare for the database query
+        //Prepare for the database query-
         dataBaseQuery.PrepareForQuery();
 
         // intent

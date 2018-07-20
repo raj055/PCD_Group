@@ -66,12 +66,15 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     ImageView imageView,imageView1,imageView2;
     boolean doubleBackToExitPressedOnce = false;
 
+    /** Populates the screen including the list of users.
+     * Queries the Database for the change of access type.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admindashboard);
 
-        /*
+      /*
             - drawer menu bar to show field and information
             - click field after go new Activity
 	    */
@@ -91,16 +94,16 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         // find MenuItem you want to change
         MenuItem nav_email = menu.findItem(R.id.nav_email);
 
-        // intent
+        // Get the email id of the logged user
         Intent intent = getIntent();
         EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
         nav_email.setTitle(EmailHolder);
-
         gblv.currentUserEmail = EmailHolder;
 
         // hide items in menu drawer
         menu.findItem(R.id.nav_myQuotation).setVisible(false);
 
+        //
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -114,14 +117,12 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         // Setting view you want to display as a row element
         View view = inflater.inflate(R.layout.main_dashbord, mainLayout, false);
 
-         imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
-         imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
-         imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
+        imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
+        imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
+        imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
 
         if (gblv.AccessType.contains("Manager")) {
-
-            menu.findItem(R.id.nav_myQuotation).setVisible(false);
-
+          menu.findItem(R.id.nav_myQuotation).setVisible(false);
         }
         else if (gblv.AccessType.contains("Client")){
 
@@ -130,9 +131,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
             menu.findItem(R.id.main_vendor).setVisible(false);
             menu.findItem(R.id.main_po).setVisible(false);
-
             menu.findItem(R.id.nav_myQuotation).setVisible(true);
-
         }
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -258,7 +257,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     @Override
     public void onBackPressed() {
 
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
 
@@ -285,7 +283,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             }
         }, 2000);
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

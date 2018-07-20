@@ -306,7 +306,11 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
             Toast.makeText(AdminSetting.this, response.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
+    /**
+     * @name  onDestroy
+     *
+     * @description Releases the memory of all the components after intent finishes.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

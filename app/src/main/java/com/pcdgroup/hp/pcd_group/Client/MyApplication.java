@@ -37,8 +37,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-
-//        refWatcher = LeakCanary.install(this);
     }
 
     public static synchronized MyApplication getInstance() {

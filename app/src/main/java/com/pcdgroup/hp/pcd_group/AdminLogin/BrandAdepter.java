@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * @author Grasp
  * @version 1.0 on 28-06-2018.
- * @class_name
- * @description
+ * @class_name Brand Adapter
+ * @description Adapter containing list of brand names
  */
 
 public class BrandAdepter extends BaseAdapter {

@@ -69,7 +69,6 @@ public class DataBaseQuery {
 
     //Assign the call back executor.
     resultReceiver = callBackExecutor;
-
     queryType = typeOfQuery;
 
   }
