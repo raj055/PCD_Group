@@ -45,7 +45,6 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
     UserAdminAdepter adepter;
 
     //Widgets
-    Button done;
     ListView listView;
 
     //Access Value Parameters
@@ -72,7 +71,6 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
         userDataGets = new ArrayList<UserDataGet>();
         tempStoreDataValues = new ArrayList<UserDataGet>();
         listView = (ListView) findViewById(R.id.lstv1);
-        done = (Button) findViewById(R.id.btn_done);
 
         //Define adapter and set the list view for the users.
         adepter = new UserAdminAdepter(this, userDataGets);
@@ -94,14 +92,6 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
 
-        //done click listener
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SaveAccess();
-            }
-        });
-
         //access listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,6 +103,10 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
 
             }
         });
+    }
+
+    public void onClickDone(View v) {
+        SaveAccess();
     }
 
     /** Adds the access type of the users to the Dialog
@@ -290,6 +284,5 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
         super.onDestroy();
 
         listView = null;
-        done = null;
     }
 }

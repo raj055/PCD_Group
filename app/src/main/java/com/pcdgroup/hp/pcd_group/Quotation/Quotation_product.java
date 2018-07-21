@@ -2,6 +2,7 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,14 +35,12 @@ import java.util.List;
 
 public class Quotation_product extends AppCompatActivity implements CallBackInterface {
 
-    Button next, previous;
     GridView gridView;
     GridListAdapter adapter;
     String[] data;
     ArrayList<String> picNames;
     String recordName,brand,client;
     List<ProdactEntity> prodactEntities;
-//    ArrayList<String> selectedPrduct;
     List<String> IdList = new ArrayList<>();
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
@@ -49,22 +48,30 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
     CallType typeOfQuery;
     ArrayList<ProdactEntity> Items = new ArrayList<ProdactEntity>();
 
+    SelectedObject selectedObject;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quotation_product_slide);
 
-        brand = getIntent().getExtras().getString("SelectedBrand");
-        client = getIntent().getExtras().getString("ClientInfo");
-
-        next = (Button) findViewById(R.id.btn_next);
-        previous = (Button) findViewById(R.id.btn_previous);
-
         gridView = (GridView) findViewById(R.id.grid_view);
 
         prodactEntities = new ArrayList<ProdactEntity>();
 
-//        selectedPrduct = new ArrayList<ProdactEntity>();
+        selectedObject = new SelectedObject();
+
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+
+        //Check data
+       /* String brandName = selectedObject.brandAddress.get(0);
+
+        String ClientName = selectedObject.address.get(7);
+
+        Log.v("selected brand ==", String.valueOf(brandName));
+        Log.v("selected client ==", String.valueOf(ClientName));*/
+        //--
 
         recordName = new String("");
         picNames = new ArrayList<String>();
@@ -84,68 +91,43 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
+    }
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public void onClickNextProductQuotation(View view) {
 
-                SparseBooleanArray selectedRows = adapter.getSelectedIds();
+        SparseBooleanArray selectedRows = adapter.getSelectedIds();
 
-                if (selectedRows.size() > 0) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    //Loop to all the selected rows array
-                    for (int i = 0; i < selectedRows.size(); i++) {
+        if (selectedRows.size() > 0) {
 
-                        //Check if selected rows have value i.e. checked item
-                        if (selectedRows.valueAt(i)) {
+            //Loop to all the selected rows array
+            for (int i = 0; i < selectedRows.size(); i++) {
 
-                            //Get the checked item text from array list by getting keyAt method of selectedRowsarray
-                            String selectedRowLabel = IdList.get(selectedRows.keyAt(i));
+                //Check if selected rows have value i.e. checked item
+                if (selectedRows.valueAt(i)) {
 
-                            //append the row label text
-                            stringBuilder.append(selectedRowLabel + "\n");
+                    ProdactEntity m = prodactEntities.get(selectedRows.keyAt(i));
 
-//                            selectedPrduct.add(selectedRowLabel);
-
-                           ProdactEntity m = prodactEntities.get(selectedRows.keyAt(i));
-
-                            Items.add(m);
-
-                        }
-                    }
-
-
-
-//                    Log.v("selected item ===== ", String.valueOf(Items));
-
-                    Toast.makeText(getApplicationContext(), "Selected Rows\n" + stringBuilder, Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(Quotation_product.this, Quotation_quantity.class);
-
-                    Bundle args = new Bundle();
-                    args.putSerializable("productID",(Serializable)Items);
-                    intent.putExtra("BUNDLE",args);
-
-
-                    //customer
-                    intent.putExtra("ClientInfo", client);
-                    //brand
-                    intent.putExtra("SelectedBrand",brand);
-
-                    startActivity(intent);
-                    overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+                    Items.add(m);
                 }
             }
-        });
 
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Quotation_product.this, CreateQuotation.class);
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_out_left, R.animator.slide_in_right);
-            }
-        });
+            Intent intent = new Intent(Quotation_product.this, Quotation_quantity.class);
+
+            Bundle args = new Bundle();
+            args.putSerializable("productID",(Serializable) Items);
+            intent.putExtra("BUNDLE",args);
+
+            intent.putExtra("ClientInfo", (Parcelable) selectedObject);
+            intent.putExtra("SelectedBrand", (Parcelable) selectedObject);
+            startActivity(intent);
+            overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+        }
+    }
+
+    public void onClickPreviousProductQuotation(View view) {
+        Intent intent = new Intent(Quotation_product.this, CreateQuotation.class);
+        startActivity(intent);
+        overridePendingTransition(R.animator.slide_out_left, R.animator.slide_in_right);
     }
 
     @Override
@@ -177,12 +159,12 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
                 Integer reorderlevel=jo.getInt("reorderlevel");
                 Integer id = jo.getInt("id");
 
-                // Adding Student Id TO IdList Array.
-                IdList.add(jo.getString("id").toString());
 
                 picNames.add(picname);
                 ProdactEntity e = new ProdactEntity(picname,urlname,price, quantity,hsncode,gst,description,stock,reorderlevel,id);
                 prodactEntities.add(e);
+
+//                IdList.add(String.valueOf(e));
 
                 //Adepter
                 adapter.notifyDataSetChanged();

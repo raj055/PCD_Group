@@ -121,6 +121,7 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/btn_bg"
                 android:fontFamily="sans-serif-medium"
+                android:onClick="onClickLogin"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"
                 android:text="Login Now"
@@ -147,6 +148,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:fontFamily="sans-serif"
+            android:onClick="onClickRegister"
             android:text="Signup Now"
             android:textAllCaps="true"
             android:textColor="@color/White" />

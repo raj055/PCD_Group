@@ -52,7 +52,6 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
     ImageView imageView_Upload;
     EditText productName, productPrice,productMinimum,productHsncode,productBrand,productDescription,
             productStock, productRecordlevel, productgst;
-    Button UpdateProduct,Image_Upload;
     String productIdHolder,productImageHolder,productNameHolder,productPriceHolder,productMinimumHolder,productHsncodeHolder,
             productBeandHolder,productDescriptionHolder,productStockHolder, productRecordlevelHolder,
             productGstHolder;
@@ -89,8 +88,7 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
         productRecordlevel = (EditText)findViewById(R.id.editText_record);
         productgst= (EditText)findViewById(R.id.editText_gst);
 
-        Image_Upload = (Button)findViewById(R.id.btn_imgupload);
-        UpdateProduct = (Button)findViewById(R.id.btn_submit);
+
         imageView_Upload = (ImageView)findViewById(R.id.upload_imageview);
 
         //Allow network in main thread
@@ -123,34 +121,28 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
 
         productNameHolder = productNameHolder.replace("'","''");
         productDescriptionHolder = productDescriptionHolder.replace("'","''");
-        
-        // Adding click listener to update button .
-        UpdateProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                // Getting data from EditText after button click.
-                GetDataFromEditText();
+    }
 
-                if(CheckEditText){
-                    productRecordUpdate (productIdHolder,productImageHolder,productNameHolder,productPriceHolder,productMinimumHolder,
-                            productHsncodeHolder, productBeandHolder,productDescriptionHolder, productStockHolder,
-                            productRecordlevelHolder,productGstHolder);
-                }else {
+    public void onClickProductUpdate(View view) {
 
-                    // If EditText is empty then this block will execute.
-                    Toast.makeText(ProductUpdate.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-                }
+        // Getting data from EditText after button click.
+        GetDataFromEditText();
 
-            }
-        });
+        if(CheckEditText){
+            productRecordUpdate (productIdHolder,productImageHolder,productNameHolder,productPriceHolder,productMinimumHolder,
+                    productHsncodeHolder, productBeandHolder,productDescriptionHolder, productStockHolder,
+                    productRecordlevelHolder,productGstHolder);
+        }else {
 
-        Image_Upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
-            }
-        });
+            // If EditText is empty then this block will execute.
+            Toast.makeText(ProductUpdate.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void onClickImageUpdateUpload(View v) {
+        showFileChooser();
     }
 
     public String getStringImage(Bitmap bmp){
@@ -368,7 +360,5 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
         productRecordlevel = null;
         productgst = null;
         imageView_Upload = null;
-        UpdateProduct = null;
-        Image_Upload = null;
     }
 }

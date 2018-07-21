@@ -137,7 +137,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         Intent intent = new Intent(getApplicationContext(), CreateQuotation.class);
         startActivity(intent);
     }
-    /** Show list of clients on Client Button Click     */
+    /** Show list of clients on Client Button Click  */
     public void onClickClient(View v){
         Intent intent = new Intent(getApplicationContext(), ClientDetailsActivity.class);
         intent.putExtra("emailid", EmailHolder);

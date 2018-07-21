@@ -93,16 +93,6 @@ public class ClientDetailsActivity extends AppCompatActivity
             - add new client button to add new
          */
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(ClientDetailsActivity.this,ClientRegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
         DataAdapters = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView1);
         mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
@@ -193,6 +183,12 @@ public class ClientDetailsActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    public void onClickFloatingAddNewClient(View v) {
+
+        Intent intent = new Intent(ClientDetailsActivity.this,ClientRegisterActivity.class);
+        startActivity(intent);
     }
 
     @Override

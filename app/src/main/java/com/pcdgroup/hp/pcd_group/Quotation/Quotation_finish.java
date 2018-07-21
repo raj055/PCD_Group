@@ -6,11 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import com.pcdgroup.hp.pcd_group.Global.GlobalVariable;
 import com.pcdgroup.hp.pcd_group.R;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -32,13 +36,14 @@ import java.util.Calendar;
 
 public class Quotation_finish extends AppCompatActivity {
 
-    Button Finish,validdate;
     private EditText transportationcost,discountprice;
-    private TextView textdate, textvaliddate,tvDiscount;
+    private TextView textdate, textvaliddate,tvDiscount,tvAmount;
     GlobalVariable globalVariable;
     String Tpcost,discount,DiscountVallue;
     String brand,client;
-
+    ArrayList<ProdactEntity> quntity = new ArrayList<ProdactEntity>();
+    SelectedObject selectedObject;
+    ArrayList<ProdactEntity> object;
     private int year;
     private int month;
     private int day;
@@ -50,20 +55,39 @@ public class Quotation_finish extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quotation_finish_slide);
 
-        brand = getIntent().getExtras().getString("SelectedBrand");
-        client = getIntent().getExtras().getString("ClientInfo");
-
         globalVariable = GlobalVariable.getInstance();
 
         tvDiscount = (TextView) findViewById(R.id.tv_discount);
         textdate = (TextView) findViewById(R.id.tv_date);
         textvaliddate = (TextView) findViewById(R.id.tv_uptodate);
+        tvAmount = (TextView) findViewById(R.id.tv_amount);
 
         transportationcost = (EditText) findViewById(R.id.et_trasport);
         discountprice = (EditText) findViewById(R.id.et_discount);
 
-        validdate = (Button) findViewById(R.id.btn_validupto);
-        Finish = (Button) findViewById(R.id.btn_finish);
+        selectedObject = new SelectedObject();
+
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("BUNDLE");
+
+        object = (ArrayList<ProdactEntity>) args.getSerializable("productID");
+
+        if (args.containsKey("Quantity")) {
+
+            quntity = (ArrayList<ProdactEntity>) args.getSerializable("Quantity");
+
+            float totalAmount = 0;
+            for (int productCount = 0; productCount < quntity.size(); productCount++) {
+                String str = quntity.get(productCount).getAddedQuontity();
+                int quantity = Integer.valueOf(str);
+                int price = quntity.get(productCount).getPrice();
+                totalAmount += (float) (quantity * price);
+            }
+            tvAmount.setText((String.valueOf(totalAmount)));
+        }
 
         DiscountVallue = globalVariable.DiscountType;
 
@@ -78,14 +102,6 @@ public class Quotation_finish extends AppCompatActivity {
                 .append(day).append("-")
                 .append(month + 1).append("-")
                 .append(year).append(" "));
-
-        // Valid up to Date
-        validdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DATE_PICKER_ID);
-            }
-        });
 
         discountprice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -134,30 +150,37 @@ public class Quotation_finish extends AppCompatActivity {
             }
         });
 
-        Finish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Quotation_finish.this, Invoice.class);
-
-                //customer
-                intent.putExtra("ClientInfo", client);
-                //brand
-                intent.putExtra("SelectedBrand",brand);
-
-                intent.putExtra("date", textdate.getText());
-                intent.putExtra("validdate", textvaliddate.getText());
-
-                Tpcost = transportationcost.getText().toString();
-                intent.putExtra("transportioncost",Tpcost);
-
-                discount = discountprice.getText().toString();
-                intent.putExtra("discountperce",discount);
-
-                startActivity(intent);
-                finish();
-            }
-        });
     }
+
+    public void onClickValidDate(View v) {
+        showDialog(DATE_PICKER_ID);
+    }
+
+    public void onClickFinishQuotation(View v) {
+        Intent intent = new Intent(Quotation_finish.this, Invoice.class);
+
+        Bundle args = new Bundle();
+
+        //customer
+        intent.putExtra("ClientInfo",(Parcelable) selectedObject);
+        //brand
+        intent.putExtra("SelectedBrand",(Parcelable) selectedObject);
+
+        args.putSerializable("productID",(Serializable) object);
+
+        intent.putExtra("date", textdate.getText());
+        intent.putExtra("validdate", textvaliddate.getText());
+
+        Tpcost = transportationcost.getText().toString();
+        intent.putExtra("transportioncost",Tpcost);
+
+        discount = discountprice.getText().toString();
+        intent.putExtra("discountperce",discount);
+
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -198,7 +221,6 @@ public class Quotation_finish extends AppCompatActivity {
         super.onDestroy();
         transportationcost = null;
         discountprice = null;
-        validdate = null;
         textdate = null;
         textvaliddate = null;
         tvDiscount = null;

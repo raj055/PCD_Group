@@ -39,7 +39,6 @@ import java.util.Random;
 
 public class UserRegistarActivity extends AppCompatActivity implements CallBackInterface {
 
-    Button register;
     EditText First_Name, Last_Name,MobileNo, Email, Password ;
     String F_Name_Holder, L_Name_Holder, MobileNo_Holder, EmailHolder, PasswordHolder;
     String emailPattern;
@@ -47,11 +46,11 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     HashMap<String,String> hashMap = new HashMap<>();
     EditText VerifayCode;
     TextView RegenrateCode;
-    Button Verify;
     String strVerify;
     String senderHolder,numberHolde,message_Holder,code_Holder;
     Random Number;
     int Rnumber;
+    Button Verify;
 
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -73,32 +72,25 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
         Email = (EditText)findViewById(R.id.editTextEmail);
         Password = (EditText)findViewById(R.id.editTextPassword);
         MobileNo = (EditText)findViewById(R.id.editTextL_mobile);
+    }
 
-        register = (Button)findViewById(R.id.Submit);
+    public void onClickUserRegister(View view) {
 
-        //Adding Click Listener on button.
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // Checking whether EditText is Empty or Not
+        CheckEditTextIsEmptyOrNot();
 
-                // Checking whether EditText is Empty or Not
-                CheckEditTextIsEmptyOrNot();
+        if(EmailHolder.matches(emailPattern) && CheckEditText){
 
-                if(EmailHolder.matches(emailPattern) && CheckEditText){
+            VerificationCode();
+        }
+        else {
 
-                    VerificationCode();
-                }
-                else {
+            // If EditText is empty then this block will execute .
+            Toast.makeText(UserRegistarActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
 
-                    // If EditText is empty then this block will execute .
-                    Toast.makeText(UserRegistarActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-
+        }
     }
 
     private void VerificationCode() {
@@ -245,7 +237,7 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        register = null;
+
         First_Name = null;
         Last_Name = null;
         MobileNo = null;

@@ -6,10 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.pcdgroup.hp.pcd_group.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -48,12 +51,13 @@ import java.util.List;
 
 public class CreateQuotation extends AppCompatActivity implements CallBackInterface {
 
-    private Button add_client, addAddress, next;
     private TextView client,textaddres;
     GlobalVariable globalVariable;
     List<Category> categoriesList;
     String[] data;
     Intent intent;
+
+    SelectedObject selectobject;
 
     HashMap<String,String> hashMap = new HashMap<>();
 
@@ -72,14 +76,9 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         */
 
         globalVariable = GlobalVariable.getInstance();
-
         client = (TextView) findViewById(R.id.tv_client);
         textaddres = (TextView) findViewById(R.id.address);
-
-        add_client = (Button) findViewById(R.id.btn_client);
-        addAddress = (Button) findViewById(R.id.btn_address);
-
-        next = (Button) findViewById(R.id.btn_next);
+        selectobject = new SelectedObject();
 
         urlQry = DataGetUrl.LIST_BRAND;
         typeOfQuery = CallType.JSON_CALL;
@@ -94,43 +93,33 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
 
-        // Client add in database
-        add_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
-                Intent intent = new Intent(CreateQuotation.this, SelectClient.class);
+    public void onClickQuotationAddClient(View v) {
 
-                startActivityForResult(intent, 1);
-            }
-        });
+        Intent intent = new Intent(CreateQuotation.this, SelectClient.class);
 
-        addAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        startActivityForResult(intent, 1);
+    }
 
-                Intent intent = new Intent(CreateQuotation.this, BrandList.class);
+    public void onClickQuotationAddBrand(View v) {
 
-                startActivityForResult(intent, 2);
+        Intent intent = new Intent(CreateQuotation.this, BrandList.class);
 
-            }
-        });
+        startActivityForResult(intent, 2);
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CreateQuotation.this, Quotation_product.class);
+    }
 
-                //customer
-                intent.putExtra("ClientInfo", globalVariable.globalClient);
-                //brand
-                intent.putExtra("SelectedBrand",globalVariable.globalBarnd);
+    public void onClickNextScreenQuotation(View view) {
+        Intent intent = new Intent(CreateQuotation.this, Quotation_product.class);
 
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
-            }
-        });
+        //customer
+        intent.putExtra("ClientInfo", (Parcelable) selectobject);
+        //brand
+        intent.putExtra("SelectedBrand", (Parcelable) selectobject);
 
+        startActivity(intent);
+        overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
     }
 
     @Override
@@ -154,6 +143,15 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
                         globalVariable.globalClient[7] = extras.getString("fname");
                     }
                     client.setText(globalVariable.globalClient[7]);
+
+                    selectobject.address.add(globalVariable.globalClient[0]);
+                    selectobject.address.add(globalVariable.globalClient[1]);
+                    selectobject.address.add(globalVariable.globalClient[2]);
+                    selectobject.address.add(globalVariable.globalClient[3]);
+                    selectobject.address.add(globalVariable.globalClient[4]);
+                    selectobject.address.add(globalVariable.globalClient[5]);
+                    selectobject.address.add(globalVariable.globalClient[6]);
+                    selectobject.address.add(globalVariable.globalClient[7]);
                 }
             }
         }
@@ -177,6 +175,18 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
                             globalVariable.globalBarnd[10] = extras.getString("gst");
                         }
                         textaddres.setText(globalVariable.globalBarnd[0]);
+
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[0]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[1]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[2]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[3]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[4]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[5]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[6]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[7]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[8]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[9]);
+                        selectobject.brandAddress.add(globalVariable.globalBarnd[10]);
                     }
                 }
         }
@@ -258,8 +268,6 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        add_client = null;
-        addAddress = null;
         client = null;
         textaddres = null;
     }

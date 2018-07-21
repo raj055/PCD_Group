@@ -30,7 +30,6 @@ import java.util.HashMap;
 public class Add_Dealer extends Fragment implements CallBackInterface {
 
     EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
-    Button submit;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Designation_Holder;
     Boolean CheckEditText ;
@@ -63,52 +62,46 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
         organisation = (EditText) view.findViewById(R.id.organisation_et);
         gstno = (EditText) view.findViewById(R.id.gstno_et);
 
-        submit = (Button) view.findViewById(R.id.submit_btnDealer);
-
-        //Adding Click Listener on button.
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // Checking whether EditText is Empty or Not.
-                CheckEditTextIsEmptyOrNot();
-
-                if(CheckEditText){
-
-                    urlQry = DataGetUrl.ADD_DEALER;
-                    typeOfQuery = CallType.POST_CALL;
-
-                    hashMap.put("name",Name_Holder);
-                    hashMap.put("address",Name_Holder);
-                    hashMap.put("area",Area_Holder);
-                    hashMap.put("state",State_Holder);
-                    hashMap.put("email",Email_Holder);
-                    hashMap.put("mobileno",Mobileno_Holder);
-                    hashMap.put("organisation",Organisation_Holder);
-                    hashMap.put("gstno",Gst_Holder);
-                    hashMap.put("designation",Designation_Holder);
-
-                    //Send Database query for inquiring to the database.
-                    dataBaseQuery = new DataBaseQuery(hashMap,
-                            urlQry,
-                            typeOfQuery,
-                            getActivity().getApplicationContext(),
-                            Add_Dealer.this
-                    );
-                    //Prepare for the database query
-                    dataBaseQuery.PrepareForQuery();
-
-                }
-                else {
-
-                    // If EditText is empty then this block will execute.
-                    Toast.makeText(getActivity(), "Please fill all form fields.", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
         return view;
+    }
+
+    public void onClickDealerAdd(View view) {
+
+        // Checking whether EditText is Empty or Not.
+        CheckEditTextIsEmptyOrNot();
+
+        if(CheckEditText){
+
+            urlQry = DataGetUrl.ADD_DEALER;
+            typeOfQuery = CallType.POST_CALL;
+
+            hashMap.put("name",Name_Holder);
+            hashMap.put("address",Name_Holder);
+            hashMap.put("area",Area_Holder);
+            hashMap.put("state",State_Holder);
+            hashMap.put("email",Email_Holder);
+            hashMap.put("mobileno",Mobileno_Holder);
+            hashMap.put("organisation",Organisation_Holder);
+            hashMap.put("gstno",Gst_Holder);
+            hashMap.put("designation",Designation_Holder);
+
+            //Send Database query for inquiring to the database.
+            dataBaseQuery = new DataBaseQuery(hashMap,
+                    urlQry,
+                    typeOfQuery,
+                    getActivity().getApplicationContext(),
+                    Add_Dealer.this
+            );
+            //Prepare for the database query
+            dataBaseQuery.PrepareForQuery();
+
+        }
+        else {
+
+            // If EditText is empty then this block will execute.
+            Toast.makeText(getActivity(), "Please fill all form fields.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void CheckEditTextIsEmptyOrNot(){
@@ -158,6 +151,5 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
         organisation = null;
         gstno = null;
         designation = null;
-        submit = null;
     }
 }

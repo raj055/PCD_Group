@@ -37,7 +37,6 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     HashMap<String, String> hashMap = new HashMap<>();
     EditText ClientName, ClientNameL, ClientAddress, ClientAddressline1, ClientAddressline2, ClientMobileno, ClientState,
             ClientCountry, ClientEmail, ClientCompany, ClientPin, ClientDesignation;
-    Button UpdateStudent;
     String ClientIdHolder, ClientFNameHolder, ClientLNameHolder, ClientAddressHolder, ClientAddressline1Holder, ClientAddressline2Holder,
             ClientMobilenoHolder, ClientStateHolder, ClientCountryHolder, ClientEmailHolder, ClientPinoHolder,
             ClientComapnyHolder, ClientDesignationHolder;
@@ -72,8 +71,6 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientCompany = (EditText) findViewById(R.id.editCompany);
         ClientDesignation = (EditText) findViewById(R.id.editDesignation);
 
-        UpdateStudent = (Button) findViewById(R.id.UpdateButton);
-
         // Receive Client ID, Name , Address , Email, etc.. Send by previous ShowSingleRecordActivity.
         ClientIdHolder = getIntent().getStringExtra("id");
         ClientFNameHolder = getIntent().getStringExtra("first_name");
@@ -103,64 +100,61 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientCompany.setText(ClientComapnyHolder);
         ClientDesignation.setText(ClientDesignationHolder);
 
-        // Adding click listener to update button .
-        UpdateStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                // Getting data from EditText after button click.
-                GetDataFromEditText();
+    }
 
-                if (CheckEditText) {
+    public void onClickUpdateClient(View view) {
 
-                    urlQry = DataGetUrl.EDIT_CLIENT;
-                    typeOfQuery = CallType.POST_CALL;
+        // Getting data from EditText after button click.
+        GetDataFromEditText();
 
-                    hashMap.put("id", ClientIdHolder);
+        if (CheckEditText) {
 
-                    hashMap.put("first_name", ClientFNameHolder);
+            urlQry = DataGetUrl.EDIT_CLIENT;
+            typeOfQuery = CallType.POST_CALL;
 
-                    hashMap.put("last_name", ClientLNameHolder);
+            hashMap.put("id", ClientIdHolder);
 
-                    hashMap.put("address", ClientAddressHolder);
+            hashMap.put("first_name", ClientFNameHolder);
 
-                    hashMap.put("address_line1", ClientAddressline1Holder);
+            hashMap.put("last_name", ClientLNameHolder);
 
-                    hashMap.put("address_line2", ClientAddressline2Holder);
+            hashMap.put("address", ClientAddressHolder);
 
-                    hashMap.put("mobile_num", ClientMobilenoHolder);
+            hashMap.put("address_line1", ClientAddressline1Holder);
 
-                    hashMap.put("state", ClientStateHolder);
+            hashMap.put("address_line2", ClientAddressline2Holder);
 
-                    hashMap.put("country", ClientCountryHolder);
+            hashMap.put("mobile_num", ClientMobilenoHolder);
 
-                    hashMap.put("email_id", ClientEmailHolder);
+            hashMap.put("state", ClientStateHolder);
 
-                    hashMap.put("pin", ClientPinoHolder);
+            hashMap.put("country", ClientCountryHolder);
 
-                    hashMap.put("company_name", ClientComapnyHolder);
+            hashMap.put("email_id", ClientEmailHolder);
 
-                    hashMap.put("designation", ClientDesignationHolder);
+            hashMap.put("pin", ClientPinoHolder);
 
-                    //Send Database query for inquiring to the database.
-                    dataBaseQuery = new DataBaseQuery(hashMap,
-                            urlQry,
-                            typeOfQuery,
-                            getApplicationContext(),
-                            UpdateActivity.this
-                    );
-                    //Prepare for the database query
-                    dataBaseQuery.PrepareForQuery();
+            hashMap.put("company_name", ClientComapnyHolder);
 
-                } else {
+            hashMap.put("designation", ClientDesignationHolder);
 
-                    // If EditText is empty then this block will execute.
-                    Toast.makeText(UpdateActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+            //Send Database query for inquiring to the database.
+            dataBaseQuery = new DataBaseQuery(hashMap,
+                    urlQry,
+                    typeOfQuery,
+                    getApplicationContext(),
+                    UpdateActivity.this
+            );
+            //Prepare for the database query
+            dataBaseQuery.PrepareForQuery();
 
-                }
-            }
-        });
+        } else {
 
+            // If EditText is empty then this block will execute.
+            Toast.makeText(UpdateActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     // Method to get existing data from EditText.
@@ -278,6 +272,5 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientCompany = null;
         ClientPin = null;
         ClientDesignation = null;
-        UpdateStudent = null;
     }
 }

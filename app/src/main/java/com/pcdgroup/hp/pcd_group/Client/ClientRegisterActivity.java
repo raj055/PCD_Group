@@ -31,11 +31,11 @@ import java.util.HashMap;
 
 public class ClientRegisterActivity extends AppCompatActivity implements CallBackInterface {
 
-    EditText fname, lname, address, addressline1, addressline2, mobileno, country, company_name, pin, email_id, designation;
+    EditText fname, lname, address, addressline1, addressline2, mobileno, country, company_name,
+            pin, email_id, password, designation;
     Spinner type, state;
-    Button submit;
     String FName_Holder, LName_Holder, type_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder, Mobileno_Holder,
-            State_Holder, Country_Holder, CompanyName_Holder, Pin_Holder, Emailid_Holder, Designation_Holder,
+            State_Holder, Country_Holder, CompanyName_Holder, Pin_Holder, Emailid_Holder, Password_Holder, Designation_Holder,
             UserClient_Holder;
 
     Boolean CheckEditText;
@@ -71,54 +71,51 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         company_name = (EditText) findViewById(R.id.et_companyname);
         pin = (EditText) findViewById(R.id.et_Pin);
         email_id = (EditText) findViewById(R.id.et_email);
+        password = (EditText) findViewById(R.id.et_password);
         designation = (EditText) findViewById(R.id.et_designation);
-        submit = (Button) findViewById(R.id.btn_submit);
+    }
 
-        //Adding Click Listener on button.
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public void onClickRegister(View view) {
 
-                // Checking whether EditText is Empty or Not.
-                CheckEditTextIsEmptyOrNot();
+        // Checking whether EditText is Empty or Not.
+        CheckEditTextIsEmptyOrNot();
 
-                if (CheckEditText) {
+        if (CheckEditText) {
 
-                    // If EditText is not empty and CheckEditText = True then this block will execute.
-                    urlQry = DataGetUrl.CLIENT_REGISTER;
+            // If EditText is not empty and CheckEditText = True then this block will execute.
+            urlQry = DataGetUrl.CLIENT_REGISTER;
 
-                    typeOfQuery = CallType.POST_CALL;
+            typeOfQuery = CallType.POST_CALL;
 
-                    hashMap.put("first_name", FName_Holder);
-                    hashMap.put("last_name", LName_Holder);
-                    hashMap.put("type", type_Holder);
-                    hashMap.put("address", Address_Hoder);
-                    hashMap.put("address_line1", Addressline1_Holder);
-                    hashMap.put("address_line2", Addressline2_Holder);
-                    hashMap.put("mobile_num", Mobileno_Holder);
-                    hashMap.put("state", State_Holder);
-                    hashMap.put("country", Country_Holder);
-                    hashMap.put("company_name", CompanyName_Holder);
-                    hashMap.put("pin", Pin_Holder);
-                    hashMap.put("email_id", Emailid_Holder);
-                    hashMap.put("designation", Designation_Holder);
-                    hashMap.put("user", UserClient_Holder);
+            hashMap.put("first_name", FName_Holder);
+            hashMap.put("last_name", LName_Holder);
+            hashMap.put("type", type_Holder);
+            hashMap.put("address", Address_Hoder);
+            hashMap.put("address_line1", Addressline1_Holder);
+            hashMap.put("address_line2", Addressline2_Holder);
+            hashMap.put("mobile_num", Mobileno_Holder);
+            hashMap.put("state", State_Holder);
+            hashMap.put("country", Country_Holder);
+            hashMap.put("company_name", CompanyName_Holder);
+            hashMap.put("pin", Pin_Holder);
+            hashMap.put("email_id", Emailid_Holder);
+            hashMap.put("password", Password_Holder);
+            hashMap.put("designation", Designation_Holder);
+            hashMap.put("user", UserClient_Holder);
 
-                    //Send Database query for inquiring to the database.
-                    dataBaseQuery = new DataBaseQuery(hashMap,
-                            urlQry,
-                            typeOfQuery,
-                            getApplicationContext(),
-                            ClientRegisterActivity.this
-                    );
-                    //Prepare for the database query
-                    dataBaseQuery.PrepareForQuery();
-                } else {
-                    // If EditText is empty then this block will execute.
-                    Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            //Send Database query for inquiring to the database.
+            dataBaseQuery = new DataBaseQuery(hashMap,
+                    urlQry,
+                    typeOfQuery,
+                    getApplicationContext(),
+                    ClientRegisterActivity.this
+            );
+            //Prepare for the database query
+            dataBaseQuery.PrepareForQuery();
+        } else {
+            // If EditText is empty then this block will execute.
+            Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void CheckEditTextIsEmptyOrNot() {
@@ -135,6 +132,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         Country_Holder = country.getText().toString();
         CompanyName_Holder = company_name.getText().toString();
         Emailid_Holder = email_id.getText().toString();
+        Password_Holder = password.getText().toString();
         Pin_Holder = pin.getText().toString();
         Designation_Holder = designation.getText().toString();
 
@@ -148,7 +146,11 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
 
         UserClient_Holder = globalVariable.currentUserEmail;
 
-        if (TextUtils.isEmpty(FName_Holder) || TextUtils.isEmpty(LName_Holder) || TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) || TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) || TextUtils.isEmpty(Designation_Holder)) {
+        if (TextUtils.isEmpty(FName_Holder) || TextUtils.isEmpty(LName_Holder) ||
+                TextUtils.isEmpty(type_Holder) || TextUtils.isEmpty(Address_Hoder) ||
+                TextUtils.isEmpty(CompanyName_Holder) || TextUtils.isEmpty(Emailid_Holder) ||
+                TextUtils.isEmpty(Password_Holder) || TextUtils.isEmpty(Designation_Holder)) {
+
             CheckEditText = false;
         } else {
             CheckEditText = true;
@@ -209,8 +211,8 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         company_name = null;
         pin = null;
         email_id = null;
+        password = null;
         designation = null;
-        submit = null;
         state = null;
         type = null;
     }

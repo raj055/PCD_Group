@@ -50,7 +50,7 @@ public enum DataGetUrl {
 
   private String[] urls = {
 
-          "http://dert.co.in/gFiles/UserLogin.php",                 // USER_LOGIN
+         "http://dert.co.in/gFiles/UserLogin.php",                 // USER_LOGIN
           "http://dert.co.in/gFiles/UserRegistration.php",          //USER_REGISTER
           "http://dert.co.in/gFiles/otp_registration_user.php",     //OTP_REGISTER
 
@@ -88,6 +88,7 @@ public enum DataGetUrl {
           "http://dert.co.in/gFiles/getpdfs.php",                   //SHOW_CLIENT_QUOTATION_LIST
           "http://dert.co.in/gFiles/QuotationList.php",             //ALL_QUOTATION_LIST
           "http://dert.co.in/gFiles/updatebill.php"                //UPDATE_BILL
+
   };
 
   public String getUrl(DataGetUrl getUrl){

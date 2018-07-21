@@ -110,75 +110,64 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         TextViewCompanyName.setText(CompnyHolder);
         TextViewEmailID.setText(EmailHolder);
         TextViewDesignation.setText(DesignationHolder);
-
-        UpdateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(SingleRecordShow.this, UpdateActivity.class);
-
-                // Sending Client Id, Name, Number and Class to next UpdateActivity.
-                intent.putExtra("id", IdHolder);
-                intent.putExtra("first_name", fNameHolder);
-                intent.putExtra("last_name", lNameHolder);
-                intent.putExtra("address", AddressHolder);
-                intent.putExtra("address_line1", Address1Holder);
-                intent.putExtra("address_line2", Address2Holder);
-                intent.putExtra("mobile_num", MobileHolder);
-                intent.putExtra("state", StateHolder);
-                intent.putExtra("country", CountryHolder);
-                intent.putExtra("pin", PinHolder);
-                intent.putExtra("company_name", CompnyHolder);
-                intent.putExtra("email_id", EmailHolder);
-                intent.putExtra("designation", DesignationHolder);
-
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                startActivity(intent);
-
-                // Finishing current activity after opening next activity.
-                finish();
-            }
-        });
-
-        // Add Click listener on Delete button.
-        DeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                urlQry = DataGetUrl.SINGLE_DELETE;
-                typeOfQuery = CallType.POST_CALL;
-
-                hashMap.put("id", IdHolder);
-
-                //Send Database query for inquiring to the database.
-                dataBaseQuery = new DataBaseQuery(hashMap,
-                        urlQry,
-                        typeOfQuery,
-                        getApplicationContext(),
-                        SingleRecordShow.this
-                );
-                //Prepare for the database query
-                dataBaseQuery.PrepareForQuery();
-
-                intent = new Intent(SingleRecordShow.this, ClientDetailsActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        // Add Click listener on DealerAssign button.
-        DealerAssign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(SingleRecordShow.this, DealerList.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
+    /** Update/Edit clients record on Update Button Click  */
+    public void onClickUpdateClient(View view) {
+
+        Intent intent = new Intent(SingleRecordShow.this, UpdateActivity.class);
+
+        // Sending Client Id, Name, Number and Class to next UpdateActivity.
+        intent.putExtra("id", IdHolder);
+        intent.putExtra("first_name", fNameHolder);
+        intent.putExtra("last_name", lNameHolder);
+        intent.putExtra("address", AddressHolder);
+        intent.putExtra("address_line1", Address1Holder);
+        intent.putExtra("address_line2", Address2Holder);
+        intent.putExtra("mobile_num", MobileHolder);
+        intent.putExtra("state", StateHolder);
+        intent.putExtra("country", CountryHolder);
+        intent.putExtra("pin", PinHolder);
+        intent.putExtra("company_name", CompnyHolder);
+        intent.putExtra("email_id", EmailHolder);
+        intent.putExtra("designation", DesignationHolder);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        startActivity(intent);
+
+        // Finishing current activity after opening next activity.
+        finish();
+    }
+    /** Delete clients record on Delete Button Click  */
+    public void onClickDeleteClient(View view) {
+
+        urlQry = DataGetUrl.SINGLE_DELETE;
+        typeOfQuery = CallType.POST_CALL;
+
+        hashMap.put("id", IdHolder);
+
+        //Send Database query for inquiring to the database.
+        dataBaseQuery = new DataBaseQuery(hashMap,
+                urlQry,
+                typeOfQuery,
+                getApplicationContext(),
+                SingleRecordShow.this
+        );
+        //Prepare for the database query
+        dataBaseQuery.PrepareForQuery();
+
+        intent = new Intent(SingleRecordShow.this, ClientDetailsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    /** Assign dealer clients on Assign Button Click  */
+    public void onClickDealerAssign(View view) {
+
+        Intent intent = new Intent(SingleRecordShow.this, DealerList.class);
+        startActivity(intent);
+    }
+    /** Show option menu Click  */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);

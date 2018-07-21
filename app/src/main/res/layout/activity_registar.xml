@@ -97,6 +97,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="#7B68EE"
+        android:onClick="onClickUserRegister"
         android:text="Register" />
 
 </RelativeLayout>

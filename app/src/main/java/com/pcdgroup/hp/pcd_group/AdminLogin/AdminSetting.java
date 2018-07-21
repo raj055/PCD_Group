@@ -39,7 +39,6 @@ import java.util.List;
 
 public class AdminSetting extends AppCompatActivity implements CallBackInterface {
 
-    Button Brand;
     EditText brandname, address, address1, address2,pincode,mobileno,email,website,pan,gst;
     Spinner state, SpinerBrand;
     TextView details;
@@ -85,7 +84,6 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
         gst = (EditText) promptUserView.findViewById(R.id.editText8);
         state = (Spinner)  promptUserView.findViewById(R.id.spinner6);
 
-        Brand = (Button) findViewById(R.id.btn_brand);
         details = (TextView) findViewById(R.id.tv_details);
         SpinerBrand = (Spinner) findViewById(R.id.spbrnad);
 
@@ -114,18 +112,6 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
         //Adepter
         adepter.notifyDataSetChanged();
 
-        // Click Brand button
-        Brand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                CheckEditTextIsEmptyOrNot();
-
-                CheckAnyAddress();
-
-            }
-        });
-
         SpinerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -145,6 +131,14 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
 
             }
         });
+
+    }
+
+    public void onClickBrandSeting(View view) {
+
+        CheckEditTextIsEmptyOrNot();
+
+        CheckAnyAddress();
 
     }
 
@@ -315,7 +309,6 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
     protected void onDestroy() {
         super.onDestroy();
 
-        Brand = null;
         brandname = null;
         address = null;
         address1 = null;

@@ -50,6 +50,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:background="@null"
+            android:onClick="onClickNextProductQuotation"
             android:text="@string/next"
             android:textColor="@android:color/black" />
 
@@ -60,6 +61,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:background="@null"
+            android:onClick="onClickPreviousProductQuotation"
             android:text="@string/previous"
             android:textColor="@android:color/black" />
 

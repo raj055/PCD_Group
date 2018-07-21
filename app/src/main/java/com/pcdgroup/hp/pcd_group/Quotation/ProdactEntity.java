@@ -1,5 +1,7 @@
 package com.pcdgroup.hp.pcd_group.Quotation;
 
+import java.io.Serializable;
+
 /**
  * @author Grasp
  * @version 1.0 on 28-06-2018.
@@ -7,11 +9,12 @@ package com.pcdgroup.hp.pcd_group.Quotation;
  * @description product list to get and set data
  */
 
-public class ProdactEntity {
+public class ProdactEntity implements Serializable{
 
     private String title,thumbnailUrl,description;
     private int availableStock;
     private Integer price,minimum,hsncode,gst,stock,reorderlevel;
+    private String AddedQuontity;
 
     public ProdactEntity(String name, String thumbnailUrl, Integer price, Integer quantity,Integer hsncode,Integer gst,String description,Integer stock,Integer reorderlevel, int availableStock) {
         this.title = name;
@@ -24,6 +27,7 @@ public class ProdactEntity {
         this.reorderlevel=reorderlevel;
         this.thumbnailUrl = thumbnailUrl;
         this.availableStock = availableStock;
+        this.AddedQuontity = "0";
     }
 
     public String getTitle() {
@@ -36,6 +40,7 @@ public class ProdactEntity {
     public  String getDescription() {return description;}
     public Integer getstock() {return stock;}
     public Integer getReorderlevel() {return reorderlevel;}
+    public String getAddedQuontity() {return AddedQuontity;}
 
     public void setTitle(String name) {
         this.title = name;
@@ -47,6 +52,7 @@ public class ProdactEntity {
     public  void setDescription (String description) { this.description= description ;}
     public void setStock(Integer stock) {this.stock = stock;}
     public void setReorderlevel(Integer reorderlevel) {this.reorderlevel = reorderlevel;}
+    public String setAddedQuontity(String s) {return AddedQuontity;}
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
@@ -59,9 +65,6 @@ public class ProdactEntity {
     }
     public void settitle(String title) {
         this.title = title;
-    }
-    public void setprice(Integer price) {
-        this.price = price;
     }
     public int getStock() {
         return availableStock;

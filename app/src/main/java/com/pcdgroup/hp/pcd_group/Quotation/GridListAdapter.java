@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -36,6 +38,8 @@ public class GridListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<ProdactEntity> entityItems;
     private ImageLoader imageLoader;
+
+    int numberOfCheckboxesChecked = 0;
 
     private SparseBooleanArray mSelectedItemsIds;
 
@@ -75,7 +79,7 @@ public class GridListAdapter extends BaseAdapter {
         //Assign Id'S
         NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
         TextView title = (TextView) convertView.findViewById(R.id.label);
-        CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+        final CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
         // getting movie data for the row
         ProdactEntity m = entityItems.get(position);
 
@@ -90,7 +94,30 @@ public class GridListAdapter extends BaseAdapter {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 checkCheckBox(position, !mSelectedItemsIds.get(position));
+            }
+        });
+
+        final View finalConvertView = convertView;
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked && numberOfCheckboxesChecked >= 10) {
+
+                    Toast.makeText(finalConvertView.getContext(),"You Check Only 10 Items.",Toast.LENGTH_SHORT).show();
+
+                    checkBox.setChecked(false);
+                } else {
+
+                    if (isChecked) {
+                        numberOfCheckboxesChecked++;
+                    } else {
+                        numberOfCheckboxesChecked--;
+                    }
+                }
+
             }
         });
 

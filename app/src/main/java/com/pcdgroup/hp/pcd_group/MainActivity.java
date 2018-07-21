@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     Handler handler = new Handler();
 
     EditText Email, Password;
-    Button LogIn,Register;
     String PasswordHolder, EmailHolder;
     Boolean CheckEditText ;
     HashMap<String,String> hashMap = new HashMap<>();
@@ -110,36 +109,9 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         Email = (EditText)findViewById(R.id.email);
         Password = (EditText)findViewById(R.id.password);
-        LogIn = (Button)findViewById(R.id.Login);
-        Register = (Button)findViewById(R.id.register);
 
         gblVar = GlobalVariable.getInstance();
 
-        LogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                saveUsername();
-
-                CheckEditTextIsEmptyOrNot();
-
-                if(CheckEditText){
-                    QueryTheDataBase();
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this,UserRegistarActivity.class);
-                startActivity(intent);
-            }
-        });
 /*
         Email.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -164,6 +136,26 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
                 return false;
             }
         });*/
+    }
+
+    public void onClickLogin(View view) {
+
+//                saveUsername();
+
+        CheckEditTextIsEmptyOrNot();
+
+        if(CheckEditText){
+            QueryTheDataBase();
+        }
+        else {
+            Toast.makeText(MainActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onClickRegister(View view) {
+
+        Intent intent = new Intent(MainActivity.this,UserRegistarActivity.class);
+        startActivity(intent);
     }
 
     private void QueryTheDataBase(){
@@ -329,7 +321,5 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         rellay2 = null;
         Email = null;
         Password = null;
-        LogIn = null;
-        Register = null;
     }
 }

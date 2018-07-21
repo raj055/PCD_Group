@@ -42,7 +42,6 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
 
     String[] data;
     ListView listView;
-    Button done;
     UserAdminAdepter adepter;
     HashMap<String,String> hashMap = new HashMap<>();
     String currentDicountValue;
@@ -69,7 +68,6 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         userDataGets = new ArrayList<UserDataGet>();
         tempStoreDataValues = new ArrayList<UserDataGet>();
         listView = (ListView) findViewById(R.id.lstv1);
-        done = (Button) findViewById(R.id.btn_done);
 
         gblv = GlobalVariable.getInstance();
 
@@ -94,15 +92,6 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         //Adepter
         adepter.notifyDataSetChanged();
 
-        //done click listener
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SaveDiscount();
-            }
-        });
-
-
         //access listView on item click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -114,6 +103,10 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
 
             }
         });
+    }
+
+    public void onClickClientDiscount(View v) {
+        SaveDiscount();
     }
 
     private void SelectionBox(int position) {
@@ -287,6 +280,5 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
     protected void onDestroy() {
         super.onDestroy();
         listView = null;
-        done = null;
     }
 }

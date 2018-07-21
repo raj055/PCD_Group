@@ -2,6 +2,7 @@ package com.pcdgroup.hp.pcd_group.Quotation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallBackInterface;
 import com.pcdgroup.hp.pcd_group.DatabaseComponents.CallType;
@@ -19,6 +21,7 @@ import com.pcdgroup.hp.pcd_group.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +35,6 @@ import java.util.List;
 
 public class Quotation_quantity extends AppCompatActivity implements CallBackInterface {
 
-    Button next, previous;
     ListView listView;
     QuontityAdepter adapter;
     String productData,brand,client;
@@ -44,36 +46,33 @@ public class Quotation_quantity extends AppCompatActivity implements CallBackInt
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    ArrayList<ProdactEntity> QuantityItems = new ArrayList<ProdactEntity>();
+    SelectedObject selectedObject;
+    ArrayList<ProdactEntity> object;
+    String picname,urlname,description;
+    Integer price,quantity,hsncode,gst,stock,reorderlevel,id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quotation_quantity_slide);
 
-        next = (Button) findViewById(R.id.btn_next);
-        previous = (Button) findViewById(R.id.btn_previous);
-
         listView = (ListView) findViewById(R.id.product_listview);
-
         prodactEntities = new ArrayList<ProdactEntity>();
-
-        brand = getIntent().getExtras().getString("SelectedBrand");
-        client = getIntent().getExtras().getString("ClientInfo");
+        selectedObject = new SelectedObject();
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
-        ArrayList<ProdactEntity> object = (ArrayList<ProdactEntity>) args.getSerializable("productID");
+        object = (ArrayList<ProdactEntity>) args.getSerializable("productID");
         List<ProdactEntity> lstPrd = new ArrayList<ProdactEntity>();
 
         for(int i = 0 ; i < object.size(); i++){
             ProdactEntity m = object.get(i);
             lstPrd.add(m);
         }
-//        lstPrd.addAll(object);
 
-        Log.v("displayItem ======= ", String.valueOf(object));
-
-//        listView.setAdapter((ListAdapter) items);
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
 
         adapter = new QuontityAdepter(this, lstPrd, this);
         listView.setAdapter(adapter);
@@ -90,32 +89,37 @@ public class Quotation_quantity extends AppCompatActivity implements CallBackInt
         );
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Quotation_quantity.this, Quotation_finish.class);
-
-                //customer
-                intent.putExtra("ClientInfo", client);
-                //brand
-                intent.putExtra("SelectedBrand",brand);
-
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
-            }
-        });
-
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Quotation_quantity.this, Quotation_product.class);
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_out_left, R.animator.slide_in_right);
-            }
-        });
     }
 
+    public void onClickNextScreenQuantity(View view) {
+
+        for(int i = 0; i < object.size(); i++){
+            ProdactEntity pe = object.get(i);
+            QuantityItems.add(pe);
+
+        }
+
+        Log.v("Object ==========", String.valueOf(object));
+
+        Intent intent = new Intent(Quotation_quantity.this, Quotation_finish.class);
+        Bundle args = new Bundle();
+        args.putSerializable("Quantity",(Serializable) QuantityItems);
+
+        args.putSerializable("productID",(Serializable) QuantityItems);
+        intent.putExtra("BUNDLE",args);
+
+        intent.putExtra("ClientInfo", (Parcelable) selectedObject);
+        intent.putExtra("SelectedBrand", (Parcelable) selectedObject);
+
+        startActivity(intent);
+        overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+    }
+
+    public void onClickPreviosScreenQuantity(View view) {
+        Intent intent = new Intent(Quotation_quantity.this, Quotation_product.class);
+        startActivity(intent);
+        overridePendingTransition(R.animator.slide_out_left, R.animator.slide_in_right);
+    }
     @Override
     public void finish() {
         super.finish();
@@ -134,22 +138,24 @@ public class Quotation_quantity extends AppCompatActivity implements CallBackInt
             for (int i=0; i<ja.length();i++){
 
                 jo=ja.getJSONObject(i);
-                String picname = jo.getString("name");
-                String urlname = jo.getString("photo");
-                Integer price = jo.getInt("price");
-                Integer quantity = jo.getInt("minimum");
-                Integer hsncode=jo.getInt("hsncode");
-                Integer gst=jo.getInt("gst");
-                String description=jo.getString("description");
-                Integer stock=jo.getInt("stock");
-                Integer reorderlevel=jo.getInt("reorderlevel");
-                Integer id = jo.getInt("id");
+                picname = jo.getString("name");
+                urlname = jo.getString("photo");
+                price = jo.getInt("price");
+                quantity = jo.getInt("minimum");
+                hsncode=jo.getInt("hsncode");
+                gst=jo.getInt("gst");
+                description=jo.getString("description");
+                stock=jo.getInt("stock");
+                reorderlevel=jo.getInt("reorderlevel");
+                id = jo.getInt("id");
 
                 // Adding Student Id TO IdList Array.
                 IdList.add(jo.getString("id").toString());
 
                 ProdactEntity e = new ProdactEntity(picname,urlname,price, quantity,hsncode,gst,description,stock,reorderlevel,id);
                 prodactEntities.add(e);
+
+                IdList.add(String.valueOf(e));
 
                 //Adepter
                 adapter.notifyDataSetChanged();

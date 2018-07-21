@@ -84,7 +84,7 @@ import static android.app.PendingIntent.getActivity;
  * @description create invoice  to add client and company details
  */
 
-public class Invoice extends AppCompatActivity  implements CallBackInterface {
+public class Invoice extends AppCompatActivity {
 
     TextView name,address,state,company,country,pin;
     TextView state1,sgst,cgst1;
@@ -119,10 +119,7 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
     String mCurrentDirectoryUri;
     String DiscountTVvalue;
     GlobalVariable globalVariable;
-
-    DataGetUrl urlQry;
-    DataBaseQuery dataBaseQuery;
-    CallType typeOfQuery;
+    SelectedObject selectedObject;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -144,159 +141,166 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
 
         DiscountTextview.setText("Discount:" + "\t" + DiscountTVvalue + "%");
 
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+        Bundle extras = getIntent().getExtras();
+        //Check data
+       /* String brandName = selectedObject.brandAddress.get(0);
+
+        String ClientName = selectedObject.address.get(7);
+
+        Log.v("selected brand ==", String.valueOf(brandName));
+        Log.v("selected client ==", String.valueOf(ClientName));*/
+        //--
+
+        // Brand Details
+
         String str;
-        if(savedInstanceState == null){
-            Bundle extras = getIntent().getExtras();
-            if(extras != null) {
 
-                //Brand
-                String[] brandAddress = extras.getStringArray("SelectedBrand");
-                b_name.setText(brandAddress[0]);
-                str = brandAddress[1] + "," + "\n" + brandAddress[2] + "," + "\n" + brandAddress[3];
-                b_address.setText(str);
+        b_name.setText(selectedObject.brandAddress.get(0));
+        str = selectedObject.brandAddress.get(1) + "," + "\n" + selectedObject.brandAddress.get(2) + "," + "\n" + selectedObject.brandAddress.get(3);
+        b_address.setText(str);
 
-                b_state.setText(brandAddress[5]);
+        b_state.setText(selectedObject.brandAddress.get(5));
 
-                b_pin.setText(brandAddress[4]);
+        b_pin.setText(selectedObject.brandAddress.get(4));
 
-                str = brandAddress[6] + "," + "\n" + brandAddress[7] + "," + "\n" + brandAddress[8];
-                b_mobile.setText(str);
+        str = selectedObject.brandAddress.get(6) + "," + "\n" + selectedObject.brandAddress.get(7) + "," + "\n" + selectedObject.brandAddress.get(9);
+        b_mobile.setText(str);
 
-                str = brandAddress[9] + "," + "\n" + brandAddress[10];
-                b_pan.setText(str);
+        str = selectedObject.brandAddress.get(9) + "," + "\n" + selectedObject.brandAddress.get(10);
+        b_pan.setText(str);
 
-                // Client
-                String[]   clientInfo =  extras.getStringArray("ClientInfo");
+        // Client Details
 
-                name.setText(clientInfo[7]);
-                str =clientInfo[0] + "," + "\n" + clientInfo[1] + "," + "\n"+ clientInfo[2];
-//                  + "\n"+ clientInfo[3] + "\n"+ clientInfo[4];
+        name.setText(selectedObject.address.get(7));
+        str = selectedObject.address.get(0) + "," + "\n" + selectedObject.address.get(1) + "," + "\n" + selectedObject.address.get(2);
 
-                address.setText(str);
-                state.setText(clientInfo[4]);
-                pin.setText(clientInfo[3]);
-                company.setText(clientInfo[6]);
-                country.setText(clientInfo[5]);
+        address.setText(str);
+        state.setText(selectedObject.address.get(4));
+        pin.setText(selectedObject.address.get(3));
+        company.setText(selectedObject.address.get(6));
+        country.setText(selectedObject.address.get(5));
 
-                //Product
-                ArrayList<String[]> PrdList = (ArrayList<String[]>) extras.getSerializable("ProductInfo");
-                int size = PrdList.size();
+        //Product Details
 
-                getAllProducts = "";
-                Log.v("Products---------", getAllProducts);
-                getGst = new String();
-                getPrice = new String();
-                getCgst = new String();
-                getQuantity = new String();
-                getAmount = new String();
-                getHsn = new String();
-                state_holder = state.getText().toString();
-                state1_holder = state1.getText().toString();
+        ArrayList<String[]> PrdList = (ArrayList<String[]>) extras.getSerializable("ProductInfo");
+        int size = PrdList.size();
 
-                if (state1_holder.contains(state_holder)){
+        getAllProducts = "";
+        Log.v("Products---------", getAllProducts);
+        getGst = new String();
+        getPrice = new String();
+        getCgst = new String();
+        getQuantity = new String();
+        getAmount = new String();
+        getHsn = new String();
+        state_holder = state.getText().toString();
+        state1_holder = state1.getText().toString();
 
-                }else {
-                    TableRow tblr = (TableRow) findViewById(R.id.tableRow);
-                    tblr.removeView(sgst);
+        if (state1_holder.contains(state_holder)) {
 
-                    cgst1.setText("IGST");
-                    igst = true;
+        } else {
+            TableRow tblr = (TableRow) findViewById(R.id.tableRow);
+            tblr.removeView(sgst);
 
-                    gstValue /= 1;
-                }
+            cgst1.setText("IGST");
+            igst = true;
 
-                for(int i = 0; i < size; i++){
-
-                    String[] stringList = PrdList.get(i);
-
-                    View child = (View) getLayoutInflater().inflate(R.layout.product_list, null);
-                    lyt.addView(child);
-                    LinearLayout tblRw = (LinearLayout) child.findViewById(R.id.tableRow2);
-
-                    item = (TextView)child.findViewById(R.id.tvproduct);
-                    hsn = (TextView)child.findViewById(R.id.tvhsn);
-                    gst = (TextView)child.findViewById(R.id.tvgst);
-                    price = (TextView)child.findViewById(R.id.tvprice);
-                    quantity = (TextView)child.findViewById(R.id.tvquantity);
-                    cgst = (TextView)child.findViewById(R.id.sgst);
-                    amount = (TextView)child.findViewById(R.id.amount);
-
-                    //product information
-                    item.setText(stringList[0]);
-                    getAllProducts = getAllProducts.concat(stringList[0]);
-                    getAllProducts = getAllProducts.concat(",");
-
-                    hsn.setText(stringList[1]);
-                    getHsn = getHsn.concat(stringList[1]);
-                    getHsn = getHsn.concat(",");
-
-                    float gstValue = Integer.valueOf(stringList[2]);
-                    float priceStr = Float.valueOf(stringList[3]);
-                    getPrice = getPrice.concat(stringList[3]);
-                    getPrice =getPrice.concat(",");
-                    Integer quantityStr = Integer.valueOf(stringList[4]);
-
-
-
-                    amt = gstValue * priceStr/100 + priceStr;
-                    if(igst != true)gstValue /= 2;
-                    gst.setText(String.valueOf(gstValue));
-                    getGst = getGst.concat(String.valueOf(gstValue));
-                    getGst = getGst.concat(",");
-                    getCgst = getCgst.concat(String.valueOf(gstValue));
-                    getCgst = getCgst.concat(",");
-                    if(igst == true){
-                        tblRw.removeView(cgst);
-                    }
-                    else
-//                        gst.
-                            cgst.setText(String.valueOf(gstValue));
-                    amt *= quantityStr;
-                    price.setText(stringList[3]);
-
-                    quantity.setText(stringList[4]);
-                    getQuantity = getQuantity.concat(stringList[4]);
-                    getQuantity = getQuantity.concat(",");
-
-                    amount.setText(String.valueOf(amt));
-                    getAmount = getAmount.concat(String.valueOf(amt));
-                    getAmount =getAmount.concat(",");
-
-                    totalPrice +=  priceStr;
-                    totalAmount += amt;
-                    totalquantity += quantityStr;
-                }
-                finalprice.setText(String.valueOf(totalPrice));
-                finalquantity.setText(String.valueOf(totalquantity));
-                finalamount.setText(String.valueOf(totalAmount));
-
-                float totalDiscount = Float.valueOf(discount);
-                float tDiscount = totalDiscount * amt /100;
-                DiscountValue.setText(String.valueOf(tDiscount));
-
-                float totalTransport = Float.valueOf(transport);
-                totalAmount += totalTransport;
-
-                totalAmount -= tDiscount;
-
-                finalPayable.setText(String.valueOf(totalAmount));
-
-                str = extras.getString("date");
-                String str2 = getAllProducts;
-                Log.v("Products---------", str2);
-                Log.v("Products---------", getAllProducts);
-                Log.v("Date Put---------", str);
-
-                date.setText(str);
-                str = extras.getString("validdate");
-                validdate.setText(str);
-
-                fillHashMap();
-            }
+            gstValue /= 1;
         }
+
+        for (int i = 0; i < size; i++) {
+
+            String[] stringList = PrdList.get(i);
+
+            View child = (View) getLayoutInflater().inflate(R.layout.product_list, null);
+            lyt.addView(child);
+            LinearLayout tblRw = (LinearLayout) child.findViewById(R.id.tableRow2);
+
+            item = (TextView) child.findViewById(R.id.tvproduct);
+            hsn = (TextView) child.findViewById(R.id.tvhsn);
+            gst = (TextView) child.findViewById(R.id.tvgst);
+            price = (TextView) child.findViewById(R.id.tvprice);
+            quantity = (TextView) child.findViewById(R.id.tvquantity);
+            cgst = (TextView) child.findViewById(R.id.sgst);
+            amount = (TextView) child.findViewById(R.id.amount);
+
+            //product information
+            item.setText(stringList[0]);
+            getAllProducts = getAllProducts.concat(stringList[0]);
+            getAllProducts = getAllProducts.concat(",");
+
+            hsn.setText(stringList[1]);
+            getHsn = getHsn.concat(stringList[1]);
+            getHsn = getHsn.concat(",");
+
+            float gstValue = Integer.valueOf(stringList[2]);
+            float priceStr = Float.valueOf(stringList[3]);
+            getPrice = getPrice.concat(stringList[3]);
+            getPrice = getPrice.concat(",");
+            Integer quantityStr = Integer.valueOf(stringList[4]);
+
+
+            amt = gstValue * priceStr / 100 + priceStr;
+            if (igst != true) gstValue /= 2;
+            gst.setText(String.valueOf(gstValue));
+            getGst = getGst.concat(String.valueOf(gstValue));
+            getGst = getGst.concat(",");
+            getCgst = getCgst.concat(String.valueOf(gstValue));
+            getCgst = getCgst.concat(",");
+            if (igst == true) {
+                tblRw.removeView(cgst);
+            } else
+//                        gst.
+                cgst.setText(String.valueOf(gstValue));
+            amt *= quantityStr;
+            price.setText(stringList[3]);
+
+            quantity.setText(stringList[4]);
+            getQuantity = getQuantity.concat(stringList[4]);
+            getQuantity = getQuantity.concat(",");
+
+            amount.setText(String.valueOf(amt));
+            getAmount = getAmount.concat(String.valueOf(amt));
+            getAmount = getAmount.concat(",");
+
+            totalPrice += priceStr;
+            totalAmount += amt;
+            totalquantity += quantityStr;
+        }
+
+        finalprice.setText(String.valueOf(totalPrice));
+        finalquantity.setText(String.valueOf(totalquantity));
+        finalamount.setText(String.valueOf(totalAmount));
+
+        float totalDiscount = Float.valueOf(discount);
+        float tDiscount = totalDiscount * amt / 100;
+        DiscountValue.setText(String.valueOf(tDiscount));
+
+        float totalTransport = Float.valueOf(transport);
+        totalAmount += totalTransport;
+
+        totalAmount -= tDiscount;
+
+        finalPayable.setText(String.valueOf(totalAmount));
+
+        str = extras.getString("date");
+        String str2 = getAllProducts;
+        Log.v("Products---------", str2);
+        Log.v("Products---------", getAllProducts);
+        Log.v("Date Put---------", str);
+
+        date.setText(str);
+        str = extras.getString("validdate");
+        validdate.setText(str);
+
+        fillHashMap();
     }
 
+
     void fillHashMap(){
+
         hsmap.put("date", date.getText().toString());
         hsmap.put("name", name.getText().toString());
         hsmap.put("validdate", validdate.getText().toString());
@@ -368,6 +372,8 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
         b_pan = (TextView) findViewById(R.id.textView16);
 
         globalVariable = GlobalVariable.getInstance();
+
+        selectedObject = new SelectedObject();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -634,11 +640,6 @@ public class Invoice extends AppCompatActivity  implements CallBackInterface {
     @Override
     public void onBackPressed() {
         finish();
-    }
-
-    @Override
-    public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
-
     }
 
     @Override

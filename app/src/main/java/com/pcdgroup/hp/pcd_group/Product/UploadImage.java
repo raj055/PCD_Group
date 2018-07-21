@@ -63,7 +63,6 @@ public class UploadImage extends AppCompatActivity {
     ImageView imageView;
     Spinner brand;
     Spinner gst;
-    Button pickImage, upload;
     private File actualImage, compressedImage;
 
     private Bitmap bitmap;
@@ -101,60 +100,50 @@ public class UploadImage extends AppCompatActivity {
         description= (EditText) findViewById(R.id.Descriprion);
         stock= (EditText) findViewById(R.id.Stock);
         reorderlevel= (EditText) findViewById(R.id.Reorderlevel);
-        pickImage= (Button) findViewById(R.id.pickImgaeButton);
-        upload = (Button) findViewById(R.id.upload);
+    }
 
-        imageView = (ImageView) findViewById(R.id.previewImage);
+    public void onClickUploadImage(View v) {
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (name.getText().toString().length() <= 0)
+        {
+            name.setError("Please Enter Name !");
+        }
+        else if (price.getText().toString().length() <= 0)
+        {
+            price.setError("Please Enter Price !");
+        }
+        else if (minimum.getText().toString().length() <= 0)
+        {
+            minimum.setError("Please Enter Minimum Value !");
+        }
+        else if (hsncode.getText().toString().length() <= 0)
+        {
+            hsncode.setError("Please Enter HSN Code !");
+        }
+        else if (description.getText().toString().length() <= 0)
+        {
+            description.setError("Please Enter Description !");
+        }
+        else if (stock.getText().toString().length() <= 0)
+        {
+            stock.setError("Please Enter Stock !");
+        }
+        else if (reorderlevel.getText().toString().length() <= 0)
+        {
+            reorderlevel.setError("Please Enter Reorderlevel !");
+        }
+        else if (bitmap==null)
+        {
+            Toast.makeText(UploadImage.this,"Please Upload Image", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            uploadImage();
 
-                if (name.getText().toString().length() <= 0)
-                {
-                    name.setError("Please Enter Name !");
-                }
-                else if (price.getText().toString().length() <= 0)
-                {
-                    price.setError("Please Enter Price !");
-                }
-                else if (minimum.getText().toString().length() <= 0)
-                {
-                    minimum.setError("Please Enter Minimum Value !");
-                }
-                else if (hsncode.getText().toString().length() <= 0)
-                {
-                    hsncode.setError("Please Enter HSN Code !");
-                }
-                else if (description.getText().toString().length() <= 0)
-                {
-                    description.setError("Please Enter Description !");
-                }
-                else if (stock.getText().toString().length() <= 0)
-                {
-                    stock.setError("Please Enter Stock !");
-                }
-                else if (reorderlevel.getText().toString().length() <= 0)
-                {
-                    reorderlevel.setError("Please Enter Reorderlevel !");
-                }
-                else if (bitmap==null)
-                {
-                    Toast.makeText(UploadImage.this,"Please Upload Image", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    uploadImage();
+        }
+    }
 
-                }
-            }
-        });
-        pickImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
-            }
-        });
-
+    public void onClickChoiceImage(View v) {
+        showFileChooser();
     }
 
     public String getStringImage(Bitmap bmp){
@@ -315,7 +304,5 @@ public class UploadImage extends AppCompatActivity {
         imageView = null;
         brand = null;
         gst = null;
-        pickImage = null;
-        upload = null;
     }
 }
