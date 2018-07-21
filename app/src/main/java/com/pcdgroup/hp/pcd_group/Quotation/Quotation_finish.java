@@ -86,7 +86,7 @@ public class Quotation_finish extends AppCompatActivity {
                 int price = quntity.get(productCount).getPrice();
                 totalAmount += (float) (quantity * price);
             }
-            tvAmount.setText((String.valueOf(totalAmount)));
+            tvAmount.setText("Total Amount : \u20B9 " + String.valueOf(totalAmount));
         }
 
         DiscountVallue = globalVariable.DiscountType;
