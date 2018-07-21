@@ -53,12 +53,11 @@ import java.util.List;
  * @author Grasp
  * @version 1.0 on 28-06-2018.
  * @class_name ClientDetailsActivity
- * @description client details activity to display client details
+ * @description Activity - shows list of clients with their details.
  */
 
 public class ClientDetailsActivity extends AppCompatActivity
-  implements CallBackInterface , RecyclerViewAdapter.DataAdapterListener {
-
+    implements CallBackInterface , RecyclerViewAdapter.DataAdapterListener {
 
     HashMap<String, String> hashMap = new HashMap<>();
 

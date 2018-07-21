@@ -63,7 +63,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawer;
     GlobalVariable gblv;
     Context context;
-    ImageView imageView,imageView1,imageView2;
+
     boolean doubleBackToExitPressedOnce = false;
 
     /** Populates the screen including the list of users.
@@ -74,13 +74,10 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admindashboard);
 
-      /*
-            - drawer menu bar to show field and information
-            - click field after go new Activity
-	    */
-
+        //Global variable
         gblv = GlobalVariable.getInstance();
 
+        //Toolbar for adding action
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -98,17 +95,20 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         Intent intent = getIntent();
         EmailHolder = intent.getStringExtra(MainActivity.UserEmail);
         nav_email.setTitle(EmailHolder);
+
+        //set the user email for global access
         gblv.currentUserEmail = EmailHolder;
 
-        // hide items in menu drawer
+        //Hide items in menu drawer
         menu.findItem(R.id.nav_myQuotation).setVisible(false);
 
-        //
+        //Define action bar for toolbar
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Layout
         LinearLayout mainLayout = (LinearLayout) findViewById(R.id.activity_main_layout);
 
         // Inflating layout
@@ -117,10 +117,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         // Setting view you want to display as a row element
         View view = inflater.inflate(R.layout.main_dashbord, mainLayout, false);
 
-        imageView = (ImageView) mainLayout.findViewById(R.id.imageViewmain);
-        imageView1 = (ImageView) mainLayout.findViewById(R.id.imageViewmain1);
-        imageView2 = (ImageView) mainLayout.findViewById(R.id.imageViewmain2);
-
+        //Add the options according to the access types
         if (gblv.AccessType.contains("Manager")) {
           menu.findItem(R.id.nav_myQuotation).setVisible(false);
         }
@@ -133,38 +130,31 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             menu.findItem(R.id.main_po).setVisible(false);
             menu.findItem(R.id.nav_myQuotation).setVisible(true);
         }
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ClientDetailsActivity.class);
-                intent.putExtra("emailid", EmailHolder);
-                startActivity(intent);
-            }
-        });
-
-        imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ViewImage.class);
-                intent.putExtra("email",EmailHolder);
-                startActivity(intent);
-            }
-        });
-
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateQuotation.class);
-                startActivity(intent);
-            }
-        });
-
         mainLayout.addView(view);
     }
-
+    /** Go to create quotation on Create Quotation */
+    public void onClickCreateQuotation(View v){
+        Intent intent = new Intent(getApplicationContext(), CreateQuotation.class);
+        startActivity(intent);
+    }
+    /** Show list of clients on Client Button Click     */
+    public void onClickClient(View v){
+        Intent intent = new Intent(getApplicationContext(), ClientDetailsActivity.class);
+        intent.putExtra("emailid", EmailHolder);
+        startActivity(intent);
+    }
+    /** Show list of products on Product Button Click     */
+    public void onClickProduct(View v){
+        Intent intent = new Intent(getApplicationContext(), ViewImage.class);
+        intent.putExtra("email",EmailHolder);
+        startActivity(intent);
+    }
+    /** On Clicking the navigation items, the next activity to be done.     *
+     * @param item MenuItem - Selected item */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        //Get the selected item and perform the activity.
         switch (item.getItemId()) {
 
             case R.id.nav_quotation:
@@ -204,19 +194,23 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
                 break;
         }
 
+        //Close the Drawer
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    /** Add Menu options     *
+     * @param menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
+        //Add settings, login and discount option for admin to select.
         menu.add(0, 1, 1,  menuIconWithText(getResources().getDrawable(R.drawable.settings), getResources().getString(R.string.action_brandsettings)));
         menu.add(0, 2, 2,  menuIconWithText(getResources().getDrawable(R.drawable.login),getResources().getString(R.string.action_accesslogin)));
         menu.add(0, 3, 3,  menuIconWithText(getResources().getDrawable(R.drawable.percentage),getResources().getString(R.string.action_discount)));
         return true;
     }
-
+    /** On Clicking the menu items, the next activity to be done.     *
+     * @param item MenuItem - Selected item */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -244,6 +238,9 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         return super.onOptionsItemSelected(item);
     }
 
+    /** Get the text for the selected menu item of Discount Percent   *
+     * @param r - Drawable and title - String
+     * @return Char value for Menu text*/
     private CharSequence menuIconWithText(Drawable r, String title) {
 
         r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
@@ -253,6 +250,8 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
         return sb;
     }
+
+    /** When Back button is pressed - if drawer is open or close     */
 
     @Override
     public void onBackPressed() {
@@ -289,8 +288,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         super.onDestroy();
 
         drawer = null;
-        imageView = null;
-        imageView1 = null;
-        imageView2 = null;
+
     }
 }

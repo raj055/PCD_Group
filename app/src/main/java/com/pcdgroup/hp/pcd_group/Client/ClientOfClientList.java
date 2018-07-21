@@ -57,7 +57,7 @@ import retrofit2.http.GET;
  * @author Grasp
  * @version 1.0 on 28-06-2018.
  * @class_name ClientOfClientList
- * @description client of client is client add there new  client list
+ * @description  Lists clients registered by the other clients who do not have admin/manager access
  */
 
 public class ClientOfClientList extends AppCompatActivity implements CallBackInterface {
@@ -68,6 +68,7 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
     private String emailId;
     String finalResult;
 
+    //Client list and adapter for storing the clients' list
     ArrayList<DataAdapter> ClientList = new ArrayList<DataAdapter>();
     ClientAdepter clientAdepter;
 
@@ -92,7 +93,6 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
             public void onClick(View v) {
 
                 Intent intent = new Intent(ClientOfClientList.this, ClientRegisterActivity.class);
-
                 startActivity(intent);
                 finish();
             }
