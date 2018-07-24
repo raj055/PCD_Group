@@ -65,6 +65,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Creates a quotation by filling in the required fields of address, name, etc.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,7 +233,9 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
         return super.onOptionsItemSelected(item);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -264,7 +268,7 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -111,7 +111,9 @@ public class ShowQuotationList extends AppCompatActivity implements CallBackInte
       }
     }
   }
-
+  /** CallBack Function for processing the Database query result.
+   * @param  response - Response string received while database query.
+   *         dataGetUrl - Url queried.*/
   @Override
   public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
     try {
@@ -143,7 +145,7 @@ public class ShowQuotationList extends AppCompatActivity implements CallBackInte
       e.printStackTrace();
     }
   }
-
+  /** Releases the memory of all the components after intent finishes. */
   @Override
   protected void onDestroy() {
     super.onDestroy();

@@ -61,7 +61,6 @@ public class UserAdminAdepter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_user, null);
 
-
         //Assign Id'S
         TextView email = (TextView) convertView.findViewById(R.id.title);
 

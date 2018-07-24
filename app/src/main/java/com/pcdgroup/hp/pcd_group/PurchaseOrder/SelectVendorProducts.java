@@ -60,6 +60,10 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Enlists products belonging to the particular vendor.
+     * The given products can be selected.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +140,9 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
         //Prepare for the database query
         dataBaseQuery.PrepareForQuery();
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -172,7 +178,7 @@ public class SelectVendorProducts extends AppCompatActivity implements CallBackI
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

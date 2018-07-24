@@ -41,6 +41,7 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
     ArrayList<String> picNames;
     String recordName,brand,client;
     List<ProdactEntity> prodactEntities;
+
     List<String> IdList = new ArrayList<>();
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
@@ -135,7 +136,9 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
         super.finish();
         overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
         try {

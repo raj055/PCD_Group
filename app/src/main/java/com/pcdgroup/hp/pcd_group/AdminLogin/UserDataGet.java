@@ -12,6 +12,7 @@ public class UserDataGet {
     private String Email;
     private String AccessType = "";
 
+
     public UserDataGet(String emial){
 
         this.Email = emial;

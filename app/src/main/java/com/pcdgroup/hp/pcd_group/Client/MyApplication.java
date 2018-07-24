@@ -19,13 +19,6 @@ import com.squareup.leakcanary.RefWatcher;
 
 public class MyApplication extends Application {
 
-//    private RefWatcher refWatcher;
-//
-//    public static  RefWatcher getRefwatchar(Context context){
-//        MyApplication application = (MyApplication) context.getApplicationContext();
-//        return application.refWatcher;
-//    }
-
     public static final String TAG = MyApplication.class
             .getSimpleName();
 
@@ -33,6 +26,7 @@ public class MyApplication extends Application {
 
     private static MyApplication mInstance;
 
+    /** Initialise the main application */
     @Override
     public void onCreate() {
         super.onCreate();

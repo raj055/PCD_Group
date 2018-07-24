@@ -411,12 +411,14 @@ public class ViewInvoice extends AppCompatActivity implements CallBackInterface 
 
     return sb;
   }
-
+  /** CallBack Function for processing the Database query result.
+   * @param  response - Response string received while database query.
+   *         dataGetUrl - Url queried.*/
   @Override
   public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
     Toast.makeText(ViewInvoice.this, response.toString(), Toast.LENGTH_LONG).show();
   }
-
+  /** Releases the memory of all the components after intent finishes. */
   @Override
   protected void onDestroy() {
     super.onDestroy();

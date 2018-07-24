@@ -233,7 +233,7 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(UserRegistarActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

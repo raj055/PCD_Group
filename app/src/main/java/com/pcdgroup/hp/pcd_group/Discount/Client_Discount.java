@@ -55,15 +55,15 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Lists users / clients for setting the discount value.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount);
 
-        /*
-            - list of user database
-            - set discount to user to create new quotation to another
-        */
+        // list of user database
+        // set discount to user to create new quotation to another
 
         userDataGets = new ArrayList<UserDataGet>();
         tempStoreDataValues = new ArrayList<UserDataGet>();
@@ -238,7 +238,9 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         }
         return super.onOptionsItemSelected(item);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
@@ -275,7 +277,7 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
             Toast.makeText(Client_Discount.this, response.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

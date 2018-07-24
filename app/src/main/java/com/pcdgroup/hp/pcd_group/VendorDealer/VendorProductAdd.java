@@ -169,7 +169,9 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
 
         return super.onOptionsItemSelected(item);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -203,7 +205,7 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

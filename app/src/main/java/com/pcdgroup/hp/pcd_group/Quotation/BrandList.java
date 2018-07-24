@@ -48,15 +48,13 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Shows brand list for selection to be included in quotation.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brandlist);
-
-        /*
-            - show brand list
-            - add brand list in invoice
-        */
 
         listView = (ListView) findViewById(R.id.list_address);
 
@@ -110,7 +108,9 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
         dataBaseQuery.PrepareForQuery();
 
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -144,7 +144,7 @@ public class BrandList  extends AppCompatActivity implements CallBackInterface {
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -240,7 +240,9 @@ public class SelectClient extends AppCompatActivity implements ClientRecyclerVie
     public void onDataSelected(ClientDataAdapter dataAdapter) {
 
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         // adding contacts to contacts list

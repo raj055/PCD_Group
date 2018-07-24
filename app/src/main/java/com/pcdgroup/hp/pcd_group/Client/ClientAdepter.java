@@ -28,6 +28,7 @@ public class ClientAdepter extends ArrayAdapter<DataAdapter> {
     ArrayList<DataAdapter> data = new ArrayList<DataAdapter>();
     DataAdapter client;
 
+
     public ClientAdepter(Activity activity, int layoutResourceId, ArrayList<DataAdapter> data) {
         super(activity, layoutResourceId, data);
         this.activity = activity;

@@ -80,6 +80,9 @@ public class UploadImage extends AppCompatActivity {
 
     private int PICK_IMAGE_REQUEST = 1;
 
+    /** Add new product. Creates the product entities screen.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -290,7 +293,7 @@ public class UploadImage extends AppCompatActivity {
         //Adding request to the queue
         requestQueue.add(stringRequest);
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

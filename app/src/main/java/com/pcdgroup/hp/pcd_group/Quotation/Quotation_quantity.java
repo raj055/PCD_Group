@@ -125,7 +125,9 @@ public class Quotation_quantity extends AppCompatActivity implements CallBackInt
         super.finish();
         overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
         try {

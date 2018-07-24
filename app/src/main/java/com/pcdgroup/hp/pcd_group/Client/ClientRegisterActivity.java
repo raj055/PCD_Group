@@ -47,14 +47,12 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
     Intent intent;
     GlobalVariable globalVariable;
 
+    /** Populates the screen includes the list of clients added by the logged in user/client.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientregister);
-
-        /*
-            - add new client details
-        */
 
         globalVariable = GlobalVariable.getInstance();
 
@@ -192,12 +190,14 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
         Toast.makeText(ClientRegisterActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

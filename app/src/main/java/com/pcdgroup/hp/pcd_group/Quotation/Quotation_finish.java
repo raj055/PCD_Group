@@ -215,7 +215,7 @@ public class Quotation_finish extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
