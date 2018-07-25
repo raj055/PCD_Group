@@ -50,11 +50,10 @@ public class Create_New_PO extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_po);
 
-        /*
-            - select vendor in vendor list
-            - select product in product list
-            - create purchase order to click button
-        */
+
+        // select vendor in vendor list
+        // select product in product list
+        // create purchase order to click button
 
         globalVariable = GlobalVariable.getInstance();
 

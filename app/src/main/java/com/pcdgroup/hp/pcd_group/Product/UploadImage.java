@@ -88,10 +88,9 @@ public class UploadImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_image_layout);
 
-        /*
-            - compress image to upload to server
-            - set name image and upload database
-        */
+
+        //    - compress image to upload to server
+        //    - set name image and upload database
 
         //Assign Id'S
         name= (EditText) findViewById(R.id.name);

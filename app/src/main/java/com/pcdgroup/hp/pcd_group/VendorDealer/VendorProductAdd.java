@@ -75,6 +75,9 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Populates Product list for addition of the vendor product.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

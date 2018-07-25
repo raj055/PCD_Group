@@ -55,14 +55,13 @@ public class DealerList extends AppCompatActivity implements CallBackInterface {
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Populates list of dealer to choose from in order to assign a dealor to the user
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dealer_list);
-
-        /*
-            - shoe list of data to dealer
-         */
 
         listView = (ListView) findViewById(R.id.listViewDealer);
 

@@ -52,6 +52,9 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Display the vendor list for preparing the PO.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

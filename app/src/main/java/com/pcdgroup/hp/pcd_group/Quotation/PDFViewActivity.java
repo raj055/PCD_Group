@@ -45,9 +45,9 @@ public class PDFViewActivity extends AppCompatActivity implements OnPageChangeLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfview);
 
-        /*
-            - display pdf of quotation
-        */
+
+        //display pdf of quotation
+
 
         gblVar = GlobalVariable.getInstance();
 

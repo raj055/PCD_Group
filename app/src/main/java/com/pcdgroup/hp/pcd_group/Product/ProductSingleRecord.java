@@ -57,10 +57,10 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.productrecord_activity);
 
-        /*
-            - display single record
-            - this record update and delete button show
-        */
+
+        // display single record
+        // this record update and delete button show
+
 
         gblVar = GlobalVariable.getInstance();
 

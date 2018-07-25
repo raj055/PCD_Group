@@ -27,15 +27,17 @@ public class VendorDealerMain extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
+    /** Register the details of Vendor / Dealor. Add the details to the database.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vendor_dealer);
 
-        /*
-            - add vendor fragment
-            - add dealer fragment
-        */
+
+        //    - add vendor fragment
+        //    - add dealer fragment
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 

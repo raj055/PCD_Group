@@ -89,14 +89,17 @@ public class ViewInvoice extends AppCompatActivity implements CallBackInterface 
   DataBaseQuery dataBaseQuery;
   CallType typeOfQuery;
 
+  /** Populates list of invoices.
+   * Updation of brand.
+   * @param savedInstanceState object of passing parameters from the previous intent */
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.invoice);
 
-      /*
-          - view invoice
-      */
+      // view invoice
 
     gblVar = GlobalVariable.getInstance();
 
@@ -112,7 +115,6 @@ public class ViewInvoice extends AppCompatActivity implements CallBackInterface 
     TransportationCost =(TextView) findViewById(R.id.textView18);
     DiscountValue =(TextView ) findViewById(R.id.textView27);
     DiscountTextview =(TextView ) findViewById(R.id.textView20);
-
 
     state = (TextView)findViewById(R.id.text_state);
     pin = (TextView)findViewById(R.id.text_pin);

@@ -56,7 +56,6 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
     HashMap<String,String> hashMap = new HashMap<>();
     CallType typeOfQuery;
 
-
     /** Populates the screen including the list of users.
      * Queries the Database for the change of access type.
      * @param savedInstanceState object of passing parameters from the previous intent */
