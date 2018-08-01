@@ -36,12 +36,17 @@ import java.util.HashMap;
 
 public class Add_Vendor extends Fragment implements CallBackInterface {
 
-    EditText name,address,area,mobileno,state,email,organisation,gstno,products;
+    //Components for Vendor
+    EditText name, address, area, mobileno, state, email, organisation, gstno, products;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Products_Holder;
     Boolean CheckEditText ;
-    HashMap<String,String> hashMap = new HashMap<>();
+
+    //Globals
     GlobalVariable globalVariable;
+
+    //Database Components
+    HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -73,7 +78,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
 
         return view;
     }
-
+    /** Add Vendor on selection VendorAdd Button */
     public void onClickVendorAdd(View view) {
 
         // Checking whether EditText is Empty or Not.
@@ -110,12 +115,14 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
         }
     }
 
+    /** Add the Products related to the Vendors. */
     public void onClickAddVendorProduct(View view) {
 
         Intent intent = new Intent(getActivity(),VendorProductAdd.class);
         startActivityForResult(intent, 1);
     }
 
+    /** On returning from select product activity. */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -141,7 +148,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
             }
         }
     }
-
+    /** Check whether Edit Text is empty or not. */
     public void CheckEditTextIsEmptyOrNot(){
 
         //Checking all EditText Empty or Not.
@@ -155,6 +162,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
         Gst_Holder = gstno.getText().toString();
         Products_Holder = products.getText().toString();
 
+        //Allow the Apostrophe in the text so that the text is not rejected.
         Name_Holder = Name_Holder.replace("'","''");
         Address_Hoder = Address_Hoder.replace("'","''");
         Area_Holder = Area_Holder.replace("'","''");

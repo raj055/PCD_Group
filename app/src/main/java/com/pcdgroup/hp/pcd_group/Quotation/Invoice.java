@@ -249,7 +249,7 @@ public class Invoice extends AppCompatActivity {
             if (igst == true) {
                 tblRw.removeView(cgst);
             } else
-//                        gst.
+
                 cgst.setText(String.valueOf(gstValue));
             amt *= quantityStr;
             price.setText(stringList[3]);
@@ -295,6 +295,7 @@ public class Invoice extends AppCompatActivity {
         fillHashMap();
     }
 
+    /** Store the product/client details in the hashmap */
 
     void fillHashMap(){
 
@@ -327,6 +328,7 @@ public class Invoice extends AppCompatActivity {
 
         hsmap.put("bname", b_name.getText().toString());
     }
+    /** Get the layout entities */
 
     void initialiseLayouts() {
         date = (TextView) findViewById(R.id.date_tv);
@@ -372,13 +374,16 @@ public class Invoice extends AppCompatActivity {
 
         selectedObject = new SelectedObject();
     }
+    /** Creation of menu to Edit and create PDF
+     * @param  menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.drawable.edit), getResources().getString(R.string.action_edit)));
         menu.add(0, 2, 2, menuIconWithText(getResources().getDrawable(R.drawable.pdf), getResources().getString(R.string.action_pdf)));
         return true;
     }
-
+    /** On selection of Menu item
+     * @param  item MenuItem */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -440,7 +445,8 @@ public class Invoice extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    /** Get the structure of HashMap
+     * @return Properties */
     private Properties getHashMap(){
 
         Properties prHsmp = new Properties();
@@ -450,6 +456,7 @@ public class Invoice extends AppCompatActivity {
         }
         return prHsmp;
     }
+    /** Creation of text file for storing on Database */
     @SuppressLint("LongLogTag")
     private void createTextFile(){
 
@@ -485,6 +492,7 @@ public class Invoice extends AppCompatActivity {
         }
     }
 
+    /** Upload the Pdf  */
     private void UploadPdf() {
 
         //getting name for the image
@@ -521,7 +529,8 @@ public class Invoice extends AppCompatActivity {
             }
         }
     }
-
+    /** Define menu Icon text
+     * @param title menu button title */
     private CharSequence menuIconWithText(Drawable r, String title) {
 
         r.setBounds(0, 0, r.getIntrinsicWidth(), r.getIntrinsicHeight());
@@ -532,6 +541,7 @@ public class Invoice extends AppCompatActivity {
         return sb;
     }
 
+    /** Creat pdf */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void createPdf(){
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -589,7 +599,8 @@ public class Invoice extends AppCompatActivity {
         // close the document
         document.close();
     }
-
+    /** Load the pdf
+     * @param v,width,height create bitmap view for pdf*/
     public static Bitmap loadBitmapFromView(View v, int width, int height) {
         Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
@@ -633,7 +644,7 @@ public class Invoice extends AppCompatActivity {
             }
         }
     }*/
-
+    /** Clear the activity on clicking Back Press. */
     @Override
     public void onBackPressed() {
         finish();

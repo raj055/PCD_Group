@@ -167,13 +167,15 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
         Intent intent = new Intent(SingleRecordShow.this, DealerList.class);
         startActivity(intent);
     }
-    /** Show option menu Click  */
+    /** Show option menu Click - For Home screen
+     * @param menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    /** On selection of options menu item - to go to home screen
+     * @param item MenuItem */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -208,10 +210,9 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
      *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
-
         Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
-
     }
+
     /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {

@@ -12,10 +12,9 @@ public class UserDataGet {
     private String Email;
     private String AccessType = "";
 
+    public UserDataGet(String email){
 
-    public UserDataGet(String emial){
-
-        this.Email = emial;
+        this.Email = email;
     }
 
     public String getEmail(){return Email;}

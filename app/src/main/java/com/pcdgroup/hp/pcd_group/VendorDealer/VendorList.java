@@ -46,8 +46,9 @@ public class VendorList  extends AppCompatActivity implements CallBackInterface 
     VendorListAdapter adapter;
     List<VendorData> localdata;
     String[] data;
-    HashMap<String,String> hashMap = new HashMap<>();
 
+    //Database Components
+    HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;

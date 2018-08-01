@@ -61,21 +61,28 @@ import java.util.List;
 
 public class VendorProductAdd extends AppCompatActivity implements CallBackInterface {
 
+    //Product list components.
     private ListView listView;
     ProductList_VendorAdepter adapter;
     String[] data;
     ArrayList<String> picNames;
+
     String recordName,EmailHolders;
     List<ProductdataVendor> localEntity;
+
+    //Global variables
     GlobalVariable gblVar;
     String id;
     ProductdataVendor selectedRowLabel;
+
+    //Database query components.
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
     /** Populates Product list for addition of the vendor product.
+     * Show product name and product id.
      * @param savedInstanceState object of passing parameters from the previous intent */
 
     @Override
@@ -83,27 +90,27 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_view);
 
-        /*
-            - add vendor product to show in details
-            - show product to product id
-        */
-
+        //Get current intent
         Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");
 
+        //Global Variables
         gblVar = GlobalVariable.getInstance();
 
+        //Components related to Product Vendor
         localEntity = new ArrayList<ProductdataVendor>();
         recordName = new String("");
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
 
+        //Adapter for view.
         adapter = new ProductList_VendorAdepter(this, localEntity,this);
         listView.setAdapter(adapter);
 
         //Allow network in main thread
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
+        //Database Query
         urlQry = DataGetUrl.VIEW_PRODUCT;
         typeOfQuery = CallType.JSON_CALL;
 
@@ -119,15 +126,19 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
 
         //Adepter
         adapter.notifyDataSetChanged();
-
     }
 
+    /** Options - done menu for
+     * @param menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Menu Inflater
         getMenuInflater().inflate(R.menu.done,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /** On selection of done, add the products selected to the Product List of Vendor     *
+     * @param item MenuItem */
     @SuppressLint("LongLogTag")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -155,21 +166,17 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
 
                     }
                 }
-
+                //
                 String productString = new String ();
-
                 productString = String.valueOf((stringBuilder));
-
                 Intent intent = new Intent();
 
                 intent.putExtra("ProductID", productString);
-
                 setResult(RESULT_OK, intent);
 
                 finish();
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
     /** CallBack Function for processing the Database query result.
@@ -188,6 +195,8 @@ public class VendorProductAdd extends AppCompatActivity implements CallBackInter
 
                 jo=ja.getJSONObject(i);
                 id = jo.getString("id");
+
+                //Fill in the product details.
                 String picname = jo.getString("name");
                 String urlname = jo.getString("photo");
                 String price = jo.getString("price");

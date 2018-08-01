@@ -40,20 +40,29 @@ import java.util.List;
 
 public class Client_Discount extends AppCompatActivity implements CallBackInterface {
 
+    //List components of client/user
     String[] data;
     ListView listView;
     UserAdminAdepter adepter;
-    HashMap<String,String> hashMap = new HashMap<>();
     String currentDicountValue;
+
+    //List User Data
     List<UserDataGet> userDataGets;
     List<UserDataGet> tempStoreDataValues;
+    String discountValue;
+
+    //User Data
     UserDataGet usrDGet;
     Intent intent;
+
+    //Global Variable
     GlobalVariable gblv;
-    String discountValue = "";
+
+    //Database query components.
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    HashMap<String,String> hashMap = new HashMap<>();
 
     /** Lists users / clients for setting the discount value.
      * @param savedInstanceState object of passing parameters from the previous intent */
@@ -105,10 +114,14 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         });
     }
 
+    /** Save the discount value on Clicking the button
+     * @param  v View */
     public void onClickClientDiscount(View v) {
         SaveDiscount();
     }
 
+    /** Selection Box for different Percentage values.
+     * @param  position - position to get the  */
     private void SelectionBox(int position) {
 
         usrDGet = userDataGets.get(position);
@@ -211,12 +224,15 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
         }
         finish();
     }
+    /** Home Button menu
+     * @param  menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    /** Go to the home page based on the type of user.
+     * @param  item MenuItem */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -256,6 +272,8 @@ public class Client_Discount extends AppCompatActivity implements CallBackInterf
                 for (int i=0; i<ja.length();i++){
 
                     jo=ja.getJSONObject(i);
+
+                    //Read the user id and discount value assigned to the user.
                     String email = jo.getString("email_id");
                     String accessType = jo.getString("Discount");
                     UserDataGet e = new UserDataGet(email);

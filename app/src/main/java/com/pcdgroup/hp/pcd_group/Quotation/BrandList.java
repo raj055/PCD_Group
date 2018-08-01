@@ -39,10 +39,13 @@ import java.util.List;
 
 public class BrandList  extends AppCompatActivity implements CallBackInterface {
 
+    //List of brands
     private ListView listView;
     List<Category> categoriesList;
     BrandAdepter adepter;
     String[] data;
+
+    //Database components
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;

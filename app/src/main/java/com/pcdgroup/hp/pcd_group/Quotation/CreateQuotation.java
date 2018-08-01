@@ -51,6 +51,7 @@ import java.util.List;
 
 public class CreateQuotation extends AppCompatActivity implements CallBackInterface {
 
+    //
     private TextView client,textaddres;
     GlobalVariable globalVariable;
     List<Category> categoriesList;
@@ -59,8 +60,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
     SelectedObject selectobject;
 
+    //Database Components
     HashMap<String,String> hashMap = new HashMap<>();
-
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
@@ -97,6 +98,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
     }
 
+    /** On clicking ClientAdd button
+     * @param v View */
     public void onClickQuotationAddClient(View v) {
 
         Intent intent = new Intent(CreateQuotation.this, SelectClient.class);
@@ -104,6 +107,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         startActivityForResult(intent, 1);
     }
 
+    /** On clicking Quotation button
+     * @param v View */
     public void onClickQuotationAddBrand(View v) {
 
         Intent intent = new Intent(CreateQuotation.this, BrandList.class);
@@ -112,6 +117,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
 
     }
 
+    /** On clicking ClientAdd button
+     * @param view View */
     public void onClickNextScreenQuotation(View view) {
         Intent intent = new Intent(CreateQuotation.this, Quotation_product.class);
 
@@ -124,6 +131,8 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
     }
 
+    /** Start another activity to get client address and product and come back
+     * @param  requestCode, data */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -194,12 +203,16 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
         }
     }
 
+    /** On clicking the home option
+     * @param  menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /** Home menu option
+     * @param  item MenuItem */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

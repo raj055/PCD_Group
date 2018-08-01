@@ -104,6 +104,7 @@ public class AccessAdmin extends AppCompatActivity implements CallBackInterface 
         });
     }
 
+    /** After clicking done, save the access type */
     public void onClickDone(View v) {
         SaveAccess();
     }

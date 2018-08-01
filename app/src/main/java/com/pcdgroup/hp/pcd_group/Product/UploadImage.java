@@ -144,10 +144,12 @@ public class UploadImage extends AppCompatActivity {
         }
     }
 
-    public void onClickChoiceImage(View v) {
+
+     public void onClickChoiceImage(View v) {
         showFileChooser();
     }
 
+    /** Add new product. Creates the product entities screen.*/
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -156,6 +158,7 @@ public class UploadImage extends AppCompatActivity {
         return encodedImage;
     }
 
+    /** Get the file path from other activity.*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -177,13 +180,14 @@ public class UploadImage extends AppCompatActivity {
             }
         }
     }
-
+    /** Start activity for getting file.*/
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
+    /** Compresses Image for a lesser size*/
     public void compressImage() {
         if (actualImage == null) {
             showError("Please choose an image!");
@@ -210,9 +214,13 @@ public class UploadImage extends AppCompatActivity {
               });
         }
     }
+
+    /** Error Message*/
     public void showError(String errorMessage) {
         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
+
+    /** Set the compressed Image to the Image */
     private void setCompressedImage() {
         imageView.setImageBitmap(BitmapFactory.decodeFile(compressedImage.getAbsolutePath()));
         bitmap = BitmapFactory.decodeFile(compressedImage.getAbsolutePath());
@@ -220,6 +228,7 @@ public class UploadImage extends AppCompatActivity {
         Log.d("Compressor", "Compressed image save in " + compressedImage.getPath());
     }
 
+    /** Upload Image */
     private void uploadImage(){
 
         //Showing the progress dialog

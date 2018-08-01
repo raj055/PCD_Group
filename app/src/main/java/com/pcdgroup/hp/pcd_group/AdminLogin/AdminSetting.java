@@ -39,42 +39,41 @@ import java.util.List;
 
 public class AdminSetting extends AppCompatActivity implements CallBackInterface {
 
+    //Text edit for the entities of Brand.
     EditText brandname, address, address1, address2,pincode,mobileno,email,website,pan,gst;
     Spinner state, SpinerBrand;
     TextView details;
-
     Boolean CheckEditText;
+
+    //Strings to hold the texts
     String Name_Holder, Address_Hoder,Addressline1_Holder,Addressline2_Holder,Mobileno_Holder,
       State_Holder,Pin_Holder, Emailid_Holder, Website_Holde, Pan_Holde, GST_Holder;
 
-    HashMap<String,String> hashMap = new HashMap<>();
-
+    //Components of brand list.
     View promptUserView;
-
     List<Category> categoriesList;
     BrandAdepter adepter;
     String[] data;
 
+    //Database query related objects
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    HashMap<String,String> hashMap = new HashMap<>();
 
-    /** Updates the admin setting according to the new requirement.
-     * Updation of brand.
+    /** Shows list of brands. Handles additon.
+     * Queries the database for the addition of products.
      * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminsetting);
 
-
-        // add new brand in database and show in spinner list view
-        // All details show to selected item in spinner
-
-
+        //Inflator to add the brand names
         LayoutInflater layoutinflater = LayoutInflater.from(this);
         promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box,null);
 
+        //Get all the brand details.
         brandname = (EditText) promptUserView.findViewById(R.id.brnadname);
         address = (EditText) promptUserView.findViewById(R.id.editText);
         address1 = (EditText) promptUserView.findViewById(R.id.editText2);
@@ -134,7 +133,6 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
 
             }
         });
-
     }
 
     public void onClickBrandSeting(View view) {
@@ -188,6 +186,7 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
                 urlQry = DataGetUrl.ADD_BRAND;
                 typeOfQuery = CallType.POST_CALL;
 
+                //Add all the entities of Brand
                 hashMap.put("name",Name_Holder);
                 hashMap.put("address",Address_Hoder);
                 hashMap.put("address1",Addressline1_Holder);

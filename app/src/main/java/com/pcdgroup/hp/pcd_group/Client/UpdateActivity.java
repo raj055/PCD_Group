@@ -52,13 +52,13 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
         // update all client field
         gblVar = GlobalVariable.getInstance();
 
+        //Assign the EditText of the client details.
         ClientName = (EditText) findViewById(R.id.editName);
         ClientNameL = (EditText) findViewById(R.id.editNamel);
         ClientAddress = (EditText) findViewById(R.id.editAddress);
@@ -100,10 +100,10 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         ClientPin.setText(ClientPinoHolder);
         ClientCompany.setText(ClientComapnyHolder);
         ClientDesignation.setText(ClientDesignationHolder);
-
-
     }
 
+    /** Send Database query after clicking update client.
+     * @param view View */
     public void onClickUpdateClient(View view) {
 
         // Getting data from EditText after button click.
@@ -115,29 +115,17 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
             typeOfQuery = CallType.POST_CALL;
 
             hashMap.put("id", ClientIdHolder);
-
             hashMap.put("first_name", ClientFNameHolder);
-
             hashMap.put("last_name", ClientLNameHolder);
-
             hashMap.put("address", ClientAddressHolder);
-
             hashMap.put("address_line1", ClientAddressline1Holder);
-
             hashMap.put("address_line2", ClientAddressline2Holder);
-
             hashMap.put("mobile_num", ClientMobilenoHolder);
-
             hashMap.put("state", ClientStateHolder);
-
             hashMap.put("country", ClientCountryHolder);
-
             hashMap.put("email_id", ClientEmailHolder);
-
             hashMap.put("pin", ClientPinoHolder);
-
             hashMap.put("company_name", ClientComapnyHolder);
-
             hashMap.put("designation", ClientDesignationHolder);
 
             //Send Database query for inquiring to the database.
@@ -158,7 +146,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         }
     }
 
-    // Method to get existing data from EditText.
+    /** Store the client data into variables. */
     public void GetDataFromEditText() {
 
         ClientFNameHolder = ClientName.getText().toString();
@@ -191,15 +179,16 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         } else {
             CheckEditText = true;
         }
-
     }
-
+    /** Options Menu for returning to Home Screen.
+     * @param  menu Menu - .*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  item MenuItem - .*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -230,6 +219,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         return super.onOptionsItemSelected(item);
     }
 
+    /** On back pressed go to Client details activity */
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(UpdateActivity.this);
@@ -252,6 +242,7 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
     /** CallBack Function for processing the Database query result.
      * @param  response - Response string received while database query.
      *         dataGetUrl - Url queried.*/

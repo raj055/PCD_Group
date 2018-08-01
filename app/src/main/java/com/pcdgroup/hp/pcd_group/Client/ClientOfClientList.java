@@ -86,11 +86,12 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientofclient);
 
+        //Define the action button for registering a client
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Go to the next activity of registering a client.
                 Intent intent = new Intent(ClientOfClientList.this, ClientRegisterActivity.class);
                 startActivity(intent);
                 finish();
@@ -173,10 +174,9 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
             e.printStackTrace();
         }
 
+        //Adapter containing the client list.
         clientAdepter=new ClientAdepter(ClientOfClientList.this,R.layout.cardview1, ClientList);
-
         listView.setAdapter(clientAdepter);
-
         clientAdepter.notifyDataSetChanged();
     }
     /** Releases the memory of all the components after intent finishes. */

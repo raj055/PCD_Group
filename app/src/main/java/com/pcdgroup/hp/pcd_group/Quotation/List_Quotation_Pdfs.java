@@ -34,11 +34,15 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
     QuotationAdepter adapter;
     List<pdf2> localPdf;
     String[] data;
+
+    //Database components.
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Create invoice pdf according to the given information of quotatio.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

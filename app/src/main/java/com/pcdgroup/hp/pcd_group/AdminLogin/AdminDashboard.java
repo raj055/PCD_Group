@@ -56,13 +56,17 @@ import java.util.TimerTask;
  * @description Main Activity to after login. Show in all field to Admin, Manager,client and user.
  */
 
-public class AdminDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AdminDashboard extends AppCompatActivity implements
+  NavigationView.OnNavigationItemSelectedListener {
 
+    //Components for Admin Dashboard
     public static String EmailHolder = "";
     Intent intent;
     private DrawerLayout drawer;
-    GlobalVariable gblv;
     Context context;
+
+    //Global variable
+    GlobalVariable gblv;
 
     boolean doubleBackToExitPressedOnce = false;
 
@@ -252,7 +256,6 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     }
 
     /** When Back button is pressed - if drawer is open or close     */
-
     @Override
     public void onBackPressed() {
 
@@ -264,6 +267,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
         }
     }
 
+    /** Double click on the back pressed */
     private void DoubleClick() {
 
         if (doubleBackToExitPressedOnce) {
@@ -282,12 +286,12 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
             }
         }, 2000);
     }
+
     /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
         drawer = null;
-
     }
 }

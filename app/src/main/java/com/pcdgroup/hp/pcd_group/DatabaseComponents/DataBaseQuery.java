@@ -47,6 +47,8 @@ public class DataBaseQuery {
   RequestQueue requestQueue ;
   DataGetUrl dataGetUrl;
 
+  /** Query the Database on the basis of url and information in hashmap
+   * @param hashMapRef, urlqry - all the database related components */
   public DataBaseQuery(HashMap<String, String> hashMapRef,
                             DataGetUrl urlQry,
                             CallType typeOfQuery,
@@ -73,6 +75,7 @@ public class DataBaseQuery {
 
   }
 
+  /** Decide on the type of query for the database */
   public void PrepareForQuery(){
     switch (queryType){
 

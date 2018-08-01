@@ -107,7 +107,7 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
         };
     }
 
-     class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView TextViewfName;
         public TextView TextViewlName;
@@ -126,11 +126,10 @@ public class ClientRecyclerViewAdapter extends RecyclerView.Adapter<ClientRecycl
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // send selected contact in callback
-                    listener.onDataSelected(dataListFiltered.get(getAdapterPosition()));
+                // send selected contact in callback
+                listener.onDataSelected(dataListFiltered.get(getAdapterPosition()));
                 }
             });
-
         }
     }
 

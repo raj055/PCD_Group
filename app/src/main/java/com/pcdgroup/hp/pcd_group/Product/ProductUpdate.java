@@ -43,13 +43,16 @@ import java.util.HashMap;
 
 public class ProductUpdate extends AppCompatActivity implements CallBackInterface {
 
+    //Components for the
     String HttpURL = "http://dert.co.in/gFiles/updateproductdetails.php";
     ProgressDialog progressDialog;
     String finalResult;
     Boolean CheckEditText;
-    HashMap<String,String> hashMap = new HashMap<>();
+
     HttpParse httpParse = new HttpParse();
     ImageView imageView_Upload;
+
+    //Edit Text and variables for all product details.
     EditText productName, productPrice,productMinimum,productHsncode,productBrand,productDescription,
             productStock, productRecordlevel, productgst;
     String productIdHolder,productImageHolder,productNameHolder,productPriceHolder,productMinimumHolder,productHsncodeHolder,
@@ -62,13 +65,14 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
 
     private int PICK_IMAGE_REQUEST = 1;
 
+    //Database Query Components.
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    HashMap<String,String> hashMap = new HashMap<>();
 
     /** Update the product details.
      *  @param savedInstanceState object of passing parameters from the previous intent */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +109,7 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
         productStockHolder = getIntent().getStringExtra("stock");
         productRecordlevelHolder = getIntent().getStringExtra("reorderlevel");
         productGstHolder = getIntent().getStringExtra("gst");
-        
+
         // Setting Received Student Name, Phone Number, Class into EditText.
 //        imageView_Upload.setImageBitmap(bitmap);
         productName.setText(productNameHolder);
@@ -232,9 +236,12 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
 
     }
 
-    // Method to Update Student Record.
-    public void productRecordUpdate( String productIdHolder,String ClientImageHolder, String productNameHolder, String productPriceHolder, String productMinimumHolder,
-                                    String productHsncodeHolder, String productBeandHolder,
+    /** Update product Record.
+    * @param productIdHolder - all product details */
+    public void productRecordUpdate( String productIdHolder,String ClientImageHolder,
+                                     String productNameHolder, String productPriceHolder,
+                                     String productMinimumHolder, String productHsncodeHolder,
+                                     String productBeandHolder,
                                     String productDescriptionHolder, String productStockHolder,
                                     String productRecordlevelHolder, String productGstHolder){
 
@@ -261,11 +268,7 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
             @Override
             protected String doInBackground(String... params) {
 
-
-
                 finalResult = httpParse.postRequest(hashMap, HttpURL);
-
-
                 return finalResult;
             }
         }
@@ -277,13 +280,15 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
                 productDescriptionHolder, productStockHolder, productRecordlevelHolder,
                 productGstHolder);
     }
-
+    /** Home Button menu
+     * @param  menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    /** Go to the home page based on the type of user.
+     * @param  item MenuItem */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -318,6 +323,7 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
         return super.onOptionsItemSelected(item);
     }
 
+    /** Go to earlier activity on Back Pressed. */
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(ProductUpdate.this);

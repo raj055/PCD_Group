@@ -32,23 +32,25 @@ import java.util.HashMap;
  */
 public class ProductSingleRecord extends AppCompatActivity implements CallBackInterface {
 
-    HashMap<String,String> hashMap = new HashMap<>();
-    HashMap<String,String> ResultHash = new HashMap<>();
-    String FinalJSonObject ;
+    //Product Details Entities
     String IdHolder,NameHolder, PriceHolder, MinimumHolder,HsnHolder,BrandHolder,DescriptionHolder,
             StockHolder, RecordlevelHolder,GstHolder;
     Button UpdateButton, DeleteButton;
 
+    //TextView for the product entities
     private TextView TextViewName, TextViewPrice, TextviewMinimum, TextviewHsn, TextviewBrand,
             TextviewDescription, TextviewStock, TextViewRecordlevel, TextviewGst;
 
+    //Variables to hold required entities
     String EmailHolders;
     Intent intent;
     GlobalVariable gblVar;
 
+    //Database Components
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    HashMap<String,String> hashMap = new HashMap<>();
 
     /** Product single record display activity to enable editting and updation.
      * @param savedInstanceState object of passing parameters from the previous intent */
@@ -67,6 +69,7 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         final Intent intent = getIntent();
         EmailHolders = intent.getStringExtra("email");
 
+        //Variables filled with the
         TextViewName = (TextView) findViewById(R.id.p_name) ;
         TextViewPrice = (TextView) findViewById(R.id.p_price) ;
         TextviewMinimum = (TextView) findViewById(R.id.p_minimum) ;
@@ -137,6 +140,7 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
             @Override
             public void onClick(View view) {
 
+                //Send Database query for the deletion of products.
                 urlQry = DataGetUrl.DELETE_PRODUCTS;
                 typeOfQuery = CallType.POST_CALL;
 
@@ -158,6 +162,7 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
             }
         });
 
+        //Set visibility on the basis of the type of user.
         if (gblVar.AccessType.contains("Manager")){
             UpdateButton.setVisibility(View.INVISIBLE);
             DeleteButton.setVisibility(View.INVISIBLE);
@@ -171,13 +176,16 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         }
 
     }
-
+    /** Home Button menu
+     * @param  menu Menu */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /** Go to the home page based on the type of user.
+     * @param  item MenuItem */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

@@ -29,15 +29,20 @@ import java.util.HashMap;
 
 public class Add_Dealer extends Fragment implements CallBackInterface {
 
+    //Widgets for addition of Dealor
     EditText name,address,area,mobileno,state,email,organisation,gstno,designation;
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Designation_Holder;
     Boolean CheckEditText ;
-    HashMap<String,String> hashMap = new HashMap<>();
+
+    //Globals
     GlobalVariable globalVariable;
+
+    //Database components.
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    HashMap<String,String> hashMap = new HashMap<>();
 
     @Nullable
     @Override
@@ -65,6 +70,7 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
         return view;
     }
 
+    /** Add Dealor on selection DealorAdd Button */
     public void onClickDealerAdd(View view) {
 
         // Checking whether EditText is Empty or Not.
@@ -75,6 +81,7 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
             urlQry = DataGetUrl.ADD_DEALER;
             typeOfQuery = CallType.POST_CALL;
 
+            //Fill the hasmap
             hashMap.put("name",Name_Holder);
             hashMap.put("address",Name_Holder);
             hashMap.put("area",Area_Holder);
@@ -104,6 +111,7 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
 
     }
 
+    /** Check whether Edit Text is empty or not. */
     public void CheckEditTextIsEmptyOrNot(){
 
         //Checking all EditText Empty or Not.
@@ -117,6 +125,7 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
         Gst_Holder = gstno.getText().toString();
         Designation_Holder = designation.getText().toString();
 
+        //Allow the Apostrophe in the text so that the text is not rejected.
         Name_Holder = Name_Holder.replace("'","''");
         Address_Hoder = Address_Hoder.replace("'","''");
         Area_Holder = Area_Holder.replace("'","''");
@@ -125,6 +134,7 @@ public class Add_Dealer extends Fragment implements CallBackInterface {
         Organisation_Holder = Organisation_Holder.replace("'","''");
         Designation_Holder = Designation_Holder.replace("'","''");
 
+        //Set the boolean variable with the status value.
         if(TextUtils.isEmpty(Name_Holder) || TextUtils.isEmpty(Email_Holder) || TextUtils.isEmpty(Mobileno_Holder))
         {
             CheckEditText = false;

@@ -41,10 +41,13 @@ import java.util.List;
 
 public class FinishedOrder extends AppCompatActivity implements CallBackInterface {
 
+    //PO - list components.
     ListView listView;
     FinishedOrderList_Adepter adapter;
     List<PurchaseData> localPdf;
     String[] data;
+
+    //Database Components
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -58,10 +61,8 @@ public class FinishedOrder extends AppCompatActivity implements CallBackInterfac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
 
-
         // list of finish order
         // show to finish order
-
 
         listView = (ListView) findViewById(R.id.lV_FinishedOrder);
 

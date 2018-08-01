@@ -59,39 +59,41 @@ import java.util.List;
 public class ClientDetailsActivity extends AppCompatActivity
     implements CallBackInterface , RecyclerViewAdapter.DataAdapterListener {
 
-    HashMap<String, String> hashMap = new HashMap<>();
-
+    //Call back for Client
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
 
+    //
     List<DataAdapter> DataAdapters;
-
     RecyclerView recyclerView;
-
     RecyclerView.LayoutManager recyclerViewlayoutManager;
-
     RecyclerViewAdapter mAdepter;
+    int RecyclerViewClickedItemPOS;
+
 
     View ChildView;
 
     SearchView searchView;
 
-    int RecyclerViewClickedItemPOS;
 
+
+    //Database components
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
+    HashMap<String, String> hashMap = new HashMap<>();
 
+    /** Queries the database and enlists the clients/users.
+     * Enables addition of new client.
+     * @param savedInstanceState object of passing parameters from the previous intent */
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientdetails);
 
-        // client details to display client list
-        // add new client button to add new
-
-
+        //Adapter and Recycler view to populate and show the clients.
         DataAdapters = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView1);
         mAdepter = new RecyclerViewAdapter(this, DataAdapters, this);
@@ -101,18 +103,17 @@ public class ClientDetailsActivity extends AppCompatActivity
         // white background notification bar
         whiteNotificationBar(recyclerView);
 
+        //Recycler View Components
         recyclerViewlayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewlayoutManager);
-
         recyclerView.setAdapter(mAdepter);
 
+        //Call back to execute on clicking the client items.
         actionModeCallback = new ActionModeCallback();
 
         // JSON data web call function call from here.
         urlQry = DataGetUrl.GET_CLIENT_DETAILS;
-
         typeOfQuery = CallType.JSON_CALL;
-
 
         //Send Database query for inquiring to the database.
         dataBaseQuery = new DataBaseQuery(hashMap,
@@ -164,6 +165,7 @@ public class ClientDetailsActivity extends AppCompatActivity
                     intent.putExtra("email_id", cldata.getEmailid());
                     intent.putExtra("designation", cldata.getDesignation());
 
+                    //Start new Acitivity- show a single client.
                     startActivity(intent);
                     finish();
 
@@ -184,12 +186,16 @@ public class ClientDetailsActivity extends AppCompatActivity
         });
     }
 
+    /** Go to new client addition intent on clicking the add button.
+     * @param v View object of passing parameters from the previous intent */
     public void onClickFloatingAddNewClient(View v) {
 
         Intent intent = new Intent(ClientDetailsActivity.this,ClientRegisterActivity.class);
         startActivity(intent);
     }
 
+    /** Creation of Options Menu.
+     * @param menu Menu for creation of search option */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -399,6 +405,7 @@ public class ClientDetailsActivity extends AppCompatActivity
                         mAdepter.removeData(selectedItemPositions.get(i));
                     }
 
+                    //Database query for getting the client details.
                     urlQry = DataGetUrl.DELETE_MULTIPLE_CLIENT;
                     typeOfQuery = CallType.JSON_CALL;
 

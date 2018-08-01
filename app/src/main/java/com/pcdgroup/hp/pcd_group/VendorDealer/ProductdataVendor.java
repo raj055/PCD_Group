@@ -11,7 +11,9 @@ public class ProductdataVendor {
 
     private String id,title,thumbnailUrl,description,price,minimum,hsncode,gst,stock,reorderlevel;
 
-    public ProductdataVendor(String id, String name, String thumbnailUrl, String price, String quantity,String hsncode,String gst,String description,String stock,String reorderlevel) {
+    public ProductdataVendor(String id, String name, String thumbnailUrl, String price,
+                             String quantity,String hsncode,String gst,String description,
+                             String stock,String reorderlevel) {
         this.id = id;
         this.title = name;
         this.price = price;

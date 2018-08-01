@@ -61,7 +61,7 @@ public class UserAdminAdepter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_user, null);
 
-        //Assign Id'S
+        //Assign Id's
         TextView email = (TextView) convertView.findViewById(R.id.title);
 
         // getting movie data for the row

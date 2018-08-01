@@ -31,14 +31,20 @@ import java.util.HashMap;
 
 public class ClientRegisterActivity extends AppCompatActivity implements CallBackInterface {
 
+    //EditText for Client details
     EditText fname, lname, address, addressline1, addressline2, mobileno, country, company_name,
             pin, email_id, password, designation;
     Spinner type, state;
+
+    //String to store the text for
     String FName_Holder, LName_Holder, type_Holder, Address_Hoder, Addressline1_Holder, Addressline2_Holder, Mobileno_Holder,
             State_Holder, Country_Holder, CompanyName_Holder, Pin_Holder, Emailid_Holder, Password_Holder, Designation_Holder,
             UserClient_Holder;
 
+    //Check edit text
     Boolean CheckEditText;
+
+    //Database query components.
     HashMap<String, String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -47,7 +53,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
     Intent intent;
     GlobalVariable globalVariable;
 
-    /** Populates the screen includes the list of clients added by the logged in user/client.
+    /** Populates the screen for client registration. Add user/client on registration.
      * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +62,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
 
         globalVariable = GlobalVariable.getInstance();
 
-        //Assign Id'S
+        //All the client registration components.
         fname = (EditText) findViewById(R.id.et_fname);
         lname = (EditText) findViewById(R.id.et_lname);
         type = (Spinner) findViewById(R.id.spinner);
@@ -73,6 +79,9 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         designation = (EditText) findViewById(R.id.et_designation);
     }
 
+    /** On clicking the button register, send registration details.
+     * Send database query for adding the registration details.
+     * @param view View*/
     public void onClickRegister(View view) {
 
         // Checking whether EditText is Empty or Not.
@@ -85,6 +94,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
 
             typeOfQuery = CallType.POST_CALL;
 
+            //Add the parameters to hashmap for sending to database.
             hashMap.put("first_name", FName_Holder);
             hashMap.put("last_name", LName_Holder);
             hashMap.put("type", type_Holder);
@@ -115,7 +125,7 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
             Toast.makeText(ClientRegisterActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
         }
     }
-
+    /** Check if all the fields of registration are filled. */
     public void CheckEditTextIsEmptyOrNot() {
 
         //Checking all EditText Empty or Not.
@@ -155,11 +165,16 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
         }
     }
 
+    /** Go back to the client details activity on back press. */
     @Override
     public void onBackPressed() {
+
+        //Show the dialog and recheck if user wants to exit.
         final AlertDialog.Builder builder = new AlertDialog.Builder(ClientRegisterActivity.this);
         builder.setMessage("Are You Sure Want To Exit Register ?");
         builder.setCancelable(true);
+
+        //Check the type of user logged in and go to the relevant activity.
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -176,11 +191,14 @@ public class ClientRegisterActivity extends AppCompatActivity implements CallBac
 
                 }
 
+                //Start the next activity.
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
             }
         });
+
+        //Build the dialog.
         builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

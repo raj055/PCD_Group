@@ -44,20 +44,23 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     RelativeLayout rellay1,rellay2;
     Handler handler = new Handler();
 
+    //Login details widgets
     EditText Email, Password;
     String PasswordHolder, EmailHolder;
     Boolean CheckEditText ;
-    HashMap<String,String> hashMap = new HashMap<>();
-    HttpParse httpParse = new HttpParse();
     public static final String UserEmail = "";
-    public static final String ClientDiscount = "";
-    boolean shutdown = false;
+
+    //Globals
     GlobalVariable gblVar;
 
+    //Shutdown status
+    boolean shutdown = false;
+
+    //Database Components
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
-
+    HashMap<String,String> hashMap = new HashMap<>();
     Intent intent;
 
     Runnable runnable;
@@ -156,13 +159,13 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
             Toast.makeText(MainActivity.this, "Please fill all form fields.", Toast.LENGTH_LONG).show();
         }
     }
-
+    /** Go to the register activity on clicking the register button */
     public void onClickRegister(View view) {
 
         Intent intent = new Intent(MainActivity.this,UserRegistarActivity.class);
         startActivity(intent);
     }
-
+    /** Prepare the variables for querying the Database. */
     private void QueryTheDataBase(){
 
         urlQry = DataGetUrl.USER_LOGIN;
@@ -183,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         dataBaseQuery.PrepareForQuery();
 
     }
+    /** Save the required parameters in Shared Preferences. */
     private void saveUsername() {
         String username = Email.getText().toString();
         String userpassword =  Password.getText().toString();
@@ -190,13 +194,13 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         launchMainActivity();
     }
-
+    /** Save the required parameters in Shared Preferences. */
     private void launchMainActivity() {
         Intent intent = new Intent(MainActivity.this, AdminDashboard.class);
         startActivity(intent);
         finish();
     }
-
+    /** Check if the entered values are empty. */
     public void CheckEditTextIsEmptyOrNot(){
 
         EmailHolder = Email.getText().toString();
@@ -212,6 +216,9 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         }
     }
 
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
@@ -283,7 +290,8 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         }
 
     }
-
+    /** See if app has access to internet .
+     * @param  context */
     public boolean isConnected(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -298,7 +306,8 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         } else
             return false;
     }
-
+    /** Dialog Box to check if the internet is working.
+     * @param  c Context*/
     public android.support.v7.app.AlertDialog.Builder buildDialog(Context c) {
 
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(c);

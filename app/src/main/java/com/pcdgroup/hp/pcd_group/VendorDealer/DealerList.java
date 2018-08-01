@@ -45,12 +45,15 @@ import java.util.List;
 
 public class DealerList extends AppCompatActivity implements CallBackInterface {
 
+    //Dealer List components.
     ListView listView;
     DealerListAdapter adapter;
     List<DealerData> localdata;
     String[] data;
-    HashMap<String,String> hashMap = new HashMap<>();
     String emailId;
+
+    //Database Components.
+    HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;

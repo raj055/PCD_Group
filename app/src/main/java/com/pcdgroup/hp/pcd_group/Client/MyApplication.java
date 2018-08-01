@@ -16,7 +16,6 @@ import com.squareup.leakcanary.RefWatcher;
  * @class_name MyApplication
  * @description requestQueue show
  */
-
 public class MyApplication extends Application {
 
     public static final String TAG = MyApplication.class

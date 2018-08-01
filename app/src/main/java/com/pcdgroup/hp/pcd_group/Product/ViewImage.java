@@ -51,6 +51,7 @@ import java.util.List;
 
 public class ViewImage extends AppCompatActivity implements CallBackInterface {
 
+    //Components of the Products view
     ListView listView;
     CustomListAdapter adapter;
     String[] data;
@@ -58,7 +59,11 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
     String recordName,EmailHolders;
     List<Entity> localEntity;
     SearchView searchView;
+
+    //Global Variables
     GlobalVariable gblVar;
+
+    //Database Components
     HashMap<String,String> hashMap = new HashMap<>();
     DataGetUrl urlQry;
     DataBaseQuery dataBaseQuery;
@@ -92,11 +97,13 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
 
         gblVar = GlobalVariable.getInstance();
 
+
         localEntity = new ArrayList<Entity>();
         recordName = new String("");
         picNames = new ArrayList<String>();
         listView = (ListView) findViewById(R.id.lstv);
 
+        //Find the access type of the user and set visibility of the addition button.
         if (gblVar.AccessType.contains("Manager")){
             fab.setVisibility(View.INVISIBLE);
             listView.setClickable(false);
@@ -142,6 +149,7 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
 
                 Entity productdata = localEntity.get(position);
 
+                //Send the data to the next intent.
                 intent.putExtra("id",productdata.getId());
                 intent.putExtra("name",productdata.getTitle());
                 intent.putExtra("price", productdata.getPrice());
@@ -155,6 +163,7 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
 
                 intent.putExtra("email",EmailHolders);
 
+                //Start the next activity.
                 startActivityForResult(intent, 2);
                 finish();
 
@@ -163,6 +172,7 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
 
     }
 
+    /** Get the product details after starting the details of the .*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

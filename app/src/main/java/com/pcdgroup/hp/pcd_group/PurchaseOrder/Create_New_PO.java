@@ -32,16 +32,20 @@ import java.util.ArrayList;
 
 public class Create_New_PO extends AppCompatActivity {
 
+    //Widgets for storing different entities.
     Button selectVendor,selectProduct,CreatePurchaseOrder;
     TextView VendorName;
     ListView listView;
     EditText AddQuantity;
     LinearLayout linearVendor,linearProduct;
-    GlobalVariable globalVariable;
+
+    //List of Products - Components
     ProductListAdapter itemsAdapter;
     public ArrayList<ProductInfoAdapter> items = new ArrayList<ProductInfoAdapter>();
     public ArrayList<String[]> PrdList = new ArrayList<String[]>();
 
+    //Global variables
+    GlobalVariable globalVariable;
     /** Creates a purchase order after selecting a vendor and products.
      * @param savedInstanceState object of passing parameters from the previous intent */
 
@@ -148,6 +152,7 @@ public class Create_New_PO extends AppCompatActivity {
         });
     }
 
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
