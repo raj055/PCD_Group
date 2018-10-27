@@ -66,15 +66,14 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Update the product details.
+     *  @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_product);
 
-        /*
-            - update product
-            - update image
-        */
 
         gblVar = GlobalVariable.getInstance();
 
@@ -341,12 +340,14 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
 
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

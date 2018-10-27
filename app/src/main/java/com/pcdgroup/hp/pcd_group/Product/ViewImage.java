@@ -64,15 +64,17 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Creates and shows list of products.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_image_layout);
 
-        /*
-            - show image in list view
-            - product details shoe in card view
-        */
+
+            // show image in list view
+            // product details shoe in card view
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -274,7 +276,9 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
             getWindow().setStatusBarColor(Color.WHITE);
         }
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -308,7 +312,7 @@ public class ViewImage extends AppCompatActivity implements CallBackInterface {
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

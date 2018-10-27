@@ -54,15 +54,15 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Show single client record selected for editing.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_record);
 
-        /*
-            - update button to update record and delete record
-            - selected record details show
-        */
+        //update button to update record and delete record
+        //selected record details show
 
         gblVar = GlobalVariable.getInstance();
 
@@ -203,14 +203,16 @@ public class SingleRecordShow extends AppCompatActivity implements CallBackInter
 
         return super.onOptionsItemSelected(item);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
 
         Toast.makeText(SingleRecordShow.this, response.toString(), Toast.LENGTH_LONG).show();
 
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

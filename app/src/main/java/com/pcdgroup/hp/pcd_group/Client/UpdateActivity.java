@@ -47,15 +47,16 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Updation of the client details including the entities of name, address, email, etc.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
-        /*
-            - update all client field
-        */
-
+        // update all client field
         gblVar = GlobalVariable.getInstance();
 
         ClientName = (EditText) findViewById(R.id.editName);
@@ -251,12 +252,14 @@ public class UpdateActivity extends AppCompatActivity implements CallBackInterfa
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response, DataGetUrl dataGetUrl) {
         Toast.makeText(UpdateActivity.this, response.toString(), Toast.LENGTH_LONG).show();
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

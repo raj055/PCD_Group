@@ -50,15 +50,18 @@ public class FinishedOrder extends AppCompatActivity implements CallBackInterfac
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Populates the screen includes the list of clients added by the logged in user/client.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
 
-        /*
-            - list of finish order
-            - show to finish order
-        */
+
+        // list of finish order
+        // show to finish order
+
 
         listView = (ListView) findViewById(R.id.lV_FinishedOrder);
 
@@ -91,7 +94,9 @@ public class FinishedOrder extends AppCompatActivity implements CallBackInterfac
         });
 
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -119,7 +124,7 @@ public class FinishedOrder extends AppCompatActivity implements CallBackInterfac
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

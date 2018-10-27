@@ -42,16 +42,18 @@ public class Create_New_PO extends AppCompatActivity {
     public ArrayList<ProductInfoAdapter> items = new ArrayList<ProductInfoAdapter>();
     public ArrayList<String[]> PrdList = new ArrayList<String[]>();
 
+    /** Creates a purchase order after selecting a vendor and products.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_po);
 
-        /*
-            - select vendor in vendor list
-            - select product in product list
-            - create purchase order to click button
-        */
+
+        // select vendor in vendor list
+        // select product in product list
+        // create purchase order to click button
 
         globalVariable = GlobalVariable.getInstance();
 
@@ -207,7 +209,7 @@ public class Create_New_PO extends AppCompatActivity {
 
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

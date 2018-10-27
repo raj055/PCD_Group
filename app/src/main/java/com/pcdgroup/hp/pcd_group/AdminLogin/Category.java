@@ -7,7 +7,6 @@ package com.pcdgroup.hp.pcd_group.AdminLogin;
  * @class_name Category
  * @description Holds all the entities (related data) of client / users
  */
-
 public class Category {
 
 	String name;

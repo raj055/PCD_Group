@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
     Runnable runnable;
 
+    /** Populates the Login screen including the splash screen.
+     * Queries the Database for the verification of the user details.
+     * Stores the details in SharedPreferences.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -311,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
         return builder;
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

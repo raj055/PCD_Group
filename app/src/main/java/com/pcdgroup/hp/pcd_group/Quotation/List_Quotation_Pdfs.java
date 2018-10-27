@@ -85,7 +85,9 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
         });
 
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -114,7 +116,7 @@ public class List_Quotation_Pdfs extends AppCompatActivity implements CallBackIn
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

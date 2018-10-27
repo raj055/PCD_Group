@@ -54,15 +54,18 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Enlists the orders of all the users/dealors for the admin to see.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderlist);
 
-        /*
-            - display all order list
-            - create order list to bill
-        */
+
+        //    - display all order list
+        //    - create order list to bill
+
 
         httpParse = new HttpParse();
 
@@ -135,7 +138,9 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -169,7 +174,7 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -56,15 +56,14 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Registers new user. Adds users to database.
+     * Confirms mobile number by sending OTP.
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registar);
-
-         /*
-            - new user register in database
-            - conform this user send otp to user email and mobile no
-        */
 
         //Assign Id'S
         First_Name = (EditText)findViewById(R.id.editTextF_Name);
@@ -233,7 +232,7 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(UserRegistarActivity.this,response.toString(), Toast.LENGTH_LONG).show();
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

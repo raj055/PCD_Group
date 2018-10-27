@@ -121,15 +121,12 @@ public class Invoice extends AppCompatActivity {
     GlobalVariable globalVariable;
     SelectedObject selectedObject;
 
+    /** Create invoice pdf according to the given information of quotatio.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice);
-
-        /*
-            - show pdf of invoice
-            - send to server and create invoice to quotation
-        */
 
         initialiseLayouts();
 
@@ -642,6 +639,7 @@ public class Invoice extends AppCompatActivity {
         finish();
     }
 
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

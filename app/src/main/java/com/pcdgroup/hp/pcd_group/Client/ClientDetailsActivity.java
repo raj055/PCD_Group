@@ -88,10 +88,9 @@ public class ClientDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientdetails);
 
-        /*
-            - client details to display client list
-            - add new client button to add new
-         */
+        // client details to display client list
+        // add new client button to add new
+
 
         DataAdapters = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView1);

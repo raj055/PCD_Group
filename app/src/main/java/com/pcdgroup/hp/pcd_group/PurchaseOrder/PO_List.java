@@ -58,15 +58,15 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Enlists the Purchase orders.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_po_list);
 
-        /*
-            - list of purchase order
-            - create new purchase order
-        */
+        //    - list of purchase order
+        //    - create new purchase order
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,9 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
             }
         });
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         try {
@@ -133,7 +135,7 @@ public class PO_List extends AppCompatActivity implements CallBackInterface {
             e.printStackTrace();
         }
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -50,15 +50,17 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Product single record display activity to enable editting and updation.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.productrecord_activity);
 
-        /*
-            - display single record
-            - this record update and delete button show
-        */
+
+        // display single record
+        // this record update and delete button show
+
 
         gblVar = GlobalVariable.getInstance();
 
@@ -207,13 +209,16 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         }
         return super.onOptionsItemSelected(item);
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
 
         Toast.makeText(ProductSingleRecord.this, response.toString(), Toast.LENGTH_LONG).show();
 
     }
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

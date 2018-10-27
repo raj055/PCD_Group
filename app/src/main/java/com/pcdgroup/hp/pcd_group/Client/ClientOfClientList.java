@@ -78,14 +78,13 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
     CallType typeOfQuery;
     HashMap<String, String> hashMap = new HashMap<>();
 
+    /** Populates the screen includes the list of clients added by the logged in user/client.     *
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientofclient);
-
-        /*
-            - client add new client show data
-        */
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +96,6 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
                 finish();
             }
         });
-
 
         listView = (ListView) findViewById(R.id.listView);
 
@@ -130,7 +128,9 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
         dataBaseQuery.PrepareForQuery();
 
     }
-
+    /** CallBack Function for processing the Database query result.
+     * @param  response - Response string received while database query.
+     *         dataGetUrl - Url queried.*/
     @Override
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         JSONArray jsonArray = null;
@@ -179,11 +179,7 @@ public class ClientOfClientList extends AppCompatActivity implements CallBackInt
 
         clientAdepter.notifyDataSetChanged();
     }
-    /**
-     * @name  onDestroy
-     *
-     * @description Releases the memory of all the components after intent finishes.
-     */
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();

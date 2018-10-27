@@ -59,15 +59,18 @@ public class AdminSetting extends AppCompatActivity implements CallBackInterface
     DataBaseQuery dataBaseQuery;
     CallType typeOfQuery;
 
+    /** Updates the admin setting according to the new requirement.
+     * Updation of brand.
+     * @param savedInstanceState object of passing parameters from the previous intent */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminsetting);
 
-        /*
-            - add new brand in database and show in spinner list view
-            - All details show to selected item in spinner
-        */
+
+        // add new brand in database and show in spinner list view
+        // All details show to selected item in spinner
+
 
         LayoutInflater layoutinflater = LayoutInflater.from(this);
         promptUserView = layoutinflater.inflate(R.layout.brand_dialog_box,null);

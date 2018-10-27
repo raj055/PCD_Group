@@ -99,15 +99,18 @@ public class ViewPurchaseOrder extends AppCompatActivity {
     private int month;
     private int day;
 
+    /** Purchase Orders list -
+     * @param savedInstanceState object of passing parameters from the previous intent */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_purchaseorder);
 
-        /*
-            - create purchase order pdf in memory
-            - send to server a new created purchase order
-        */
+
+        // create purchase order pdf in memory
+        // send to server a new created purchase order
+
 
         initialiseLayouts();
 
@@ -541,7 +544,7 @@ public class ViewPurchaseOrder extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
-
+    /** Releases the memory of all the components after intent finishes. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
