@@ -61,8 +61,7 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
 
         selectedObject = new SelectedObject();
 
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("Addresses");
 
         //Check data
        /* String brandName = selectedObject.brandAddress.get(0);
@@ -117,8 +116,7 @@ public class Quotation_product extends AppCompatActivity implements CallBackInte
             args.putSerializable("productID",(Serializable) Items);
             intent.putExtra("BUNDLE",args);
 
-            intent.putExtra("ClientInfo", (Parcelable) selectedObject);
-            intent.putExtra("SelectedBrand", (Parcelable) selectedObject);
+            intent.putExtra("Addresses", (Parcelable) selectedObject);
             startActivity(intent);
             overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
         }

@@ -1,9 +1,11 @@
 package com.pcdgroup.hp.pcd_group.AdminLogin;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -151,6 +153,7 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
     }
     /** On Clicking the navigation items, the next activity to be done.     *
      * @param item MenuItem - Selected item */
+    @SuppressLint("ApplySharedPref")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -189,6 +192,10 @@ public class AdminDashboard extends AppCompatActivity implements NavigationView.
 
             case R.id.nav_logout:
                 intent = new Intent(getApplicationContext(),MainActivity.class);
+                SharedPreferences preferences =getSharedPreferences("userinfo",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
                 startActivity(intent);
                 finish();
                 break;

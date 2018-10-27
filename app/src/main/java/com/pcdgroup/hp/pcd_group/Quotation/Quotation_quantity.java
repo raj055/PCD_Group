@@ -71,8 +71,8 @@ public class Quotation_quantity extends AppCompatActivity implements CallBackInt
             lstPrd.add(m);
         }
 
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("Addresses");
+
 
         adapter = new QuontityAdepter(this, lstPrd, this);
         listView.setAdapter(adapter);
@@ -108,8 +108,7 @@ public class Quotation_quantity extends AppCompatActivity implements CallBackInt
         args.putSerializable("productID",(Serializable) QuantityItems);
         intent.putExtra("BUNDLE",args);
 
-        intent.putExtra("ClientInfo", (Parcelable) selectedObject);
-        intent.putExtra("SelectedBrand", (Parcelable) selectedObject);
+        intent.putExtra("Addresses", (Parcelable) selectedObject);
 
         startActivity(intent);
         overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);

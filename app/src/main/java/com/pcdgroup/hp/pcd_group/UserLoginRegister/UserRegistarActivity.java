@@ -100,7 +100,7 @@ public class UserRegistarActivity extends AppCompatActivity implements CallBackI
         message_Holder = Integer.toString(Rnumber);
 
         String email = Email.getText().toString().trim();
-        String subject = getResources().getString(R.string.emailsend);
+        String subject = getResources().getString(R.string.emailSend);
         String message = message_Holder + getResources().getString(R.string.otp_msg);
 
         //Creating SendMail object
