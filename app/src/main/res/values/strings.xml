@@ -93,7 +93,7 @@
     <string name="forward">Forward</string>
 
     // send email
-    <string name="emailsend">PCD &amp; DERT \'OTP Registration code'</string>
+    <string name="emailSend">PCD DART OTP Registration code</string>
     <string name="otp_msg"> \u0020 is your OTP Password For Register PCD_GROUP User</string>
 
     // drawer menu change item color

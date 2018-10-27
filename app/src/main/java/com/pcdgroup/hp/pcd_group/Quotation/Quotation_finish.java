@@ -67,8 +67,7 @@ public class Quotation_finish extends AppCompatActivity {
 
         selectedObject = new SelectedObject();
 
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("Addresses");
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
@@ -162,9 +161,7 @@ public class Quotation_finish extends AppCompatActivity {
         Bundle args = new Bundle();
 
         //customer
-        intent.putExtra("ClientInfo",(Parcelable) selectedObject);
-        //brand
-        intent.putExtra("SelectedBrand",(Parcelable) selectedObject);
+        intent.putExtra("Addresses",(Parcelable) selectedObject);
 
         args.putSerializable("productID",(Serializable) object);
 
@@ -180,7 +177,6 @@ public class Quotation_finish extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
     @Override
     protected Dialog onCreateDialog(int id) {

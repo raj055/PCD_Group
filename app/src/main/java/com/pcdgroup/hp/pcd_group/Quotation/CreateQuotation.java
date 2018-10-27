@@ -120,15 +120,15 @@ public class CreateQuotation extends AppCompatActivity implements CallBackInterf
     /** On clicking ClientAdd button
      * @param view View */
     public void onClickNextScreenQuotation(View view) {
-        Intent intent = new Intent(CreateQuotation.this, Quotation_product.class);
 
-        //customer
-        intent.putExtra("ClientInfo", (Parcelable) selectobject);
-        //brand
-        intent.putExtra("SelectedBrand", (Parcelable) selectobject);
+            Intent intent = new Intent(CreateQuotation.this, Quotation_product.class);
 
-        startActivity(intent);
-        overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+            //customer
+            intent.putExtra("Addresses", (Parcelable) selectobject);
+
+            startActivity(intent);
+            overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+
     }
 
     /** Start another activity to get client address and product and come back

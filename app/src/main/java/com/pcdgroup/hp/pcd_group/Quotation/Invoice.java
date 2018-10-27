@@ -138,8 +138,8 @@ public class Invoice extends AppCompatActivity {
 
         DiscountTextview.setText("Discount:" + "\t" + DiscountTVvalue + "%");
 
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("SelectedBrand");
-        selectedObject = (SelectedObject) getIntent().getParcelableExtra("ClientInfo");
+        selectedObject = (SelectedObject) getIntent().getParcelableExtra("Addresses");
+
         Bundle extras = getIntent().getExtras();
         //Check data
        /* String brandName = selectedObject.brandAddress.get(0);
