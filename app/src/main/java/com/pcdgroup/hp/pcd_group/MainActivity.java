@@ -3,9 +3,11 @@ package com.pcdgroup.hp.pcd_group;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -41,12 +43,13 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements CallBackInterface {
 
+    //
     RelativeLayout rellay1,rellay2;
     Handler handler = new Handler();
 
     //Login details widgets
     EditText Email, Password;
-    String PasswordHolder, EmailHolder;
+    String PasswordHolder, EmailHolder, UserType, DiscountValue;
     Boolean CheckEditText ;
     public static final String UserEmail = "";
 
@@ -72,14 +75,15 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         /*
-            - login page to login activity
-            - check database to access type after this type user login
-        */
+//        android.app.ActionBar actionBar = getActionBar();
+//        actionBar.setBackgroundDrawable( new ColorDrawable(getResources().getColor(R.color.AntiqueWhite)));
 
+        //    login page to login activity
+        //    check database to access type after this type user login
         if(!isConnected(MainActivity.this)) buildDialog(MainActivity.this).show();
         else {
             Toast.makeText(MainActivity.this,"Welcome", Toast.LENGTH_SHORT).show();
@@ -92,33 +96,46 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
             @Override
             public void run() {
 //                while (!shutdown){
-                if(rellay1 != null)
-                    rellay1.setVisibility(View.VISIBLE);
-                if(rellay2 != null)
-                    rellay2.setVisibility(View.VISIBLE);
+            if(rellay1 != null)
+                rellay1.setVisibility(View.VISIBLE);
+            if(rellay2 != null)
+                rellay2.setVisibility(View.VISIBLE);
 //                }
             }
         };
 
-         // check to see if the user is already logged in
-        String username = MySharedPreferences.getUsername(this);
-        String password = MySharedPreferences.getPassword(this);
+        gblVar = GlobalVariable.getInstance();
 
-        if ((username != null) && (password != null)) {
+        Email = (EditText)findViewById(R.id.email);
+        Password = (EditText)findViewById(R.id.password);
+
+
+        // check to see if the user is already logged in
+        String username      = MySharedPreferences.getUsername(this);
+        String password      = MySharedPreferences.getPassword(this);
+        String usertype      = MySharedPreferences.getUsertype(this);
+        String discountvalue = MySharedPreferences.getDiscountValue(this);
+
+
+
+        if ((username != null) && (password != null) && (usertype != null) && (discountvalue != null)) {
             Log.v("Username----",username);
             Log.v("Password----", password);
 
         //    launchMainActivity();
             EmailHolder = username;
             PasswordHolder = password;
-            QueryTheDataBase();
+            UserType = usertype;
+            DiscountValue = discountvalue;
+            checkAccessType(usertype, discountvalue);
+//            QueryTheDataBase();
         }
+        else
+            QueryTheDataBase();
         handler.postDelayed(runnable, 2000); //2000 is the timeout for the splash
 
-        Email = (EditText)findViewById(R.id.email);
-        Password = (EditText)findViewById(R.id.password);
 
-        gblVar = GlobalVariable.getInstance();
+
 
 /*
         Email.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -162,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
     /** Go to the register activity on clicking the register button */
     public void onClickRegister(View view) {
 
-        Intent intent = new Intent(MainActivity.this,UserRegistarActivity.class);
+        Intent intent = new Intent(MainActivity.this, UserRegistarActivity.class);
         startActivity(intent);
     }
     /** Prepare the variables for querying the Database. */
@@ -172,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
         typeOfQuery = CallType.POST_CALL;
 
         hashMap.put("email_id",EmailHolder);
-
         hashMap.put("password",PasswordHolder);
 
         //Send Database query for inquiring to the database.
@@ -187,10 +203,12 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
     }
     /** Save the required parameters in Shared Preferences. */
-    private void saveUsername() {
-        String username = Email.getText().toString();
-        String userpassword =  Password.getText().toString();
-        MySharedPreferences.storeUsername(this, username, userpassword);
+    private void saveUsername(String username,
+                              String password,
+                              String usertype,
+                              String discountvalue) {
+
+        MySharedPreferences.storeUsername(this, username, password, usertype, discountvalue );
 
         launchMainActivity();
     }
@@ -241,45 +259,10 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
                     accessType = jo.getString("Access");
                     discountType = jo.getString("Discount");
+                    checkAccessType(accessType, discountType);
+                    saveUsername(EmailHolder, PasswordHolder,accessType,discountType);
                 }
-                if(accessType != null && discountType != null)
-                {
-                    Log.v("accesstype","" + accessType);
-                    if(accessType.contains("Admin")) {
-                        Log.v("To be","in Admin mode" );
-                         intent = new Intent(MainActivity.this, AdminDashboard.class);
 
-                        gblVar.AccessType = "Admin";
-                        gblVar.DiscountType = "100";
-
-                    }
-                    else if(accessType.contains("Manager")) {
-                        Log.v("To be","in Manager mode" );
-                         intent = new Intent(MainActivity.this, AdminDashboard.class);
-
-                        gblVar.AccessType = "Manager";
-                        gblVar.DiscountType = "100";
-
-                    }
-                    else if(accessType.contains("Client")) {
-                        Log.v("To be","in Client mode" );
-                         intent = new Intent(MainActivity.this, AdminDashboard.class);
-
-                        gblVar.AccessType = "Client";
-                        gblVar.DiscountType = discountType;
-
-                    }
-                    else{
-                         intent = new Intent(MainActivity.this, ViewImage.class);
-                         gblVar.AccessType = "User";
-
-                    }
-
-                    intent.putExtra(UserEmail , EmailHolder);
-                    saveUsername();
-                    startActivity(intent);
-                    finish();
-                }
             }
             catch (Exception e){
                 Toast.makeText(getApplicationContext(),"The Username or password you entered is incorrect.", Toast.LENGTH_SHORT).show();
@@ -287,6 +270,48 @@ public class MainActivity extends AppCompatActivity implements CallBackInterface
 
             }
 
+        }
+
+    }
+
+    public void checkAccessType(String accessType, String discountType){
+        if(accessType != null && discountType != null)
+        {
+            Log.v("accesstype","" + accessType);
+            if(accessType.contains("Admin")) {
+                Log.v("To be","in Admin mode" );
+                intent = new Intent(MainActivity.this, AdminDashboard.class);
+
+                gblVar.AccessType = "Admin";
+                gblVar.DiscountType = "100";
+
+            }
+            else if(accessType.contains("Manager")) {
+                Log.v("To be","in Manager mode" );
+                intent = new Intent(MainActivity.this, AdminDashboard.class);
+
+                gblVar.AccessType = "Manager";
+                gblVar.DiscountType = "100";
+
+            }
+            else if(accessType.contains("Client")) {
+                Log.v("To be","in Client mode" );
+                intent = new Intent(MainActivity.this, AdminDashboard.class);
+
+                gblVar.AccessType = "Client";
+                gblVar.DiscountType = discountType;
+
+            }
+            else{
+                intent = new Intent(MainActivity.this, ViewImage.class);
+                gblVar.AccessType = "User";
+
+            }
+
+            intent.putExtra(UserEmail , EmailHolder);
+
+            startActivity(intent);
+            finish();
         }
 
     }

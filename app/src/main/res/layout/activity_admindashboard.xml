@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/Khaki"
     android:fitsSystemWindows="true"
     tools:context="com.pcdgroup.hp.pcd_group.AdminLogin.AdminDashboard"
     tools:openDrawer="start">
@@ -21,6 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:elevation="5dp"
+            android:backgroundTint="@color/ForestGreen"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 

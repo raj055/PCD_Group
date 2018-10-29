@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,24 +36,27 @@ public class VendorDealerMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_vendor_dealer);
 
-
         //    - add vendor fragment
         //    - add dealer fragment
-
+        Log.v("Vendor Dealor-----","Selected");
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
+        Log.v("Vendor Dealor-----","Selected");
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
 
+        Log.v("Vendor Dealor-----","Selected");
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        Log.v("Vendor Dealor-----","Finished");
         tabLayout.setupWithViewPager(mViewPager);
-
+        Log.v("Vendor Dealor-----","Finished");
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        Log.v("Vendor Dealor-----","setupViewPager");
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Add_Vendor(), "VENDOR");
+//        adapter.addFragment(new Add_Vendor(), "VENDOR");
         adapter.addFragment(new Add_Dealer(), "DEALER");
         viewPager.setAdapter(adapter);
     }

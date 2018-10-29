@@ -9,6 +9,7 @@
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/orderList"
+        android:background="@color/Khaki"
         android:layout_height="wrap_content">
     </ListView>
 

@@ -6,7 +6,7 @@
     android:id="@+id/activity_vendor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/Khaki"
     android:padding="20dp"
     tools:context="com.pcdgroup.hp.pcd_group.VendorDealer.Add_Vendor">
 
@@ -185,10 +185,9 @@
                     android:id="@+id/btn_vendor_product"
                     android:layout_width="151dp"
                     android:layout_height="45dp"
-                    android:onClick="onClickAddVendorProduct"
                     android:text="Add Product"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
 
                 <EditText
                     android:id="@+id/product_et"

@@ -6,13 +6,14 @@
     android:id="@+id/cardview1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="6dp"
-    card_view:cardElevation="6dp"
-    card_view:contentPadding="7dp"
-    android:padding="10dp"
     android:layout_margin="7dp"
-    card_view:cardBackgroundColor="#ADD8E6"
-    >
+    android:padding="10dp"
+    card_view:cardBackgroundColor="@color/ForestGreen"
+    card_view:cardCornerRadius="15dp"
+
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp"
+    card_view:contentPadding="7dp">
 
     <TableLayout
         android:layout_width="fill_parent"
@@ -22,26 +23,26 @@
         <TableRow>
 
             <TextView
-            android:id="@+id/tvfname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="05dp"
-            android:textSize="20dp"
-            android:text="FName"
-            android:textStyle="bold"
-            android:textColor="#FF1493"
-            />
+                android:id="@+id/tvfname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="05dp"
+                android:layout_weight="1"
+                android:text="FName"
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/tvlname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20dp"
                 android:text="Lname"
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
                 android:textStyle="bold"
-                android:textColor="#FF1493"
                 />
 
             <TextView
@@ -49,10 +50,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="16dp"
                 android:text="Type"
-                android:textStyle="bold"
                 android:textColor="@color/Gray"
+                android:textSize="16dp"
+                android:textStyle="bold"
                 />
 
         </TableRow>
@@ -63,57 +64,60 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Address : "
-                android:textStyle="bold"
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tvaddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:text="address Show"
-                android:textColor="#8A2BE2"/>
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"/>
         </TableRow>
 
         <TableRow>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/tvaddressline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="addressline1 Show"
-                android:textColor="#8A2BE2"
-                tools:ignore="DuplicateIds" />
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
+                tools:ignore="DuplicateIds"/>
         </TableRow>
 
         <TableRow>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/tvaddressline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20dp"
+                android:layout_marginTop="10dp"
                 android:text="addressline2 Show"
-                android:textColor="#8A2BE2"
-                tools:ignore="DuplicateIds" />
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
+                tools:ignore="DuplicateIds"/>
         </TableRow>
 
         <TableRow>
@@ -122,22 +126,22 @@
                 android:id="@+id/mobileno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Mobileno : "
-                android:textStyle="bold"
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tv_Mobileno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Mobileno Show"
-                android:textColor="#8A2BE2"
-                tools:ignore="DuplicateIds" />
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
+                tools:ignore="DuplicateIds"/>
         </TableRow>
 
         <TableRow>
@@ -146,23 +150,23 @@
                 android:id="@+id/state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="State : "
-                android:textStyle="bold"
                 android:textColor="@color/Black"
-                tools:ignore="DuplicateIds" />
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:ignore="DuplicateIds"/>
 
             <TextView
                 android:id="@+id/tv_state"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="18dp"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:text="State Show"
-                android:textColor="#8A2BE2"
-                tools:ignore="DuplicateIds" />
+                android:textColor="@color/Khaki"
+                android:textSize="18dp"
+                tools:ignore="DuplicateIds"/>
         </TableRow>
 
         <TableRow>
@@ -171,23 +175,24 @@
                 android:id="@+id/Country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Country : "
-                android:textStyle="bold"
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tvCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Country Show"
-                android:textColor="#8A2BE2"
-                tools:ignore="DuplicateIds" />
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
+                tools:ignore="DuplicateIds"/>
         </TableRow>
+
         <TableRow>
 
 
@@ -195,22 +200,22 @@
                 android:id="@+id/companyname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Company_name : "
                 android:layout_marginTop="10dp"
-                android:textStyle="bold"
+                android:text="Company_name : "
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tv_companyname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:text=" company_name Show"
-                android:textColor="#8A2BE2"
+                android:layout_weight="1"
+                android:text="company_name Show"
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
                 />
         </TableRow>
 
@@ -220,22 +225,22 @@
                 android:id="@+id/pin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Pin : "
-                android:textStyle="bold"
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tvpin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
                 android:text="Pin Show"
-                android:textColor="#8A2BE2"
-                tools:ignore="DuplicateIds" />
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
+                tools:ignore="DuplicateIds"/>
         </TableRow>
 
         <TableRow>
@@ -244,22 +249,22 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Email_ID : "
                 android:layout_marginTop="10dp"
-                android:textStyle="bold"
+                android:text="Email_ID : "
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tvemailid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:text="email_id Show"
-                android:textColor="#8A2BE2"
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
                 />
 
         </TableRow>
@@ -270,22 +275,22 @@
                 android:id="@+id/designation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Designation : "
                 android:layout_marginTop="10dp"
-                android:textStyle="bold"
+                android:text="Designation : "
                 android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/tvdesignation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:text="designation Show"
-                android:textColor="#8A2BE2"
+                android:textColor="@color/Khaki"
+                android:textSize="20dp"
                 />
 
         </TableRow>
@@ -308,13 +313,13 @@
             <ImageView
                 android:layout_width="@dimen/icon_width_height"
                 android:layout_height="@dimen/icon_width_height"
-                android:src="@drawable/bg_circle" />
+                android:src="@drawable/bg_circle"/>
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_done_white_24dp" />
+                android:src="@drawable/ic_done_white_24dp"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -327,7 +332,7 @@
             <ImageView
                 android:id="@+id/icon_profile"
                 android:layout_width="@dimen/icon_width_height"
-                android:layout_height="@dimen/icon_width_height" />
+                android:layout_height="@dimen/icon_width_height"/>
 
             <TextView
                 android:id="@+id/icon_text"
@@ -335,7 +340,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/icon_text" />
+                android:textSize="@dimen/icon_text"/>
         </RelativeLayout>
 
     </RelativeLayout>

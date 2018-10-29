@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="6dp"
-    card_view:cardElevation="6dp"
+    card_view:cardElevation="24dp"
     card_view:contentPadding="7dp"
     android:padding="10dp"
     android:layout_margin="7dp"

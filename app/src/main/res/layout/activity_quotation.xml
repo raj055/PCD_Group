@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="top"
+                android:background="@color/Khaki"
     android:orientation="vertical">
 
     <Button
@@ -16,7 +17,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="53dp"
-        android:background="#7B68EE"
+        android:background="@color/ForestGreen"
         android:onClick="onClickQuotationAddBrand"
         android:text="Add Address"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="213dp"
-        android:background="#7B68EE"
+        android:background="@color/ForestGreen"
         android:onClick="onClickQuotationAddClient"
         android:text="Add Client"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_client"

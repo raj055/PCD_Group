@@ -31,7 +31,7 @@ import java.util.HashMap;
  * @author Grasp
  * @version 1.0 on 28-06-2018.
  * @class_name Add_Vendor
- * @description add new Vendor in database and add this product
+ * @description add new Vendor in database and add related product
  */
 
 public class Add_Vendor extends Fragment implements CallBackInterface {
@@ -41,6 +41,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
     String Name_Holder, Address_Hoder, Area_Holder, Mobileno_Holder,State_Holder, Email_Holder,
              Organisation_Holder, Gst_Holder, Products_Holder;
     Boolean CheckEditText ;
+    Button addVendorSubmit, addRelevantProducts;
 
     //Globals
     GlobalVariable globalVariable;
@@ -57,11 +58,6 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
 
         View view = inflater.inflate(R.layout.fragment_vendor,container,false);
 
-        /*
-            - add vendor product in product list
-            - add vendor details in database
-        */
-
         globalVariable = GlobalVariable.getInstance();
 
         //Assign Id'S
@@ -76,51 +72,64 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
         gstno = (EditText) view.findViewById(R.id.gstno_et);
         products = (EditText) view.findViewById(R.id.product_et);
 
+        //Assign Buttons
+        addVendorSubmit = (Button) view.findViewById(R.id.submit_btnVendor);
+        addRelevantProducts = (Button) view.findViewById(R.id.btn_vendor_product);
+
+        //Assign the click listeners
+        addVendorSubmit.setOnClickListener(addVendorListener);
+        addRelevantProducts.setOnClickListener(addProducts);
+
         return view;
-    }
-    /** Add Vendor on selection VendorAdd Button */
-    public void onClickVendorAdd(View view) {
-
-        // Checking whether EditText is Empty or Not.
-        CheckEditTextIsEmptyOrNot();
-
-        if(CheckEditText){
-
-            urlQry = DataGetUrl.ADD_VENDOR;
-            typeOfQuery = CallType.POST_CALL;
-
-            hashMap.put("name",Name_Holder);
-            hashMap.put("address",Address_Hoder);
-            hashMap.put("area",Area_Holder);
-            hashMap.put("state",State_Holder);
-            hashMap.put("email",Email_Holder);
-            hashMap.put("mobileno",Mobileno_Holder);
-            hashMap.put("organisation",Organisation_Holder);
-            hashMap.put("gstno",Gst_Holder);
-            hashMap.put("products",Products_Holder);
-
-            //Send Database query for inquiring to the database.
-            dataBaseQuery = new DataBaseQuery(hashMap,
-                    urlQry,
-                    typeOfQuery,
-                    getActivity().getApplicationContext(),
-                    Add_Vendor.this
-            );
-            //Prepare for the database query
-            dataBaseQuery.PrepareForQuery();
-        }
-        else {
-            // If EditText is empty then this block will execute.
-            Toast.makeText(getActivity(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
-        }
     }
 
     /** Add the Products related to the Vendors. */
-    public void onClickAddVendorProduct(View view) {
+    View.OnClickListener addProducts = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getActivity(),VendorProductAdd.class);
+            startActivityForResult(intent, 1);
 
-        Intent intent = new Intent(getActivity(),VendorProductAdd.class);
-        startActivityForResult(intent, 1);
-    }
+        }
+    };
+    /** Add the Vendors by querying database. */
+    View.OnClickListener addVendorListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // Checking whether EditText is Empty or Not.
+            CheckEditTextIsEmptyOrNot();
+
+            if(CheckEditText){
+
+                urlQry = DataGetUrl.ADD_VENDOR;
+                typeOfQuery = CallType.POST_CALL;
+
+                hashMap.put("name",Name_Holder);
+                hashMap.put("address",Address_Hoder);
+                hashMap.put("area",Area_Holder);
+                hashMap.put("state",State_Holder);
+                hashMap.put("email",Email_Holder);
+                hashMap.put("mobileno",Mobileno_Holder);
+                hashMap.put("organisation",Organisation_Holder);
+                hashMap.put("gstno",Gst_Holder);
+                hashMap.put("products",Products_Holder);
+
+                //Send Database query for inquiring to the database.
+                dataBaseQuery = new DataBaseQuery(hashMap,
+                  urlQry,
+                  typeOfQuery,
+                  getActivity().getApplicationContext(),
+                  Add_Vendor.this
+                );
+                //Prepare for the database query
+                dataBaseQuery.PrepareForQuery();
+            }
+            else {
+                // If EditText is empty then this block will execute.
+                Toast.makeText(getActivity(), "Please fill all form fields.", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     /** On returning from select product activity. */
     @Override
@@ -179,6 +188,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
             CheckEditText = true ;
         }
     }
+
     /** CallBack Function for processing the Database query result.
      * @param  response - Response string received while database query.
      *         dataGetUrl - Url queried.*/
@@ -186,6 +196,7 @@ public class Add_Vendor extends Fragment implements CallBackInterface {
     public void ExecuteQueryResult(String response,DataGetUrl dataGetUrl) {
         Toast.makeText(getActivity(),response.toString(), Toast.LENGTH_LONG).show();
     }
+
     /** Releases the memory of all the components after intent finishes. */
     @Override
     public void onDestroy() {

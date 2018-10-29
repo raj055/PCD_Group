@@ -78,7 +78,6 @@ public class ProductUpdate extends AppCompatActivity implements CallBackInterfac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_product);
 
-
         gblVar = GlobalVariable.getInstance();
 
         productName = (EditText)findViewById(R.id.editText_name);

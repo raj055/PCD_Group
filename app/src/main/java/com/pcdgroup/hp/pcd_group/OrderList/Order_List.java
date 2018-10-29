@@ -165,7 +165,7 @@ public class Order_List extends AppCompatActivity implements CallBackInterface {
                 pdfList.add(pdf);
             }
 
-            billAdepter = new PdfAdapter(Order_List.this,R.layout.list_layout, pdfList);
+            billAdepter = new PdfAdapter(Order_List.this, R.layout.list_layout, pdfList);
             lstVeiw.setAdapter(billAdepter);
 
             billAdepter.notifyDataSetChanged();

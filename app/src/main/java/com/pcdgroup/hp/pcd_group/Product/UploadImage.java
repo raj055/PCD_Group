@@ -66,17 +66,17 @@ public class UploadImage extends AppCompatActivity {
     private File actualImage, compressedImage;
 
     private Bitmap bitmap;
-    private String KEY_IMAGE = "image";
-    private String KEY_NAME = "name";
-    private String KEY_Price = "price";
-    private String KEY_Minimum = "minimum";
-    private String KEY_HSNCode = "HSNCode";
-    private String KEY_Brand = "Brand";
-    private String KEY_Gst= "gst";
+    private String KEY_IMAGE    = "image";
+    private String KEY_NAME     = "name";
+    private String KEY_Price    = "price";
+    private String KEY_Minimum  = "minimum";
+    private String KEY_HSNCode  = "HSNCode";
+    private String KEY_Brand    = "Brand";
+    private String KEY_Gst      = "gst";
     private String KEY_Description = "Description";
-    private String KEY_Stock = "Stock";
+    private String KEY_Stock    = "Stock";
     private String KEY_Reorderlevel = "Reorderlevel";
-    private String UPLOAD_URL ="http://dert.co.in/gFiles/upload.php";
+    private String UPLOAD_URL   ="http://dert.co.in/gFiles/upload.php";
 
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -87,7 +87,6 @@ public class UploadImage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_image_layout);
-
 
         //    - compress image to upload to server
         //    - set name image and upload database

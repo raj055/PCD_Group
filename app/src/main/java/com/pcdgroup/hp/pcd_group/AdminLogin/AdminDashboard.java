@@ -180,8 +180,10 @@ public class AdminDashboard extends AppCompatActivity implements
                 break;
 
             case R.id.nav_vendordealer:
+
                 intent = new Intent(getApplicationContext(),VendorDealerMain.class);
                 startActivity(intent);
+
                 break;
 
             case R.id.nav_po:

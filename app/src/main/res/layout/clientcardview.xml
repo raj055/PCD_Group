@@ -10,7 +10,7 @@
     card_view:contentPadding="7dp"
     android:padding="10dp"
     android:layout_margin="7dp"
-    card_view:cardBackgroundColor="#ADD8"
+    card_view:cardBackgroundColor="@color/ForestGreen"
     >
 
     <TableLayout

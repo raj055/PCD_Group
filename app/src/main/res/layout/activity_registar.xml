@@ -96,7 +96,7 @@
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:background="#7B68EE"
+        android:background="@color/ForestGreen"
         android:onClick="onClickUserRegister"
         android:text="Register" />
 

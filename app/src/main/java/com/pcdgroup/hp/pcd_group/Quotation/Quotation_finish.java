@@ -43,7 +43,7 @@ public class Quotation_finish extends AppCompatActivity {
     String brand,client;
     ArrayList<ProdactEntity> quntity = new ArrayList<ProdactEntity>();
     SelectedObject selectedObject;
-    ArrayList<ProdactEntity> object;
+    ArrayList<ProdactEntity> prdList;
     private int year;
     private int month;
     private int day;
@@ -72,7 +72,7 @@ public class Quotation_finish extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
 
-        object = (ArrayList<ProdactEntity>) args.getSerializable("productID");
+        prdList = (ArrayList<ProdactEntity>) args.getSerializable("productID");
 
         if (args.containsKey("Quantity")) {
 
@@ -163,7 +163,7 @@ public class Quotation_finish extends AppCompatActivity {
         //customer
         intent.putExtra("Addresses",(Parcelable) selectedObject);
 
-        args.putSerializable("productID",(Serializable) object);
+        args.putSerializable("productID", prdList);
 
         intent.putExtra("date", textdate.getText());
         intent.putExtra("validdate", textvaliddate.getText());
@@ -173,6 +173,7 @@ public class Quotation_finish extends AppCompatActivity {
 
         discount = discountprice.getText().toString();
         intent.putExtra("discountperce",discount);
+        intent.putExtra("BUNDLE",args);
 
         startActivity(intent);
         finish();

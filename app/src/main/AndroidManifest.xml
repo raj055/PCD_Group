@@ -12,13 +12,14 @@
     <application
         android:name=".Client.MyApplication"
         android:allowBackup="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/pcd_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/pcd_launcher"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity" android:label="PCD_Group">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,7 @@
         <activity android:name=".AdminLogin.AdminDashboard" android:label="PCD_Group"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".AdminLogin.AdminSetting" android:label="PCD_Group" />
+        <activity android:name=".AdminLogin.AdminSetting" android:label="PCD_Group"  />
         <activity android:name=".Client.SingleRecordShow" android:label="PCD_Group" />
         <activity android:name=".Client.ClientDetailsActivity" android:label="PCD_Group" />
         <activity android:name=".Client.UpdateActivity" android:label="PCD_Group" />

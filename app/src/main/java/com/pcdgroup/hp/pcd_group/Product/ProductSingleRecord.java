@@ -63,7 +63,6 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         // display single record
         // this record update and delete button show
 
-
         gblVar = GlobalVariable.getInstance();
 
         final Intent intent = getIntent();
@@ -94,7 +93,6 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
         StockHolder = getIntent().getStringExtra("stock");
         RecordlevelHolder = getIntent().getStringExtra("reorderlevel");
         GstHolder = getIntent().getStringExtra("gst");
-
 
         // Setting product Name, Phone Number, Class into TextView after done all process .
         TextViewName.setText(NameHolder);
@@ -140,24 +138,24 @@ public class ProductSingleRecord extends AppCompatActivity implements CallBackIn
             @Override
             public void onClick(View view) {
 
-                //Send Database query for the deletion of products.
-                urlQry = DataGetUrl.DELETE_PRODUCTS;
-                typeOfQuery = CallType.POST_CALL;
+            //Send Database query for the deletion of products.
+            urlQry = DataGetUrl.DELETE_PRODUCTS;
+            typeOfQuery = CallType.POST_CALL;
 
-                hashMap.put("id",IdHolder);
+            hashMap.put("id",IdHolder);
 
-                //Send Database query for inquiring to the database.
-                dataBaseQuery = new DataBaseQuery(hashMap,
-                        urlQry,
-                        typeOfQuery,
-                        getApplicationContext(),
-                        ProductSingleRecord.this
-                );
-                //Prepare for the database query
-                dataBaseQuery.PrepareForQuery();
+            //Send Database query for inquiring to the database.
+            dataBaseQuery = new DataBaseQuery(hashMap,
+                    urlQry,
+                    typeOfQuery,
+                    getApplicationContext(),
+                    ProductSingleRecord.this
+            );
+            //Prepare for the database query
+            dataBaseQuery.PrepareForQuery();
 
-                Intent intent = new Intent(ProductSingleRecord.this,ViewImage.class);
-                startActivity(intent);
+            Intent intent = new Intent(ProductSingleRecord.this,ViewImage.class);
+            startActivity(intent);
 
             }
         });
