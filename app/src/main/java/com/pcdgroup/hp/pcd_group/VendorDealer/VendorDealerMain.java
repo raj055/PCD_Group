@@ -28,7 +28,7 @@ public class VendorDealerMain extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
-    /** Register the details of Vendor / Dealor. Add the details to the database.
+    /** Register the details of Vendor / Dealer. Add the details to the database.
      * @param savedInstanceState object of passing parameters from the previous intent */
 
     @Override
@@ -38,25 +38,25 @@ public class VendorDealerMain extends AppCompatActivity {
 
         //    - add vendor fragment
         //    - add dealer fragment
-        Log.v("Vendor Dealor-----","Selected");
+        Log.v("Vendor Dealer-----","Selected");
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        Log.v("Vendor Dealor-----","Selected");
+        Log.v("Vendor Dealer-----","Selected");
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
 
-        Log.v("Vendor Dealor-----","Selected");
+        Log.v("Vendor Dealer-----","Selected");
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        Log.v("Vendor Dealor-----","Finished");
+        Log.v("Vendor Dealer-----","Finished");
         tabLayout.setupWithViewPager(mViewPager);
-        Log.v("Vendor Dealor-----","Finished");
+        Log.v("Vendor Dealer-----","Finished");
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Log.v("Vendor Dealor-----","setupViewPager");
+        Log.v("Vendor Dealer-----","setupViewPager");
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-//        adapter.addFragment(new Add_Vendor(), "VENDOR");
+        adapter.addFragment(new Add_Vendor(), "VENDOR");
         adapter.addFragment(new Add_Dealer(), "DEALER");
         viewPager.setAdapter(adapter);
     }
